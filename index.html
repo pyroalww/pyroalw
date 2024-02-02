@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
@@ -11,22 +11,25 @@
     <header>
         <h1>PYROALW</h1>
         <nav>
+            
             <ul>
+                
                 <li><a href="#who-am-i" onclick="showSection('who-am-i')">Who Am I?</a></li>
                 <li><a href="#projects" onclick="showSection('projects')">Projects</a></li>
                 <li><a href="#shop" onclick="showSection('shop')">Shop</a></li>
+                <li><a href="#order-custom-rat" onclick="showSection('order-custom-rat')">Order RAT</a></li>
                 <li><a href="#socials" onclick="showSection('socials')">Socials</a></li>
                 <li><a href="#contact" onclick="showSection('contact')">Contact</a></li>
                 <li><a href="#code-activation" onclick="showSection('code-activation')">Code activation</a></li>
             </ul>
         </nav>
     </header>
-
+    <div class="menu-toggle" onclick="toggleNav()"></div>
     <section id="who-am-i" class="content-section">
         <div class="content">
             <img src="https://avatars.githubusercontent.com/u/134533935?v=4" alt="Profile Photo">
             <h2>Who Am I?</h2>
-            <p>A basic Python, website and SwiftUI developer. Total 5M+ Views on TikTok!</p>
+            <p>A basic Python, website and SwiftUI developer. Mainly makes malwares. Our 6,000-person discord community server has been banned. Total 5M+ Views on TikTok!</p>
         </div>
     </section>
 
@@ -95,7 +98,44 @@
 
         </div>
     </section>
-
+    <section id="order-custom-rat" class="content-section">
+        <div class="content">
+            <h2>Order a Custom RAT</h2>
+            <button onclick="toggleCustomRatForm()">Customize Your RAT</button>
+            <div id="custom-rat-form" style="display: none;">
+                <form id="custom-rat-order-form">
+                    <label for="rat-name">1. RAT Name:</label>
+                    <input type="text" id="rat-name" required>
+    
+                    <label for="rat-icon-url">2. RAT Icon URL:</label>
+                    <input type="text" id="rat-icon-url" required>
+    
+                    <label for="startup-dialogs">3. Optional Startup Dialogs:</label>
+                    <input type="text" id="startup-dialogs">
+    
+                    <label for="rat-imitation">4. What Does This RAT Imitate?</label>
+                    <input type="text" id="rat-imitation" required>
+    
+                    <label for="webhook-address">5. Optional Private Discord Webhook Address:</label>
+                    <input type="text" id="webhook-address">
+    
+                    <label for="custom-website">6. Custom and Realistic Website (+$5, Extra 1 day processing time):</label>
+                    <input type="checkbox" id="custom-website">
+    
+                    <label for="email-address">7. Email Address for Final Version:</label>
+                    <input type="email" id="email-address" required>
+    
+                    <label for="optional-requests">8. Optional Requests:</label>
+                    <textarea id="optional-requests"></textarea>
+    
+                    <label for="discord-nickname">9. Discord Nickname (for contact):</label>
+                    <input type="text" id="discord-nickname">
+    
+                    <button type="button" onclick="submitCustomRatOrder()">Submit Order</button>
+                </form>
+            </div>
+        </div>
+    </section>
     <section id="socials" class="content-section">
         <div class="content">
             <h2>Socials</h2>
@@ -115,7 +155,9 @@
                 <textarea placeholder="Your message"></textarea><br>
                 <input type="text" placeholder="Your name">
                 <input type="text" placeholder="Your surname">
-                <button onclick="sendDiscordMessage()">Send Message</button>
+                <div class="g-recaptcha" data-sitekey="6LeWsGQpAAAAAAodCrYKbyL9TtW-4s5YoCMmNuQt"></div>
+                <button type="button" onclick="submitContactForm()">Send Message</button>
+                
             </div>
         </div>
     </section>

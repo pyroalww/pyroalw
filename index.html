@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>PYROALW</title>
+</head>
+<body>
+    <header>
+        <h1>PYROALW</h1>
+        <nav>
+            <ul>
+                <li><a href="#who-am-i" onclick="showSection('who-am-i')">Who Am I?</a></li>
+                <li><a href="#projects" onclick="showSection('projects')">Projects</a></li>
+                <li><a href="#shop" onclick="showSection('shop')">Shop</a></li>
+                <li><a href="#socials" onclick="showSection('socials')">Socials</a></li>
+                <li><a href="#contact" onclick="showSection('contact')">Contact</a></li>
+                <li><a href="#code-activation" onclick="showSection('code-activation')">Code activation</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="who-am-i" class="content-section">
+        <div class="content">
+            <img src="https://avatars.githubusercontent.com/u/134533935?v=4" alt="Profile Photo">
+            <h2>Who Am I?</h2>
+            <p>A basic Python, website and SwiftUI developer. Total 5M+ Views on TikTok!</p>
+        </div>
+    </section>
+
+    <section id="projects" class="content-section">
+        <div class="content">
+            <h2>Projects</h2>
+            <div class="project" onclick="openProjectLink('#')">
+                <img src="px.png" alt="Project 1">
+                <h3>Px Shell (OS)</h3>
+                <p>a Python-based command-line utility with a variety of features and functionalities. Px Shell allows you to perform a wide range of tasks, from system operations to web searches and utility functions.</p>
+            </div>
+
+            <div class="project" onclick="openProjectLink('#')">
+                <img src="FSR.PNG" alt="Project 2">
+                <h3>AMD FSR3 Fluid Motions Mod Installer</h3>
+                <p>Auto FSR3 Mod Installer is a user-friendly application designed for Unix-based systems (like decks). Developed by @c4gwn, simplifies the process of installing AMD FSR3 mods for various games. With an intuitive interface, users can easily select their desired game, specify the game folder, and install the AMD FSR3 mod effortlessly. The application also provides information about mod compatibility and allows users to remove the FSR mod if needed</p>
+            </div>
+            <div class="project" onclick="openProjectLink('#')">
+                <img src="rat.jpg.png" alt="Project 3">
+                <h3>Slient Powerfull RAT</h3>
+                <p>This software runs silently on the victim's computer. Every time the computer boots up, it silently transmits data to the server.</p>
+            </div>
+            <div class="project" onclick="openProjectLink('#')">
+                <img src="" alt="Project 4">
+                <h3>Remote Shell</h3>
+                <p>Access the victim's computer using only the IP address! (Screenshot soon)</p>
+            </div>
+            <div class="project" onclick="openProjectLink('#')">
+                <img src="log.png" alt="Project 5">
+                <h3>Instant LOG sender</h3>
+                <p>Quickly sends all events happening on the system to the opposite server (uses only 20MB RAM)</p>
+            </div>
+
+            <div class="project" onclick="openProjectLink('#')">
+                <img src="https://avatars.githubusercontent.com/u/134533935?v=4" alt="Project 6">
+                <h3>Github</h3>
+                <p>My Github page for my all projects</p>
+            </div>
+        </div>
+        </div>
+
+    </section>
+
+    <section id="shop" class="content-section">
+        <div class="content">
+            <h2>Shop</h2>
+            <div class="product" onclick="addToCart('RAT Tool Makers', 10.00)">
+                <img src="product1.jpg" alt="Ürün 1">
+                <h3>RAT Tool Makers</h3>
+                <p>Price: $10.00</p>
+                <p>Description: When someone else runs the RAT tool, their passwords, user information and a lot of other information is transferred to your server.</p>
+            </div>
+
+            <div class="product" onclick="addToCart('Reedem Code Generators', 10.00)">
+                <img src="product2.jpg" alt="Ürün 2">
+                <h3>Reedem Code Generators</h3>
+                <p>Description: The gift code generator can generate code that can work according to the algorithm of the application you want to use.</p>
+                <p>Price: $10.00</p>
+            </div>
+            <div class="product" onclick="addToCart('Multi Functional Tools', 10.00)">
+                <img src="product3.jpg" alt="Ürün 3">
+                <h3>Multi Functional Tools</h3>
+                <p>Description: Multi Tool has many tools that can be useful to you, add to cart for features and screenshots.</p>
+                <p>Price: $10.00</p>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="socials" class="content-section">
+        <div class="content">
+            <h2>Socials</h2>
+            <div class="socials">
+                <a href="https://www.tiktok.com/@pyro_xdd" target="_blank" class="social-button tiktok"></a>
+                <a href="https://www.instagram.com/c4gwn" target="_blank" class="social-button instagram"></a>
+                <a href="https://api.whatsapp.com/send?phone=12054628170&text=Please%20help%20me" target="_blank" class="social-button whatsapp"></a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="content-section">
+        <div class="content">
+            <h2>Contact</h2>
+            <button onclick="toggleContactForm()">Contact Me</button>
+            <div id="contact-form">
+                <textarea placeholder="Your message"></textarea><br>
+                <input type="text" placeholder="Your name">
+                <input type="text" placeholder="Your surname">
+                <button onclick="sendDiscordMessage()">Send Message</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="code-activation" class="content-section">
+        <div class="content">
+            <h2>Code Activation</h2>
+            <input type="text" id="activation-code" placeholder="Enter your 16-digit code">
+            <button onclick="activateCode()">Activate</button>
+        </div>
+    </section>
+    <footer>
+        <p>2024 pyroalw / a @c4gwn brand</p>
+    </footer>
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

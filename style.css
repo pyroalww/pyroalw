@@ -1,0 +1,241 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: background-color 0.5s ease; 
+    background: linear-gradient(to right, #35424a, #161b22); /* Arka plan rengi ve animasyon */
+}
+
+header {
+    background-color: #282c34; /* Üst menü rengi */
+    transition: background-color 0.5s ease;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
+@media only screen and (max-width: 768px) {
+    header {
+        padding: 0.5rem;
+    }
+
+    nav ul {
+        flex-direction: column;
+    }
+
+    nav a {
+        padding: 0.5rem;
+    }
+
+    .content {
+        padding: 1rem;
+    }
+
+    .project, .product {
+        margin-bottom: 1rem;
+    }
+}
+nav {
+    margin-top: 1rem;
+}
+nav a {
+    text-decoration: none;
+    color: #61dafb; /* Menü yazı rengi */
+    padding: 1rem;
+    transition: color 0.3s ease; /* Üst menü link renk geçişi */
+}
+nav a:hover {
+    color: #3498db; /* Üst menü link hover rengi */
+}
+
+/* Contact Me düzenlemeleri */
+#contact-form {
+    display: none;
+    text-align: center;
+}
+
+#contact-form textarea,
+#contact-form input {
+    margin: 10px;
+    padding: 10px;
+    width: 80%;
+    max-width: 400px;
+    border: 1px solid #61dafb;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+#contact-form button {
+    padding: 10px;
+    background-color: #61dafb;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+#contact-form button:hover {
+    background-color: #3498db;
+}
+
+.loading-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+#code-activation input {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #61dafb;
+    border-radius: 5px;
+    margin-right: 10px;
+    width: 200px;
+}
+
+#code-activation button {
+    padding: 10px;
+    font-size: 1rem;
+    background-color: #61dafb;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button,
+input {
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+}
+button:hover,
+input:hover {
+    transform: scale(1.05);
+}
+#code-activation button:hover {
+    background-color: #3498db;
+}
+input,
+button {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #61dafb;
+    background-color: #61dafb;
+    color: white;
+}
+
+button:hover {
+    background-color: #3498db;
+}
+.loading-spinner {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+nav ul {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0;
+}
+
+.socials {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+button {
+    background-color: #333;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    cursor: pointer;
+}
+ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+li {
+    margin: 0 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+section {
+    padding: 2rem 0;
+}
+
+.content {
+    max-width: 800px;
+    margin: auto;
+    text-align: center;
+}
+.content-section {
+    display: none;
+    text-align: center;
+    padding: 2rem;
+}
+.project, .product {
+    cursor: pointer;
+    margin-bottom: 2rem;
+}
+
+img {
+    max-width: 100%;
+}
+
+.social-button {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    margin: 0 0.5rem;
+    background-size: cover;
+}
+
+.tiktok {
+    background-image: url('tiktok_icon.png');
+}
+
+.instagram {
+    background-image: url('instagram_icon.png');
+}
+
+.whatsapp {
+    background-image: url('whatsapp_icon.png');
+}
+
+footer {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+.project:hover, .product:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out;
+}

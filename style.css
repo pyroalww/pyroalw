@@ -20,21 +20,120 @@ header {
         padding: 0.5rem;
     }
 
+    nav {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #282c34;
+        z-index: 1000;
+    }
+
+    nav.active {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
     nav ul {
         flex-direction: column;
+        padding: 0;
+    }
+
+    nav li {
+        margin: 1rem 0;
     }
 
     nav a {
-        padding: 0.5rem;
-    }
-
-    .content {
         padding: 1rem;
+        display: block;
+        text-align: center;
     }
 
-    .project, .product {
-        margin-bottom: 1rem;
+    nav a:hover {
+        color: #3498db;
     }
+}
+#custom-rat-order-form {
+    max-width: 400px;
+    margin: auto;
+}
+
+#custom-rat-order-form label {
+    display: block;
+    margin-top: 10px;
+    color: #3498db; /* Menü yazı rengi */
+}
+
+#custom-rat-order-form input,
+#custom-rat-order-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    box-sizing: border-box;
+    border: 1px solid #3498db;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+#custom-rat-order-form input:hover,
+#custom-rat-order-form textarea:hover {
+    border-color: #3498db;
+}
+
+#custom-rat-order-form button {
+    padding: 10px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+#custom-rat-order-form button:hover {
+    background-color: #2980b9;
+}
+
+#custom-rat-form {
+    animation: fadeInDown 0.5s ease;
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* Menü açma/kapatma düğmesi */
+.menu-toggle {
+    display: block;
+    position: fixed;
+    top: 0.5rem;
+    right: 0.5rem;
+    cursor: pointer;
+    z-index: 1500;
+    font-size: 1.5rem;
+    color: white;
+}
+
+/* Menü simgesi için stil */
+.menu-toggle::before {
+    content: '\2630';
+}
+
+/* Menü açıkken simgeyi değiştir */
+.nav-active .menu-toggle::before {
+    content: '\2715';
 }
 nav {
     margin-top: 1rem;

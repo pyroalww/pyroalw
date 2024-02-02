@@ -34,6 +34,103 @@ function activateCode() {
         }
     }, 2000);
 }
+function submitContactForm() {
+    // reCAPTCHA doğrulamasını yap
+    const recaptchaResponse = grecaptcha.getResponse();
+
+    if (!recaptchaResponse) {
+        alert("Please complete the CAPTCHA verification.");
+        return;
+    }
+
+    // Forma ilişkin diğer işlemleri gerçekleştir
+
+    const message = document.querySelector("#contact-form textarea").value;
+    const name = document.querySelector("#contact-form input:nth-of-type(1)").value;
+    const surname = document.querySelector("#contact-form input:nth-of-type(2)").value;
+
+    const webhookURL = "https://discord.com/api/webhooks/1202897805421576242/ChFcoUZKpolWG8urJZjq1qroLsvP4m4Z3_C6WdE8R321cZka4853ErBhJoyV4lnUuLVS";
+
+    const payload = {
+        content: `${name} ${surname} sent a message:\n${message}`
+    };
+
+    fetch(webhookURL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    });
+
+
+    toggleContactForm();
+
+
+}
+function toggleNav() {
+    const nav = document.querySelector('nav');
+    nav.classList.toggle('active');
+    document.body.classList.toggle('nav-active');
+}
+function toggleCustomRatForm() {
+    const customRatForm = document.getElementById("custom-rat-form");
+    customRatForm.style.display = customRatForm.style.display === "none" ? "block" : "none";
+}
+
+function submitCustomRatOrder() {
+    const ratName = document.getElementById("rat-name").value;
+    const ratIconUrl = document.getElementById("rat-icon-url").value;
+    const startupDialogs = document.getElementById("startup-dialogs").value;
+    const ratImitation = document.getElementById("rat-imitation").value;
+    const webhookAddress = document.getElementById("webhook-address").value;
+    const customWebsite = document.getElementById("custom-website").checked;
+    const emailAddress = document.getElementById("email-address").value;
+    const optionalRequests = document.getElementById("optional-requests").value;
+    const discordNickname = document.getElementById("discord-nickname").value;
+
+    // Özet bilgileri oluştur
+    const summary = `
+        **Custom RAT Order Summary**
+        1. RAT Name: ${ratName}
+        2. RAT Icon URL: ${ratIconUrl}
+        3. Optional Startup Dialogs: ${startupDialogs}
+        4. What Does This RAT Imitate? ${ratImitation}
+        5. Optional Private Discord Webhook Address: ${webhookAddress}
+        6. Custom and Realistic Website: ${customWebsite ? 'Yes' : 'No'}
+        7. Email Address for Final Version: ${emailAddress}
+        8. Optional Requests: ${optionalRequests}
+        9. Discord Nickname: ${discordNickname}
+    `;
+
+    // Discord Webhook'a gönder
+    sendToDiscordWebhook(summary);
+
+    // E-posta gönder
+    sendEmail(emailAddress, "Custom RAT Order Summary", summary);
+
+    // Sipariş formunu kapat
+    toggleCustomRatForm();
+    alert("Your order has been received. Information forwarded to pyro. If the situation is urgent and needs to be fast, you can take a screenshot of the form and send it to pyro's instagram account. (Located in the Socials tab) We wish you a good day.")
+}
+
+function sendToDiscordWebhook(message) {
+    const webhookURL = "https://discord.com/api/webhooks/1202897805421576242/ChFcoUZKpolWG8urJZjq1qroLsvP4m4Z3_C6WdE8R321cZka4853ErBhJoyV4lnUuLVS";
+
+    const payload = {
+        content: message
+    };
+
+    fetch(webhookURL, {
+        method: "POST", 
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => console.log(response))
+    .catch(error => console.error(error));
+}
 function fillProjects() {
 
 

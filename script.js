@@ -1,10 +1,9 @@
+const webhookURL = process.env.WEBHOOKURL;
 function addToCart(productName, price) {
 
-
-    window.location.href = `https://pyroalww.github.io/pyrorats`;
-    window.location.href = `mailto:c4gwnn@gmail.com?subject=Product Order&body=Product: ${productName}%0D%0APrice: $${price}`;
-    
+    window.location.href = `mailto:shop@pyroalw.xyz?subject=Product Order&body=Product: ${productName}%0D%0APrice: $${price}`;
 }
+
 function openProjectLink(link) {
     window.location.href = "https://github.com/pyroalww";
 }
@@ -37,6 +36,7 @@ function activateCode() {
         }
     }, 2000);
 }
+
 function submitContactForm() {
     // reCAPTCHA doğrulamasını yap
     const recaptchaResponse = grecaptcha.getResponse();
@@ -52,7 +52,7 @@ function submitContactForm() {
     const name = document.querySelector("#contact-form input:nth-of-type(1)").value;
     const surname = document.querySelector("#contact-form input:nth-of-type(2)").value;
 
-    const webhookURL = "https://discord.com/api/webhooks/1202897805421576242/ChFcoUZKpolWG8urJZjq1qroLsvP4m4Z3_C6WdE8R321cZka4853ErBhJoyV4lnUuLVS";
+
 
     const payload = {
         content: `${name} ${surname} sent a message:\n${message}`
@@ -108,13 +108,13 @@ function submitCustomRatOrder() {
 
     // Discord Webhook'a gönder
     sendToDiscordWebhook(summary);
-    alert("Your order has been received. Information forwarded to pyro. If the situation is urgent and needs to be fast, you can take a screenshot of the form and send it to pyro's instagram account. (Located in the Socials tab) We wish you a good day.")
+
     // E-posta gönder
     sendEmail(emailAddress, "Custom RAT Order Summary", summary);
 
     // Sipariş formunu kapat
     toggleCustomRatForm();
-    
+    alert("Your order has been received. Information forwarded to pyro. If the situation is urgent and needs to be fast, you can take a screenshot of the form and send it to pyro's instagram account. (Located in the Socials tab) We wish you a good day.")
 }
 
 function sendToDiscordWebhook(message) {
@@ -168,7 +168,7 @@ function sendDiscordMessage() {
     const name = document.querySelector("#contact-form input:nth-of-type(1)").value;
     const surname = document.querySelector("#contact-form input:nth-of-type(2)").value;
 
-    const webhookURL = "https://discord.com/api/webhooks/1202897805421576242/ChFcoUZKpolWG8urJZjq1qroLsvP4m4Z3_C6WdE8R321cZka4853ErBhJoyV4lnUuLVS";
+   
 
     const payload = {
         content: `${name} ${surname} sent a message:\n${message}`

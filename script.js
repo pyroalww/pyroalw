@@ -1,4 +1,3 @@
-const webhookURL = process.env.WEBHOOKURL;
 function addToCart(productName, price) {
 
     window.location.href = `mailto:shop@pyroalw.xyz?subject=Product Order&body=Product: ${productName}%0D%0APrice: $${price}`;
@@ -52,7 +51,7 @@ function submitContactForm() {
     const name = document.querySelector("#contact-form input:nth-of-type(1)").value;
     const surname = document.querySelector("#contact-form input:nth-of-type(2)").value;
 
-
+    const webhookURL = "https://discord.com/api/webhooks/1202897805421576242/ChFcoUZKpolWG8urJZjq1qroLsvP4m4Z3_C6WdE8R321cZka4853ErBhJoyV4lnUuLVS";
 
     const payload = {
         content: `${name} ${surname} sent a message:\n${message}`
@@ -168,7 +167,7 @@ function sendDiscordMessage() {
     const name = document.querySelector("#contact-form input:nth-of-type(1)").value;
     const surname = document.querySelector("#contact-form input:nth-of-type(2)").value;
 
-   
+    const webhookURL = "https://discord.com/api/webhooks/1202897805421576242/ChFcoUZKpolWG8urJZjq1qroLsvP4m4Z3_C6WdE8R321cZka4853ErBhJoyV4lnUuLVS";
 
     const payload = {
         content: `${name} ${surname} sent a message:\n${message}`

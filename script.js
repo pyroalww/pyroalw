@@ -1,6 +1,9 @@
 function addToCart(productName, price) {
 
-    window.location.href = `mailto:shop@pyroalw.xyz?subject=Product Order&body=Product: ${productName}%0D%0APrice: $${price}`;
+
+    window.location.href = `https://pyroalww.github.io/pyrorats`;
+    window.location.href = `mailto:c4gwnn@gmail.com?subject=Product Order&body=Product: ${productName}%0D%0APrice: $${price}`;
+    
 }
 function openProjectLink(link) {
     window.location.href = "https://github.com/pyroalww";
@@ -105,13 +108,13 @@ function submitCustomRatOrder() {
 
     // Discord Webhook'a gönder
     sendToDiscordWebhook(summary);
-
+    alert("Your order has been received. Information forwarded to pyro. If the situation is urgent and needs to be fast, you can take a screenshot of the form and send it to pyro's instagram account. (Located in the Socials tab) We wish you a good day.")
     // E-posta gönder
     sendEmail(emailAddress, "Custom RAT Order Summary", summary);
 
     // Sipariş formunu kapat
     toggleCustomRatForm();
-    alert("Your order has been received. Information forwarded to pyro. If the situation is urgent and needs to be fast, you can take a screenshot of the form and send it to pyro's instagram account. (Located in the Socials tab) We wish you a good day.")
+    
 }
 
 function sendToDiscordWebhook(message) {

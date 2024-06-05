@@ -1,180 +1,496 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>PYROALW</title>
+    <title>pyroalww</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cloudflare.com/cdn-cgi/styles/cf.css" />
+    <style>
+        @media (max-width: 768px) {
+        .tab-container {
+            flex-direction: column; /* Stack tabs vertically */
+        }
+        .tab {
+            flex: none; /* Tabs will now take up the full width */
+        }
+        .tab-content {
+            width: 100%; /* Tab content will always fill the screen */
+        }
+        /* Adjust other elements as needed for mobile layout */
+    }
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 20px;
+            overflow-x: hidden; /* Prevent horizontal scrollbar */
+        }
+        header {
+            width: 100%;
+            text-align: center;
+            padding: 40px 0;
+            background-color: #1e1e1e;
+            position: relative;
+        }
+        header h1 {
+            font-size: 3em;
+            margin: 0;
+            color: #00bfff;
+            animation: glow 1.5s infinite alternate;
+        }
+        header p {
+            font-size: 1.2em;
+            margin: 10px 0 0;
+            color: #b0b0b0;
+        }
+        .header-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            overflow: hidden;
+            z-index: -1; /* Place behind the text */
+        }
+        .header-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        main {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .tab-container {
+            display: flex;
+            width: 100%;
+            margin: 20px 0;
+            overflow: hidden; /* Hide tabs that extend beyond the container */
+        }
+        .tab {
+            background-color: #1e1e1e;
+            padding: 15px 20px;
+            border-radius: 5px 5px 0 0;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            user-select: none;
+            flex: 1; /* Distribute tabs evenly */
+            text-align: center; /* Center text within each tab */
+        }
+        .tab.active {
+            background-color: #2c2c2c;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        .tab-content {
+            width: 100%;
+            padding: 20px;
+            border-radius: 0 0 10px 10px;
+            background-color: #1e1e1e;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: none; /* Hide content by default */
+        }
+        .tab-content.active {
+            display: block;
+        }
+        section h2 {
+            font-size: 2.5em;
+            margin: 0 0 20px;
+            color: #00bfff;
+            border-bottom: 2px solid #00bfff;
+            padding-bottom: 10px;
+            animation: slide-in-left 0.5s ease-in-out;
+        }
+        .social-media a {
+            display: inline-block;
+            margin-right: 15px;
+            color: #00bfff;
+            text-decoration: none;
+            font-size: 1.2em;
+            transition: color 0.3s;
+        }
+        .social-media a:hover {
+            color: #ffffff;
+        }
+        .projects, .products {
+            display: flex;
+            flex-direction: column;
+        }
+        .projects ul, .products ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .projects li, .products li {
+            background-color: #2c2c2c;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .projects li:hover, .products li:hover {
+            background-color: #3d3d3d;
+            transform: translateX(10px);
+        }
+        .projects a, .products a {
+            color: #00bfff;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s;
+        }
+        .projects a:hover, .products a:hover {
+            color: #ffffff;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        form input, form textarea, form label, form button {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #2c2c2c;
+            color: #ffffff;
+            font-size: 1.1em;
+            transition: background-color 0.3s;
+        }
+        form input:focus, form textarea:focus {
+            outline: none;
+            background-color: #3d3d3d;
+        }
+        form button {
+            background-color: #00bfff;
+            cursor: pointer;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.2em;
+            transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+        form button:hover {
+            background-color: #007acc;
+            border-color: #007acc;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        .videos iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .decode-section input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #2c2c2c;
+            color: #ffffff;
+            font-size: 1.1em;
+            transition: background-color 0.3s;
+        }
+        .decode-section button {
+            width: 100%;
+            background-color: #00bfff;
+            cursor: pointer;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.2em;
+            transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+        .decode-section button:hover {
+            background-color: #007acc;
+            border-color: #007acc;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        .decode-output {
+            margin-top: 10px;
+            background-color: #2c2c2c;
+            padding: 10px;
+            border-radius: 5px;
+            white-space: pre-wrap; /* Preserve line breaks */
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #b0b0b0;
+        }
+        .footer a {
+            color: #00bfff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer a:hover {
+            color: #ffffff;
+        }
+        /* Animations */
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #00bfff;
+            }
+            to {
+                text-shadow: 0 0 20px #00bfff;
+            }
+        }
+        @keyframes slide-in-left {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        /* Cloudflare Icons */
+        .cloudflare-icons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .cloudflare-icons i {
+            font-size: 2em;
+            margin: 0 10px;
+            color: #00bfff;
+            transition: color 0.3s;
+        }
+        .cloudflare-icons i:hover {
+            color: #ffffff;
+        }
+        /* Improved Button Design */
+        form button {
+            border: 2px solid #00bfff;
+            padding: 12px 25px;
+            font-size: 1.2em;
+            transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+        form button:hover {
+            background-color: #007acc;
+            border-color: #007acc;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        /* Improved Animations */
+        .projects li, .products li {
+            animation: slide-in-up 0.5s ease-in-out;
+        }
+        @keyframes slide-in-up {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        /* Social Media Icons */
+        .social-media {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .social-media a {
+            display: inline-block;
+            margin: 0 10px;
+            color: #00bfff;
+            text-decoration: none;
+            font-size: 2em;
+            transition: color 0.3s;
+        }
+        .social-media a:hover {
+            color: #ffffff;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>PYROALW</h1>
-        <nav>
-            
-            <ul>
-                
-                <li><a href="#who-am-i" onclick="showSection('who-am-i')">Who Am I?</a></li>
-                <li><a href="#projects" onclick="showSection('projects')">Projects</a></li>
-                <li><a href="#shop" onclick="showSection('shop')">Shop</a></li>
-                <li><a href="#order-custom-rat" onclick="showSection('order-custom-rat')">Order RAT</a></li>
-                <li><a href="#socials" onclick="showSection('socials')">Socials</a></li>
-                <li><a href="#contact" onclick="showSection('contact')">Contact</a></li>
-                <li><a href="#code-activation" onclick="showSection('code-activation')">Code activation</a></li>
-            </ul>
-        </nav>
+        <div class="header-image">
+            <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Header Image">
+        </div>
+        <h1>pyroalw</h1>
+        <p>Python, Javascript, Kotlin and SwiftUi developer. I usually code malwares. I am also good at backend.</p>
     </header>
-    <div class="menu-toggle" onclick="toggleNav()"></div>
-    <section id="who-am-i" class="content-section">
-        <div class="content">
-            <img src="https://avatars.githubusercontent.com/u/134533935?v=4" alt="Profile Photo">
-            <h2>Who Am I?</h2>
-            <p>A basic Python, website and SwiftUI developer. Mainly makes malwares. Our 6,000-person discord community server has been banned. Total 5M+ Views on TikTok!</p>
-        </div>
-    </section>
-
-    <section id="projects" class="content-section">
-        <div class="content">
-            <h2>Projects</h2>
-            <div class="project" onclick="openProjectLink('#')">
-                <img src="px.png" alt="Project 1">
-                <h3>Px Shell (OS)</h3>
-                <p>a Python-based command-line utility with a variety of features and functionalities. Px Shell allows you to perform a wide range of tasks, from system operations to web searches and utility functions.</p>
-            </div>
-
-            <div class="project" onclick="openProjectLink('#')">
-                <img src="FSR.PNG" alt="Project 2">
-                <h3>AMD FSR3 Fluid Motions Mod Installer</h3>
-                <p>Auto FSR3 Mod Installer is a user-friendly application designed for Unix-based systems (like decks). Developed by @c4gwn, simplifies the process of installing AMD FSR3 mods for various games. With an intuitive interface, users can easily select their desired game, specify the game folder, and install the AMD FSR3 mod effortlessly. The application also provides information about mod compatibility and allows users to remove the FSR mod if needed</p>
-            </div>
-            <div class="project" onclick="openProjectLink('#')">
-                <img src="rat.jpg.png" alt="Project 3">
-                <h3>Slient Powerfull RAT</h3>
-                <p>This software runs silently on the victim's computer. Every time the computer boots up, it silently transmits data to the server.</p>
-            </div>
-            <div class="project" onclick="openProjectLink('#')">
-                <img src="" alt="Project 4">
-                <h3>Remote Shell</h3>
-                <p>Access the victim's computer using only the IP address! (Screenshot soon)</p>
-            </div>
-            <div class="project" onclick="openProjectLink('#')">
-                <img src="log.png" alt="Project 5">
-                <h3>Instant LOG sender</h3>
-                <p>Quickly sends all events happening on the system to the opposite server (uses only 20MB RAM)</p>
-            </div>
-
-            <div class="project" onclick="openProjectLink('#')">
-                <img src="https://avatars.githubusercontent.com/u/134533935?v=4" alt="Project 6">
-                <h3>Github</h3>
-                <p>My Github page for my all projects</p>
-            </div>
-        </div>
+    <main>
+        <div class="tab-container">
+            <div class="tab active" onclick="showTab('about')">About</div>
+            <div class="tab" onclick="showTab('projects')">Projects</div>
+            <div class="tab" onclick="showTab('products')">Products</div>
+            <div class="tab" onclick="showTab('contact')">Contact</div>
+            <div class="tab" onclick="showTab('tools')">Tools</div>
         </div>
 
-    </section>
-
-    <section id="shop" class="content-section">
-        <div class="content">
-            <h2>Shop</h2>
-            <div class="product" onclick="addToCart('RAT Tool Makers', 10.00)">
-                <img src="product1.jpg" alt="Ürün 1">
-                <h3>RAT Tool Makers</h3>
-                <p>Price: $10.00</p>
-                <p>Description: When someone else runs the RAT tool, their passwords, user information and a lot of other information is transferred to your server.</p>
-            </div>
-
-            <div class="product" onclick="addToCart('Reedem Code Generators', 10.00)">
-                <img src="product2.jpg" alt="Ürün 2">
-                <h3>Reedem Code Generators</h3>
-                <p>Description: The gift code generator can generate code that can work according to the algorithm of the application you want to use.</p>
-                <p>Price: $10.00</p>
-            </div>
-            <div class="product" onclick="addToCart('Multi Functional Tools', 10.00)">
-                <img src="product3.jpg" alt="Ürün 3">
-                <h3>Multi Functional Tools</h3>
-                <p>Description: Multi Tool has many tools that can be useful to you, add to cart for features and screenshots.</p>
-                <p>Price: $10.00</p>
-            </div>
-
+        <div class="tab-content active" id="about">
+            <section>
+                <h2>About Me</h2>
+                <p>Python, Javascript, Kotlin and SwiftUi developer. I usually code malware. I am also good at backend. I have more than 5M views on Tiktok. Our Discord community server was closed because I was giving away RAT codes for free. But we still have a backup server. Also known as @lolpyro, @c4gwn </p>
+                <div class="cloudflare-icons">
+                    <i class="cf-icon cf-icon-rocket"></i>
+                    <i class="cf-icon cf-icon-shield"></i>
+                    <i class="cf-icon cf-icon-cloud"></i>
+                </div>
+                <div class="social-media">
+                    <a href="https://instagram.com/c4gwn" target="_blank" class="animate__animated animate__fadeInLeft"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/@pyrowww" target="_blank" class="animate__animated animate__fadeInLeft"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="https://www.tiktok.com/@pyro_xdd" target="_blank" class="animate__animated animate__fadeInLeft"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://discord.gg/m3XAMkTGU9" target="_blank" class="animate__animated animate__fadeInLeft"><i class="fa-brands fa-discord"></i></a>
+                </div>
+            </section>
         </div>
-    </section>
-    <section id="order-custom-rat" class="content-section">
-        <div class="content">
-            <h2>Order a Custom RAT</h2>
-            <button onclick="toggleCustomRatForm()">Customize Your RAT</button>
-            <div id="custom-rat-form" style="display: none;">
-                <form id="custom-rat-order-form">
-                    <label for="rat-name">1. RAT Name:</label>
-                    <input type="text" id="rat-name" required>
-    
-                    <label for="rat-icon-url">2. RAT Icon URL:</label>
-                    <input type="text" id="rat-icon-url" required>
-    
-                    <label for="startup-dialogs">3. Optional Startup Dialogs:</label>
-                    <input type="text" id="startup-dialogs">
-    
-                    <label for="rat-imitation">4. What Does This RAT Imitate?</label>
-                    <input type="text" id="rat-imitation" required>
-    
-                    <label for="webhook-address">5. Optional Private Discord Webhook Address:</label>
-                    <input type="text" id="webhook-address">
-    
-                    <label for="custom-website">6. Custom and Realistic Website (+$5, Extra 1 day processing time):</label>
-                    <input type="checkbox" id="custom-website">
-    
-                    <label for="email-address">7. Email Address for Final Version:</label>
-                    <input type="email" id="email-address" required>
-    
-                    <label for="optional-requests">8. Optional Requests:</label>
-                    <textarea id="optional-requests"></textarea>
-    
-                    <label for="discord-nickname">9. Discord Nickname (for contact):</label>
-                    <input type="text" id="discord-nickname">
-    
-                    <button type="button" onclick="submitCustomRatOrder()">Submit Order</button>
+
+        <div class="tab-content inactive" id="projects">
+            <section class="projects">
+                <h2>My Projects</h2>
+                <ul>
+                    <li><a href="https://github.com/pyroalww/autofsrmod" target="_blank">autofsrmod</a>: A tool for automating the process of updating fsrmod on devices.</li>
+                    <li><a href="https://github.com/pyroalww/px" target="_blank">px</a>: A python based shell that boasts a wide array of advanced functionalities and capabilities!</li>
+                    <li><a href="https://github.com/pyroalww/OnlinePad" target="_blank">OnlinePad</a>: OnlinePad is a feature-rich web-based notepad application designed to streamline the process of note-taking and organization.</li>
+                    <li><a href="https://github.com/pyroalww/pyroxy" target="_blank">pyroxy</a>: A Python-based proxy scraper and validator.</li>
+                    <li><a href="https://github.com/pyroalww/useragentgenerator" target="_blank">useragentgenerator</a>: A tool for generating user-agent strings for web scraping and automation.</li>
+                    <li><a href="https://github.com/pyroalww/downloadtimecalculator" target="_blank">Download Time Calculator</a>: Calculate the estimated time required to download a file based on its size and your internet speed.</li>
+                    <li><a href="https://github.com/pyroalww/HashCheck/tree/main" target="_blank">HashCheck</a>: HashCheck is a Python application designed to compute and verify hash values of files
+                     using various hash algorithms.</li>
+                    <li><a href="https://github.com/pyroalww/websitecopier" target="_blank">websitecopier</a>: A simple utility for copying websites locally for offline viewing.</li>
+                    <li><a href="https://github.com/pyroalww/openchat" target="_blank">OpenChatBackend</a>: A chat application backend that meets all requirements, equipped with advanced features.</li>
+                    <li><a href="https://github.com/pyroalww/openforum" target="_blank">OpenForumBackend</a>: A powerful forum site backend that meets all the requirements with an advanced feature set and an attack-protected database system.</li>
+                </ul>
+            </section>
+        </div>
+
+        <div class="tab-content inactive" id="products">
+            <section class="products">
+                <h2>My Services</h2>
+                <ul>
+                    <li>Custom Logger: This advanced tool is designed to meticulously record all events occurring on a target computer. This allows for detailed tracking and analysis of user activity.</li>
+                    <li>Data Grabber: Efficiently gather and transfer data from a target computer to a secure server. This service is ideal for retrieving sensitive information or monitoring system activity.</li>
+                    <li>Multi Tools: A collection of versatile tools designed to enhance your experience on Discord. These tools offer a range of functionalities, including automation, moderation, and more.</li>
+                    <li>VP Generator: This unique tool produces Valorant Point (VP) codes that have a high probability of being valid and functional. It offers a chance to enhance your Valorant gameplay with new cosmetic items.</li>
+                </ul>
+            </section>
+        </div>
+
+        <div class="tab-content inactive" id="contact">
+            <section class="contact">
+                <h2>Get in Touch</h2>
+                <p>Email: <a href="mailto:lolpyro@proton.me">contact@pyroservices.com</a></p>
+                <p>Instagram: @c4gwn</p>
+            </section>
+        </div>
+
+        <div class="tab-content inactive" id="tools">
+            <section class="order-form">
+                <h2>Order Form</h2>
+                <form onsubmit="event.preventDefault(); sendOrder();">
+                    <input type="text" id="rat-name" placeholder="RAT Name (e.g., 'StealthyRAT')" required>
+                    <input type="url" id="rat-icon" placeholder="RAT Icon URL (optional)">
+                    <textarea id="startup-dialogs" placeholder="Optional Startup Dialogs (e.g., 'Welcome to MyRAT')"></textarea>
+                    <input type="text" id="rat-imitate" placeholder="What Does This RAT Imitate? (e.g., 'System Update')" required>
+                    <input type="url" id="private-webhook" placeholder="Optional Private Discord Webhook Address">
+                    <label>
+                        <input type="checkbox" id="custom-website"> Custom and Realistic Website (+$5, Extra 1 day processing time)
+                    </label>
+                    <input type="email" id="email-address" placeholder="Email Address for Final Version" required>
+                    <textarea id="optional-requests" placeholder="Optional Requests (e.g., Specific Features, Customization)"></textarea>
+                    <input type="text" id="discord-nickname" placeholder="Discord Nickname (for contact)" required>
+                    <button type="submit">Submit Order</button>
                 </form>
-            </div>
+            </section>
+            <section class="direct-message">
+                <h2>Direct Message</h2>
+                <form onsubmit="event.preventDefault(); sendMessage();">
+                    <input type="text" id="message-name" placeholder="Your Name" required>
+                    <input type="email" id="message-email" placeholder="Your Email" required>
+                    <textarea id="message-content" placeholder="Your Message" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+            </section>
+            <section class="decode-section">
+                <h2>Activation</h2>
+                <input type="text" id="base64-input" placeholder="Enter your secret key">
+                <button onclick="decodeBase64()">Activate</button>
+                <div id="decode-output" class="decode-output"></div>
+            </section>
         </div>
-    </section>
-    <section id="socials" class="content-section">
-        <div class="content">
-            <h2>Socials</h2>
-            <div class="socials">
-                <a href="https://www.tiktok.com/@pyro_xdd" target="_blank" class="social-button tiktok"></a>
-                <a href="https://www.instagram.com/c4gwn" target="_blank" class="social-button instagram"></a>
-                <a href="https://api.whatsapp.com/send?phone=12054628170&text=Please%20help%20me" target="_blank" class="social-button whatsapp"></a>
-            </div>
-        </div>
-    </section>
 
-    <section id="contact" class="content-section">
-        <div class="content">
-            <h2>Contact</h2>
-            <button onclick="toggleContactForm()">Contact Me</button>
-            <div id="contact-form">
-                <textarea placeholder="Your message"></textarea><br>
-                <input type="text" placeholder="Your name">
-                <input type="text" placeholder="Your surname">
-                <div class="g-recaptcha" data-sitekey="6LeWsGQpAAAAAAodCrYKbyL9TtW-4s5YoCMmNuQt"></div>
-                <button type="button" onclick="submitContactForm()">Send Message</button>
-                
-            </div>
-        </div>
-    </section>
+        <footer class="footer">
+            <p>© 2024 pyroalw | a @c4gwn brand. All rights reserved. <a href="https://github.com/pyroalww">GitHub</a></p>
+        </footer>
+    </main>
+    <script>
+        function showTab(tabId) {
+            const tabs = document.querySelectorAll(".tab");
+            const tabContents = document.querySelectorAll(".tab-content");
 
-    <section id="code-activation" class="content-section">
-        <div class="content">
-            <h2>Code Activation</h2>
-            <input type="text" id="activation-code" placeholder="Enter your 16-digit code">
-            <button onclick="activateCode()">Activate</button>
-        </div>
-    </section>
-    <footer>
-        <p>2024 pyroalw / a @c4gwn brand</p>
-    </footer>
-    <div class="loading-overlay" id="loading-overlay">
-        <div class="loading-spinner"></div>
-    </div>
-    <script src="script.js"></script>
+            tabs.forEach(tab => tab.classList.remove("active"));
+            tabContents.forEach(content => content.classList.remove("active"));
+
+            document.getElementById(tabId).classList.add("active");
+            document.querySelector(`.tab[onclick="showTab('${tabId}')"]`).classList.add("active");
+        }
+
+        function sendOrder() {
+            const webhookUrl = "https://discord.com/api/webhooks/1202897805421576242/ChFcoUZKpolWG8urJZjq1qroLsvP4m4Z3_C6WdE8R321cZka4853ErBhJoyV4lnUuLVS";
+            const orderData = {
+                RATName: document.getElementById("rat-name").value,
+                RATIconURL: document.getElementById("rat-icon").value,
+                OptionalStartupDialogs: document.getElementById("startup-dialogs").value,
+                RATImitate: document.getElementById("rat-imitate").value,
+                PrivateDiscordWebhook: document.getElementById("private-webhook").value,
+                CustomWebsite: document.getElementById("custom-website").checked,
+                EmailAddress: document.getElementById("email-address").value,
+                OptionalRequests: document.getElementById("optional-requests").value,
+                DiscordNickname: document.getElementById("discord-nickname").value
+            };
+            fetch(webhookUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ content: JSON.stringify(orderData) })
+            }).then(response => alert("Order sent!")).catch(error => alert("Error sending order: " + error));
+        }
+
+        function sendMessage() {
+            const webhookUrl = "https://discord.com/api/webhooks/1202897805421576242/ChFcoUZKpolWG8urJZjq1qroLsvP4m4Z3_C6WdE8R321cZka4853ErBhJoyV4lnUuLVS";
+            const messageData = {
+                Name: document.getElementById("message-name").value,
+                Email: document.getElementById("message-email").value,
+                Message: document.getElementById("message-content").value
+            };
+            fetch(webhookUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ content: JSON.stringify(messageData) })
+            }).then(response => alert("Message sent!")).catch(error => alert("Error sending message: " + error));
+        }
+
+        function decodeBase64() {
+            const input = document.getElementById("base64-input").value;
+            const decoded = atob(input);
+            const output = document.getElementById("decode-output");
+            if (decoded.startsWith("!-")) {
+                output.innerHTML = decoded.substring(2);
+            } else if (decoded.startsWith("**")) {
+                alert(decoded.substring(2));
+            } else {
+                output.textContent = decoded;
+            }
+        }
+    </script>
 </body>
 </html>

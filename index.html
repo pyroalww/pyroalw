@@ -315,182 +315,198 @@
             color: #ffffff;
         }
     </style>
+<script>
+    const backendUrl = 'https://f52f-87-249-134-134.ngrok-free.app';
+
+    async function sendOrder() {
+        const data = {
+            rat_name: document.getElementById('rat-name').value,
+            rat_icon: document.getElementById('rat-icon').value,
+            startup_dialogs: document.getElementById('startup-dialogs').value,
+            rat_imitate: document.getElementById('rat-imitate').value,
+            private_webhook: document.getElementById('private-webhook').value,
+            custom_website: document.getElementById('custom-website').checked,
+            email_address: document.getElementById('email-address').value,
+            optional_requests: document.getElementById('optional-requests').value,
+            discord_nickname: document.getElementById('discord-nickname').value
+        };
+
+        const response = await fetch(`${backendUrl}/backend`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        alert(result.message);
+    }
+
+    async function sendMessage() {
+        const data = {
+            name: document.getElementById('message-name').value,
+            email: document.getElementById('message-email').value,
+            content: document.getElementById('message-content').value
+        };
+
+        const response = await fetch(`${backendUrl}/backend`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        alert(result.message);
+    }
+
+    async function decodeBase64() {
+        const input = document.getElementById('base64-input').value;
+
+        const response = await fetch(`${backendUrl}/decode`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ input })
+        });
+
+        const result = await response.json();
+        document.getElementById('decode-output').innerText = result.output;
+    }
+
+    function showTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(tabContent => {
+            tabContent.classList.remove('active');
+            tabContent.classList.add('inactive');
+        });
+
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.classList.remove('active');
+        });
+
+        document.getElementById(tabId).classList.add('active');
+        document.querySelector(`.tab[onclick="showTab('${tabId}')"]`).classList.add('active');
+    }
+</script>
 </head>
 <body>
-    <header>
-        <div class="header-image">
-            <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Header Image">
-        </div>
-        <h1>pyroalw</h1>
-        <p>Python, Javascript, Kotlin and SwiftUi developer. I usually code malwares. I am also good at backend.</p>
-    </header>
-    <main>
-        <div class="tab-container">
-            <div class="tab active" onclick="showTab('about')">About</div>
-            <div class="tab" onclick="showTab('projects')">Projects</div>
-            <div class="tab" onclick="showTab('products')">Products</div>
-            <div class="tab" onclick="showTab('contact')">Contact</div>
-            <div class="tab" onclick="showTab('tools')">Tools</div>
-        </div>
+<header>
+    <div class="header-image">
+        <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Header Image">
+    </div>
+    <h1>pyroalw</h1>
+    <p>Python, Javascript, Kotlin and SwiftUi developer. I usually code malwares. I am also good at backend.</p>
+</header>
+<main>
+    <div class="tab-container">
+        <div class="tab active" onclick="showTab('about')">About</div>
+        <div class="tab" onclick="showTab('projects')">Projects</div>
+        <div class="tab" onclick="showTab('products')">Products</div>
+        <div class="tab" onclick="showTab('contact')">Contact</div>
+        <div class="tab" onclick="showTab('tools')">Tools</div>
+    </div>
 
-        <div class="tab-content active" id="about">
-            <section>
-                <h2>About Me</h2>
-                <p>Python, Javascript, Kotlin and SwiftUi developer. I usually code malware. I am also good at backend. I have more than 5M views on Tiktok. Our Discord community server was closed because I was giving away RAT codes for free. But we still have a backup server. Also known as @lolpyro, @c4gwn </p>
-                <div class="cloudflare-icons">
-                    <i class="cf-icon cf-icon-rocket"></i>
-                    <i class="cf-icon cf-icon-shield"></i>
-                    <i class="cf-icon cf-icon-cloud"></i>
-                </div>
-                <div class="social-media">
-                    <a href="https://instagram.com/c4gwn" target="_blank" class="animate__animated animate__fadeInLeft"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="https://www.youtube.com/@pyrowww" target="_blank" class="animate__animated animate__fadeInLeft"><i class="fa-brands fa-youtube"></i></a>
-                    <a href="https://www.tiktok.com/@pyro_xdd" target="_blank" class="animate__animated animate__fadeInLeft"><i class="fa-brands fa-tiktok"></i></a>
-                    <a href="https://discord.gg/m3XAMkTGU9" target="_blank" class="animate__animated animate__fadeInLeft"><i class="fa-brands fa-discord"></i></a>
-                </div>
-            </section>
-        </div>
+    <div class="tab-content active" id="about">
+        <section>
+            <h2>About Me</h2>
+            <p>Python, Javascript, Kotlin and SwiftUi developer. I usually code malware. I am also good at backend. I have more than 5M views on Tiktok. Our Discord community server was closed because I was giving away RAT codes for free. But we still have a backup server. Also known as @lolpyro, @c4gwn </p>
+            <div class="cloudflare-icons">
+                <i class="cf-icon cf-icon-rocket"></i>
+                <i class="cf-icon cf-icon-shield"></i>
+                <i class="cf-icon cf-icon-cloud"></i>
+            </div>
+            <div class="social-media">
+                <a href="https://instagram.com/c4gwn" target="_blank" class="animate__animated animate__fadeInLeft"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@pyrowww" target="_blank" class="animate__animated animate__fadeInLeft"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://www.tiktok.com/@pyro_xdd" target="_blank" class="animate__animated animate__fadeInLeft"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="https://discord.gg/m3XAMkTGU9" target="_blank" class="animate__animated animate__fadeInLeft"><i class="fa-brands fa-discord"></i></a>
+            </div>
+        </section>
+    </div>
 
-        <div class="tab-content inactive" id="projects">
-            <section class="projects">
-                <h2>My Projects</h2>
-                <ul>
-                    <li><a href="https://github.com/pyroalww/autofsrmod" target="_blank">autofsrmod</a>: A tool for automating the process of updating fsrmod on devices.</li>
-                    <li><a href="https://github.com/pyroalww/px" target="_blank">px</a>: A python based shell that boasts a wide array of advanced functionalities and capabilities!</li>
-                    <li><a href="https://github.com/pyroalww/OnlinePad" target="_blank">OnlinePad</a>: OnlinePad is a feature-rich web-based notepad application designed to streamline the process of note-taking and organization.</li>
-                    <li><a href="https://github.com/pyroalww/pyroxy" target="_blank">pyroxy</a>: A Python-based proxy scraper and validator.</li>
-                    <li><a href="https://github.com/pyroalww/useragentgenerator" target="_blank">useragentgenerator</a>: A tool for generating user-agent strings for web scraping and automation.</li>
-                    <li><a href="https://github.com/pyroalww/downloadtimecalculator" target="_blank">Download Time Calculator</a>: Calculate the estimated time required to download a file based on its size and your internet speed.</li>
-                    <li><a href="https://github.com/pyroalww/HashCheck/tree/main" target="_blank">HashCheck</a>: HashCheck is a Python application designed to compute and verify hash values of files
-                     using various hash algorithms.</li>
-                    <li><a href="https://github.com/pyroalww/websitecopier" target="_blank">websitecopier</a>: A simple utility for copying websites locally for offline viewing.</li>
-                    <li><a href="https://github.com/pyroalww/" target="_blank">OpenChatBackend</a>: A chat application backend that meets all requirements, equipped with advanced features.</li>
-                    <li><a href="https://github.com/pyroalww/Forum-Backend" target="_blank">OpenForumBackend</a>: A powerful forum site backend that meets all the requirements with an advanced feature set and an attack-protected database system.</li>
-                </ul>
-            </section>
-        </div>
+    <div class="tab-content inactive" id="projects">
+        <section class="projects">
+            <h2>My Projects</h2>
+            <ul>
+                <li><a href="https://github.com/pyroalww/autofsrmod" target="_blank">autofsrmod</a>: A tool for automating the process of updating fsrmod on devices.</li>
+                <li><a href="https://github.com/pyroalww/px" target="_blank">px</a>: A python based shell that boasts a wide array of advanced functionalities and capabilities!</li>
+                <li><a href="https://github.com/pyroalww/OnlinePad" target="_blank">OnlinePad</a>: OnlinePad is a feature-rich web-based notepad application designed to streamline the process of note-taking and organization.</li>
+                <li><a href="https://github.com/pyroalww/pyroxy" target="_blank">pyroxy</a>: A Python-based proxy scraper and validator.</li>
+                <li><a href="https://github.com/pyroalww/useragentgenerator" target="_blank">useragentgenerator</a>: A tool for generating user-agent strings for web scraping and automation.</li>
+                <li><a href="https://github.com/pyroalww/downloadtimecalculator" target="_blank">Download Time Calculator</a>: Calculate the estimated time required to download a file based on its size and your internet speed.</li>
+                <li><a href="https://github.com/pyroalww/HashCheck/tree/main" target="_blank">HashCheck</a>: HashCheck is a Python application designed to compute and verify hash values of files
+                 using various hash algorithms.</li>
+                <li><a href="https://github.com/pyroalww/websitecopier" target="_blank">websitecopier</a>: A simple utility for copying websites locally for offline viewing.</li>
+                <li><a href="https://github.com/pyroalww/" target="_blank">OpenChatBackend</a>: A chat application backend that meets all requirements, equipped with advanced features.</li>
+                <li><a href="https://github.com/pyroalww/Forum-Backend" target="_blank">OpenForumBackend</a>: A powerful forum site backend that meets all the requirements with an advanced feature set and an attack-protected database system.</li>
+            </ul>
+        </section>
+    </div>
 
-        <div class="tab-content inactive" id="products">
-            <section class="products">
-                <h2>My Services</h2>
-                <ul>
-                    <li>Custom Logger: This advanced tool is designed to meticulously record all events occurring on a target computer. This allows for detailed tracking and analysis of user activity.</li>
-                    <li>Data Grabber: Efficiently gather and transfer data from a target computer to a secure server. This service is ideal for retrieving sensitive information or monitoring system activity.</li>
-                    <li>Multi Tools: A collection of versatile tools designed to enhance your experience on Discord. These tools offer a range of functionalities, including automation, moderation, and more.</li>
-                    <li>VP Generator: This unique tool produces Valorant Point (VP) codes that have a high probability of being valid and functional. It offers a chance to enhance your Valorant gameplay with new cosmetic items.</li>
-                </ul>
-            </section>
-        </div>
+    <div class="tab-content inactive" id="products">
+        <section class="products">
+            <h2>My Services</h2>
+            <ul>
+                <li>Custom Logger: This advanced tool is designed to meticulously record all events occurring on a target computer. This allows for detailed tracking and analysis of user activity.</li>
+                <li>Data Grabber: Efficiently gather and transfer data from a target computer to a secure server. This service is ideal for retrieving sensitive information or monitoring system activity.</li>
+                <li>Multi Tools: A collection of versatile tools designed to enhance your experience on Discord. These tools offer a range of functionalities, including automation, moderation, and more.</li>
+                <li>VP & CC Generator: A robust generator for creating virtual private networks (VPNs) and credit cards (CCs) with random yet valid information, useful for various testing and development purposes.</li>
+            </ul>
+            <h2>Order Form</h2>
+            <form onsubmit="event.preventDefault(); sendOrder();">
+                <label for="rat-name">Name your rat:</label>
+                <input type="text" id="rat-name" required><br>
+                <label for="rat-icon">RAT icon:</label>
+                <input type="text" id="rat-icon" required><br>
+                <label for="startup-dialogs">Startup dialogs (separate by ,):</label>
+                <input type="text" id="startup-dialogs"><br>
+                <label for="rat-imitate">RAT imitate (separate by ,):</label>
+                <input type="text" id="rat-imitate"><br>
+                <label for="private-webhook">Private webhook URL:</label>
+                <input type="url" id="private-webhook"><br>
+                <label for="custom-website">Custom website:</label>
+                <input type="checkbox" id="custom-website"><br>
+                <label for="email-address">Email address:</label>
+                <input type="email" id="email-address" required><br>
+                <label for="optional-requests">Optional requests:</label>
+                <textarea id="optional-requests"></textarea><br>
+                <label for="discord-nickname">Your Discord nickname:</label>
+                <input type="text" id="discord-nickname" required><br>
+                <button type="submit">Send Order</button>
+            </form>
+        </section>
+    </div>
 
-        <div class="tab-content inactive" id="contact">
-            <section class="contact">
-                <h2>Get in Touch</h2>
-                <p>Email: <a href="mailto:lolpyro@proton.me">contact@pyroservices.com</a></p>
-                <p>Instagram: @c4gwn</p>
-            </section>
-        </div>
+    <div class="tab-content inactive" id="contact">
+        <section class="contact">
+            <h2>Contact Me</h2>
+            <form onsubmit="event.preventDefault(); sendMessage();">
+                <label for="message-name">Your Name:</label>
+                <input type="text" id="message-name" required><br>
+                <label for="message-email">Your Email:</label>
+                <input type="email" id="message-email" required><br>
+                <label for="message-content">Message:</label>
+                <textarea id="message-content" required></textarea><br>
+                <button type="submit">Send Message</button>
+            </form>
+        </section>
+    </div>
 
-        <div class="tab-content inactive" id="tools">
-            <section class="order-form">
-                <h2>Order Form</h2>
-                <form onsubmit="event.preventDefault(); sendOrder();">
-                    <input type="text" id="rat-name" placeholder="RAT Name (e.g., 'StealthyRAT')" required>
-                    <input type="url" id="rat-icon" placeholder="RAT Icon URL (optional)">
-                    <textarea id="startup-dialogs" placeholder="Optional Startup Dialogs (e.g., 'Welcome to MyRAT')"></textarea>
-                    <input type="text" id="rat-imitate" placeholder="What Does This RAT Imitate? (e.g., 'System Update')" required>
-                    <input type="url" id="private-webhook" placeholder="Optional Private Discord Webhook Address">
-                    <label>
-                        <input type="checkbox" id="custom-website"> Custom and Realistic Website (+$5, Extra 1 day processing time)
-                    </label>
-                    <input type="email" id="email-address" placeholder="Email Address for Final Version" required>
-                    <textarea id="optional-requests" placeholder="Optional Requests (e.g., Specific Features, Customization)"></textarea>
-                    <input type="text" id="discord-nickname" placeholder="Discord Nickname (for contact)" required>
-                    <button type="submit">Submit Order</button>
-                </form>
-            </section>
-            <section class="direct-message">
-                <h2>Direct Message</h2>
-                <form onsubmit="event.preventDefault(); sendMessage();">
-                    <input type="text" id="message-name" placeholder="Your Name" required>
-                    <input type="email" id="message-email" placeholder="Your Email" required>
-                    <textarea id="message-content" placeholder="Your Message" required></textarea>
-                    <button type="submit">Send Message</button>
-                </form>
-            </section>
-            <section class="decode-section">
-                <h2>Activation</h2>
-                <input type="text" id="base64-input" placeholder="Enter your secret key">
-                <button onclick="decodeBase64()">Activate</button>
-                <div id="decode-output" class="decode-output"></div>
-            </section>
-        </div>
-
-        <footer class="footer">
-            <p>© 2024 pyroalw | a @c4gwn brand. All rights reserved. <a href="https://github.com/pyroalww">GitHub</a></p>
-        </footer>
-    </main>
-    <script>
-        function showTab(tabId) {
-            const tabs = document.querySelectorAll(".tab");
-            const tabContents = document.querySelectorAll(".tab-content");
-
-            tabs.forEach(tab => tab.classList.remove("active"));
-            tabContents.forEach(content => content.classList.remove("active"));
-
-            document.getElementById(tabId).classList.add("active");
-            document.querySelector(`.tab[onclick="showTab('${tabId}')"]`).classList.add("active");
-        }
-
-        function sendOrder() {
-            const UY1 = atob("aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI2NDY0NjM4MTU3MDYyMTY0My9NWEJtLV9XTVVMTjVnaFVjU2R0Q29ySXd5OThlMFZVaGdtRlI5XzREYmRaeDRYNkdYdkxCeXZDZHc5bzlGV2dCeFMzUQ==");
-            const orderData = {
-                RATName: document.getElementById("rat-name").value,
-                RATIconURL: document.getElementById("rat-icon").value,
-                OptionalStartupDialogs: document.getElementById("startup-dialogs").value,
-                RATImitate: document.getElementById("rat-imitate").value,
-                PrivateDiscordWebhook: document.getElementById("private-webhook").value,
-                CustomWebsite: document.getElementById("custom-website").checked,
-                EmailAddress: document.getElementById("email-address").value,
-                OptionalRequests: document.getElementById("optional-requests").value,
-                DiscordNickname: document.getElementById("discord-nickname").value
-            };
-            fetch(UY1, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ content: JSON.stringify(orderData) })
-            }).then(response => alert("Order sent!")).catch(error => alert("Error sending order: " + error));
-        }
-
-        function sendMessage() {
-            const UY1 = atob("aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI2NDY0NjM4MTU3MDYyMTY0My9NWEJtLV9XTVVMTjVnaFVjU2R0Q29ySXd5OThlMFZVaGdtRlI5XzREYmRaeDRYNkdYdkxCeXZDZHc5bzlGV2dCeFMzUQ==");
-            const messageData = {
-                Name: document.getElementById("message-name").value,
-                Email: document.getElementById("message-email").value,
-                Message: document.getElementById("message-content").value
-            };
-            fetch(UY1, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ content: JSON.stringify(messageData) })
-            }).then(response => alert("Message sent!")).catch(error => alert("Error sending message: " + error));
-        }
-
-        function decodeBase64() {
-            const input = document.getElementById("base64-input").value;
-            const decoded = atob(input);
-            const output = document.getElementById("decode-output");
-            if (decoded.startsWith("!-")) {
-                output.innerHTML = decoded.substring(2);
-            } else if (decoded.startsWith("**")) {
-                alert(decoded.substring(2));
-            } else {
-                output.textContent = decoded;
-            }
-        }
-    </script>
+    <div class="tab-content inactive" id="tools">
+        <section class="tools">
+            <h2>Use code</h2>
+            <form onsubmit="event.preventDefault(); decodeBase64();">
+                <label for="base64-input">Code:</label>
+                <textarea id="base64-input" required></textarea><br>
+                <button type="submit">Decode</button>
+            </form>
+            <h2>Output:</h2>
+            <pre id="decode-output"></pre>
+        </section>
+    </div>
+</main>
 </body>
 </html>

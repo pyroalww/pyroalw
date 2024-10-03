@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your ID</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Patrick Hand', cursive;
+            background-color: #b8ff34;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        p {
+            font-size: 4rem;
+            margin: 10px;
+            color: #000;
+        }
+        footer {
+            font-size: 1.5rem;
+            margin-top: 30px;
+            color: #555;
+        }
+        #box {
+            border: 3px solid #000;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: #fff;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+            width: 250px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="box">
+        <h1>Your ID:</h1>
+        <p id="userId"></p>
+    </div>
+
+    <footer>
+        <p>www.pyrollc.com.tr</p>
+    </footer>
+
+    <script>
+        function generateId() {
+            return Math.floor(10000 + Math.random() * 90000); // 5 haneli ID oluştur
+        }
+
+        const userIdDisplay = document.getElementById('userId');
+        let userId = localStorage.getItem('userId');
+
+        if (!userId) {
+            userId = generateId();
+            localStorage.setItem('userId', userId);
+        }
+
+        userIdDisplay.textContent = userId;
+    </script>
+
+</body>
+</html>

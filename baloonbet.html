@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BaloonBet</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(-45deg, #ff7e5f, #feb47b, #7ee8fa, #80ff72);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            color: #ffffff;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .game-container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            max-width: 500px;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .game-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 48px 0 rgba(31, 38, 135, 0.5);
+        }
+
+        #balloon {
+            width: 200px;
+            height: 240px;
+            background: radial-gradient(circle at 30% 30%, #ffd700, #ffa500);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            margin: 30px auto;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+        }
+
+        #balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 30px;
+            background-color: #ffa500;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 18px;
+            margin: 10px 5px;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+            background-color: #45a049;
+        }
+
+        .button:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .button:disabled {
+            background-color: #cccccc;
+            color: #666666;
+            cursor: not-allowed;
+        }
+
+        input {
+            padding: 15px;
+            font-size: 18px;
+            border-radius: 50px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            margin: 10px 5px;
+            width: 150px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .stat:hover {
+            transform: scale(1.05);
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        #multiplier {
+            font-size: 24px;
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        @keyframes inflate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .inflating {
+            animation: inflate 0.5s ease-in-out infinite;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+
+        .popping {
+            animation: pop 0.5s ease-out forwards;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(10px);
+        }
+
+        @keyframes celebrate {
+            0% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(-5deg); }
+            50% { transform: scale(1.1) rotate(5deg); }
+            75% { transform: scale(1.1) rotate(-5deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        .celebrating {
+            animation: celebrate 0.5s ease-in-out 3;
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+
+        .shaking {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+            text-align: center;
+            color: #333;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>BaloonBet</h1>
+        <div class="stats">
+            <div class="stat">Bakiye: <span id="balance">1000</span> TL</div>
+            <div class="stat">Kazanç: <span id="current-win">0</span> TL</div>
+        </div>
+        <div id="balloon"></div>
+        <div class="stat">Çarpan: <span id="multiplier">1.00</span>x</div>
+        <input type="number" id="bet" placeholder="Bahis miktarı">
+        <button class="button" id="placeBetButton">Bahis Koy</button>
+        <button class="button" id="inflateButton" disabled>Balonu Şişir</button>
+    </div>
+    
+    
+    <div class="notification" id="notification"></div>
+    <div id="creditModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Kredi Teklifi</h2>
+            <p>Bakiyeniz 50 TL'nin altına düştü. 500 TL kredi almak ister misiniz?</p>
+            <button class="button" id="acceptCredit">Kredi Al</button>
+        </div>
+    </div>
+
+    <script>
+        let balance = localStorage.getItem('balance') ? parseFloat(localStorage.getItem('balance')) : 1000;
+        let currentBet = 0;
+        let currentWin = 0;
+        let isGameActive = false;
+        let balloonSize = 200;
+        let multiplier = 1.00;
+        let inflateInterval;
+
+        const balanceElement = document.getElementById('balance');
+        const currentWinElement = document.getElementById('current-win');
+        const multiplierElement = document.getElementById('multiplier');
+        const balloonElement = document.getElementById('balloon');
+        const betInput = document.getElementById('bet');
+        const placeBetButton = document.getElementById('placeBetButton');
+        const inflateButton = document.getElementById('inflateButton');
+        const notificationElement = document.getElementById('notification');
+        const creditModal = document.getElementById('creditModal');
+        const acceptCreditButton = document.getElementById('acceptCredit');
+        const closeModal = document.getElementsByClassName('close')[0];
+
+        function updateUI() {
+            balanceElement.textContent = balance.toFixed(2);
+            currentWinElement.textContent = currentWin.toFixed(2);
+            multiplierElement.textContent = multiplier.toFixed(2);
+            balloonElement.style.width = balloonSize + 'px';
+            balloonElement.style.height = (balloonSize * 1.2) + 'px';
+            localStorage.setItem('balance', balance.toString());
+
+            if (balance < 50 && !creditModal.style.display) {
+                creditModal.style.display = 'block';
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            notificationElement.textContent = message;
+            notificationElement.className = 'notification show';
+            if (type === 'warning') {
+                notificationElement.classList.add('shaking');
+            } else if (type === 'success') {
+                notificationElement.classList.add('celebrating');
+            }
+            setTimeout(() => {
+                notificationElement.classList.remove('show', 'shaking', 'celebrating');
+            }, 3000);
+        }
+
+        function placeBet() {
+            currentBet = parseFloat(betInput.value);
+            if (isNaN(currentBet) || currentBet <= 0 || currentBet > balance) {
+                showNotification('Geçerli bir bahis miktarı girin!', 'warning');
+                return;
+            }
+            balance -= currentBet;
+            isGameActive = true;
+            placeBetButton.disabled = true;
+            inflateButton.disabled = false;
+            betInput.disabled = true;
+            updateUI();
+            showNotification('Bahis konuldu! Balonu şişirmeye başlayın.');
+        }
+
+        function startInflating() {
+            inflateButton.textContent = 'Dur';
+            inflateButton.onclick = stopInflating;
+            balloonElement.classList.add('inflating');
+            inflateInterval = setInterval(() => {
+                balloonSize += 1;
+                multiplier += 0.01;
+                currentWin = currentBet * multiplier;
+                updateUI();
+                multiplierElement.style.fontSize = `${24 + (multiplier - 1) * 10}px`;
+
+                if (Math.random() < 0.01) {
+                    popBalloon();
+                }
+            }, 100);
+        }
+
+        function stopInflating() {
+            clearInterval(inflateInterval);
+            balloonElement.classList.remove('inflating');
+            collectWin();
+        }
+
+        function popBalloon() {
+            clearInterval(inflateInterval);
+            balloonElement.classList.remove('inflating');
+            balloonElement.classList.add('popping');
+            setTimeout(() => {
+                balloonElement.classList.remove('popping');
+                resetGame();
+            }, 500);
+            showNotification('Balon patladı! Bahsinizi kaybettiniz.', 'warning');
+        }
+
+        function collectWin() {
+            balance += currentWin;
+            showNotification(`Tebrikler! ${currentWin.toFixed(2)} TL kazandınız.`, 'success');
+            balloonElement.classList.add('celebrating');
+            setTimeout(() => {
+                balloonElement.classList.remove('celebrating');
+                resetGame();
+            }, 1500);
+        }
+
+        function resetGame() {
+            isGameActive = false;
+            currentBet = 0;
+            currentWin = 0;
+            balloonSize = 200;
+            multiplier = 1.00;
+            placeBetButton.disabled = false;
+            inflateButton.disabled = true;
+            inflateButton.textContent = 'Balonu Şişir';
+            inflateButton.onclick = startInflating;
+            betInput.disabled = false;
+            betInput.value = '';
+            updateUI();
+        }
+
+        acceptCreditButton.onclick = function() {
+            balance += 500;
+            updateUI();
+            creditModal.style.display = 'none';
+            showNotification('500 TL kredi hesabınıza eklendi!', 'success');
+        }
+
+        closeModal.onclick = function() {
+            creditModal.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == creditModal) {
+                creditModal.style.display = 'none';
+            }
+        }
+
+        placeBetButton.onclick = placeBet;
+        inflateButton.onclick = startInflating;
+
+        updateUI();
+    </script>
+</body>
+</html>

@@ -3,18 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BaloonBet</title>
+    <title>BaloonBet Extreme</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        :root {
+            --primary-color: #ff6b6b;
+            --secondary-color: #feca57;
+            --tertiary-color: #48dbfb;
+            --quaternary-color: #ff9ff3;
+        }
 
         body {
             font-family: 'Poppins', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
-            background: linear-gradient(-45deg, #ff7e5f, #feb47b, #7ee8fa, #80ff72);
+            background: linear-gradient(-45deg, var(--primary-color), var(--secondary-color), var(--tertiary-color), var(--quaternary-color));
             background-size: 400% 400%;
             animation: gradient 15s ease infinite;
             color: #ffffff;
@@ -30,12 +37,12 @@
             text-align: center;
             background-color: rgba(255, 255, 255, 0.1);
             padding: 40px;
-            border-radius: 20px;
+            border-radius: 30px;
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
             backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.18);
             max-width: 500px;
-            width: 100%;
+            width: 90%;
             transition: all 0.3s ease;
         }
 
@@ -86,7 +93,7 @@
         }
 
         .button:hover {
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.05);
             box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
             background-color: #45a049;
         }
@@ -247,11 +254,43 @@
             text-decoration: none;
             cursor: pointer;
         }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        #multiplier {
+            animation: pulse 1s infinite;
+        }
+
+        @media (max-width: 600px) {
+            .game-container {
+                padding: 20px;
+            }
+
+            .button {
+                padding: 12px 24px;
+                font-size: 16px;
+            }
+
+            input {
+                padding: 12px;
+                font-size: 16px;
+                width: 120px;
+            }
+
+            #balloon {
+                width: 150px;
+                height: 180px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="game-container">
-        <h1>BaloonBet</h1>
+        <h1>BaloonBet Extreme</h1>
         <div class="stats">
             <div class="stat">Bakiye: <span id="balance">1000</span> TL</div>
             <div class="stat">Kazanç: <span id="current-win">0</span> TL</div>
@@ -262,7 +301,6 @@
         <button class="button" id="placeBetButton">Bahis Koy</button>
         <button class="button" id="inflateButton" disabled>Balonu Şişir</button>
     </div>
-    
     
     <div class="notification" id="notification"></div>
     <div id="creditModal" class="modal">
@@ -282,6 +320,11 @@
         let balloonSize = 200;
         let multiplier = 1.00;
         let inflateInterval;
+        let popMultiplier = 0;
+        let baloonset = false;
+        let baseInflateSpeed = 100;
+        let lastUpdateTime = 0;
+        let isInflating = false;
 
         const balanceElement = document.getElementById('balance');
         const currentWinElement = document.getElementById('current-win');
@@ -308,6 +351,13 @@
             }
         }
 
+        Object.defineProperty(window, 'baloonset', {
+            set: function(value) {
+                baloonset = value;
+                console.log(`Balon patlama tahmini özelliği ${value ? 'açıldı' : 'kapatıldı'}.`);
+            }
+        });
+
         function showNotification(message, type = 'info') {
             notificationElement.textContent = message;
             notificationElement.className = 'notification show';
@@ -333,33 +383,57 @@
             inflateButton.disabled = false;
             betInput.disabled = true;
             updateUI();
+            
+            if (baloonset) {
+                popMultiplier = (Math.random() * 4 + 1.5).toFixed(2);
+                console.log(`Balon ${popMultiplier}x çarpanında patlayacak.`);
+            }
             showNotification('Bahis konuldu! Balonu şişirmeye başlayın.');
         }
 
         function startInflating() {
+            if (isInflating) return;
+            isInflating = true;
             inflateButton.textContent = 'Dur';
             inflateButton.onclick = stopInflating;
             balloonElement.classList.add('inflating');
-            inflateInterval = setInterval(() => {
+            lastUpdateTime = Date.now();
+            requestAnimationFrame(inflate);
+        }
+
+        function inflate() {
+            const currentTime = Date.now();
+            const deltaTime = currentTime - lastUpdateTime;
+            
+            if (deltaTime >= baseInflateSpeed) {
                 balloonSize += 1;
                 multiplier += 0.01;
                 currentWin = currentBet * multiplier;
                 updateUI();
                 multiplierElement.style.fontSize = `${24 + (multiplier - 1) * 10}px`;
+                lastUpdateTime = currentTime;
 
-                if (Math.random() < 0.01) {
+                if (baloonset && multiplier >= parseFloat(popMultiplier)) {
                     popBalloon();
+                    return;
                 }
-            }, 100);
+            }
+
+            if (isInflating) {
+                requestAnimationFrame(inflate);
+            }
         }
 
         function stopInflating() {
+            if (!isInflating) return;
+            isInflating = false;
             clearInterval(inflateInterval);
             balloonElement.classList.remove('inflating');
             collectWin();
         }
 
         function popBalloon() {
+            isInflating = false;
             clearInterval(inflateInterval);
             balloonElement.classList.remove('inflating');
             balloonElement.classList.add('popping');
@@ -382,10 +456,12 @@
 
         function resetGame() {
             isGameActive = false;
+            isInflating = false;
             currentBet = 0;
             currentWin = 0;
             balloonSize = 200;
             multiplier = 1.00;
+            popMultiplier = 0;
             placeBetButton.disabled = false;
             inflateButton.disabled = true;
             inflateButton.textContent = 'Balonu Şişir';
@@ -416,6 +492,19 @@
         inflateButton.onclick = startInflating;
 
         updateUI();
+
+        window.set = function(value) {
+            if (!isGameActive || !baloonset) {
+                console.log("Bu özellik şu anda kullanılamıyor.");
+                return;
+            }
+            if (value > 1 && value <= 10) {
+                popMultiplier = value.toFixed(2);
+                console.log(`Patlama çarpanı ${popMultiplier}x olarak ayarlandı.`);
+            } else {
+                console.log("Geçersiz değer. 1'den büyük ve 10'dan küçük veya eşit bir değer girin.");
+            }
+        }
     </script>
 </body>
 </html>

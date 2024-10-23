@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PixelMiner 5.0</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        :root {
+            --main-color: #0f0;
+            --danger-color: #ff0000;
+            --warning-color: #ffd700;
+            --success-color: #00ff00;
+            --bg-color: #000;
+            --pixel-size: clamp(50px, 15vw, 70px);
+            --gradient: linear-gradient(45deg, #1a1a1a, #000000);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Press Start 2P', cursive;
+            background: var(--gradient);
+            color: var(--main-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            text-shadow: 0 0 5px var(--main-color);
+        }
+
+        .game-container {
+            background: rgba(0, 50, 0, 0.3);
+            border: 2px solid var(--main-color);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+            max-width: 800px;
+            width: 100%;
+            margin-bottom: 60px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0,255,0,0.1) 0%, rgba(0,0,0,0) 70%);
+            animation: rotate 20s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin: 20px auto;
+            max-width: 500px;
+            perspective: 1000px;
+        }
+
+        .pixel {
+            width: var(--pixel-size);
+            height: var(--pixel-size);
+            background: rgba(0, 50, 0, 0.5);
+            border: 2px solid var(--main-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .pixel:hover:not(.revealed):not(.disabled) {
+            transform: scale(1.05) translateZ(20px);
+            box-shadow: 0 0 15px var(--main-color);
+        }
+
+        .pixel.revealed {
+            transform: rotateY(180deg);
+        }
+
+        .pixel.win-animation {
+            animation: winPulse 0.5s ease-in-out;
+        }
+
+        .pixel.lose-animation {
+            animation: loseShake 0.5s ease-in-out;
+        }
+        .bet-input {
+            background: rgba(0, 50, 0, 0.5);
+            border: 2px solid var(--main-color);
+            color: var(--main-color);
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Press Start 2P', cursive;
+            width: 200px;
+            text-align: center;
+            font-size: 0.8em;
+            transition: all 0.3s ease;
+            outline: none;
+            margin: 10px 0;
+        }
+
+        .bet-input:focus {
+            box-shadow: 0 0 15px var(--main-color);
+            transform: translateY(-2px);
+        }
+
+        .bet-input::placeholder {
+            color: rgba(0, 255, 0, 0.5);
+        }
+        @keyframes winPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes loseShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-box {
+            background: rgba(0, 50, 0, 0.5);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 0.8em;
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.2);
+        }
+        .game-button {
+            background: linear-gradient(45deg, rgba(0, 100, 0, 0.8), rgba(0, 150, 0, 0.8));
+            border: 2px solid var(--main-color);
+            color: var(--main-color);
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 10px;
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+        }
+
+        .game-button:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+            background: linear-gradient(45deg, rgba(0, 120, 0, 0.8), rgba(0, 170, 0, 0.8));
+        }
+
+        .game-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: rgba(50, 50, 50, 0.8);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: var(--gradient);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            border: 2px solid var(--main-color);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            animation: modalEnter 0.3s ease-out;
+        }
+
+        @keyframes modalEnter {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .achievement {
+            background: rgba(0, 50, 0, 0.3);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .achievement.unlocked {
+            border: 2px solid var(--success-color);
+            background: rgba(0, 100, 0, 0.3);
+        }
+
+        .achievement:hover {
+            transform: translateX(10px);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px 30px;
+            border-radius: 25px;
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(10px);
+        }
+
+        .notification.success {
+            border: 2px solid var(--success-color);
+            color: var(--success-color);
+        }
+
+        .notification.error {
+            border: 2px solid var(--danger-color);
+            color: var(--danger-color);
+        }
+
+        .balance-warning {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 215, 0, 0.2);
+            padding: 15px 30px;
+            border-radius: 25px;
+            color: var(--warning-color);
+            border: 2px solid var(--warning-color);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-around;
+            background: rgba(0, 20, 0, 0.9);
+            padding: 15px;
+            backdrop-filter: blur(10px);
+            border-top: 2px solid var(--main-color);
+        }
+
+        .nav-button {
+            background: none;
+            border: none;
+            color: var(--main-color);
+            font-family: inherit;
+            font-size: 0.8em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-button:hover {
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        .nav-button i {
+            font-size: 1.5em;
+        }
+
+        @media (max-width: 768px) {
+            .game-container {
+                padding: 10px;
+                margin: 10px;
+            }
+
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+                font-size: 0.7em;
+            }
+
+            .pixel {
+                font-size: 0.7em;
+            }
+
+            .modal-content {
+                padding: 15px;
+                margin: 10px;
+            }
+        }
+
+        /* Confetti Animation */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: var(--main-color);
+            position: absolute;
+            animation: confetti 5s ease-in-out infinite;
+        }
+
+        @keyframes confetti {
+            0% { transform: translateY(0) rotateZ(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotateZ(720deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="notification" id="notification"></div>
+    <div class="moves-left">Kalan Hamle: <span id="movesLeft">3</span></div>
+    <div class="current-win">Kazanç: <span id="currentWin">0</span> ₺</div>
+
+    <div class="game-container">
+        <h1>PixelMiner 5.0</h1>
+        
+        <div class="stats-container">
+            <div class="stat-box">
+                BAKİYE: <span id="balance">1000</span> ₺
+            </div>
+            <div class="stat-box">
+                KAZANÇ: <span id="totalWin">0</span> ₺
+            </div>
+            <div class="stat-box">
+                COMBO: <span id="combo">x1</span>
+            </div>
+            <div class="stat-box">
+                EN İYİ: <span id="bestWin">0</span> ₺
+            </div>
+        </div>
+
+        <div class="grid" id="grid"></div>
+
+        <input type="number" id="betAmount" class="bet-input" placeholder="Bahis Miktarı" min="1">
+        <button id="startButton" class="game-button">BAŞLAT</button>
+    </div>
+
+    <div class="bottom-nav">
+        <button class="nav-button" onclick="showStats()">
+            <i class="fas fa-chart-bar"></i>
+            <span>İstatistik</span>
+        </button>
+        <button class="nav-button" onclick="showAchievements()">
+            <i class="fas fa-trophy"></i>
+            <span>Başarılar</span>
+        </button>
+        <button class="nav-button" onclick="showHelp()">
+            <i class="fas fa-question-circle"></i>
+            <span>Yardım</span>
+        </button>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="statsModal">
+        <div class="modal-content">
+            <h2>İstatistikler</h2>
+            <div id="statsContent"></div>
+            <button onclick="closeModal('statsModal')" class="game-button">Kapat</button>
+        </div>
+    </div>
+
+    <div class="modal" id="achievementsModal">
+        <div class="modal-content">
+            <h2>Başarılar</h2>
+            <div id="achievementsContent"></div>
+            <button onclick="closeModal('achievementsModal')" class="game-button">Kapat</button>
+        </div>
+    </div>
+
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
+            <h2>Nasıl Oynanır?</h2>
+            <div id="helpContent">
+                <p>1. Bahis miktarını girin</p>
+                <p>2. Başlat butonuna tıklayın</p>
+                <p>3. 3 karo seçin</p>
+                <p>4. Kırmızı karolardan kaçının</p>
+                <p>5. Combo yaparak kazancınızı artırın</p>
+            </div>
+            <button onclick="closeModal('helpModal')"class="game-button">Kapat</button>
+        </div>
+    </div>
+
+    <script>
+let gameData = {
+    balance: 1000,
+    bestWin: 0,
+    movesLeft: 3,
+    currentBet: 0,
+    currentWin: 0,
+    combo: 1,
+    isGameActive: false,
+    stats: {
+        totalGames: 0,
+        totalWins: 0,
+        totalLosses: 0,
+        biggestCombo: 1
+    },
+    achievements: [
+        { id: 1, name: "Başlangıç", description: "İlk oyununu oyna", unlocked: false },
+        { id: 2, name: "Şanslı", description: "Tek seferde 500₺ kazan", unlocked: false },
+        { id: 3, name: "Combo Ustası", description: "3x combo yap", unlocked: false },
+        { id: 4, name: "Veteran", description: "100 oyun oyna", unlocked: false }
+    ]
+};
+
+function loadGameData() {
+    const saved = localStorage.getItem('pixelminer_data');
+    if (saved) {
+        gameData = JSON.parse(saved);
+        updateUI();
+    }
+}
+
+function saveGameData() {
+    localStorage.setItem('pixelminer_data', JSON.stringify(gameData));
+}
+
+function createGrid() {
+    const grid = document.getElementById('grid');
+    grid.innerHTML = '';
+    
+    for (let i = 0; i < 25; i++) {
+        const pixel = document.createElement('div');
+        pixel.className = 'pixel';
+        
+        const rand = Math.random();
+        if (rand < 0.3) {
+            pixel.dataset.type = 'toxic';
+            pixel.dataset.value = '0';
+        } else {
+            pixel.dataset.type = 'normal';
+            pixel.dataset.value = (1.1 + Math.random() * 1.9).toFixed(2);
+        }
+        
+        pixel.addEventListener('click', () => handlePixelClick(pixel));
+        grid.appendChild(pixel);
+    }
+}
+
+function handlePixelClick(pixel) {
+    if (!gameData.isGameActive || pixel.classList.contains('revealed') || 
+        pixel.classList.contains('disabled') || gameData.movesLeft <= 0) return;
+
+    gameData.movesLeft--;
+    pixel.classList.add('revealed');
+    
+    const value = parseFloat(pixel.dataset.value);
+    if (pixel.dataset.type === 'toxic') {
+        pixel.classList.add('lose-animation');
+        endGame(true);
+    } else {
+        const win = gameData.currentBet * value * gameData.combo;
+        gameData.currentWin += win;
+        gameData.combo += 0.2;
+        pixel.classList.add('win-animation');
+        
+        if (gameData.movesLeft === 0) {
+            endGame(false);
+        }
+    }
+    
+    checkAchievements();
+    updateUI();
+    showNotification(`${value}x - ${(gameData.currentBet * value).toFixed(2)}₺`);
+}
+
+function checkAchievements() {
+    const achievements = gameData.achievements;
+    
+    // İlk oyun başarısı
+    if (!achievements[0].unlocked && gameData.stats.totalGames > 0) {
+        unlockAchievement(0);
+    }
+    
+    // 500₺ kazanma başarısı
+    if (!achievements[1].unlocked && gameData.currentWin >= 500) {
+        unlockAchievement(1);
+    }
+    
+    // Combo başarısı
+    if (!achievements[2].unlocked && gameData.combo >= 3) {
+        unlockAchievement(2);
+    }
+    
+    // 100 oyun başarısı
+    if (!achievements[3].unlocked && gameData.stats.totalGames >= 100) {
+        unlockAchievement(3);
+    }
+}
+
+function unlockAchievement(index) {
+    gameData.achievements[index].unlocked = true;
+    showNotification(`Başarı Açıldı: ${gameData.achievements[index].name}!`, 'success');
+}
+
+function createConfetti() {
+    for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.animationDelay = Math.random() * 3 + 's';
+        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 50%, 50%)`;
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 5000);
+    }
+}
+
+function checkBalance() {
+    if (gameData.balance < 20) {
+        gameData.balance = 100;
+        showNotification('Bakiyeniz 100₺ olarak yenilendi!', 'success');
+        saveGameData();
+        updateUI();
+    }
+}
+
+function showStats() {
+    const content = document.getElementById('statsContent');
+    content.innerHTML = `
+        <div class="achievement">Toplam Oyun: ${gameData.stats.totalGames}</div>
+        <div class="achievement">Kazanılan: ${gameData.stats.totalWins}</div>
+        <div class="achievement">Kaybedilen: ${gameData.stats.totalLosses}</div>
+        <div class="achievement">En Yüksek Combo: ${gameData.stats.biggestCombo.toFixed(1)}x</div>
+    `;
+    document.getElementById('statsModal').style.display = 'flex';
+}
+
+function showAchievements() {
+    const content = document.getElementById('achievementsContent');
+    content.innerHTML = gameData.achievements.map(ach => `
+        <div class="achievement ${ach.unlocked ? 'unlocked' : ''}">
+            <span>${ach.name}</span>
+            <span>${ach.description}</span>
+        </div>
+    `).join('');
+    document.getElementById('achievementsModal').style.display = 'flex';
+}
+
+function showHelp() {
+    document.getElementById('helpModal').style.display = 'flex';
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+function startGame() {
+    const bet = parseFloat(document.getElementById('betAmount').value);
+    if (isNaN(bet) || bet <= 0 || bet > gameData.balance) {
+        showNotification('Geçerli bir bahis miktarı girin!', 'error');
+        return;
+    }
+
+    gameData.currentBet = bet;
+    gameData.balance -= bet;
+    gameData.movesLeft = 3;
+    gameData.currentWin = 0;
+    gameData.combo = 1;
+    gameData.isGameActive = true;
+    gameData.stats.totalGames++;
+
+    document.getElementById('startButton').disabled = true;
+    createGrid();
+    updateUI();
+    saveGameData();
+    showNotification('Oyun başladı! 3 karo seçin.', 'success');
+}
+
+function endGame(isToxic) {
+    gameData.isGameActive = false;
+    document.querySelectorAll('.pixel').forEach(p => {
+        p.classList.add('revealed');
+        if (p.dataset.type === 'toxic') {
+            p.classList.add('toxic');
+        }
+        p.textContent = `${p.dataset.value}x`;
+    });
+
+    if (isToxic) {
+        gameData.stats.totalLosses++;
+        showNotification('Kaybettiniz!', 'error');
+    } else {
+        gameData.balance += gameData.currentWin;
+        gameData.stats.totalWins++;
+        if (gameData.currentWin > gameData.bestWin) {
+            gameData.bestWin = gameData.currentWin;
+        }
+        if (gameData.combo > gameData.stats.biggestCombo) {
+            gameData.stats.biggestCombo = gameData.combo;
+        }
+        showNotification(`Kazandınız: ${gameData.currentWin.toFixed(2)}₺`, 'success');
+        createConfetti();
+    }
+
+    checkBalance();
+    document.getElementById('startButton').disabled = false;
+    saveGameData();
+}
+
+function showNotification(message, type = 'info') {
+    const notification = document.getElementById('notification');
+    notification.textContent = message;
+    notification.className = `notification show ${type}`;
+    setTimeout(() => {
+        notification.classList.remove('show');
+    }, 2000);
+}
+
+function updateUI() {
+    document.getElementById('balance').textContent = gameData.balance.toFixed(2);
+    document.getElementById('currentWin').textContent = gameData.currentWin.toFixed(2);
+    document.getElementById('totalWin').textContent = (gameData.balance - 1000).toFixed(2);
+    document.getElementById('bestWin').textContent = gameData.bestWin.toFixed(2);
+    document.getElementById('movesLeft').textContent = gameData.movesLeft;
+    document.getElementById('combo').textContent = `x${gameData.combo.toFixed(1)}`;
+}
+
+// Event Listeners
+document.getElementById('startButton').addEventListener('click', startGame);
+window.addEventListener('load', loadGameData);
+
+// Modals için click-outside handler
+window.addEventListener('click', (e) => {
+    if (e.target.classList.contains('modal')) {
+        e.target.style.display = 'none';
+    }
+});
+
+    </script>
+</body>
+</html>

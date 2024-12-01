@@ -550,7 +550,7 @@
             font-family: monospace;
             margin-right: 5px;
         }
-        /* Add inside the existing style tag */
+
         .word-count {
             font-size: 0.8rem;
             color: var(--text-color);
@@ -564,13 +564,119 @@
             background-color: var(--secondary-color);
             color: var(--text-color);
         }
+
+        .version-control {
+            margin-top: 1rem;
+        }
+
+        .version-list {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 0.5rem;
+        }
+
+        .version-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .version-item:last-child {
+            border-bottom: none;
+        }
+
+        .version-item button {
+            padding: 2px 5px;
+            font-size: 0.8rem;
+        }
+
+        .limit-indicator {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            z-index: 1000;
+        }
+
+        .idea-suggestion {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+        }
+
+        .idea-suggestion h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .idea-suggestion ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .idea-suggestion li {
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .idea-suggestion li:hover {
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .panel {
+                width: 100%;
+                min-height: 50vh;
+            }
+
+            .resizer {
+                width: 100%;
+                height: 10px;
+                cursor: row-resize;
+            }
+
+            .toolbar {
+                flex-direction: column;
+            }
+
+            .toolbar button {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+
+            .preview-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .preview-header button {
+                margin-top: 0.5rem;
+            }
+
+            .shortcut-panel {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
-
-<div id="mobileWarning" style="display: none; position: fixed; top: 0; left: 0; right: 0; background-color: var(--error-color); color: white; text-align: center; padding: 15px; z-index: 9999;">
-    Incompatible device size. Please login from a desktop device. 
-</div>
+    <div id="mobileWarning" style="display: none; position: fixed; top: 0; left: 0; right: 0; background-color: var(--error-color); color: white; text-align: center; padding: 15px; z-index: 9999;">
+        For the best experience, please use a desktop device.
+    </div>
     <div class="container">
         <div class="panel edit-panel">
             <h1>PyroAI Website Builder</h1>
@@ -581,6 +687,7 @@
                 <button id="exportProject" class="button">Export</button>
                 <button id="copyCode" class="button">Copy Code</button>
                 <button id="regenerateProject" class="button">Regenerate</button>
+                <button id="suggestIdeas" class="button">Suggest Ideas</button>
             </div>
             <div class="undo-redo">
                 <button id="undoButton" class="button" disabled>Undo</button>
@@ -593,12 +700,19 @@
                 <label for="proMode">Pro</label>
             </div>
             <div class="input-container">
-                
                 <textarea id="promptInput" placeholder="Describe your website or request changes..."></textarea>
                 <div id="wordCount" class="word-count">0 words</div>
                 <button id="sendPrompt" class="button">Generate / Modify</button>
             </div>
             <div class="chat-container" id="chatContainer"></div>
+            <div class="version-control">
+                <h3>Version History</h3>
+                <div class="version-list" id="versionList"></div>
+            </div>
+            <div class="idea-suggestion" id="ideaSuggestion" style="display: none;">
+                <h3>Website Ideas</h3>
+                <ul id="ideaList"></ul>
+            </div>
         </div>
         <div class="resizer" id="dragHandle"></div>
         <div class="panel preview-panel">
@@ -662,7 +776,149 @@
             <li><span class="shortcut-key">F11</span> Toggle Fullscreen</li>
         </ul>
     </div>
+
+    <div class="limit-indicator" id="limitIndicator"></div>
+
     <script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        const genaiapi=['QUlTYVNGMm1kMzlEQTFGM0xETDQ='];const PYROLLCbackend=['UFlST0xMQy5DT00uVFIvR0VOQVBJ'];const APIKEY=['aHR0cDovL2FwaS5weXJvbGxjLmNvbS50ci9hcGkvZ2VuZXJhdGUvcHlyb0NvZGVyOjI3Qi9nZW5lcmF0ZS9HUFUzL1EyNDNUOFUyRkcxMlZNMjlWTTI5UzJGTjFUOFUyRkcxMlZNMjQzVDhVMkZHUFlST0xMQw=='];const BACKENDIP=['aHR0cDovL2JhY2tlbmQuc2hlbGwucHlyb2xsYy5jb20udHIvc2hlbGwvREVTS1RPUC0zNE1EMkxMQy9hZG1pbmlzdHJhdG9yLz9vbGxhbWEjcnVuI3B5cm9jb2RlcjoyN0Ijc2VydmUvI0lQPSRjbGllbnQ/cHlyb2xsYy5jb20udHIvYWlnZW53ZWI='];const _0x5a2b=['QUl6YVN5RGU3cmRGVDFlTXFlZ0h0ZFVoTEwwRW9CbUM4WUhOdE9J'];(function(_0x2d8f05,_0x4b81bb){const _0x4d74cb=function(_0x32719f){while(--_0x32719f){_0x2d8f05['push'](_0x2d8f05['shift']());}};_0x4d74cb(++_0x4b81bb);}(_0x5a2b,0x79));const _0x4d74=function(_0x2d8f05,_0x4b81bb){_0x2d8f05=_0x2d8f05-0x0;let _0x4d74cb=_0x5a2b[_0x2d8f05];if(_0x4d74['initialized']===undefined){(function(){const _0x32719f=function(){let _0x2e4a67;try{_0x2e4a67=Function('return\x20(function()\x20'+'{}.constructor(\x22return\x20this\x22)(\x20)'+');')();}catch(_0x1c1a59){_0x2e4a67=window;}return _0x2e4a67;};const _0x5a2b9f=_0x32719f();const _0x274f6e='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';_0x5a2b9f['atob']||(_0x5a2b9f['atob']=function(_0x3e4c21){const _0x14e45a=String(_0x3e4c21)['replace'](/=+$/,'');let _0x3f3b38='';for(let _0x2e0cf1=0x0,_0x27e03e,_0x16c2cc,_0x3d6228=0x0;_0x16c2cc=_0x14e45a['charAt'](_0x3d6228++);~_0x16c2cc&&(_0x27e03e=_0x2e0cf1%0x4?_0x27e03e*0x40+_0x16c2cc:_0x16c2cc,_0x2e0cf1++%0x4)?_0x3f3b38+=String['fromCharCode'](0xff&_0x27e03e>>(-0x2*_0x2e0cf1&0x6)):0x0){_0x16c2cc=_0x274f6e['indexOf'](_0x16c2cc);}return _0x3f3b38;});}());_0x4d74['base64DecodeUnicode']=function(_0x1c1a59){const _0x2e4a67=atob(_0x1c1a59);let _0x5a2b9f='';for(let _0x274f6e=0x0,_0x3e4c21=_0x2e4a67['length'];_0x274f6e<_0x3e4c21;_0x274f6e++){_0x5a2b9f+='%'+('00'+_0x2e4a67['charCodeAt'](_0x274f6e)['toString'](0x10))['slice'](-0x2);}return decodeURIComponent(_0x5a2b9f);};_0x4d74['data']={};_0x4d74['initialized']=!![];}const _0x32719f=_0x4d74['data'][_0x2d8f05];if(_0x32719f===undefined){_0x4d74cb=_0x4d74['base64DecodeUnicode'](_0x4d74cb);_0x4d74['data'][_0x2d8f05]=_0x4d74cb;}else{_0x4d74cb=_0x32719f;}return _0x4d74cb;};const apiKey=_0x4d74('0x0');
+        const getLimits = (function() {
+            const MAX_DAILY_REQUESTS = 50;
+            const MAX_PROMPT_LENGTH = 500;
+            const MAX_IDEA_SUGGESTIONS = 5;
+            return {
+                getMaxDailyRequests: function() { return MAX_DAILY_REQUESTS; },
+                getMaxPromptLength: function() { return MAX_PROMPT_LENGTH; },
+                getMaxIdeaSuggestions: function() { return MAX_IDEA_SUGGESTIONS; }
+            };
+        })();
+        const promptInput = document.getElementById('promptInput');
+        const sendPromptButton = document.getElementById('sendPrompt');
+        const chatContainer = document.getElementById('chatContainer');
+        const previewFrame = document.getElementById('previewFrame');
+        const codePreview = document.getElementById('codePreview');
+        const togglePreviewButton = document.getElementById('togglePreview');
+        const newProjectButton = document.getElementById('newProject');
+        const saveProjectButton = document.getElementById('saveProject');
+        const loadProjectButton = document.getElementById('loadProject');
+        const exportProjectButton = document.getElementById('exportProject');
+        const regenerateProjectButton = document.getElementById('regenerateProject');
+        const exportModal = document.getElementById('exportModal');
+        const closeModal = document.getElementsByClassName('close')[0];
+        const downloadExportButton = document.getElementById('downloadExport');
+        const notification = document.getElementById('notification');
+        const fastModeRadio = document.getElementById('fastMode');
+        const proModeRadio = document.getElementById('proMode');
+        const dragHandle = document.getElementById('dragHandle');
+        const editPanel = document.querySelector('.edit-panel');
+        const previewPanel = document.querySelector('.preview-panel');
+        const refreshPreviewButton = document.getElementById('refreshPreview');
+        const previewLoading = document.getElementById('previewLoading');
+        const fullscreenPreviewButton = document.getElementById('fullscreenPreview');
+        const fullscreenPreviewContainer = document.getElementById('fullscreenPreview');
+        const exitFullscreenButton = document.getElementById('exitFullscreen');
+        const fullscreenFrame = document.getElementById('fullscreenFrame');
+        const themeToggle = document.getElementById('themeToggle');
+        const copyCodeButton = document.getElementById('copyCode');
+        const wordCount = document.getElementById('wordCount');
+        const undoButton = document.getElementById('undoButton');
+        const redoButton = document.getElementById('redoButton');
+        const shortcutPanel = document.getElementById('shortcutPanel');
+        const shortcutToggle = document.getElementById('shortcutToggle');
+        const versionList = document.getElementById('versionList');
+        const limitIndicator = document.getElementById('limitIndicator');
+        const suggestIdeasButton = document.getElementById('suggestIdeas');
+        const ideaSuggestion = document.getElementById('ideaSuggestion');
+        const ideaList = document.getElementById('ideaList');
+
+        let conversation = [];
+        let currentCode = '';
+        let isResizing = false;
+        let undoStack = [];
+        let redoStack = [];
+        let codeVersions = [];
+        let currentVersionIndex = -1;
+        let dailyRequestCount = 0;
+        let ideaSuggestionCount = 0;
+
+        sendPromptButton.addEventListener('click', handlePrompt);
+        togglePreviewButton.addEventListener('click', togglePreview);
+        newProjectButton.addEventListener('click', newProject);
+        saveProjectButton.addEventListener('click', saveProject);
+        loadProjectButton.addEventListener('click', loadProject);
+        exportProjectButton.addEventListener('click', () => exportModal.style.display = 'block');
+        closeModal.addEventListener('click', () => exportModal.style.display = 'none');
+        downloadExportButton.addEventListener('click', exportProject);
+        regenerateProjectButton.addEventListener('click', regenerateProject);
+        refreshPreviewButton.addEventListener('click', refreshPreview);
+        fullscreenPreviewButton.addEventListener('click', enterFullscreenPreview);
+        exitFullscreenButton.addEventListener('click', exitFullscreenPreview);
+        themeToggle.addEventListener('click', toggleTheme);
+        copyCodeButton.addEventListener('click', copyCodeToClipboard);
+        promptInput.addEventListener('input', updateWordCount);
+        undoButton.addEventListener('click', undo);
+        redoButton.addEventListener('click', redo);
+        shortcutToggle.addEventListener('click', toggleShortcutPanel);
+        suggestIdeasButton.addEventListener('click', suggestIdeas);
+
+        dragHandle.addEventListener('mousedown', initResize);
+        document.addEventListener('mousemove', handleResize);
+        document.addEventListener('mouseup', stopResize);
+
+        loadThemePreference();
+        refreshPreview();
+        updateWordCount();
+        checkDeviceWidth();
+        loadDailyRequestCount();
+        updateLimitIndicator();
+        window.addEventListener('resize', checkDeviceWidth);
+
         function checkDeviceWidth() {
             const mobileWarning = document.getElementById('mobileWarning');
             if (window.innerWidth < 768) {
@@ -671,372 +927,480 @@
                 mobileWarning.style.display = 'none';
             }
         }
-    
-        // Check on page load
-        checkDeviceWidth();
-        // Check when window is resized
-        window.addEventListener('resize', checkDeviceWidth);
-    </script>
-    <script>
 
-    const promptInput = document.getElementById('promptInput');
-    const sendPromptButton = document.getElementById('sendPrompt');
-    const chatContainer = document.getElementById('chatContainer');
-    const previewFrame = document.getElementById('previewFrame');
-    const codePreview = document.getElementById('codePreview');
-    const togglePreviewButton = document.getElementById('togglePreview');
-    const newProjectButton = document.getElementById('newProject');
-    const saveProjectButton = document.getElementById('saveProject');
-    const loadProjectButton = document.getElementById('loadProject');
-    const exportProjectButton = document.getElementById('exportProject');
-    const regenerateProjectButton = document.getElementById('regenerateProject');
-    const exportModal = document.getElementById('exportModal');
-    const closeModal = document.getElementsByClassName('close')[0];
-    const downloadExportButton = document.getElementById('downloadExport');
-    const notification = document.getElementById('notification');
-    const fastModeRadio = document.getElementById('fastMode');
-    const proModeRadio = document.getElementById('proMode');
-    const dragHandle = document.getElementById('dragHandle');
-    const editPanel = document.querySelector('.edit-panel');
-    const previewPanel = document.querySelector('.preview-panel');
-    const refreshPreviewButton = document.getElementById('refreshPreview');
-    const previewLoading = document.getElementById('previewLoading');
-    const fullscreenPreviewButton = document.getElementById('fullscreenPreview');
-    const fullscreenPreviewContainer = document.getElementById('fullscreenPreview');
-    const exitFullscreenButton = document.getElementById('exitFullscreen');
-    const fullscreenFrame = document.getElementById('fullscreenFrame');
-    const themeToggle = document.getElementById('themeToggle');
-    const copyCodeButton = document.getElementById('copyCode');
-    const wordCount = document.getElementById('wordCount');
-    const colorThemeSelect = document.getElementById('colorTheme');
-
-    let conversation = [];
-    let currentCode = '';
-    let isResizing = false;
-
-    sendPromptButton.addEventListener('click', handlePrompt);
-    togglePreviewButton.addEventListener('click', togglePreview);
-    newProjectButton.addEventListener('click', newProject);
-    saveProjectButton.addEventListener('click', saveProject);
-    loadProjectButton.addEventListener('click', loadProject);
-    exportProjectButton.addEventListener('click', () => exportModal.style.display = 'block');
-    closeModal.addEventListener('click', () => exportModal.style.display = 'none');
-    downloadExportButton.addEventListener('click', exportProject);
-    regenerateProjectButton.addEventListener('click', regenerateProject);
-    refreshPreviewButton.addEventListener('click', refreshPreview);
-    fullscreenPreviewButton.addEventListener('click', enterFullscreenPreview);
-    exitFullscreenButton.addEventListener('click', exitFullscreenPreview);
-    themeToggle.addEventListener('click', toggleTheme);
-    copyCodeButton.addEventListener('click', copyCodeToClipboard);
-    promptInput.addEventListener('input', updateWordCount);
-    colorThemeSelect.addEventListener('change', changeColorTheme);
-
-    dragHandle.addEventListener('mousedown', initResize);
-    document.addEventListener('mousemove', handleResize);
-    document.addEventListener('mouseup', stopResize);
-
-    // Initialize the app
-    loadThemePreference();
-    refreshPreview();
-    updateWordCount();
-
-    async function handlePrompt() {
-        const prompt = promptInput.value.trim();
-        if (!prompt) {
-            showNotification('Please enter a prompt', 'error');
-            return;
-        }
-
-        addMessage('user', prompt);
-        promptInput.value = '';
-        updateWordCount();
-
-        showLoading();
-        showPreviewLoading();
-
-        try {
-            const response = await generateContent(prompt);
-            const generatedCode = extractCodeFromResponse(response);
-            
-            if (generatedCode) {
-                addMessage('ai', 'Website generated/modified successfully!');
-                updatePreview(generatedCode);
-                currentCode = generatedCode;
-                createMagicAnimation();
-            } else {
-                throw new Error('No valid code generated');
+        async function handlePrompt() {
+            const prompt = promptInput.value.trim();
+            if (!prompt) {
+                showNotification('Please enter a prompt', 'error');
+                return;
             }
-        } catch (error) {
-            addMessage('ai', 'Error: ' + error.message);
-            showNotification('Failed to generate content', 'error');
+
+            if (prompt.length > getLimits.getMaxPromptLength()) {
+                showNotification(`Prompt is too long. Please limit to ${getLimits.getMaxPromptLength()} characters.`, 'error');
+                return;
+            }
+
+            if (dailyRequestCount >= getLimits.getMaxDailyRequests()) {
+                showNotification('Daily request limit reached. Please try again tomorrow.', 'error');
+                return;
+            }
+
+            addMessage('user', prompt);
+            promptInput.value = '';
+            updateWordCount();
+
+            showLoading();
+            showPreviewLoading();
+
+            try {
+                const response = await generateContent(prompt);
+                const generatedCode = extractCodeFromResponse(response);
+                
+                if (generatedCode) {
+                    addMessage('ai', 'Website generated/modified successfully!');
+                    updatePreview(generatedCode);
+                    saveCodeVersion(generatedCode);
+                    createMagicAnimation();
+                    incrementDailyRequestCount();
+                } else {
+                    throw new Error('No valid code generated');
+                }
+            } catch (error) {
+                addMessage('ai', 'Error: ' + error.message);
+                showNotification('Failed to generate content', 'error');
+            }
+
+            hideLoading();
+            hidePreviewLoading();
+            updateLimitIndicator();
         }
 
-        hideLoading();
-        hidePreviewLoading();
-    }
+        function addMessage(role, content) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', `${role}-message`);
+            messageElement.textContent = content;
+            chatContainer.appendChild(messageElement);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
 
-    function addMessage(role, content) {
-        const messageElement = document.createElement('div');
-        messageElement.classList.add('message', `${role}-message`);
-        messageElement.textContent = content;
-        chatContainer.appendChild(messageElement);
-        chatContainer.scrollTop = chatContainer.scrollHeight;
+            conversation.push({ role, content });
+        }
 
-        conversation.push({ role, content });
-    }
+        function showLoading() {
+            previewLoading.style.display = 'flex';
+            sendPromptButton.disabled = true;
+        }
 
-    function showLoading() {
-        previewLoading.style.display = 'flex';
-        sendPromptButton.disabled = true;
-    }
+        function hideLoading() {
+            previewLoading.style.display = 'none';
+            sendPromptButton.disabled = false;
+        }
 
-    function hideLoading() {
-        previewLoading.style.display = 'none';
-        sendPromptButton.disabled = false;
-    }
+        function showPreviewLoading() {
+            previewLoading.style.display = 'flex';
+        }
 
-    function showPreviewLoading() {
-        previewLoading.style.display = 'flex';
-    }
+        function hidePreviewLoading() {
+            previewLoading.style.display = 'none';
+        }
 
-    function hidePreviewLoading() {
-        previewLoading.style.display = 'none';
-    }
+        async function generateContent(prompt) {
+            const model = proModeRadio.checked ? 'gemini-1.5-pro' : 'gemini-1.5-flash';
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
 
-    async function generateContent(prompt) {
-        const apiKey = 'AIzaSyDe7rdFT1eMqegHtdUhLL0EoBmC8YHNtOI'; // Replace with your actual API key
-        const model = proModeRadio.checked ? 'gemini-1.5-pro' : 'gemini-1.5-flash';
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
-
-        const response = await fetch(`${apiUrl}?key=${apiKey}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                contents: [
-                    {
-                        parts: [
-                            {
-                                text: `Generate or modify a complete, functional website based on the following description: ${prompt}\n\nCurrent code:\n${currentCode}\n\nPlease provide a complete index.html file that includes HTML, CSS, and JavaScript. Ensure all necessary components and content are included, even if repeating from previous examples. The response should be a single HTML file with embedded CSS and JavaScript. Include a PyroLLC watermark in the footer.`
-                            }
-                        ]
-                    }
-                ],
-                generationConfig: {
-                    temperature: 0.7,
-                    topK: 40,
-                    topP: 0.95,
-                    maxOutputTokens: 8192,
+            const response = await fetch(`${apiUrl}?key=${apiKey}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
                 },
-            }),
-        });
+                body: JSON.stringify({
+                    contents: [
+                        {
+                            parts: [
+                                {
+                                    text: `Generate or modify a complete, functional website based on the following description: ${prompt}\n\nCurrent code:\n${currentCode}\n\nPlease provide a complete index.html file that includes HTML, CSS, and JavaScript. Ensure all necessary components and content are included, even if repeating from previous examples. The response should be a single HTML file with embedded CSS and JavaScript. Include a PyroLLC watermark in the footer.`
+                                }
+                            ]
+                        }
+                    ],
+                    generationConfig: {
+                        temperature: 0.7,
+                        topK: 40,
+                        topP: 0.95,
+                        maxOutputTokens: 8192,
+                    },
+                }),
+            });
 
-        if (!response.ok) {
-            throw new Error('Failed to generate content');
+            if (!response.ok) {
+                throw new Error('Failed to generate content');
+            }
+
+            return await response.json();
         }
 
-        return await response.json();
-    }
-
-    function extractCodeFromResponse(response) {
-        const generatedText = response.candidates[0].content.parts[0].text;
-        const htmlMatch = generatedText.match(/```html\n([\s\S]*?)\n```/);
-        return htmlMatch ? htmlMatch[1] : '';
-    }
-
-    function updatePreview(code) {
-        const blob = new Blob([code], { type: 'text/html' });
-        const url = URL.createObjectURL(blob);
-        previewFrame.src = url;
-        fullscreenFrame.src = url;
-        codePreview.textContent = code;
-    }
-
-    function togglePreview() {
-        if (previewFrame.style.display === 'none') {
-            previewFrame.style.display = 'block';
-            codePreview.style.display = 'none';
-            togglePreviewButton.textContent = 'Show Code';
-        } else {
-            previewFrame.style.display = 'none';
-            codePreview.style.display = 'block';
-            togglePreviewButton.textContent = 'Show Preview';
+        function extractCodeFromResponse(response) {
+            const generatedText = response.candidates[0].content.parts[0].text;
+            const htmlMatch = generatedText.match(/```html\n([\s\S]*?)\n```/);
+            return htmlMatch ? htmlMatch[1] : '';
         }
-    }
 
-    function newProject() {
-        if (confirm('Are you sure you want to start a new project? All current progress will be lost.')) {
-            conversation = [];
-            currentCode = '';
-            chatContainer.innerHTML = '';
-            updatePreview('');
-            showNotification('New project started', 'success');
+        function updatePreview(code) {
+            const blob = new Blob([code], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            previewFrame.src = url;
+            fullscreenFrame.src = url;
+            codePreview.textContent = code;
+            currentCode = code;
         }
-    }
 
-    function saveProject() {
-        const project = {
-            conversation,
-            currentCode
-        };
-        localStorage.setItem('aiWebsiteBuilderProject', JSON.stringify(project));
-        showNotification('Project saved successfully', 'success');
-    }
-
-    function loadProject() {
-        const savedProject = localStorage.getItem('aiWebsiteBuilderProject');
-        if (savedProject) {
-            const project = JSON.parse(savedProject);
-            conversation = project.conversation;
-            currentCode = project.currentCode;
-            chatContainer.innerHTML = '';
-            conversation.forEach(msg => addMessage(msg.role, msg.content));
-            updatePreview(currentCode);
-            showNotification('Project loaded successfully', 'success');
-        } else {
-            showNotification('No saved project found', 'error');
+        function togglePreview() {
+            if (previewFrame.style.display === 'none') {
+                previewFrame.style.display = 'block';
+                codePreview.style.display = 'none';
+                togglePreviewButton.textContent = 'Show Code';
+            } else {
+                previewFrame.style.display = 'none';
+                codePreview.style.display = 'block';
+                togglePreviewButton.textContent = 'Show Preview';
+            }
         }
-    }
 
-    function exportProject() {
-        const blob = new Blob([currentCode], { type: 'text/html' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'ai_website_builder_export.html';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+        function newProject() {
+            if (confirm('Are you sure you want to start a new project? All current progress will be lost.')) {
+                conversation = [];
+                currentCode = '';
+                chatContainer.innerHTML = '';
+                updatePreview('');
+                undoStack = [];
+                redoStack = [];
+                codeVersions = [];
+                currentVersionIndex = -1;
+                updateUndoRedoButtons();
+                updateVersionList();
+                showNotification('New project started', 'success');
+            }
+        }
 
-        exportModal.style.display = 'none';
-        showNotification('Project exported successfully', 'success');
-    }
+        function saveProject() {
+            const project = {
+                conversation,
+                currentCode,
+                codeVersions,
+                currentVersionIndex
+            };
+            localStorage.setItem('aiWebsiteBuilderProject', JSON.stringify(project));
+            showNotification('Project saved successfully', 'success');
+        }
 
-    function showNotification(message, type) {
-        notification.textContent = message;
-        notification.className = type;
-        notification.style.display = 'block';
-        setTimeout(() => {
-            notification.style.display = 'none';
-        }, 3000);
-    }
+        function loadProject() {
+            const savedProject = localStorage.getItem('aiWebsiteBuilderProject');
+            if (savedProject) {
+                const project = JSON.parse(savedProject);
+                conversation = project.conversation;
+                currentCode = project.currentCode;
+                codeVersions = project.codeVersions || [];
+                currentVersionIndex = project.currentVersionIndex || -1;
+                chatContainer.innerHTML = '';
+                conversation.forEach(msg => addMessage(msg.role, msg.content));
+                updatePreview(currentCode);
+                updateUndoRedoButtons();
+                updateVersionList();
+                showNotification('Project loaded successfully', 'success');
+            } else {
+                showNotification('No saved project found', 'error');
+            }
+        }
 
-    function regenerateProject() {
-        if (currentCode) {
+        function exportProject() {
+            const blob = new Blob([currentCode], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'ai_website_builder_export.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            exportModal.style.display = 'none';
+            showNotification('Project exported successfully', 'success');
+        }
+
+        function showNotification(message, type) {
+            notification.textContent = message;
+            notification.className = type;
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        function regenerateProject() {
+            if (currentCode) {
+                handlePrompt();
+            } else {
+                showNotification('No project to regenerate', 'error');
+            }
+        }
+
+        function refreshPreview() {
+            if (currentCode) {
+                updatePreview(currentCode);
+                showNotification('Preview refreshed', 'success');
+            } else {
+                showNotification('No content to refresh', 'error');
+            }
+        }
+
+        function initResize(e) {
+            isResizing = true;
+            document.addEventListener('mousemove', handleResize);
+            document.addEventListener('mouseup', stopResize);
+        }
+
+        function handleResize(e) {
+            if (!isResizing) return;
+            const containerWidth = document.querySelector('.container').offsetWidth;
+            const newEditPanelWidth = e.clientX;
+            const newEditPanelPercentage = (newEditPanelWidth / containerWidth) * 100;
+            editPanel.style.width = `${newEditPanelPercentage}%`;
+            previewPanel.style.width = `${100 - newEditPanelPercentage}%`;
+        }
+
+        function stopResize() {
+            isResizing = false;
+            document.removeEventListener('mousemove', handleResize);
+            document.removeEventListener('mouseup', stopResize);
+        }
+
+        function createMagicAnimation() {
+            const container = document.createElement('div');
+            container.className = 'magic-animation-container';
+            document.body.appendChild(container);
+
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'magic-particle';
+                particle.style.setProperty('--delay', `${Math.random() * 2}s`);
+                particle.style.setProperty('--size', `${Math.random() * 10 + 5}px`);
+                container.appendChild(particle);
+            }
+
+            setTimeout(() => {
+                document.body.removeChild(container);
+            }, 3000);
+        }
+
+        function enterFullscreenPreview() {
+            fullscreenPreviewContainer.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            if (fullscreenPreviewContainer.requestFullscreen) {
+                fullscreenPreviewContainer.requestFullscreen();
+            } else if (fullscreenPreviewContainer.mozRequestFullScreen) { // Firefox
+                fullscreenPreviewContainer.mozRequestFullScreen();
+            } else if (fullscreenPreviewContainer.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                fullscreenPreviewContainer.webkitRequestFullscreen();
+            } else if (fullscreenPreviewContainer.msRequestFullscreen) { // IE/Edge
+                fullscreenPreviewContainer.msRequestFullscreen();
+            }
+        }
+
+        function exitFullscreenPreview() {
+            fullscreenPreviewContainer.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) { // Firefox
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) { // IE/Edge
+                document.msExitFullscreen();
+            }
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            themeToggle.textContent = isDarkMode ? '☀️' : '🌓';
+            localStorage.setItem('darkMode', isDarkMode);
+        }
+
+        function loadThemePreference() {
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+                themeToggle.textContent = '☀️';
+            }
+        }
+
+        function copyCodeToClipboard() {
+            const codeToCopy = codePreview.textContent;
+            navigator.clipboard.writeText(codeToCopy).then(() => {
+                showNotification('Code copied to clipboard', 'success');
+            }, () => {
+                showNotification('Failed to copy code', 'error');
+            });
+        }
+
+        function updateWordCount() {
+            const words = promptInput.value.trim().split(/\s+/).length;
+            wordCount.textContent = words === 1 ? '1 word' : `${words} words`;
+        }
+
+        function saveCodeVersion(code) {
+            codeVersions = codeVersions.slice(0, currentVersionIndex + 1);
+            codeVersions.push(code);
+            currentVersionIndex = codeVersions.length - 1;
+            updateUndoRedoButtons();
+            updateVersionList();
+        }
+
+        function undo() {
+            if (currentVersionIndex > 0) {
+                currentVersionIndex--;
+                updatePreview(codeVersions[currentVersionIndex]);
+                updateUndoRedoButtons();
+            }
+        }
+
+        function redo() {
+            if (currentVersionIndex < codeVersions.length - 1) {
+                currentVersionIndex++;
+                updatePreview(codeVersions[currentVersionIndex]);
+                updateUndoRedoButtons();
+            }
+        }
+
+        function updateUndoRedoButtons() {
+            undoButton.disabled = currentVersionIndex <= 0;
+            redoButton.disabled = currentVersionIndex >= codeVersions.length - 1;
+        }
+
+        function toggleShortcutPanel() {
+            shortcutPanel.classList.toggle('open');
+        }
+
+        function updateVersionList() {
+            versionList.innerHTML = '';
+            codeVersions.forEach((version, index) => {
+                const versionItem = document.createElement('div');
+                versionItem.className = 'version-item';
+                versionItem.innerHTML = `
+                    <span>Version ${index + 1}</span>
+                    <button class="button" onclick="loadVersion(${index})">Load</button>
+                `;
+                versionList.appendChild(versionItem);
+            });
+        }
+
+        function loadVersion(index) {
+            currentVersionIndex = index;
+            updatePreview(codeVersions[index]);
+            updateUndoRedoButtons();
+        }
+
+        function incrementDailyRequestCount() {
+            dailyRequestCount++;
+            localStorage.setItem('dailyRequestCount', dailyRequestCount);
+            localStorage.setItem('lastRequestDate', new Date().toDateString());
+        }
+
+        function loadDailyRequestCount() {
+            const lastRequestDate = localStorage.getItem('lastRequestDate');
+            const currentDate = new Date().toDateString();
+
+            if (lastRequestDate === currentDate) {
+                dailyRequestCount = parseInt(localStorage.getItem('dailyRequestCount')) || 0;
+            } else {
+                dailyRequestCount = 0;
+                localStorage.setItem('dailyRequestCount', '0');
+                localStorage.setItem('lastRequestDate', currentDate);
+            }
+        }
+
+        function updateLimitIndicator() {
+            limitIndicator.textContent = `Requests: ${dailyRequestCount}/${getLimits.getMaxDailyRequests()}`;
+        }
+
+        function suggestIdeas() {
+            if (ideaSuggestionCount >= getLimits.getMaxIdeaSuggestions()) {
+                showNotification('Idea suggestion limit reached for today.', 'error');
+                return;
+            }
+
+            showLoading();
+            generateIdeas().then(ideas => {
+                hideLoading();
+                displayIdeas(ideas);
+                ideaSuggestionCount++;
+                localStorage.setItem('ideaSuggestionCount', ideaSuggestionCount);
+            }).catch(error => {
+                hideLoading();
+                showNotification('Failed to generate ideas', 'error');
+            });
+        }
+
+        async function generateIdeas() {
+
+            return [
+                "Personal portfolio website",
+                "E-commerce store for handmade crafts",
+                "Local restaurant menu and ordering system",
+                "Fitness tracking dashboard",
+                "Travel blog with interactive maps"
+            ];
+        }
+
+        function displayIdeas(ideas) {
+            ideaList.innerHTML = '';
+            ideas.forEach(idea => {
+                const li = document.createElement('li');
+                li.textContent = idea;
+                li.addEventListener('click', () => selectIdea(idea));
+                ideaList.appendChild(li);
+            });
+            ideaSuggestion.style.display = 'block';
+        }
+
+        function selectIdea(idea) {
+            promptInput.value = `Create a website for: ${idea}`;
+            ideaSuggestion.style.display = 'none';
             handlePrompt();
-        } else {
-            showNotification('No project to regenerate', 'error');
-        }
-    }
-
-    function refreshPreview() {
-        if (currentCode) {
-            updatePreview(currentCode);
-            showNotification('Preview refreshed', 'success');
-        } else {
-            showNotification('No content to refresh', 'error');
-        }
-    }
-
-    function initResize(e) {
-        isResizing = true;
-        document.addEventListener('mousemove', handleResize);
-        document.addEventListener('mouseup', stopResize);
-    }
-
-    function handleResize(e) {
-        if (!isResizing) return;
-        const containerWidth = document.querySelector('.container').offsetWidth;
-        const newEditPanelWidth = e.clientX;
-        const newEditPanelPercentage = (newEditPanelWidth / containerWidth) * 100;
-        editPanel.style.width = `${newEditPanelPercentage}%`;
-        previewPanel.style.width = `${100 - newEditPanelPercentage}%`;
-    }
-
-    function stopResize() {
-        isResizing = false;
-        document.removeEventListener('mousemove', handleResize);
-        document.removeEventListener('mouseup', stopResize);
-    }
-
-    function createMagicAnimation() {
-        const container = document.createElement('div');
-        container.className = 'magic-animation-container';
-        document.body.appendChild(container);
-
-        for (let i = 0; i < 30; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'magic-particle';
-            particle.style.setProperty('--delay', `${Math.random() * 2}s`);
-            particle.style.setProperty('--size', `${Math.random() * 10 + 5}px`);
-            container.appendChild(particle);
         }
 
-        setTimeout(() => {
-            document.body.removeChild(container);
-        }, 3000);
-    }
-
-    function enterFullscreenPreview() {
-        fullscreenPreviewContainer.style.display = 'block';
-        document.body.style.overflow = 'hidden';
-        if (fullscreenPreviewContainer.requestFullscreen) {
-            fullscreenPreviewContainer.requestFullscreen();
-        }
-    }
-
-    function exitFullscreenPreview() {
-        fullscreenPreviewContainer.style.display = 'none';
-        document.body.style.overflow = 'auto';
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        }
-    }
-
-    function toggleTheme() {
-        document.body.classList.toggle('dark-mode');
-        const isDarkMode = document.body.classList.contains('dark-mode');
-        themeToggle.textContent = isDarkMode ? '☀️' : '🌓';
-        localStorage.setItem('darkMode', isDarkMode);
-    }
-
-    function loadThemePreference() {
-        const isDarkMode = localStorage.getItem('darkMode') === 'true';
-        if (isDarkMode) {
-            document.body.classList.add('dark-mode');
-            themeToggle.textContent = '☀️';
-        }
-    }
-
-    function copyCodeToClipboard() {
-        const codeToCopy = codePreview.textContent;
-        navigator.clipboard.writeText(codeToCopy).then(() => {
-            showNotification('Code copied to clipboard', 'success');
-        }, () => {
-            showNotification('Failed to copy code', 'error');
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'Enter') {
+                e.preventDefault();
+                handlePrompt();
+            } else if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                saveProject();
+            } else if (e.ctrlKey && e.key === 'l') {
+                e.preventDefault();
+                loadProject();
+            } else if (e.ctrlKey && e.key === 'e') {
+                e.preventDefault();
+                exportModal.style.display = 'block';
+            } else if (e.ctrlKey && e.key === 'z') {
+                e.preventDefault();
+                undo();
+            } else if (e.ctrlKey && e.key === 'y') {
+                e.preventDefault();
+                redo();
+            } else if (e.key === 'F11') {
+                e.preventDefault();
+                if (fullscreenPreviewContainer.style.display === 'none') {
+                    enterFullscreenPreview();
+                } else {
+                    exitFullscreenPreview();
+                }
+            }
         });
-    }
 
-    function updateWordCount() {
-        const words = promptInput.value.trim().split(/\s+/).length;
-        wordCount.textContent = words === 1 ? '1 word' : `${words} words`;
-    }
-
-    function changeColorTheme(event) {
-        const selectedTheme = event.target.value;
-        document.documentElement.setAttribute('data-theme', selectedTheme);
-        localStorage.setItem('colorTheme', selectedTheme);
-    }
-
-    // Load saved color theme
-    const savedColorTheme = localStorage.getItem('colorTheme');
-    if (savedColorTheme) {
-        document.documentElement.setAttribute('data-theme', savedColorTheme);
-        colorThemeSelect.value = savedColorTheme;
-    }
-</script>
-
+        
+        ideaSuggestionCount = parseInt(localStorage.getItem('ideaSuggestionCount')) || 0;
+    </script>
 </body>
 </html>

@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyroAI Website Builder by PyroLLC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #f8f9fa;
+            --accent-color: #ff6b6b;
+            --text-color: #333;
+            --border-color: #e0e0e0;
+            --success-color: #4caf50;
+            --error-color: #f44336;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--secondary-color);
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .panel {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            min-width: 300px;
+        }
+
+        .edit-panel {
+            background-color: #fff;
+            border-right: 1px solid var(--border-color);
+        }
+
+        .preview-panel {
+            background-color: var(--secondary-color);
+        }
+
+        .resizer {
+            width: 10px;
+            background-color: var(--border-color);
+            cursor: col-resize;
+            transition: background-color 0.3s ease;
+        }
+
+        .resizer:hover {
+            background-color: var(--primary-color);
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1.5rem;
+        }
+
+        #promptInput {
+            width: 100%;
+            height: 120px;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            resize: vertical;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        #promptInput:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(74, 111, 165, 0.2);
+        }
+
+        .button {
+            padding: 0.75rem 1rem;
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .button:hover {
+            background-color: #3a5a8c;
+            transform: translateY(-2px);
+        }
+
+        .button:active {
+            transform: translateY(0);
+        }
+
+        #sendPrompt {
+            margin-top: 1rem;
+        }
+
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            background-color: #fff;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .user-message {
+            background-color: #e8f4fd;
+            align-self: flex-end;
+        }
+
+        .ai-message {
+            background-color: #f0f0f0;
+            align-self: flex-start;
+        }
+
+        .preview-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .toggle-button {
+            padding: 0.5rem 1rem;
+        }
+
+        #previewFrame {
+            flex: 1;
+            border: none;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        #codePreview {
+            flex: 1;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: #fff;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            overflow-y: auto;
+            display: none;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--primary-color);
+            border-top: 3px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .loading-text {
+            margin-top: 10px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .toolbar button {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 2rem;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+        }
+
+        #exportOptions {
+            margin-top: 1.5rem;
+        }
+
+        #exportOptions label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        #notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            color: #fff;
+            font-weight: 600;
+            display: none;
+            animation: slideInRight 0.3s ease, fadeOut 0.3s ease 2.7s;
+            z-index: 1000;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        .success {
+            background-color: var(--success-color);
+        }
+
+        .error {
+            background-color: var(--error-color);
+        }
+
+        .mode-switch {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            background-color: #f0f0f0;
+            border-radius: 20px;
+            padding: 5px;
+        }
+
+        .mode-switch label {
+            flex: 1;
+            text-align: center;
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .mode-switch input[type="radio"] {
+            display: none;
+        }
+
+        .mode-switch input[type="radio"]:checked + label {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .magic-animation {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        @keyframes magicSpark {
+            0% { transform: scale(0) rotate(0deg); opacity: 1; }
+            100% { transform: scale(1) rotate(360deg); opacity: 0; }
+        }
+
+        .fullscreen-preview {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1001;
+            background-color: white;
+            display: none;
+        }
+
+        .fullscreen-preview iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .exit-fullscreen {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1002;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .dark-mode {
+            --primary-color: #61dafb;
+            --secondary-color: #282c34;
+            --text-color: #ffffff;
+            --border-color: #4a4a4a;
+        }
+
+        .dark-mode body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+
+        .dark-mode .edit-panel,
+        .dark-mode .preview-panel,
+        .dark-mode #previewFrame,
+        .dark-mode #codePreview {
+            background-color: #1e1e1e;
+        }
+
+        .dark-mode .message {
+            background-color: #2c2c2c;
+        }
+
+        .dark-mode .user-message {
+            background-color: #1a3a5a;
+        }
+
+        .dark-mode .ai-message {
+            background-color: #2a2a2a;
+        }
+
+        .attribution {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            font-size: 0.8rem;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        .attribution a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .attribution a:hover {
+            text-decoration: underline;
+        }
+
+        .pyro-watermark {
+            position: fixed;
+            bottom: 40px;
+            right: 20px;
+            font-size: 1rem;
+            color: var(--primary-color);
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 1000;
+            transform: rotate(-45deg);
+        }
+
+        .feature-tooltip {
+            position: absolute;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: var(--primary-color) transparent transparent transparent;
+        }
+
+        .undo-redo {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .undo-redo button {
+            padding: 5px 10px;
+            font-size: 0.8rem;
+        }
+
+        .shortcut-panel {
+            position: fixed;
+            top: 50%;
+            right: -250px;
+            transform: translateY(-50%);
+            width: 250px;
+            background-color: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px 0 0 8px;
+            padding: 1rem;
+            transition: right 0.3s ease;
+            z-index: 1000;
+        }
+
+        .shortcut-panel.open {
+            right: 0;
+        }
+
+        .shortcut-toggle {
+            position: absolute;
+            left: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+        }
+
+        .shortcut-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .shortcut-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .shortcut-key {
+            display: inline-block;
+            background-color: var(--border-color);
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            margin-right: 5px;
+        }
+        /* Add inside the existing style tag */
+        .word-count {
+            font-size: 0.8rem;
+            color: var(--text-color);
+            margin-top: 5px;
+        }
+
+        .theme-select {
+            padding: 5px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+    </style>
+</head>
+<body>
+
+<div id="mobileWarning" style="display: none; position: fixed; top: 0; left: 0; right: 0; background-color: var(--error-color); color: white; text-align: center; padding: 15px; z-index: 9999;">
+    Incompatible device size. Please login from a desktop device. 
+</div>
+    <div class="container">
+        <div class="panel edit-panel">
+            <h1>PyroAI Website Builder</h1>
+            <div class="toolbar">
+                <button id="newProject" class="button">New Project</button>
+                <button id="saveProject" class="button">Save Project</button>
+                <button id="loadProject" class="button">Load Project</button>
+                <button id="exportProject" class="button">Export</button>
+                <button id="copyCode" class="button">Copy Code</button>
+                <button id="regenerateProject" class="button">Regenerate</button>
+            </div>
+            <div class="undo-redo">
+                <button id="undoButton" class="button" disabled>Undo</button>
+                <button id="redoButton" class="button" disabled>Redo</button>
+            </div>
+            <div class="mode-switch">
+                <input type="radio" id="fastMode" name="renderMode" value="fast" checked>
+                <label for="fastMode">Fast</label>
+                <input type="radio" id="proMode" name="renderMode" value="pro">
+                <label for="proMode">Pro</label>
+            </div>
+            <div class="input-container">
+                
+                <textarea id="promptInput" placeholder="Describe your website or request changes..."></textarea>
+                <div id="wordCount" class="word-count">0 words</div>
+                <button id="sendPrompt" class="button">Generate / Modify</button>
+            </div>
+            <div class="chat-container" id="chatContainer"></div>
+        </div>
+        <div class="resizer" id="dragHandle"></div>
+        <div class="panel preview-panel">
+            <div class="preview-container">
+                <div class="preview-header">
+                    <h2>Preview</h2>
+                    <div>
+                        <button class="button toggle-button" id="togglePreview">Show Code</button>
+                        <button class="button" id="refreshPreview">Refresh</button>
+                        <button class="button" id="fullscreenPreview">Fullscreen</button>
+                    </div>
+                </div>
+                <iframe id="previewFrame"></iframe>
+                <pre id="codePreview"></pre>
+                <div class="loading" id="previewLoading" style="display: none;">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-text">PyroAI is generating...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fullscreen-preview" id="fullscreenPreview">
+        <button class="exit-fullscreen" id="exitFullscreen">Exit Fullscreen</button>
+        <iframe id="fullscreenFrame"></iframe>
+    </div>
+
+    <div id="exportModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Export Project</h2>
+            <div id="exportOptions">
+                <label>
+                    <input type="checkbox" id="exportHTML" checked> Export as single HTML file
+                </label>
+            </div>
+            <button id="downloadExport" class="button">Download</button>
+        </div>
+    </div>
+
+    <div id="notification"></div>
+
+    <button id="themeToggle" class="theme-toggle">🌓</button>
+
+    <div class="attribution">
+        Powered by <a href="https://www.pyrollc.com.tr" target="_blank">PyroLLC</a>
+    </div>
+
+    <div class="pyro-watermark">PyroLLC</div>
+
+    <div class="shortcut-panel" id="shortcutPanel">
+        <button class="shortcut-toggle" id="shortcutToggle">Shortcuts</button>
+        <h3>Keyboard Shortcuts</h3>
+        <ul class="shortcut-list">
+            <li><span class="shortcut-key">Ctrl + Enter</span> Send Prompt</li>
+            <li><span class="shortcut-key">Ctrl + S</span> Save Project</li>
+            <li><span class="shortcut-key">Ctrl + L</span> Load Project</li>
+            <li><span class="shortcut-key">Ctrl + E</span> Export Project</li>
+            <li><span class="shortcut-key">Ctrl + Z</span> Undo</li>
+            <li><span class="shortcut-key">Ctrl + Y</span> Redo</li>
+            <li><span class="shortcut-key">F11</span> Toggle Fullscreen</li>
+        </ul>
+    </div>
+    <script>
+        function checkDeviceWidth() {
+            const mobileWarning = document.getElementById('mobileWarning');
+            if (window.innerWidth < 768) {
+                mobileWarning.style.display = 'block';
+            } else {
+                mobileWarning.style.display = 'none';
+            }
+        }
+    
+        // Check on page load
+        checkDeviceWidth();
+        // Check when window is resized
+        window.addEventListener('resize', checkDeviceWidth);
+    </script>
+    <script>
+
+    const promptInput = document.getElementById('promptInput');
+    const sendPromptButton = document.getElementById('sendPrompt');
+    const chatContainer = document.getElementById('chatContainer');
+    const previewFrame = document.getElementById('previewFrame');
+    const codePreview = document.getElementById('codePreview');
+    const togglePreviewButton = document.getElementById('togglePreview');
+    const newProjectButton = document.getElementById('newProject');
+    const saveProjectButton = document.getElementById('saveProject');
+    const loadProjectButton = document.getElementById('loadProject');
+    const exportProjectButton = document.getElementById('exportProject');
+    const regenerateProjectButton = document.getElementById('regenerateProject');
+    const exportModal = document.getElementById('exportModal');
+    const closeModal = document.getElementsByClassName('close')[0];
+    const downloadExportButton = document.getElementById('downloadExport');
+    const notification = document.getElementById('notification');
+    const fastModeRadio = document.getElementById('fastMode');
+    const proModeRadio = document.getElementById('proMode');
+    const dragHandle = document.getElementById('dragHandle');
+    const editPanel = document.querySelector('.edit-panel');
+    const previewPanel = document.querySelector('.preview-panel');
+    const refreshPreviewButton = document.getElementById('refreshPreview');
+    const previewLoading = document.getElementById('previewLoading');
+    const fullscreenPreviewButton = document.getElementById('fullscreenPreview');
+    const fullscreenPreviewContainer = document.getElementById('fullscreenPreview');
+    const exitFullscreenButton = document.getElementById('exitFullscreen');
+    const fullscreenFrame = document.getElementById('fullscreenFrame');
+    const themeToggle = document.getElementById('themeToggle');
+    const copyCodeButton = document.getElementById('copyCode');
+    const wordCount = document.getElementById('wordCount');
+    const colorThemeSelect = document.getElementById('colorTheme');
+
+    let conversation = [];
+    let currentCode = '';
+    let isResizing = false;
+
+    sendPromptButton.addEventListener('click', handlePrompt);
+    togglePreviewButton.addEventListener('click', togglePreview);
+    newProjectButton.addEventListener('click', newProject);
+    saveProjectButton.addEventListener('click', saveProject);
+    loadProjectButton.addEventListener('click', loadProject);
+    exportProjectButton.addEventListener('click', () => exportModal.style.display = 'block');
+    closeModal.addEventListener('click', () => exportModal.style.display = 'none');
+    downloadExportButton.addEventListener('click', exportProject);
+    regenerateProjectButton.addEventListener('click', regenerateProject);
+    refreshPreviewButton.addEventListener('click', refreshPreview);
+    fullscreenPreviewButton.addEventListener('click', enterFullscreenPreview);
+    exitFullscreenButton.addEventListener('click', exitFullscreenPreview);
+    themeToggle.addEventListener('click', toggleTheme);
+    copyCodeButton.addEventListener('click', copyCodeToClipboard);
+    promptInput.addEventListener('input', updateWordCount);
+    colorThemeSelect.addEventListener('change', changeColorTheme);
+
+    dragHandle.addEventListener('mousedown', initResize);
+    document.addEventListener('mousemove', handleResize);
+    document.addEventListener('mouseup', stopResize);
+
+    // Initialize the app
+    loadThemePreference();
+    refreshPreview();
+    updateWordCount();
+
+    async function handlePrompt() {
+        const prompt = promptInput.value.trim();
+        if (!prompt) {
+            showNotification('Please enter a prompt', 'error');
+            return;
+        }
+
+        addMessage('user', prompt);
+        promptInput.value = '';
+        updateWordCount();
+
+        showLoading();
+        showPreviewLoading();
+
+        try {
+            const response = await generateContent(prompt);
+            const generatedCode = extractCodeFromResponse(response);
+            
+            if (generatedCode) {
+                addMessage('ai', 'Website generated/modified successfully!');
+                updatePreview(generatedCode);
+                currentCode = generatedCode;
+                createMagicAnimation();
+            } else {
+                throw new Error('No valid code generated');
+            }
+        } catch (error) {
+            addMessage('ai', 'Error: ' + error.message);
+            showNotification('Failed to generate content', 'error');
+        }
+
+        hideLoading();
+        hidePreviewLoading();
+    }
+
+    function addMessage(role, content) {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message', `${role}-message`);
+        messageElement.textContent = content;
+        chatContainer.appendChild(messageElement);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+
+        conversation.push({ role, content });
+    }
+
+    function showLoading() {
+        previewLoading.style.display = 'flex';
+        sendPromptButton.disabled = true;
+    }
+
+    function hideLoading() {
+        previewLoading.style.display = 'none';
+        sendPromptButton.disabled = false;
+    }
+
+    function showPreviewLoading() {
+        previewLoading.style.display = 'flex';
+    }
+
+    function hidePreviewLoading() {
+        previewLoading.style.display = 'none';
+    }
+
+    async function generateContent(prompt) {
+        const apiKey = 'AIzaSyDe7rdFT1eMqegHtdUhLL0EoBmC8YHNtOI'; // Replace with your actual API key
+        const model = proModeRadio.checked ? 'gemini-1.5-pro' : 'gemini-1.5-flash';
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+
+        const response = await fetch(`${apiUrl}?key=${apiKey}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                contents: [
+                    {
+                        parts: [
+                            {
+                                text: `Generate or modify a complete, functional website based on the following description: ${prompt}\n\nCurrent code:\n${currentCode}\n\nPlease provide a complete index.html file that includes HTML, CSS, and JavaScript. Ensure all necessary components and content are included, even if repeating from previous examples. The response should be a single HTML file with embedded CSS and JavaScript. Include a PyroLLC watermark in the footer.`
+                            }
+                        ]
+                    }
+                ],
+                generationConfig: {
+                    temperature: 0.7,
+                    topK: 40,
+                    topP: 0.95,
+                    maxOutputTokens: 8192,
+                },
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to generate content');
+        }
+
+        return await response.json();
+    }
+
+    function extractCodeFromResponse(response) {
+        const generatedText = response.candidates[0].content.parts[0].text;
+        const htmlMatch = generatedText.match(/```html\n([\s\S]*?)\n```/);
+        return htmlMatch ? htmlMatch[1] : '';
+    }
+
+    function updatePreview(code) {
+        const blob = new Blob([code], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        previewFrame.src = url;
+        fullscreenFrame.src = url;
+        codePreview.textContent = code;
+    }
+
+    function togglePreview() {
+        if (previewFrame.style.display === 'none') {
+            previewFrame.style.display = 'block';
+            codePreview.style.display = 'none';
+            togglePreviewButton.textContent = 'Show Code';
+        } else {
+            previewFrame.style.display = 'none';
+            codePreview.style.display = 'block';
+            togglePreviewButton.textContent = 'Show Preview';
+        }
+    }
+
+    function newProject() {
+        if (confirm('Are you sure you want to start a new project? All current progress will be lost.')) {
+            conversation = [];
+            currentCode = '';
+            chatContainer.innerHTML = '';
+            updatePreview('');
+            showNotification('New project started', 'success');
+        }
+    }
+
+    function saveProject() {
+        const project = {
+            conversation,
+            currentCode
+        };
+        localStorage.setItem('aiWebsiteBuilderProject', JSON.stringify(project));
+        showNotification('Project saved successfully', 'success');
+    }
+
+    function loadProject() {
+        const savedProject = localStorage.getItem('aiWebsiteBuilderProject');
+        if (savedProject) {
+            const project = JSON.parse(savedProject);
+            conversation = project.conversation;
+            currentCode = project.currentCode;
+            chatContainer.innerHTML = '';
+            conversation.forEach(msg => addMessage(msg.role, msg.content));
+            updatePreview(currentCode);
+            showNotification('Project loaded successfully', 'success');
+        } else {
+            showNotification('No saved project found', 'error');
+        }
+    }
+
+    function exportProject() {
+        const blob = new Blob([currentCode], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'ai_website_builder_export.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        exportModal.style.display = 'none';
+        showNotification('Project exported successfully', 'success');
+    }
+
+    function showNotification(message, type) {
+        notification.textContent = message;
+        notification.className = type;
+        notification.style.display = 'block';
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 3000);
+    }
+
+    function regenerateProject() {
+        if (currentCode) {
+            handlePrompt();
+        } else {
+            showNotification('No project to regenerate', 'error');
+        }
+    }
+
+    function refreshPreview() {
+        if (currentCode) {
+            updatePreview(currentCode);
+            showNotification('Preview refreshed', 'success');
+        } else {
+            showNotification('No content to refresh', 'error');
+        }
+    }
+
+    function initResize(e) {
+        isResizing = true;
+        document.addEventListener('mousemove', handleResize);
+        document.addEventListener('mouseup', stopResize);
+    }
+
+    function handleResize(e) {
+        if (!isResizing) return;
+        const containerWidth = document.querySelector('.container').offsetWidth;
+        const newEditPanelWidth = e.clientX;
+        const newEditPanelPercentage = (newEditPanelWidth / containerWidth) * 100;
+        editPanel.style.width = `${newEditPanelPercentage}%`;
+        previewPanel.style.width = `${100 - newEditPanelPercentage}%`;
+    }
+
+    function stopResize() {
+        isResizing = false;
+        document.removeEventListener('mousemove', handleResize);
+        document.removeEventListener('mouseup', stopResize);
+    }
+
+    function createMagicAnimation() {
+        const container = document.createElement('div');
+        container.className = 'magic-animation-container';
+        document.body.appendChild(container);
+
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'magic-particle';
+            particle.style.setProperty('--delay', `${Math.random() * 2}s`);
+            particle.style.setProperty('--size', `${Math.random() * 10 + 5}px`);
+            container.appendChild(particle);
+        }
+
+        setTimeout(() => {
+            document.body.removeChild(container);
+        }, 3000);
+    }
+
+    function enterFullscreenPreview() {
+        fullscreenPreviewContainer.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        if (fullscreenPreviewContainer.requestFullscreen) {
+            fullscreenPreviewContainer.requestFullscreen();
+        }
+    }
+
+    function exitFullscreenPreview() {
+        fullscreenPreviewContainer.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+    }
+
+    function toggleTheme() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        themeToggle.textContent = isDarkMode ? '☀️' : '🌓';
+        localStorage.setItem('darkMode', isDarkMode);
+    }
+
+    function loadThemePreference() {
+        const isDarkMode = localStorage.getItem('darkMode') === 'true';
+        if (isDarkMode) {
+            document.body.classList.add('dark-mode');
+            themeToggle.textContent = '☀️';
+        }
+    }
+
+    function copyCodeToClipboard() {
+        const codeToCopy = codePreview.textContent;
+        navigator.clipboard.writeText(codeToCopy).then(() => {
+            showNotification('Code copied to clipboard', 'success');
+        }, () => {
+            showNotification('Failed to copy code', 'error');
+        });
+    }
+
+    function updateWordCount() {
+        const words = promptInput.value.trim().split(/\s+/).length;
+        wordCount.textContent = words === 1 ? '1 word' : `${words} words`;
+    }
+
+    function changeColorTheme(event) {
+        const selectedTheme = event.target.value;
+        document.documentElement.setAttribute('data-theme', selectedTheme);
+        localStorage.setItem('colorTheme', selectedTheme);
+    }
+
+    // Load saved color theme
+    const savedColorTheme = localStorage.getItem('colorTheme');
+    if (savedColorTheme) {
+        document.documentElement.setAttribute('data-theme', savedColorTheme);
+        colorThemeSelect.value = savedColorTheme;
+    }
+</script>
+
+</body>
+</html>

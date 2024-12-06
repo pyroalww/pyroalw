@@ -1,4 +1,45 @@
 <!-- developed by PYROLLC -->
+<!-- rev 3 -->
+<!-- OFFLINE -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- developed by PYROLLC -->
 <!-- developed by PYROLLC -->
 <!-- developed by PYROLLC -->
 <!-- developed by PYROLLC -->
@@ -29,25 +70,6 @@
 
 
 
-<!-- content id MFA1 -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -77,12 +99,53 @@
 <!-- developed by PYROLLC -->
 <!-- developed by PYROLLC -->
 <!-- developed by PYROLLC -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- developed by PYROLLC -->
 <!-- developed by PYROLLC -->
 <!-- developed by PYROLLC -->
 <!-- developed by PYROLLC -->
 <!-- developed by PYROLLC -->
 <!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+
+
+
+
+
 
 
 
@@ -121,16 +184,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pyroalww - Advanced Developer Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
         
         :root {
             --primary-color: #ffffff;
             --secondary-color: #000000;
-            --accent-color: #333333;
-            --background-color: #000000;
+            --accent-color: #ff4d4d;
+            --background-color: #121212;
             --text-color: #ffffff;
-            --card-bg: #1a1a1a;
+            --card-bg: #1e1e1e;
         }
 
         * {
@@ -158,13 +222,19 @@
         }
 
         header {
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(18, 18, 18, 0.8);
+            backdrop-filter: blur(10px);
             padding: 1rem 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
             transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background-color: rgba(18, 18, 18, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         nav {
@@ -205,7 +275,7 @@
             height: 2px;
             bottom: -5px;
             left: 0;
-            background-color: var(--primary-color);
+            background-color: var(--accent-color);
             transform: scaleX(0);
             transition: transform 0.3s ease;
         }
@@ -236,7 +306,9 @@
             text-align: center;
             position: relative;
             overflow: hidden;
-            background: linear-gradient(45deg, #000000, #1a1a1a);
+            background: linear-gradient(-45deg, #121212, #1a1a1a, #2a2a2a, #1a1a1a);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
         }
 
         .hero::before {
@@ -255,18 +327,14 @@
         }
 
         @keyframes movePatterns {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-
-        @keyframes moveBackground {
-            0% { background-position: 0 0; }
-            100% { background-position: 50px 50px; }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .hero-content {
@@ -277,19 +345,49 @@
         .hero-content h1 {
             font-size: 4rem;
             margin-bottom: 1rem;
-            animation: fadeInUp 1s ease, glowText 2s ease-in-out infinite alternate;
+            animation: titleReveal 2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            background: linear-gradient(45deg, #ffffff, #ff4d4d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 77, 77, 0.3);
         }
 
-        @keyframes glowText {
-            from { text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
-            to { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
+        @keyframes titleReveal {
+            0% {
+                opacity: 0;
+                transform: scale(1.5) translateY(-30px);
+                letter-spacing: 20px;
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.2) translateY(-15px);
+                letter-spacing: 10px;
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+                letter-spacing: normal;
+            }
         }
 
         .hero-content p {
             font-size: 1.2rem;
             max-width: 800px;
             margin: 0 auto;
-            animation: fadeInUp 1s ease 0.5s both;
+            opacity: 0;
+            animation: contentFadeIn 1.5s ease 2s forwards;
+        }
+
+        @keyframes contentFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .section {
@@ -308,7 +406,7 @@
             display: block;
             width: 50px;
             height: 3px;
-            background-color: var(--primary-color);
+            background-color: var(--accent-color);
             margin: 1rem auto 0;
         }
 
@@ -328,7 +426,7 @@
 
         .project-card:hover, .service-card:hover, .website-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 20px rgba(255, 77, 77, 0.2);
         }
 
         .card-content {
@@ -343,8 +441,8 @@
         .btn {
             display: inline-block;
             padding: 0.8rem 1.5rem;
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
+            background-color: var(--accent-color);
+            color: var(--primary-color);
             text-decoration: none;
             border-radius: 5px;
             transition: background-color 0.3s ease, transform 0.3s ease;
@@ -352,8 +450,7 @@
         }
 
         .btn:hover {
-            background-color: var(--accent-color);
-            color: var(--primary-color);
+            background-color: #ff3333;
             transform: translateY(-3px);
         }
 
@@ -365,17 +462,17 @@
         }
 
         .skill-item {
-            background-color: var(--accent-color);
+            background-color: var(--card-bg);
             padding: 0.5rem 1rem;
             border-radius: 20px;
             font-size: 0.9rem;
-            transition: transform 0.3s ease, background-color 0.3s ease;
+            transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
         }
 
         .skill-item:hover {
             transform: translateY(-3px);
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
+            background-color: var(--accent-color);
+            color: var(--primary-color);
         }
 
         footer {
@@ -403,17 +500,6 @@
             transform: translateY(-3px);
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -421,17 +507,37 @@
                 top: 70px;
                 left: 0;
                 right: 0;
-                background-color: rgba(0, 0, 0, 0.9);
+                background: rgba(18, 18, 18, 0.95);
+                backdrop-filter: blur(10px);
+                border-radius: 0 0 20px 20px;
+                padding: 2rem;
+                gap: 1.5rem;
                 flex-direction: column;
                 align-items: center;
-                padding: 1rem 0;
-                transition: transform 0.3s ease-in-out;
-                transform: translateY(-100%);
             }
 
             .nav-links.active {
                 display: flex;
-                transform: translateY(0);
+                animation: slideDown 0.5s ease forwards;
+            }
+
+            @keyframes slideDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+                padding: 1rem;
+                border-radius: 10px;
+                background-color: rgba(255, 255, 255, 0.05);
             }
 
             .mobile-menu-btn {
@@ -444,18 +550,35 @@
 
             .hero-content p {
                 font-size: 1rem;
+                padding: 0 1rem;
             }
 
             .section {
-                padding: 3rem 0;
+                padding: 3rem 1rem;
             }
 
             .section-title {
                 font-size: 2rem;
             }
 
-            .projects-grid, .services-grid, .recommended-websites-grid {
+            .projects-grid, 
+            .services-grid, 
+            .recommended-websites-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .skills-list {
+                gap: 0.8rem;
+            }
+
+            .skill-item {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .container {
+                padding: 0 1rem;
             }
         }
     </style>
@@ -480,8 +603,8 @@
     <main>
         <section class="hero">
             <div class="hero-content">
-                <h1>pyroalw</h1>
-                <p>I specialize in backend development using Python and Flask, focusing on scalable web applications and efficient database management with SQLite or JSON. Additionally, I have experience in machine learning with TensorFlow and occasionally develop iOS front-ends with SwiftUI for AI projects.</p>
+                <h1 class="animate__animated animate__fadeInDown">pyroalw</h1>
+                <p class="animate__animated animate__fadeInUp animate__delay-1s">I specialize in backend development using Python and Flask, focusing on scalable web applications and efficient database management with SQLite or JSON. Additionally, I have experience in machine learning with TensorFlow and occasionally develop iOS front-ends with SwiftUI for AI projects.</p>
             </div>
         </section>
 
@@ -495,265 +618,272 @@
                 <p>I prioritize simplicity and efficiency in all my projects, whether it's ensuring seamless database interactions, creating RESTful APIs, or designing intuitive user experiences. I enjoy solving complex problems with clean, scalable solutions, always keeping the end user in mind.</p>
             </div>
         </section>
-    </section>
-    <section id="recommended" class="section">
-        <div class="container">
-            <h2 class="section-title">Websites</h2>
-            <div class="recommended-websites-grid">
-                <div class="website-card">
-                    <div class="card-content">
-                        <h3>PyroAI</h3>
-                        <p>Free and Unlimited AI Chatbot</p>
-                        <a href="https://pyrollc.com.tr/pyroai" target="_blank" class="btn">Visit Site</a>
+
+
+        <section id="recommended" class="section">
+            <div class="container">
+                <h2 class="section-title animate__animated animate__fadeInUp">Websites</h2>
+                <div class="recommended-websites-grid">
+                    <div class="website-card animate__animated animate__fadeInUp">
+                        <div class="card-content">
+                            <h3>PyroAI - Free and Unlimited AI Chatbot</h3>
+                            <p>Free and Unlimited AI Chatbot</p>
+                            <a href="https://pyrollc.com.tr/pyroai" target="_blank" class="btn">Visit Site</a>
+                        </div>
                     </div>
-                </div>
-                <div class="website-card">
-                    <div class="card-content">
-                        <h3>PyroAI Website Builder</h3>
-                        <p>A website builder with PyroAI</p>
-                        <a href="https://pyrollc.com.tr/aiwebgen" target="_blank" class="btn">Visit Site</a>
+                    <div class="website-card animate__animated animate__fadeInUp animate__delay-1s">
+                        <div class="card-content">
+                            <h3>PyroAI Website Builder - A website builder with PyroAI</h3>
+                            <p>A website builder with PyroAI</p>
+                            <a href="https://pyrollc.com.tr/aiwebgen" target="_blank" class="btn">Visit Site</a>
+                        </div>
                     </div>
-                </div>
-                <div class="website-card">
-                    <div class="card-content">
-                        <h3>BaloonBet</h3>
-                        <p>Exciting Balloon Betting Game</p>
-                        <a href="https://pyrollc.com.tr/baloonbet" target="_blank" class="btn">Visit Site</a>
+                    <div class="website-card animate__animated animate__fadeInUp animate__delay-2s">
+                        <div class="card-content">
+                            <h3>BaloonBet - Exciting Balloon Betting Game</h3>
+                            <p>Exciting Balloon Betting Game</p>
+                            <a href="https://pyrollc.com.tr/baloonbet" target="_blank" class="btn">Visit Site</a>
+                        </div>
                     </div>
-                </div>
-                <div class="website-card">
-                    <div class="card-content">
-                        <h3>AirDrop</h3>
-                        <p>Local File Transfer App (P2P)</p>
-                        <a href="https://airdroponline.netlify.app" target="_blank" class="btn">Visit Site</a>
+                    <div class="website-card animate__animated animate__fadeInUp animate__delay-3s">
+                        <div class="card-content">
+                            <h3>AirDrop - Local File Transfer App (P2P)</h3>
+                            <p>Local File Transfer App (P2P)</p>
+                            <a href="https://airdroponline.netlify.app" target="_blank" class="btn">Visit Site</a>
+                        </div>
                     </div>
-                </div>
-                <div class="website-card">
-                    <div class="card-content">
-                        <h3>InstaLogin-Clone</h3>
-                        <p>Instagram Login Clone</p>
-                        <a href="https://reportaproblem-recovery.netlify.app/?username=pyrollcwebsiteuser" target="_blank" class="btn">Visit Site</a>
+                    <div class="website-card animate__animated animate__fadeInUp animate__delay-4s">
+                        <div class="card-content">
+                            <h3>InstaLogin-Clone - Instagram Login Clone</h3>
+                            <p>Instagram Login Clone</p>
+                            <a href="https://reportaproblem-recovery.netlify.app/?username=pyrollcwebsiteuser" target="_blank" class="btn">Visit Site</a>
+                        </div>
                     </div>
-                </div>
-                <div class="website-card">
-                    <div class="card-content">
-                        <h3>PixelMine</h3>
-                        <p>Exciting Pixel Mine Betting Game</p>
-                        <a href="https://pyrollc.com.tr/pixelmine" target="_blank" class="btn">Visit Site</a>
+                    <div class="website-card animate__animated animate__fadeInUp animate__delay-5s">
+                        <div class="card-content">
+                            <h3>PixelMine - Exciting Pixel Mine Betting Game</h3>
+                            <p>Exciting Pixel Mine Betting Game</p>
+                            <a href="https://pyrollc.com.tr/pixelmine" target="_blank" class="btn">Visit Site</a>
+                        </div>
                     </div>
-                </div>
-                <div class="website-card">
-                    <div class="card-content">
-                        <h3>WhatsApp Chat Generator</h3>
-                        <p>Create Realistic WhatsApp Conversation Screenshots</p>
-                        <a href="https://pyroalww.github.io/WhatsAppChatGenerator" target="_blank" class="btn">Visit Site</a>
+                    <div class="website-card animate__animated animate__fadeInUp animate__delay-6s">
+                        <div class="card-content">
+                            <h3>WhatsApp Chat Generator - Create Realistic WhatsApp Conversation Screenshots</h3>
+                            <p>Create Realistic WhatsApp Conversation Screenshots</p>
+                            <a href="https://pyroalww.github.io/WhatsAppChatGenerator" target="_blank" class="btn">Visit Site</a>
+                        </div>
                     </div>
-                </div>
-                <div class="website-card">
-                    <div class="card-content">
-                        <h3>Blackjack Royale</h3>
-                        <p>Competitive Blackjack Gaming Platform</p>
-                        <a href="https://blackjackroyale.netlify.app" target="_blank" class="btn">Visit Site</a>
+                    <div class="website-card animate__animated animate__fadeInUp animate__delay-7s">
+                        <div class="card-content">
+                            <h3>Blackjack Royale - Competitive Blackjack Gaming Platform</h3>
+                            <p>Competitive Blackjack Gaming Platform</p>
+                            <a href="https://blackjackroyale.netlify.app" target="_blank" class="btn">Visit Site</a>
+                        </div>
                     </div>
-                </div>
-                <div class="website-card">
-                    <div class="card-content">
-                        <h3>Valorant VP Generator</h3>
-                        <p>Generate Valorant VP Codes</p>
-                        <a href="https://pyroalww.github.io/Valorant-VP-Generator/" target="_blank" class="btn">Visit Site</a>
+                    <div class="website-card animate__animated animate__fadeInUp animate__delay-8s">
+                        <div class="card-content">
+                            <h3>Valorant VP Generator - Generate Valorant VP Codes</h3>
+                            <p>Generate Valorant VP Codes</p>
+                            <a href="https://pyroalww.github.io/Valorant-VP-Generator/" target="_blank" class="btn">Visit Site</a>
+                        </div>
                     </div>
+                    <!-- Add more website cards here -->
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
         <section id="projects" class="section">
             <div class="container">
-                <h2 class="section-title">My Projects</h2>
+                <h2 class="section-title animate__animated animate__fadeInUp">My Projects</h2>
                 <div class="projects-grid">
-                    <div class="project-card">
+                    <div class="project-card animate__animated animate__fadeInUp">
                         <div class="card-content">
                             <h3>FullBench</h3>
                             <p>A comprehensive Python benchmarking tool for thorough computer performance analysis.</p>
                             <a href="https://github.com/pyroalww/FullBench" target="_blank" class="btn">View Project</a>
                         </div>
                     </div>
-                    <div class="project-card">
+                    <div class="project-card animate__animated animate__fadeInUp animate__delay-1s">
                         <div class="card-content">
                             <h3>autofsrmod</h3>
                             <p>Automated tool for updating fsrmod on devices, streamlining the update process.</p>
                             <a href="https://github.com/pyroalww/autofsrmod" target="_blank" class="btn">View Project</a>
                         </div>
                     </div>
-                    <div class="project-card">
+                    <div class="project-card animate__animated animate__fadeInUp animate__delay-2s">
                         <div class="card-content">
                             <h3>px</h3>
                             <p>An advanced Python-based shell with a wide array of functionalities and capabilities.</p>
                             <a href="https://github.com/pyroalww/px" target="_blank" class="btn">View Project</a>
                         </div>
                     </div>
-                    <div class="project-card">
+                    <div class="project-card animate__animated animate__fadeInUp animate__delay-3s">
                         <div class="card-content">
                             <h3>OnlinePad</h3>
                             <p>A feature-rich web-based notepad application for streamlined note-taking and organization.</p>
                             <a href="https://github.com/pyroalww/OnlinePad" target="_blank" class="btn">View Project</a>
                         </div>
                     </div>
-                    <div class="project-card">
+                    <div class="project-card animate__animated animate__fadeInUp animate__delay-4s">
                         <div class="card-content">
                             <h3>pyroxy</h3>
                             <p>A Python-based proxy scraper and validator for efficient proxy management.</p>
                             <a href="https://github.com/pyroalww/pyroxy" target="_blank" class="btn">View Project</a>
                         </div>
                     </div>
-                    <div class="project-card">
+                    <div class="project-card animate__animated animate__fadeInUp animate__delay-5s">
                         <div class="card-content">
                             <h3>useragentgenerator</h3>
                             <p>Tool for generating user-agent strings, useful for web scraping and automation tasks.</p>
                             <a href="https://github.com/pyroalww/useragentgenerator" target="_blank" class="btn">View Project</a>
                         </div>
                     </div>
-                    <div class="project-card">
+                    <div class="project-card animate__animated animate__fadeInUp animate__delay-6s">
                         <div class="card-content">
                             <h3>Download Time Calculator</h3>
                             <p>Calculate estimated download times based on file size and internet speed.</p>
                             <a href="https://github.com/pyroalww/downloadtimecalculator" target="_blank" class="btn">View Project</a>
                         </div>
                     </div>
-                    <div class="project-card">
+                    <div class="project-card animate__animated animate__fadeInUp animate__delay-7s">
                         <div class="card-content">
                             <h3>HashCheck</h3>
                             <p>Python application for computing and verifying file hash values using various algorithms.</p>
                             <a href="https://github.com/pyroalww/HashCheck" target="_blank" class="btn">View Project</a>
                         </div>
                     </div>
-                    <div class="project-card">
+                    <div class="project-card animate__animated animate__fadeInUp animate__delay-8s">
                         <div class="card-content">
                             <h3>websitecopier</h3>
                             <p>Simple utility for copying websites locally for offline viewing and analysis.</p>
                             <a href="https://github.com/pyroalww/websitecopier" target="_blank" class="btn">View Project</a>
                         </div>
                     </div>
-                    <div class="project-card">
+                    <div class="project-card animate__animated animate__fadeInUp animate__delay-9s">
                         <div class="card-content">
                             <h3>OpenChatBackend</h3>
                             <p>Advanced chat application backend with a comprehensive feature set.</p>
                             <a href="https://github.com/pyroalww/openchat" target="_blank" class="btn">View Project</a>
                         </div>
                     </div>
-                    <div class="project-card">
+                    <div class="project-card animate__animated animate__fadeInUp animate__delay-10s">
                         <div class="card-content">
                             <h3>OpenForumBackend</h3>
                             <p>Powerful forum site backend with advanced features and an attack-protected database system.</p>
                             <a href="https://github.com/pyroalww/openforum" target="_blank" class="btn">View Project</a>
                         </div>
                     </div>
-                    <div class="project-card">
+                    <div class="project-card animate__animated animate__fadeInUp animate__delay-11s">
                         <div class="card-content">
                             <h3>DiscordClone</h3>
                             <p>Comprehensive backend for Discord clones with a detailed implementation guide.</p>
                             <a href="https://github.com/pyroalww/DiscordClone" target="_blank" class="btn">View Project</a>
                         </div>
                     </div>
-                    <div class="project-card">
+                    <div class="project-card animate__animated animate__fadeInUp animate__delay-12s">
                         <div class="card-content">
                             <h3>genai-client</h3>
                             <p>Unlimited AI usage tool leveraging Google Gemini API for advanced AI interactions.</p>
                             <a href="https://github.com/pyroalww/genai-client" target="_blank" class="btn">View Project</a>
                         </div>
                     </div>
-                    <div class="project-card">
+                    <div class="project-card animate__animated animate__fadeInUp animate__delay-13s">
                         <div class="card-content">
                             <h3>Codedit</h3>
                             <p>Feature-rich code editor developed with Python and PyQt5, offering a modern coding experience.</p>
                             <a href="https://github.com/pyroalww/Codedit" target="_blank" class="btn">View Project</a>
                         </div>
                     </div>
-                    <div class="project-card">
+                    <div class="project-card animate__animated animate__fadeInUp animate__delay-14s">
                         <div class="card-content">
                             <h3>remote-control-tool</h3>
                             <p>Versatile Discord bot for system control, file management, and media handling via commands.</p>
                             <a href="https://github.com/pyroalww/remote-control-tool" target="_blank" class="btn">View Project</a>
                         </div>
                     </div>
+                    <!-- Add more project cards here -->
                 </div>
             </div>
         </section>
 
         <section id="services" class="section">
             <div class="container">
-                <h2 class="section-title">My Services</h2>
+                <h2 class="section-title animate__animated animate__fadeInUp">My Services</h2>
                 <div class="services-grid">
-                    <div class="service-card">
+                    <div class="service-card animate__animated animate__fadeInUp">
                         <div class="card-content">
                             <h3>Custom Logger</h3>
                             <p>Advanced tool for meticulously recording all events on a target computer, providing detailed activity tracking and analysis.</p>
                         </div>
                     </div>
-                    <div class="service-card">
+                    <div class="service-card animate__animated animate__fadeInUp animate__delay-1s">
                         <div class="card-content">
                             <h3>Data Grabber</h3>
                             <p>Efficient tool for gathering and transferring data from a target computer to a secure server, ideal for sensitive information retrieval and system monitoring.</p>
                         </div>
                     </div>
-                    <div class="service-card">
+                    <div class="service-card animate__animated animate__fadeInUp animate__delay-2s">
                         <div class="card-content">
                             <h3>Multi Tools</h3>
                             <p>A suite of versatile tools designed to enhance Discord experience, offering advanced automation, moderation, and customization features.</p>
                         </div>
                     </div>
-                    <div class="service-card">
+                    <div class="service-card animate__animated animate__fadeInUp animate__delay-3s">
                         <div class="card-content">
                             <h3>VP Generator</h3>
                             <p>Unique tool for producing Valorant Point (VP) codes with high validity probability, enhancing gaming experiences.</p>
                         </div>
                     </div>
-                    <div class="service-card">
+                    <div class="service-card animate__animated animate__fadeInUp animate__delay-4s">
                         <div class="card-content">
                             <h3>Custom Software Development</h3>
                             <p>Tailored software solutions designed to meet specific client needs, leveraging expertise in multiple programming languages and technologies.</p>
                         </div>
                     </div>
-                    <div class="service-card">
+                    <div class="service-card animate__animated animate__fadeInUp animate__delay-5s">
                         <div class="card-content">
                             <h3>Cybersecurity Consulting</h3>
                             <p>Expert advice and implementation of robust security measures to protect digital assets and sensitive information.</p>
                         </div>
                     </div>
+                    <!-- Add more service cards here -->
                 </div>
             </div>
         </section>
 
-        <section id="skills" class="section">
-            <div class="container">
-                <h2 class="section-title">Technical Skills</h2>
-                <div class="skills-list">
-                    <span class="skill-item">Python</span>
-                    <span class="skill-item">JavaScript</span>
-                    <span class="skill-item">Kotlin</span>
-                    <span class="skill-item">SwiftUI</span>
-                    <span class="skill-item">Flask</span>
-                    <span class="skill-item">Node.js</span>
-                    <span class="skill-item">Express.js</span>
-                    <span class="skill-item">React</span>
-                    <span class="skill-item">HTML5</span>
-                    <span class="skill-item">CSS3</span>
-                    <span class="skill-item">SQLite</span>
-                    <span class="skill-item">JSON</span>
-                    <span class="skill-item">AWS</span>
-                    <span class="skill-item">Azure</span>
-                    <span class="skill-item">Docker</span>
-                    <span class="skill-item">Git</span>
-                    <span class="skill-item">GitHub</span>
-                    <span class="skill-item">Cybersecurity</span>
-                    <span class="skill-item">iOS Development</span>
-                    <span class="skill-item">Android Development</span>
-                    <span class="skill-item">API Development</span>
-                    <span class="skill-item">TensorFlow</span>
-                    <span class="skill-item">PyTorch</span>
-                    <span class="skill-item">Data Analysis</span>
-                </div>
-            </div>
 
+        <section id="skills" class="section">
+            <section id="skills" class="section">
+                <div class="container">
+                    <h2 class="section-title animate__animated animate__fadeInUp">Technical Skills</h2>
+                    <div class="skills-list">
+                        <span class="skill-item animate__animated animate__fadeInUp">Python</span>
+                        <span class="skill-item animate__animated animate__fadeInUp animate__delay-1s">JavaScript</span>
+                        <span class="skill-item animate__animated animate__fadeInUp animate__delay-2s">Kotlin</span>
+                        <span class="skill-item animate__animated animate__fadeInUp animate__delay-3s">SwiftUI</span>
+                        <span class="skill-item animate__animated animate__fadeInUp">Flask</span>
+                        <span class="skill-item animate__animated animate__fadeInUp">Node.js</span>
+                        <span class="skill-item animate__animated animate__fadeInUp">Express.js</span>
+                        <span class="skill-item animate__animated animate__fadeInUp">React</span>
+                        <span class="skill-item animate__animated animate__fadeInUp">HTML5</span>
+                        <span class="skill-item animate__animated animate__fadeInUp">CSS3</span>
+                        <span class="skill-item animate__animated animate__fadeInUp">SQLite</span>
+                        <span class="skill-item animate__animated animate__fadeInUp">JSON</span>
+                        <span class="skill-item animate__animated animate__fadeInUp">AWS</span>
+                        <span class="skill-item animate__animated animate__fadeInUp">Azure</span>
+                        <span class="skill-item animate__animated animate__fadeInUp">Docker</span>
+                        <span class="skill-item animate__animated animate__fadeInUp">Git</span>
+                        <span class="skill-item animate__animated animate__fadeInUp">GitHub</span>
+                        <span class="skill-item animate__animated animate__fadeInUp">Cybersecurity</span>
+                        <span class="skill-item animate__animated animate__fadeInUp">iOS Development</span>
+                        <span class="skill-item animate__animated animate__fadeInUp">Android Development</span>
+                        <span class="skill-item animate__animated animate__fadeInUp">API Development</span>
+                        <span class="skill-item animate__animated animate__fadeInUp">TensorFlow</span>
+                        <span class="skill-item animate__animated animate__fadeInUp">PyTorch</span>
+                        <span class="skill-item animate__animated animate__fadeInUp">Data Analysis</span>
+                    </div>
+                </div>            </div>
+        </section>
     </main>
 
     <footer>
@@ -788,6 +918,16 @@
             navLinks.classList.toggle('active');
         });
 
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
         // Animate elements on scroll
         const observerOptions = {
             root: null,
@@ -798,14 +938,13 @@
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('animate__fadeInUp');
+                    entry.target.classList.add('animate__animated', 'animate__fadeInUp');
                     observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
 
         document.querySelectorAll('.section > .container > *').forEach(el => {
-            el.classList.add('animate__animated');
             observer.observe(el);
         });
 
@@ -824,8 +963,8 @@
             const randomSkill = skillItems[Math.floor(Math.random() * skillItems.length)];
             randomSkill.style.transition = 'all 0.5s ease';
             randomSkill.style.transform = 'scale(1.1)';
-            randomSkill.style.backgroundColor = '#ffffff';
-            randomSkill.style.color = '#000000';
+            randomSkill.style.backgroundColor = '#ff4d4d';
+            randomSkill.style.color = '#ffffff';
 
             lastHighlightedSkill = randomSkill;
         }
@@ -843,7 +982,7 @@
         cards.forEach(card => {
             card.addEventListener('mouseenter', () => {
                 card.style.transform = 'translateY(-10px) scale(1.05)';
-                card.style.boxShadow = '0 15px 30px rgba(255, 255, 255, 0.2)';
+                card.style.boxShadow = '0 15px 30px rgba(255, 77, 77, 0.2)';
             });
             card.addEventListener('mouseleave', () => {
                 card.style.transform = '';
@@ -853,4 +992,3 @@
     </script>
 </body>
 </html>
-

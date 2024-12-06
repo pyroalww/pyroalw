@@ -618,6 +618,8 @@
             max-width: 900px;
             margin: 0 auto;
             padding: 30px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .code-card {
@@ -626,6 +628,8 @@
             padding: 25px;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .code-card:hover {
@@ -637,6 +641,7 @@
             display: flex;
             gap: 15px;
             margin-bottom: 25px;
+            flex-wrap: wrap;
         }
 
         .code-input {
@@ -649,6 +654,8 @@
             font-family: inherit;
             font-size: 1.05rem;
             transition: all 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .code-input:focus {
@@ -668,6 +675,8 @@
             transition: all 0.3s ease;
             font-weight: 600;
             font-size: 1.05rem;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .code-btn:hover {
@@ -690,8 +699,10 @@
             line-height: 1.5;
             border: 2px solid rgba(255, 255, 255, 0.1);
             transition: background 0.3s ease;
-        }
-        @keyframes messageAppear {
+            width: 100%;
+            box-sizing: border-box;
+            overflow-x: auto;
+        }        @keyframes messageAppear {
             from {
                 opacity: 0;
                 transform: translateY(10px);

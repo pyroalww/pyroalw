@@ -1,243 +1,460 @@
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+
+
+
+
+
+<!-- content id MFA1 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+<!-- developed by PYROLLC -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pyroalww - Advanced Developer Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
         
         :root {
-            --primary-color: #00bfff;
-            --secondary-color: #007acc;
-            --background-color: #121212;
-            --surface-color: #1e1e1e;
+            --primary-color: #ffffff;
+            --secondary-color: #000000;
+            --accent-color: #333333;
+            --background-color: #000000;
             --text-color: #ffffff;
-            --text-secondary: #b0b0b0;
+            --card-bg: #1a1a1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--background-color);
             color: var(--text-color);
-            margin: 0;
-            padding: 0;
             line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
         header {
-            background-color: var(--surface-color);
-            padding: 3rem 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .header-image {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            overflow: hidden;
-            box-shadow: 0 0 30px rgba(0, 191, 255, 0.7);
-        }
-
-        .header-image img {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1rem 0;
+            position: fixed;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        h1 {
-            font-size: 4rem;
-            margin: 0;
-            color: var(--primary-color);
-            animation: glow 2s infinite alternate;
-        }
-
-        @keyframes glow {
-            from {
-                text-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color);
-            }
-            to {
-                text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 30px var(--primary-color);
-            }
-        }
-
-        .subtitle {
-            font-size: 1.3rem;
-            color: var(--text-secondary);
-            max-width: 700px;
-            margin: 1.5rem auto;
-        }
-
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 3rem;
-        }
-
-        .tab-container {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
-        }
-
-        .tab {
-            background-color: var(--surface-color);
-            color: var(--text-color);
-            padding: 0.75rem 1.5rem;
-            margin: 0.5rem;
-            border-radius: 25px;
-            cursor: pointer;
+            top: 0;
+            z-index: 1000;
             transition: all 0.3s ease;
         }
 
-        .tab:hover, .tab.active {
-            background-color: var(--primary-color);
-            color: var(--background-color);
-            transform: translateY(-3px);
-            box-shadow: 0 4px 10px rgba(0, 191, 255, 0.3);
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .tab-content {
-            background-color: var(--surface-color);
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h2 {
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
             color: var(--primary-color);
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 0.5rem;
+            text-decoration: none;
+            transition: transform 0.3s ease;
         }
 
-        .project-list, .product-list {
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease, transform 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary-color);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(45deg, #000000, #1a1a1a);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: 
+                radial-gradient(circle at center, transparent 30%, rgba(255,255,255,0.03) 31%, transparent 32%),
+                radial-gradient(circle at center, transparent 20%, rgba(255,255,255,0.02) 21%, transparent 22%);
+            background-size: 100px 100px, 150px 150px;
+            animation: movePatterns 20s linear infinite;
+            transform-origin: center center;
+        }
+
+        @keyframes movePatterns {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+
+        @keyframes moveBackground {
+            0% { background-position: 0 0; }
+            100% { background-position: 50px 50px; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease, glowText 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glowText {
+            from { text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease 0.5s both;
+        }
+
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+            margin: 1rem auto 0;
+        }
+
+        .projects-grid, .services-grid, .recommended-websites-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
         }
 
-        .project-item, .product-item {
-            background-color: rgba(255, 255, 255, 0.05);
+        .project-card, .service-card, .website-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .project-card:hover, .service-card:hover, .website-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .card-content {
             padding: 1.5rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
         }
 
-        .project-item:hover, .product-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 191, 255, 0.2);
+        .card-content h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
         }
 
-        .project-item h3, .product-item h3 {
-            color: var(--primary-color);
-            margin-top: 0;
-        }
-
-        .project-item a, .product-item a {
-            color: var(--primary-color);
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
             text-decoration: none;
-            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin-top: 1rem;
         }
 
-        .project-item a:hover, .product-item a:hover {
-            text-decoration: underline;
-        }
-
-        .social-media {
-            display: flex;
-            justify-content: center;
-            margin-top: 2rem;
-        }
-
-        .social-media a {
+        .btn:hover {
+            background-color: var(--accent-color);
             color: var(--primary-color);
-            font-size: 1.8rem;
-            margin: 0 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .social-media a:hover {
-            color: var(--text-color);
-            transform: scale(1.2);
-        }
-
-        .suggested-sites {
-            margin-top: 4rem;
-        }
-
-        .suggested-sites ul {
-            list-style-type: none;
-            padding: 0;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .suggested-sites li {
-            background-color: rgba(255, 255, 255, 0.05);
-            padding: 1rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .suggested-sites li:hover {
             transform: translateY(-3px);
-            box-shadow: 0 4px 10px rgba(0, 191, 255, 0.2);
         }
 
-        .suggested-sites a {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s ease;
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
         }
 
-        .suggested-sites a:hover {
-            color: var(--text-color);
+        .skill-item {
+            background-color: var(--accent-color);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-3px);
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
         }
 
         footer {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
             text-align: center;
             padding: 2rem 0;
-            background-color: var(--surface-color);
-            margin-top: 3rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @media (max-width: 768px) {
-            .tab-container {
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background-color: rgba(0, 0, 0, 0.9);
                 flex-direction: column;
+                align-items: center;
+                padding: 1rem 0;
+                transition: transform 0.3s ease-in-out;
+                transform: translateY(-100%);
             }
-            .tab {
-                margin-bottom: 0.5rem;
+
+            .nav-links.active {
+                display: flex;
+                transform: translateY(0);
             }
-            .project-list, .product-list {
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .section {
+                padding: 3rem 0;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .projects-grid, .services-grid, .recommended-websites-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -245,205 +462,395 @@
 </head>
 <body>
     <header>
-
-        <div class="header-content">
-            <h1 class="animate__animated animate__fadeInDown">pyroalww</h1>
-            <p class="subtitle animate__animated animate__fadeInUp">I specialize in backend development using Python and Flask, focusing on scalable web applications and efficient database management with SQLite or JSON. Additionally, I have experience in machine learning with TensorFlow and occasionally develop iOS front-ends with SwiftUI for AI projects.</p>
-        </div>
+        <nav class="container">
+            <a href="#" class="logo">pyroalw</a>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#recommended">Websites</a>
+                <a href="#projects">Projects</a>
+                <a href="#services">Services</a>
+                <a href="#skills">Skills</a>
+            </div>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
     </header>
 
     <main>
-        <div class="tab-container">
-            <div class="tab active" onclick="showTab('about')">About</div>
-            <div class="tab" onclick="showTab('projects')">Projects</div>
-            <div class="tab" onclick="showTab('services')">Services</div>
-            <div class="tab" onclick="showTab('skills')">Skills</div>
-            <div class="tab" onclick="showTab('contact')">Contact</div>
-        </div>
-
-        <div class="tab-content active" id="about">
-            <h2>About Me</h2> <p>I am a developer primarily focused on backend technologies, with extensive experience in building scalable web and database backends using Python. My go-to framework for backend development is Flask, which allows me to build efficient APIs and handle server-side logic with ease. I manage databases primarily with SQLite for lightweight operations, but I also leverage JSON for simpler or flat data structures in certain projects where flexibility is a priority.</p> <p>While backend development is my primary strength, I also have experience with frontend technologies, typically using React to create dynamic user interfaces. However, I prefer to focus on backend systems, as they align more with my expertise and interests. My frontend work is usually minimalistic, designed to complement the backend architecture I build.</p> <p>In addition to web development, I occasionally work on mobile front-ends, particularly for iOS. I use SwiftUI to create intuitive user interfaces, especially when working on AI-powered applications. I have several ongoing projects in this area, where I blend mobile UI design with artificial intelligence.</p> <p>Currently, I'm actively working on improving my machine learning skills, particularly with TensorFlow in Python. My focus is on model training, and I am exploring various techniques to enhance the performance and accuracy of the models I develop. This interest in machine learning is gradually influencing my backend work as I integrate AI-powered features into my applications.</p> <p>I prioritize simplicity and efficiency in all my projects, whether it’s ensuring seamless database interactions, creating RESTful APIs, or designing intuitive user experiences. I enjoy solving complex problems with clean, scalable solutions, always keeping the end user in mind.</p>
-            <div class="social-media">
-                <a href="https://instagram.com/c4gwn" target="_blank" class="animate__animated animate__fadeInLeft"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.youtube.com/@pyrowww" target="_blank" class="animate__animated animate__fadeInLeft"><i class="fab fa-youtube"></i></a>
-                <a href="https://www.tiktok.com/@pyro_xdd" target="_blank" class="animate__animated animate__fadeInLeft"><i class="fab fa-tiktok"></i></a>
-                <a href="https://discord.gg/m3XAMkTGU9" target="_blank" class="animate__animated animate__fadeInLeft"><i class="fab fa-discord"></i></a>
-                <a href="https://github.com/pyroalww" target="_blank" class="animate__animated animate__fadeInLeft"><i class="fab fa-github"></i></a>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>pyroalw</h1>
+                <p>I specialize in backend development using Python and Flask, focusing on scalable web applications and efficient database management with SQLite or JSON. Additionally, I have experience in machine learning with TensorFlow and occasionally develop iOS front-ends with SwiftUI for AI projects.</p>
             </div>
-        </div>
+        </section>
 
-        <div class="tab-content" id="projects">
-            <h2>My Projects</h2>
-            <div class="project-list">
-                <div class="project-item">
-                    <h3>FullBench</h3>
-                    <p>A comprehensive Python benchmarking tool for thorough computer performance analysis.</p>
-                    <a href="https://github.com/pyroalww/FullBench" target="_blank">View Project</a>
+        <section id="about" class="section">
+            <div class="container">
+                <h2 class="section-title">About Me</h2>
+                <p>I am a developer primarily focused on backend technologies, with extensive experience in building scalable web and database backends using Python. My go-to framework for backend development is Flask, which allows me to build efficient APIs and handle server-side logic with ease. I manage databases primarily with SQLite for lightweight operations, but I also leverage JSON for simpler or flat data structures in certain projects where flexibility is a priority.</p>
+                <p>While backend development is my primary strength, I also have experience with frontend technologies, typically using React to create dynamic user interfaces. However, I prefer to focus on backend systems, as they align more with my expertise and interests. My frontend work is usually minimalistic, designed to complement the backend architecture I build.</p>
+                <p>In addition to web development, I occasionally work on mobile front-ends, particularly for iOS. I use SwiftUI to create intuitive user interfaces, especially when working on AI-powered applications. I have several ongoing projects in this area, where I blend mobile UI design with artificial intelligence.</p>
+                <p>Currently, I'm actively working on improving my machine learning skills, particularly with TensorFlow in Python. My focus is on model training, and I am exploring various techniques to enhance the performance and accuracy of the models I develop. This interest in machine learning is gradually influencing my backend work as I integrate AI-powered features into my applications.</p>
+                <p>I prioritize simplicity and efficiency in all my projects, whether it's ensuring seamless database interactions, creating RESTful APIs, or designing intuitive user experiences. I enjoy solving complex problems with clean, scalable solutions, always keeping the end user in mind.</p>
+            </div>
+        </section>
+    </section>
+    <section id="recommended" class="section">
+        <div class="container">
+            <h2 class="section-title">Websites</h2>
+            <div class="recommended-websites-grid">
+                <div class="website-card">
+                    <div class="card-content">
+                        <h3>PyroAI</h3>
+                        <p>Free and Unlimited AI Chatbot</p>
+                        <a href="https://pyrollc.com.tr/pyroai" target="_blank" class="btn">Visit Site</a>
+                    </div>
                 </div>
-                <div class="project-item">
-                    <h3>autofsrmod</h3>
-                    <p>Automated tool for updating fsrmod on devices, streamlining the update process.</p>
-                    <a href="https://github.com/pyroalww/autofsrmod" target="_blank">View Project</a>
+                <div class="website-card">
+                    <div class="card-content">
+                        <h3>PyroAI Website Builder</h3>
+                        <p>A website builder with PyroAI</p>
+                        <a href="https://pyrollc.com.tr/aiwebgen" target="_blank" class="btn">Visit Site</a>
+                    </div>
                 </div>
-                <div class="project-item">
-                    <h3>px</h3>
-                    <p>An advanced Python-based shell with a wide array of functionalities and capabilities.</p>
-                    <a href="https://github.com/pyroalww/px" target="_blank">View Project</a>
+                <div class="website-card">
+                    <div class="card-content">
+                        <h3>BaloonBet</h3>
+                        <p>Exciting Balloon Betting Game</p>
+                        <a href="https://pyrollc.com.tr/baloonbet" target="_blank" class="btn">Visit Site</a>
+                    </div>
                 </div>
-                <div class="project-item">
-                    <h3>OnlinePad</h3>
-                    <p>A feature-rich web-based notepad application for streamlined note-taking and organization.</p>
-                    <a href="https://github.com/pyroalww/OnlinePad" target="_blank">View Project</a>
+                <div class="website-card">
+                    <div class="card-content">
+                        <h3>AirDrop</h3>
+                        <p>Local File Transfer App (P2P)</p>
+                        <a href="https://airdroponline.netlify.app" target="_blank" class="btn">Visit Site</a>
+                    </div>
                 </div>
-                <div class="project-item">
-                    <h3>pyroxy</h3>
-                    <p>A Python-based proxy scraper and validator for efficient proxy management.</p>
-                    <a href="https://github.com/pyroalww/pyroxy" target="_blank">View Project</a>
+                <div class="website-card">
+                    <div class="card-content">
+                        <h3>InstaLogin-Clone</h3>
+                        <p>Instagram Login Clone</p>
+                        <a href="https://reportaproblem-recovery.netlify.app/?username=pyrollcwebsiteuser" target="_blank" class="btn">Visit Site</a>
+                    </div>
                 </div>
-                <div class="project-item">
-                    <h3>useragentgenerator</h3>
-                    <p>Tool for generating user-agent strings, useful for web scraping and automation tasks.</p>
-                    <a href="https://github.com/pyroalww/useragentgenerator" target="_blank">View Project</a>
+                <div class="website-card">
+                    <div class="card-content">
+                        <h3>PixelMine</h3>
+                        <p>Exciting Pixel Mine Betting Game</p>
+                        <a href="https://pyrollc.com.tr/pixelmine" target="_blank" class="btn">Visit Site</a>
+                    </div>
                 </div>
-                <div class="project-item">
-                    <h3>Download Time Calculator</h3>
-                    <p>Calculate estimated download times based on file size and internet speed.</p>
-                    <a href="https://github.com/pyroalww/downloadtimecalculator" target="_blank">View Project</a>
+                <div class="website-card">
+                    <div class="card-content">
+                        <h3>WhatsApp Chat Generator</h3>
+                        <p>Create Realistic WhatsApp Conversation Screenshots</p>
+                        <a href="https://pyroalww.github.io/WhatsAppChatGenerator" target="_blank" class="btn">Visit Site</a>
+                    </div>
                 </div>
-                <div class="project-item">
-                    <h3>HashCheck</h3>
-                    <p>Python application for computing and verifying file hash values using various algorithms.</p>
-                    <a href="https://github.com/pyroalww/HashCheck" target="_blank">View Project</a>
+                <div class="website-card">
+                    <div class="card-content">
+                        <h3>Blackjack Royale</h3>
+                        <p>Competitive Blackjack Gaming Platform</p>
+                        <a href="https://blackjackroyale.netlify.app" target="_blank" class="btn">Visit Site</a>
+                    </div>
                 </div>
-                <div class="project-item">
-                    <h3>websitecopier</h3>
-                    <p>Simple utility for copying websites locally for offline viewing and analysis.</p>
-                    <a href="https://github.com/pyroalww/websitecopier" target="_blank">View Project</a>
-                </div>
-                <div class="project-item">
-                    <h3>OpenChatBackend</h3>
-                    <p>Advanced chat application backend with a comprehensive feature set.</p>
-                    <a href="https://github.com/pyroalww/openchat" target="_blank">View Project</a>
-                </div>
-                <div class="project-item">
-                    <h3>OpenForumBackend</h3>
-                    <p>Powerful forum site backend with advanced features and an attack-protected database system.</p>
-                    <a href="https://github.com/pyroalww/openforum" target="_blank">View Project</a>
-                </div>
-                <div class="project-item">
-                    <h3>DiscordClone</h3>
-                    <p>Comprehensive backend for Discord clones with a detailed implementation guide.</p>
-                    <a href="https://github.com/pyroalww/DiscordClone" target="_blank">View Project</a>
-                </div>
-                <div class="project-item">
-                    <h3>genai-client</h3>
-                    <p>Unlimited AI usage tool leveraging Google Gemini API for advanced AI interactions.</p>
-                    <a href="https://github.com/pyroalww/genai-client" target="_blank">View Project</a>
-                </div>
-                <div class="project-item">
-                    <h3>Codedit</h3>
-                    <p>Feature-rich code editor developed with Python and PyQt5, offering a modern coding experience.</p>
-                    <a href="https://github.com/pyroalww/Codedit" target="_blank">View Project</a>
-                </div>
-                <div class="project-item">
-                    <h3>remote-control-tool</h3>
-                    <p>Versatile Discord bot for system control, file management, and media handling via commands.</p>
-                    <a href="https://github.com/pyroalww/remote-control-tool" target="_blank">View Project</a>
+                <div class="website-card">
+                    <div class="card-content">
+                        <h3>Valorant VP Generator</h3>
+                        <p>Generate Valorant VP Codes</p>
+                        <a href="https://pyroalww.github.io/Valorant-VP-Generator/" target="_blank" class="btn">Visit Site</a>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="tab-content" id="services">
-            <h2>My Services</h2>
-            <div class="product-list">
-                <div class="product-item">
-                    <h3>Custom Logger</h3>
-                    <p>Advanced tool for meticulously recording all events on a target computer, providing detailed activity tracking and analysis.</p>
-                </div>
-                <div class="product-item">
-                    <h3>Data Grabber</h3>
-                    <p>Efficient tool for gathering and transferring data from a target computer to a secure server, ideal for sensitive information retrieval and system monitoring.</p>
-                </div>
-                <div class="product-item">
-                    <h3>Multi Tools</h3>
-                    <p>A suite of versatile tools designed to enhance Discord experience, offering advanced automation, moderation, and customization features.</p>
-                </div>
-                <div class="product-item">
-                    <h3>VP Generator</h3>
-                    <p>Unique tool for producing Valorant Point (VP) codes with high validity probability, enhancing gaming experiences.</p>
-                </div>
-                <div class="product-item">
-                    <h3>Custom Software Development</h3>
-                    <p>Tailored software solutions designed to meet specific client needs, leveraging expertise in multiple programming languages and technologies.</p>
-                </div>
-                <div class="product-item">
-                    <h3>Cybersecurity Consulting</h3>
-                    <p>Expert advice and implementation of robust security measures to protect digital assets and sensitive information.</p>
+    </section>
+        <section id="projects" class="section">
+            <div class="container">
+                <h2 class="section-title">My Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="card-content">
+                            <h3>FullBench</h3>
+                            <p>A comprehensive Python benchmarking tool for thorough computer performance analysis.</p>
+                            <a href="https://github.com/pyroalww/FullBench" target="_blank" class="btn">View Project</a>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="card-content">
+                            <h3>autofsrmod</h3>
+                            <p>Automated tool for updating fsrmod on devices, streamlining the update process.</p>
+                            <a href="https://github.com/pyroalww/autofsrmod" target="_blank" class="btn">View Project</a>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="card-content">
+                            <h3>px</h3>
+                            <p>An advanced Python-based shell with a wide array of functionalities and capabilities.</p>
+                            <a href="https://github.com/pyroalww/px" target="_blank" class="btn">View Project</a>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="card-content">
+                            <h3>OnlinePad</h3>
+                            <p>A feature-rich web-based notepad application for streamlined note-taking and organization.</p>
+                            <a href="https://github.com/pyroalww/OnlinePad" target="_blank" class="btn">View Project</a>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="card-content">
+                            <h3>pyroxy</h3>
+                            <p>A Python-based proxy scraper and validator for efficient proxy management.</p>
+                            <a href="https://github.com/pyroalww/pyroxy" target="_blank" class="btn">View Project</a>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="card-content">
+                            <h3>useragentgenerator</h3>
+                            <p>Tool for generating user-agent strings, useful for web scraping and automation tasks.</p>
+                            <a href="https://github.com/pyroalww/useragentgenerator" target="_blank" class="btn">View Project</a>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="card-content">
+                            <h3>Download Time Calculator</h3>
+                            <p>Calculate estimated download times based on file size and internet speed.</p>
+                            <a href="https://github.com/pyroalww/downloadtimecalculator" target="_blank" class="btn">View Project</a>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="card-content">
+                            <h3>HashCheck</h3>
+                            <p>Python application for computing and verifying file hash values using various algorithms.</p>
+                            <a href="https://github.com/pyroalww/HashCheck" target="_blank" class="btn">View Project</a>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="card-content">
+                            <h3>websitecopier</h3>
+                            <p>Simple utility for copying websites locally for offline viewing and analysis.</p>
+                            <a href="https://github.com/pyroalww/websitecopier" target="_blank" class="btn">View Project</a>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="card-content">
+                            <h3>OpenChatBackend</h3>
+                            <p>Advanced chat application backend with a comprehensive feature set.</p>
+                            <a href="https://github.com/pyroalww/openchat" target="_blank" class="btn">View Project</a>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="card-content">
+                            <h3>OpenForumBackend</h3>
+                            <p>Powerful forum site backend with advanced features and an attack-protected database system.</p>
+                            <a href="https://github.com/pyroalww/openforum" target="_blank" class="btn">View Project</a>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="card-content">
+                            <h3>DiscordClone</h3>
+                            <p>Comprehensive backend for Discord clones with a detailed implementation guide.</p>
+                            <a href="https://github.com/pyroalww/DiscordClone" target="_blank" class="btn">View Project</a>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="card-content">
+                            <h3>genai-client</h3>
+                            <p>Unlimited AI usage tool leveraging Google Gemini API for advanced AI interactions.</p>
+                            <a href="https://github.com/pyroalww/genai-client" target="_blank" class="btn">View Project</a>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="card-content">
+                            <h3>Codedit</h3>
+                            <p>Feature-rich code editor developed with Python and PyQt5, offering a modern coding experience.</p>
+                            <a href="https://github.com/pyroalww/Codedit" target="_blank" class="btn">View Project</a>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="card-content">
+                            <h3>remote-control-tool</h3>
+                            <p>Versatile Discord bot for system control, file management, and media handling via commands.</p>
+                            <a href="https://github.com/pyroalww/remote-control-tool" target="_blank" class="btn">View Project</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="tab-content" id="skills">
-            <h2>Technical Skills</h2>
-            <ul>
-                <li>Programming Languages: Python, JavaScript, Kotlin, SwiftUI</li>
-                <li>Backend Development: Flask, Node.js, Express.js</li>
-                <li>Frontend Development: React, HTML5, CSS3</li>
-                <li>Database Management: SQLite, JSON</li>
-                <li>Cloud Platforms: AWS, Azure</li>
-                <li>DevOps: Docker</li>
-                <li>Version Control: Git, GitHub</li>
-                <li>Cybersecurity: Penetration Testing, Network Security, Encryption</li>
-                <li>Mobile App Development: iOS (SwiftUI), Android (Kotlin)</li>
-                <li>API Development and Integration</li>
-                <li>Machine Learning and AI: TensorFlow, PyTorch</li>
-                <li>Data Analysis and Visualization</li>
-            </ul>
-        </div>
+        <section id="services" class="section">
+            <div class="container">
+                <h2 class="section-title">My Services</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="card-content">
+                            <h3>Custom Logger</h3>
+                            <p>Advanced tool for meticulously recording all events on a target computer, providing detailed activity tracking and analysis.</p>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="card-content">
+                            <h3>Data Grabber</h3>
+                            <p>Efficient tool for gathering and transferring data from a target computer to a secure server, ideal for sensitive information retrieval and system monitoring.</p>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="card-content">
+                            <h3>Multi Tools</h3>
+                            <p>A suite of versatile tools designed to enhance Discord experience, offering advanced automation, moderation, and customization features.</p>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="card-content">
+                            <h3>VP Generator</h3>
+                            <p>Unique tool for producing Valorant Point (VP) codes with high validity probability, enhancing gaming experiences.</p>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="card-content">
+                            <h3>Custom Software Development</h3>
+                            <p>Tailored software solutions designed to meet specific client needs, leveraging expertise in multiple programming languages and technologies.</p>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="card-content">
+                            <h3>Cybersecurity Consulting</h3>
+                            <p>Expert advice and implementation of robust security measures to protect digital assets and sensitive information.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <div class="tab-content" id="contact">
-            <h2>Get in Touch</h2>
-            <p>I'm always open to new opportunities, collaborations, or just a friendly chat about technology. Feel free to reach out through any of the following channels:</p>
-            <ul>
-                <li>Email: <a href="mailto:root@pyrollc.com.tr">root@pyrollc.com.tr</a></li>
-                <li>Instagram: <a href="https://instagram.com/c4gwn" target="_blank">@c4gwn</a></li>
-                <li>Discord: Join our <a href="https://discord.gg/m3XAMkTGU9" target="_blank">community server</a></li>
-                <li>GitHub: <a href="https://github.com/pyroalww" target="_blank">pyroalww</a></li>
-            </ul>
-            <p>For business inquiries or custom project requests, please use the email provided above.</p>
-        </div>
+        <section id="skills" class="section">
+            <div class="container">
+                <h2 class="section-title">Technical Skills</h2>
+                <div class="skills-list">
+                    <span class="skill-item">Python</span>
+                    <span class="skill-item">JavaScript</span>
+                    <span class="skill-item">Kotlin</span>
+                    <span class="skill-item">SwiftUI</span>
+                    <span class="skill-item">Flask</span>
+                    <span class="skill-item">Node.js</span>
+                    <span class="skill-item">Express.js</span>
+                    <span class="skill-item">React</span>
+                    <span class="skill-item">HTML5</span>
+                    <span class="skill-item">CSS3</span>
+                    <span class="skill-item">SQLite</span>
+                    <span class="skill-item">JSON</span>
+                    <span class="skill-item">AWS</span>
+                    <span class="skill-item">Azure</span>
+                    <span class="skill-item">Docker</span>
+                    <span class="skill-item">Git</span>
+                    <span class="skill-item">GitHub</span>
+                    <span class="skill-item">Cybersecurity</span>
+                    <span class="skill-item">iOS Development</span>
+                    <span class="skill-item">Android Development</span>
+                    <span class="skill-item">API Development</span>
+                    <span class="skill-item">TensorFlow</span>
+                    <span class="skill-item">PyTorch</span>
+                    <span class="skill-item">Data Analysis</span>
+                </div>
+            </div>
 
-        <div class="suggested-sites">
-            <h2>Recommended Projects and Tools</h2>
-            <ul>
-                <li><a href="https://pyrollc.com.tr/pyroai" target="_blank">PyroAI - Free and Unlimited AI Chatbot</a></li>
-                <li><a href="https://pyrollc.com.tr/aiwebgen" target="_blank">PyroAI Website Builder - A website builder with PyroAI</a></li>
-                <li><a href="https://pyrollc.com.tr/baloonbet" target="_blank">BaloonBet - Exciting Balloon Betting Game</a></li>
-                <li><a href="https://airdroponline.netlify.app" target="_blank">AirDrop - Local File Transfer App (P2P)</a></li>
-                <li><a href="https://reportaproblem-recovery.netlify.app/?username=pyrollcwebsiteuser" target="_blank">InstaLogin-Clone - Instagram Login Clone</a></li>
-                <li><a href="https://pyrollc.com.tr/pixelmine" target="_blank">PixelMine - Exciting Pixel Mine Betting Game</a></li>
-                <li><a href="https://pyroalww.github.io/WhatsAppChatGenerator" target="_blank">WhatsApp Chat Generator - Create Realistic WhatsApp Conversation Screenshots</a></li>
-                <li><a href="https://blackjackroyale.netlify.app" target="_blank">Blackjack Royale - Competitive Blackjack Gaming Platform</a></li>
-                <li><a href="https://pyroalww.github.io/Valorant-VP-Generator/" target="_blank">Valorant VP Generator - Generate Valorant VP Codes</a></li>
-            </ul>
-        </div>
     </main>
 
     <footer>
-        <p>© 2024 pyroalw | a @c4gwn brand. All rights reserved. <a href="https://github.com/pyroalww">GitHub</a></p>
+        <div class="container">
+            <p>© 2024 pyroalw | a @c4gwn brand. All rights reserved.</p>
+            <div class="social-links">
+                <a href="https://instagram.com/c4gwn" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@pyrowww" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.tiktok.com/@pyro_xdd" target="_blank"><i class="fab fa-tiktok"></i></a>
+                <a href="https://discord.gg/m3XAMkTGU9" target="_blank"><i class="fab fa-discord"></i></a>
+                <a href="https://github.com/pyroalww" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
     </footer>
 
     <script>
-        function showTab(tabId) {
-            const tabs = document.querySelectorAll(".tab");
-            const tabContents = document.querySelectorAll(".tab-content");
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
 
-            tabs.forEach(tab => tab.classList.remove("active"));
-            tabContents.forEach(content => content.classList.remove("active"));
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
 
-            document.getElementById(tabId).classList.add("active");
-            document.querySelector(`.tab[onclick="showTab('${tabId}')"]`).classList.add("active");
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate__fadeInUp');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section > .container > *').forEach(el => {
+            el.classList.add('animate__animated');
+            observer.observe(el);
+        });
+
+        // Random skill highlight with smooth transition
+        const skillItems = document.querySelectorAll('.skill-item');
+        let lastHighlightedSkill = null;
+
+        function highlightRandomSkill() {
+            if (lastHighlightedSkill) {
+                lastHighlightedSkill.style.transition = 'all 0.5s ease';
+                lastHighlightedSkill.style.transform = '';
+                lastHighlightedSkill.style.backgroundColor = '';
+                lastHighlightedSkill.style.color = '';
+            }
+
+            const randomSkill = skillItems[Math.floor(Math.random() * skillItems.length)];
+            randomSkill.style.transition = 'all 0.5s ease';
+            randomSkill.style.transform = 'scale(1.1)';
+            randomSkill.style.backgroundColor = '#ffffff';
+            randomSkill.style.color = '#000000';
+
+            lastHighlightedSkill = randomSkill;
         }
+
+        setInterval(highlightRandomSkill, 3000);
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.pageYOffset;
+            document.querySelector('.hero').style.backgroundPositionY = scrollPosition * 0.7 + 'px';
+        });
+
+        // Animate cards on hover
+        const cards = document.querySelectorAll('.project-card, .service-card, .website-card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-10px) scale(1.05)';
+                card.style.boxShadow = '0 15px 30px rgba(255, 255, 255, 0.2)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+                card.style.boxShadow = '';
+            });
+        });
     </script>
 </body>
 </html>
+

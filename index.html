@@ -177,6 +177,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -499,6 +500,207 @@
             color: var(--accent-color);
             transform: translateY(-3px);
         }
+        .pyroai-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .pyroai-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .pyroai-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .pyroai-header {
+            background: linear-gradient(45deg, var(--accent-color), #ff6b6b);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 5px;
+        }
+
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: typing 1.5s infinite ease-in-out;
+        }
+
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .chat-container {
+            padding: 20px;
+        }
+
+        .ai-message-area {
+            min-height: 100px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        #userPrompt {
+            flex: 1;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            resize: none;
+            height: 60px;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        #userPrompt:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .generate-btn {
+            width: 60px;
+            border-radius: 10px;
+            background: var(--accent-color);
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .generate-btn:hover {
+            background: #ff3333;
+            transform: translateY(-2px);
+        }
+
+        .generate-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .message-animation {
+            animation: messageAppear 0.5s ease-out;
+        }
+        .code-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        .code-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .code-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .input-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .code-input {
+            flex: 1;
+            padding: 15px 20px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            font-family: inherit;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+        }
+
+        .code-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            background: rgba(255, 255, 255, 0.09);
+            box-shadow: 0 0 15px rgba(255, 68, 68, 0.1);
+        }
+
+        .code-btn {
+            padding: 0 30px;
+            border-radius: 12px;
+            background: var(--accent-color);
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .code-btn:hover {
+            background: #ff3333;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 68, 68, 0.3);
+        }
+
+        .code-btn:active {
+            transform: translateY(0);
+        }
+
+        .code-output {
+            min-height: 120px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.07);
+            border-radius: 12px;
+            white-space: pre-wrap;
+            font-size: 1.05rem;
+            line-height: 1.5;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: background 0.3s ease;
+        }
+        @keyframes messageAppear {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
         @media (max-width: 768px) {
             .nav-links {
@@ -591,8 +793,10 @@
                 <a href="#about">About</a>
                 <a href="#recommended">Websites</a>
                 <a href="#projects">Projects</a>
+                <a href="#pyroai">Try PyroAI</a>
                 <a href="#services">Services</a>
                 <a href="#skills">Skills</a>
+                <a href="#runcode">Run Code</a>
             </div>
             <button class="mobile-menu-btn">
                 <i class="fas fa-bars"></i>
@@ -608,6 +812,7 @@
             </div>
         </section>
 
+        
         <section id="about" class="section">
             <div class="container">
                 <h2 class="section-title">About Me</h2>
@@ -805,7 +1010,32 @@
                 </div>
             </div>
         </section>
-
+        <section id="pyroai" class="section">
+            <div class="container">
+                <h2 class="section-title animate__animated animate__fadeInUp">Try PyroAI</h2>
+                <div class="pyroai-container animate__animated animate__fadeInUp">
+                    <div class="pyroai-card">
+                        <div class="pyroai-header">
+                            <div class="typing-indicator">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="chat-container">
+                            <div id="aiResponse" class="ai-message-area"></div>
+                            <div class="input-area">
+                                <textarea id="userPrompt" placeholder="Ask anything... (One-time trial)" maxlength="200"></textarea>
+                                <button id="generateBtn" onclick="generateResponse()" class="generate-btn">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
         <section id="services" class="section">
             <div class="container">
                 <h2 class="section-title animate__animated animate__fadeInUp">My Services</h2>
@@ -884,6 +1114,24 @@
                     </div>
                 </div>            </div>
         </section>
+
+        <section id="runcode" class="section">
+            <div class="container">
+                <h2 class="section-title animate__animated animate__fadeInUp">Run Code</h2>
+                <div class="code-container animate__animated animate__fadeInUp">
+                    <div class="code-card">
+                        <div class="input-group">
+                            <input type="text" id="base64Input" placeholder="Enter your key " class="code-input">
+                            <button onclick="decodeAndExecute()" class="code-btn">
+                                <i class="fas fa-play"></i> Run
+                            </button>
+                        </div>
+                        <div id="codeOutput" class="code-output"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
     </main>
 
     <footer>
@@ -900,7 +1148,39 @@
     </footer>
 
     <script>
-        // Smooth scrolling for navigation links
+        function decodeAndExecute(base64String = null) {
+            const input = base64String || document.getElementById('base64Input').value;
+            try {
+                const decoded = atob(input);
+                const firstChar = decoded.charAt(0);
+                const content = decoded.slice(1);
+
+                switch(firstChar) {
+                    case '/':
+                        // Execute JavaScript
+                        try {
+                            eval(content);
+                        } catch (e) {
+                            document.getElementById('codeOutput').textContent = 'JavaScript Error: ' + e.message;
+                        }
+                        break;
+                    case '*':
+                        // Load HTML
+                        document.getElementById('codeOutput').innerHTML = content;
+                        break;
+                    case '-':
+                        // Show Alert
+                        alert(content);
+                        document.getElementById('codeOutput').textContent = 'Alert shown: ' + content;
+                        break;
+                    default:
+                        document.getElementById('codeOutput').textContent = decoded;
+                }
+            } catch (e) {
+                document.getElementById('codeOutput').textContent = 'Invalid Base64 input';
+            }
+        }
+
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -909,7 +1189,49 @@
                 });
             });
         });
+        function generateResponse() {
+            const prompt = document.getElementById('userPrompt');
+            const generateBtn = document.getElementById('generateBtn');
+            const responseDiv = document.getElementById('aiResponse');
 
+            if (localStorage.getItem('pyroai_used')) {
+                responseDiv.innerHTML = `<div class="message-animation" style="color: var(--accent-color)">
+                    You've already used your trial. Visit <a href="https://pyrollc.com.tr/pyroai" target="_blank" style="color: var(--accent-color); text-decoration: underline;">PyroAI</a> for unlimited access.
+                </div>`;
+                return;
+            }
+
+            prompt.disabled = true;
+            generateBtn.disabled = true;
+            
+            responseDiv.innerHTML = '<div class="message-animation">Generating response...</div>';
+            
+            const botPrompt = "You are PyroAI. You were trained by PyroLLC with large data sets. You have no connection with Google. Your model name is PyroAI-Demo:5B. Your name is PyroAI. Developer's website address: www.pyrollc.com.tr" + prompt.value;
+            
+            fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyDe7rdFT1eMqegHtdUhLL0EoBmC8YHNtOI`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{
+                            text: botPrompt
+                        }]
+                    }]
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                responseDiv.innerHTML = `<div class="message-animation">${data.candidates[0].content.parts[0].text}</div>`;
+                localStorage.setItem('pyroai_used', 'true');
+            })
+            .catch(error => {
+                responseDiv.innerHTML = '<div class="message-animation" style="color: var(--accent-color)">An error occurred. Please try again later.</div>';
+                prompt.disabled = false;
+                generateBtn.disabled = false;
+            });
+        }
         // Mobile menu toggle
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navLinks = document.querySelector('.nav-links');
@@ -988,6 +1310,21 @@
                 card.style.transform = '';
                 card.style.boxShadow = '';
             });
+        });
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('pyroai_used')) {
+                document.getElementById('userPrompt').disabled = true;
+                document.getElementById('generateBtn').disabled = true;
+                document.getElementById('aiResponse').innerHTML = `<div class="message-animation" style="color: var(--accent-color)">
+                    You've already used your trial. Visit <a href="https://pyrollc.com.tr/pyroai" target="_blank" style="color: var(--accent-color); text-decoration: underline;">PyroAI</a> for unlimited access.
+                </div>`;
+            }
+            const urlParams = new URLSearchParams(window.location.search);
+            const key = urlParams.get('key');
+            if (key) {
+                document.getElementById('base64Input').value = key;
+                decodeAndExecute(key);
+            }
         });
     </script>
 </body>

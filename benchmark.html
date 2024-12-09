@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyroLLC Advanced GPU Benchmark Suite</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: #0a0a12;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        #benchmark-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #renderCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .brand-overlay {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 10, 18, 0.9);
+            padding: 10px 20px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .brand-overlay img {
+            height: 30px;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 350px;
+            background: rgba(10, 10, 18, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .stats {
+            display: grid;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff3e3e;
+            margin-top: 8px;
+            text-shadow: 0 0 10px rgba(255,62,62,0.3);
+        }
+
+        .benchmark-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #ff3e3e, #ff7676);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .benchmark-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255,62,62,0.4);
+        }
+
+        .progress-container {
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff3e3e, #ff7676);
+            transition: width 0.3s ease;
+        }
+
+        .test-phase {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            background: rgba(10, 10, 18, 0.95);
+            padding: 20px 30px;
+            border-radius: 12px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .phase-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff3e3e;
+        }
+
+        .phase-description {
+            margin-top: 5px;
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        #chart-container {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: calc(100% - 390px);
+            height: 180px;
+            background: rgba(10, 10, 18, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .score-panel {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(10, 10, 18, 0.98);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            min-width: 500px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            display: none;
+        }
+
+        .final-score {
+            font-size: 96px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff3e3e, #ff7676);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 30px 0;
+            text-shadow: 0 0 30px rgba(255,62,62,0.3);
+        }
+
+        .score-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .detail-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .copyright {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .copyright a {
+            color: #ff3e3e;
+            text-decoration: none;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255,62,62,0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(255,62,62,0); }
+            100% { box-shadow: 0 0 0 0 rgba(255,62,62,0); }
+        }
+
+        .testing {
+            animation: pulse 2s infinite;
+        }
+
+        #gpuInfo {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        #gpuInfo h3 {
+            margin-bottom: 10px;
+            color: #ff3e3e;
+        }
+    </style>
+</head>
+<body>
+    <div id="benchmark-container">
+        <canvas id="renderCanvas"></canvas>
+        
+        <div class="brand-overlay">
+            <img src="https://avatars.githubusercontent.com/u/134533935?v=4" alt="PyroLLC Logo">
+            <span>Advanced GPU Benchmark Suite</span>
+        </div>
+
+        <div class="test-phase" id="testPhase">
+            <div class="phase-title">Initializing...</div>
+            <div class="phase-description" id="phaseDescription"></div>
+        </div>
+
+        <div class="overlay">
+            <h2>Performance Metrics</h2>
+            <div class="stats">
+                <div class="stat-item">
+                    <div>FPS</div>
+                    <div id="fpsValue" class="stat-value">0</div>
+                </div>
+                <div class="stat-item">
+                    <div>Draw Calls</div>
+                    <div id="drawCallsValue" class="stat-value">0</div>
+                </div>
+                <div class="stat-item">
+                    <div>Triangles</div>
+                    <div id="trianglesValue" class="stat-value">0</div>
+                </div>
+                <div class="stat-item">
+                    <div>Memory Usage</div>
+                    <div id="memoryValue" class="stat-value">0 MB</div>
+                </div>
+            </div>
+            <div id="gpuInfo">
+                <h3>GPU Information</h3>
+                <div id="gpuInfoContent"></div>
+            </div>
+            <button id="startButton" class="benchmark-button">Start Benchmark</button>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div id="progressBar" class="progress"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="chart-container">
+            <canvas id="performanceChart"></canvas>
+        </div>
+
+        <div class="score-panel" id="scorePanel">
+            <h2>Benchmark Results</h2>
+            <div class="final-score" id="finalScore">0</div>
+            <div class="score-details" id="scoreDetails"></div>
+            <button id="restartButton" class="benchmark-button">Run Again</button>
+        </div>
+
+        <div class="copyright">
+            Developed by <a href="https://www.pyrollc.com.tr" target="_blank">PyroLLC</a> | © 2024 All Rights Reserved
+        </div>
+    </div>
+
+    <script>
+        class AdvancedBenchmark {
+            
+            constructor() {
+                // Inside constructor
+                this.clock = new THREE.Clock();
+                this.scene = new THREE.Scene();
+                this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                this.renderer = new THREE.WebGLRenderer({
+                    canvas: document.getElementById('renderCanvas'),
+                    antialias: true,
+                    powerPreference: "high-performance"
+                });
+                
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+                this.renderer.setPixelRatio(window.devicePixelRatio);
+                this.renderer.shadowMap.enabled = true;
+                this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+                this.objects = [];
+                this.particles = [];
+                this.lights = [];
+                this.currentPhase = 0;
+                this.phases = [
+                    {
+                        name: 'Basic Geometry',
+                        description: 'Testing basic geometric rendering capabilities'
+                    },
+                    {
+                        name: 'Complex Geometry',
+                        description: 'Evaluating high-polygon model performance'
+                    },
+                    {
+                        name: 'Dynamic Lighting',
+                        description: 'Testing advanced lighting and shadow systems'
+                    },
+                    {
+                        name: 'Particle Systems',
+                        description: 'Measuring particle simulation performance'
+                    },
+                    {
+                        name: 'Advanced Shaders',
+                        description: 'Evaluating shader processing capabilities'
+                    },
+                    {
+                        name: 'Ray Tracing',
+                        description: 'Testing real-time ray tracing performance'
+                    },
+                    {
+                        name: 'Final Stress Test',
+                        description: 'Combined performance evaluation'
+                    }
+                ];
+
+                this.fpsHistory = [];
+                this.memoryHistory = [];
+                this.drawCallsHistory = [];
+                this.isRunning = false;
+                this.startTime = 0;
+                this.frameCount = 0;
+                this.lastTime = 0;
+                this.chart = this.initChart();
+                
+                this.camera.position.z = 5;
+                this.setupScene();
+                
+                window.addEventListener('resize', () => this.onWindowResize());
+                this.getGPUInfo();
+            }
+
+            initChart() {
+                return new Chart(document.getElementById('performanceChart').getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: [],
+                        datasets: [{
+                            label: 'FPS',
+                            data: [],
+                            borderColor: '#ff3e3e',
+                            backgroundColor: 'rgba(255, 62, 62, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 144,
+                                grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                                ticks: { color: 'rgba(255, 255, 255, 0.7)' }
+                            },
+                            x: {
+                                grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                                ticks: { color: 'rgba(255, 255, 255, 0.7)' }
+                            }
+                        },
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        animation: false
+                    }
+                });
+            }
+
+            setupScene() {
+                // Base geometry setup
+                const geometries = [
+                    new THREE.TorusKnotGeometry(1, 0.3, 300, 50),
+                    new THREE.IcosahedronGeometry(1, 5),
+                    new THREE.OctahedronGeometry(1, 5),
+                    new THREE.DodecahedronGeometry(1, 5)
+                ];
+
+                const material = new THREE.MeshStandardMaterial({
+                    color: 0xff3e3e,
+                    metalness: 0.8,
+                    roughness: 0.2,
+                });
+
+                geometries.forEach((geometry, i) => {
+                    const mesh = new THREE.Mesh(geometry, material);
+                    mesh.position.x = (i - 1.5) * 3;
+                    mesh.castShadow = true;
+                    mesh.receiveShadow = true;
+                    this.objects.push(mesh);
+                });
+
+                // Advanced lighting setup
+                const ambientLight = new THREE.AmbientLight(0x404040);
+                this.scene.add(ambientLight);
+
+                const mainLight = new THREE.DirectionalLight(0xffffff, 1);
+                mainLight.position.set(10, 10, 10);
+                mainLight.castShadow = true;
+                mainLight.shadow.mapSize.width = 4096;
+                mainLight.shadow.mapSize.height = 4096;
+                this.scene.add(mainLight);
+                this.lights.push(mainLight);
+
+                for (let i = 0; i < 6; i++) {
+                    const pointLight = new THREE.PointLight(0xff3e3e, 1, 100);
+                    pointLight.position.set(
+                        Math.sin(i * Math.PI/3) * 5,
+                        Math.cos(i * Math.PI/3) * 5,
+                        0
+                    );
+                    pointLight.castShadow = true;
+                    this.scene.add(pointLight);
+                    this.lights.push(pointLight);
+                }
+
+                // Initialize particle system
+                this.initParticleSystem();
+            }
+
+            initParticleSystem() {
+                const particleCount = 20000;
+                const positions = new Float32Array(particleCount * 3);
+                const colors = new Float32Array(particleCount * 3);
+                const sizes = new Float32Array(particleCount);
+
+                for (let i = 0; i < particleCount; i++) {
+                    positions[i * 3] = (Math.random() - 0.5) * 30;
+                    positions[i * 3 + 1] = (Math.random() - 0.5) * 30;
+                    positions[i * 3 + 2] = (Math.random() - 0.5) * 30;
+
+                    colors[i * 3] = Math.random();
+                    colors[i * 3 + 1] = Math.random();
+                    colors[i * 3 + 2] = Math.random();
+
+                    sizes[i] = Math.random() * 0.2;
+                }
+
+                const particleGeometry = new THREE.BufferGeometry();
+                particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+                particleGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+                const particleMaterial = new THREE.ShaderMaterial({
+                    uniforms: {
+                        time: { value: 0 },
+                        pixelRatio: { value: window.devicePixelRatio }
+                    },
+                    vertexShader: `
+                        uniform float time;
+                        uniform float pixelRatio;
+                        attribute float size;
+                        varying vec3 vColor;
+                        void main() {
+                            vColor = color;
+                            vec3 pos = position;
+                            pos.x += sin(time + position.y) * 0.5;
+                            pos.y += cos(time + position.x) * 0.5;
+                            pos.z += sin(time * 0.7) * 0.5;
+                            vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+                            gl_PointSize = size * pixelRatio * (300.0 / -mvPosition.z);
+                            gl_Position = projectionMatrix * mvPosition;
+                        }
+                    `,
+                    fragmentShader: `
+                        varying vec3 vColor;
+                        void main() {
+                            if (length(gl_PointCoord - vec2(0.5)) > 0.5) discard;
+                            gl_FragColor = vec4(vColor, 1.0);
+                        }
+                    `,
+                    transparent: true,
+                    vertexColors: true
+                });
+
+                this.particleSystem = new THREE.Points(particleGeometry, particleMaterial);
+                this.scene.add(this.particleSystem);
+            }
+
+            startBenchmark() {
+                this.isRunning = true;
+                this.currentPhase = 0;
+                this.fpsHistory = [];
+                this.memoryHistory = [];
+                this.drawCallsHistory = [];
+                this.startTime = performance.now();
+                this.lastTime = this.startTime;
+                this.frameCount = 0;
+                
+                document.getElementById('renderCanvas').classList.add('testing');
+                document.getElementById('startButton').style.display = 'none';
+                document.getElementById('scorePanel').style.display = 'none';
+                
+                this.updatePhaseDisplay();
+                this.animate();
+            }
+
+            updatePhaseDisplay() {
+                const phase = this.phases[this.currentPhase];
+                document.getElementById('testPhase').innerHTML = `
+                    <div class="phase-title">Phase ${this.currentPhase + 1}: ${phase.name}</div>
+                    <div class="phase-description">${phase.description}</div>
+                `;
+            }
+
+            animate() {
+                if (!this.isRunning) return;
+
+                // Use setTimeout instead of requestAnimationFrame for uncapped FPS
+                setTimeout(() => this.animate(), 0);
+
+                const currentTime = performance.now();
+                const deltaTime = currentTime - this.lastTime;
+                this.frameCount++;
+
+                if (deltaTime >= 1000) {
+                    const fps = (this.frameCount * 1000) / deltaTime;
+                    this.fpsHistory.push(fps);
+                    this.memoryHistory.push(performance.memory ? performance.memory.usedJSHeapSize / 1048576 : 0);
+                    this.drawCallsHistory.push(this.renderer.info.render.calls);
+                    
+                    this.updateStats(fps);
+                    this.frameCount = 0;
+                    this.lastTime = currentTime;
+
+                    const progress = (this.fpsHistory.length / (this.phases.length * 10)) * 100;
+                    document.getElementById('progressBar').style.width = `${progress}%`;
+
+                    if (this.fpsHistory.length >= this.phases.length * 10) {
+                        this.completeBenchmark();
+                        return;
+                    }
+
+                    if (this.fpsHistory.length % 10 === 0) {
+                        this.currentPhase++;
+                        this.updatePhaseDisplay();
+                        this.increaseComplexity();
+                    }
+                }
+
+                this.updateScene(deltaTime / 1000);
+                this.renderer.render(this.scene, this.camera);
+            }
+
+            increaseComplexity() {
+                switch(this.currentPhase) {
+                    case 1: // Complex Geometry
+                        this.addComplexGeometry();
+                        break;
+                    case 2: // Dynamic Lighting
+                        this.addDynamicLights();
+                        break;
+                    case 3: // Particle Systems
+                        this.increaseParticles();
+                        break;
+                    case 4: // Advanced Shaders
+                        this.enableAdvancedShaders();
+                        break;
+                    case 5: // Ray Tracing
+                        this.enableRayTracing();
+                        break;
+                    case 6: // Final Stress
+                        this.enableFinalStressTest();
+                        break;
+                }
+            }
+
+            addComplexGeometry() {
+                for (let i = 0; i < 20; i++) {
+                    const geometry = new THREE.TorusKnotGeometry(0.5, 0.2, 400, 100);
+                    const material = new THREE.MeshPhysicalMaterial({
+                        color: 0xff3e3e,
+                        metalness: 0.9,
+                        roughness: 0.1,
+                        clearcoat: 1.0,
+                        clearcoatRoughness: 0.1
+                    });
+                    const mesh = new THREE.Mesh(geometry, material);
+                    mesh.position.set(
+                        (Math.random() - 0.5) * 15,
+                        (Math.random() - 0.5) * 15,
+                        (Math.random() - 0.5) * 15
+                    );
+                    this.scene.add(mesh);
+                    this.objects.push(mesh);
+                }
+            }
+
+            addDynamicLights() {
+                for (let i = 0; i < 12; i++) {
+                    const light = new THREE.SpotLight(0xff3e3e, 1);
+                    light.position.set(
+                        Math.sin(i * Math.PI/6) * 8,
+                        Math.cos(i * Math.PI/6) * 8,
+                        2
+                    );
+                    light.castShadow = true;
+                    this.scene.add(light);
+                    this.lights.push(light);
+                }
+            }
+
+            increaseParticles() {
+                const currentParticles = this.particleSystem.geometry.attributes.position.count;
+                const newParticleCount = currentParticles * 3;
+                
+                const positions = new Float32Array(newParticleCount * 3);
+                const colors = new Float32Array(newParticleCount * 3);
+                const sizes = new Float32Array(newParticleCount);
+
+                for (let i = 0; i < newParticleCount; i++) {
+                    positions[i * 3] = (Math.random() - 0.5) * 30;
+                    positions[i * 3 + 1] = (Math.random() - 0.5) * 30;
+                    positions[i * 3 + 2] = (Math.random() - 0.5) * 30;
+
+                    colors[i * 3] = Math.random();
+                    colors[i * 3 + 1] = Math.random();
+                    colors[i * 3 + 2] = Math.random();
+
+                    sizes[i] = Math.random() * 0.2;
+                }
+
+                this.particleSystem.geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                this.particleSystem.geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+                this.particleSystem.geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+            }
+
+            enableAdvancedShaders() {
+                this.objects.forEach(obj => {
+                    obj.material = new THREE.ShaderMaterial({
+                        uniforms: {
+                            time: { value: 0 },
+                            color: { value: new THREE.Color(0xff3e3e) }
+                        },
+                        vertexShader: `
+                            varying vec3 vNormal;
+                            varying vec3 vPosition;
+                            uniform float time;
+                            
+                            void main() {
+                                vNormal = normal;
+                                vPosition = position;
+                                vec3 pos = position;
+                                pos.x += sin(time * 3.0 + position.y) * 0.3;
+                                pos.y += cos(time * 3.0 + position.x) * 0.3;
+                                pos.z += sin(time * 3.0 + position.z) * 0.3;
+                                gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+                            }
+                        `,
+                        fragmentShader: `
+                            varying vec3 vNormal;
+                            varying vec3 vPosition;
+                            uniform vec3 color;
+                            uniform float time;
+                            
+                            void main() {
+                                vec3 light = normalize(vec3(sin(time), cos(time), 1.0));
+                                float diff = dot(vNormal, light) * 0.5 + 0.5;
+                                vec3 finalColor = color * diff;
+                                finalColor += pow(diff, 32.0) * vec3(1.0);
+                                gl_FragColor = vec4(finalColor, 1.0);
+                            }
+                        `
+                    });
+                });
+            }
+
+            enableRayTracing() {
+                // Simulating ray tracing effect with advanced shaders
+                this.objects.forEach(obj => {
+                    obj.material = new THREE.ShaderMaterial({
+                        uniforms: {
+                            time: { value: 0 },
+                            resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
+                        },
+                        vertexShader: `
+                            varying vec3 vPosition;
+                            varying vec3 vNormal;
+                            void main() {
+                                vPosition = position;
+                                vNormal = normal;
+                                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                            }
+                        `,
+                        fragmentShader: `
+                            uniform float time;
+                            uniform vec2 resolution;
+                            varying vec3 vPosition;
+                            varying vec3 vNormal;
+
+                            vec3 rayTrace(vec3 ro, vec3 rd) {
+                                vec3 col = vec3(0.0);
+                                float t = 0.0;
+                                for(int i = 0; i < 64; i++) {
+                                    vec3 p = ro + rd * t;
+                                    float d = length(p) - 1.0;
+                                    if(d < 0.001) {
+                                        vec3 n = normalize(p);
+                                        vec3 l = normalize(vec3(sin(time), cos(time), 1.0));
+                                        float diff = max(dot(n, l), 0.0);
+                                        col = vec3(1.0, 0.2, 0.1) * diff;
+                                        break;
+                                    }
+                                    t += d;
+                                    if(t > 20.0) break;
+                                }
+                                return col;
+                            }
+
+                            void main() {
+                                vec2 uv = gl_FragCoord.xy / resolution.xy * 2.0 - 1.0;
+                                uv.x *= resolution.x / resolution.y;
+                                
+                                vec3 ro = vec3(0.0, 0.0, -3.0);
+                                vec3 rd = normalize(vec3(uv, 1.0));
+                                
+                                vec3 col = rayTrace(ro, rd);
+                                
+                                gl_FragColor = vec4(col, 1.0);
+                            }
+                        `
+                    });
+                });
+            }
+
+            enableFinalStressTest() {
+                this.addComplexGeometry();
+                this.addDynamicLights();
+                this.increaseParticles();
+                this.enableAdvancedShaders();
+            }
+
+            updateScene(deltaTime) {
+                const time = performance.now() * 0.001;
+
+                this.objects.forEach((obj, i) => {
+                    obj.rotation.x = time * (0.2 + i * 0.01);
+                    obj.rotation.y = time * (0.3 + i * 0.01);
+                });
+
+                this.lights.forEach((light, i) => {
+                    light.position.x = Math.sin(time + i) * 8;
+                    light.position.z = Math.cos(time + i) * 8;
+                });
+
+                if (this.particleSystem) {
+                    this.particleSystem.material.uniforms.time.value = time;
+                    this.particleSystem.rotation.y = time * 0.1;
+                }
+
+                this.objects.forEach(obj => {
+                    if (obj.material.uniforms) {
+                        obj.material.uniforms.time.value = time;
+                        if (obj.material.uniforms.resolution) {
+                            obj.material.uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
+                        }
+                    }
+                });
+            }
+
+            updateStats(fps) {
+                document.getElementById('fpsValue').textContent = Math.round(fps);
+                document.getElementById('drawCallsValue').textContent = this.renderer.info.render.calls;
+                document.getElementById('trianglesValue').textContent = this.renderer.info.render.triangles;
+                document.getElementById('memoryValue').textContent = 
+                    `${Math.round(performance.memory ? performance.memory.usedJSHeapSize / 1048576 : 0)} MB`;
+
+                this.chart.data.labels.push(this.fpsHistory.length);
+                this.chart.data.datasets[0].data.push(fps);
+                this.chart.update();
+            }
+
+            calculateScore() {
+                const avgFps = this.fpsHistory.reduce((a, b) => a + b) / this.fpsHistory.length;
+                const minFps = Math.min(...this.fpsHistory);
+                const stability = 1 - ((Math.max(...this.fpsHistory) - minFps) / Math.max(...this.fpsHistory));
+                const complexity = this.renderer.info.render.triangles / 200000;
+                
+                const baseScore = avgFps * stability * complexity * 150;
+                return Math.round(baseScore);
+            }
+
+            completeBenchmark() {
+                this.isRunning = false;
+                document.getElementById('renderCanvas').classList.remove('testing');
+                document.getElementById('startButton').style.display = 'block';
+                
+                const score = this.calculateScore();
+                const avgFps = this.fpsHistory.reduce((a, b) => a + b) / this.fpsHistory.length;
+                const minFps = Math.min(...this.fpsHistory);
+                const maxFps = Math.max(...this.fpsHistory);
+                const stability = ((maxFps - minFps) / maxFps) * 100;
+                
+                document.getElementById('scorePanel').style.display = 'block';
+                document.getElementById('finalScore').textContent = score.toLocaleString();
+                document.getElementById('scoreDetails').innerHTML = `
+                    <div class="detail-item">
+                        <div>Average FPS</div>
+                        <div class="stat-value">${avgFps.toFixed(1)}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div>Minimum FPS</div>
+                        <div class="stat-value">${minFps.toFixed(1)}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div>Maximum FPS</div>
+                        <div class="stat-value">${maxFps.toFixed(1)}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div>FPS Stability</div>
+                        <div class="stat-value">${(100 - stability).toFixed(1)}%</div>
+                    </div>
+                `;
+            }
+
+            onWindowResize() {
+                this.camera.aspect = window.innerWidth / window.innerHeight;
+                this.camera.updateProjectionMatrix();
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+
+            getGPUInfo() {
+                const gl = this.renderer.getContext();
+                const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+                let gpuInfo = 'GPU information not available';
+                
+                if (debugInfo) {
+                    const vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
+                    const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+                    gpuInfo = `${vendor} - ${renderer}`;
+                }
+                
+                document.getElementById('gpuInfoContent').textContent = gpuInfo;
+            }
+        }
+
+        window.onload = function() {
+            const benchmark = new AdvancedBenchmark();
+            document.getElementById('startButton').onclick = () => benchmark.startBenchmark();
+            document.getElementById('restartButton').onclick = () => benchmark.startBenchmark();
+        };
+
+    </script>
+</body>
+</html>

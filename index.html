@@ -808,6 +808,7 @@
                 <a href="#services">Services</a>
                 <a href="#skills">Skills</a>
                 <a href="#runcode">Run Code</a>
+                <a href="#exploit">Exploit</a>
             </div>
             <button class="mobile-menu-btn">
                 <i class="fas fa-bars"></i>
@@ -865,7 +866,7 @@
                         <div class="card-content">
                             <h3>Pyro Benchmark - 3D GPU Benchmark</h3>
                             <p>Benchmark your GPU online!</p>
-                            <a href="https://pyrollc.com.tr/aiwebgen" target="_blank" class="btn">Visit Site</a>
+                            <a href="https://pyrollc.com.tr/benchmark" target="_blank" class="btn">Visit Site</a>
                         </div>
                     </div>
                     <div class="website-card animate__animated animate__fadeInUp animate__delay-3s">
@@ -1157,7 +1158,35 @@
                 </div>
             </div>
         </section>
-        
+        <section id="exploit" class="section">
+            <div class="container">
+                <h2 class="section-title animate__animated animate__fadeInUp">Browser Exploit</h2>
+                <div class="code-container animate__animated animate__fadeInUp">
+                    <div class="code-card">
+                        <div style="background: rgba(255, 77, 77, 0.1); border-left: 4px solid var(--accent-color); padding: 15px; margin-bottom: 20px; border-radius: 5px;">
+                            <h3 style="color: var(--accent-color); margin-bottom: 10px;">⚠️ Warning</h3>
+                            <p>Executing this vulnerability can crash your browser. Try this if you want to test your computer or browser. This code can do the following:</p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>Browser crash</li>
+                                <li>System slowdown</li>
+                                <li>Potential data loss in other tabs</li>
+                            </ul>
+                            <p style="margin-top: 10px;">Please save your work in other tabs before proceeding.</p>
+                        </div>
+                        <div class="input-group">
+                            <button id="startExploit" class="code-btn" style="background: var(--accent-color);">
+                                <i class="fas fa-exclamation-triangle"></i> Start Exploit
+                            </button>
+                            <button id="stopExploit" class="code-btn" style="background: #666; display: none;">
+                                <i class="fas fa-stop"></i> Stop Exploit
+                            </button>
+                        </div>
+                        <div id="exploitStatus" class="code-output" style="margin-top: 15px;">Status: Ready</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+                
     </main>
 
     <footer>
@@ -1352,6 +1381,44 @@
                 decodeAndExecute(key);
             }
         });
+        let memoryLeakArray = [];
+        let exploitInterval;
+        let isExploiting = false;
+
+        document.getElementById('startExploit').addEventListener('click', function() {
+            if (confirm('Are you sure you want to start the exploit? This may crash your browser.')) {
+                isExploiting = true;
+                this.style.display = 'none';
+                document.getElementById('stopExploit').style.display = 'block';
+                document.getElementById('exploitStatus').innerHTML = 'Status: Exploit running... Creating chunks.';
+                
+                exploitInterval = setInterval(() => {
+                    try {
+                        let leak = new Array(100000000).fill('x'.repeat(1000));
+                        memoryLeakArray.push(leak);
+                        document.getElementById('exploitStatus').innerHTML = 
+                            `Status: Running... Allocated chunks: ${memoryLeakArray.length}`;
+                    } catch (e) {
+                        document.getElementById('exploitStatus').innerHTML = 
+                            `Status: Cannot create new exploit chunk: ${e.message}`;
+                        stopExploit();
+                    }
+                }, 100);
+            }
+        });
+
+        document.getElementById('stopExploit').addEventListener('click', stopExploit);
+
+        function stopExploit() {
+            if (exploitInterval) {
+                clearInterval(exploitInterval);
+                memoryLeakArray = [];
+                isExploiting = false;
+                document.getElementById('startExploit').style.display = 'block';
+                document.getElementById('stopExploit').style.display = 'none';
+                document.getElementById('exploitStatus').innerHTML = 'Status: Exploit stopped';
+            }
+        }
     </script>
 </body>
 </html>

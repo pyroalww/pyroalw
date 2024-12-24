@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Free AI Token Counter Tool - Calculate tokens for ChatGPT, GPT-3, GPT-4. Analyze text, documents, and PDFs for token usage. Best token calculator for AI models." />
+  <meta name="keywords" content="token counter, AI token calculator, ChatGPT tokens, GPT-3 token count, GPT-4 token calculator, AI text analysis, PDF token counter, free token counter, AI tools, language model tokens, text analysis tool, document analyzer" />
+  <meta name="author" content="Token Counter Tool" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="AI Chatbot Token Counter - Free Token Calculator Tool" />
+  <meta property="og:description" content="Calculate tokens for AI language models. Free tool for analyzing text, documents, and PDFs. Perfect for ChatGPT, GPT-3, and GPT-4 users." />
+  <meta property="og:type" content="website" />
+  <title>AI Chatbot Token Counter | Free Token Calculator for ChatGPT, GPT-3, GPT-4</title>
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- PDF.js Library for PDF Text Extraction -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.7.107/pdf.min.js"></script>
+
+  <!-- CSS Styling -->
+  <style>
+    :root {      /* Light Mode Colors */
+      --bg-color: #f4f6f8;
+      --card-bg: #ffffff;
+      --text-color: #333333;
+      --secondary-text: #555555;
+      --button-bg: #007BFF;
+      --button-hover-bg: #0056b3;
+      --accent-color: #28a745;
+      --border-color: #e0e0e0;
+      --progress-bg: #e0e0e0;
+      --progress-fill: #007BFF;
+      --overflow-color: #dc3545; /* Red color for overflow */
+      --warning-color: #ffc107;  /* Yellow color for mid usage */
+
+      /* Dark Mode Colors */
+      --dark-bg-color: #121212;
+      --dark-card-bg: #1e1e1e;
+      --dark-text-color: #ffffff;
+      --dark-secondary-text: #cccccc;
+      --dark-button-bg: #1a73e8;
+      --dark-button-hover-bg: #135ba1;
+      --dark-progress-fill: #1a73e8;
+      --dark-overflow-color: #dc3545;
+      --dark-warning-color: #ffc107;
+    }
+
+    body {
+      font-family: "Roboto", sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      min-height: 100vh;
+      justify-content: center;
+      align-items: center;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body.dark-mode {
+      background-color: var(--dark-bg-color);
+      color: var(--dark-text-color);
+    }
+
+    .container {
+      background-color: var(--card-bg);
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 900px;
+      text-align: center;
+      transition: background-color 0.3s;
+      position: relative;
+    }
+
+    body.dark-mode .container {
+      background-color: var(--dark-card-bg);
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-weight: 700;
+      font-size: 2em;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 10px;
+    }
+
+    .controls label {
+      font-weight: 500;
+    }
+
+    select,
+    input[type="file"] {
+      padding: 8px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 16px;
+      font-family: "Roboto", sans-serif;
+      transition: border-color 0.3s;
+    }
+
+    select:focus,
+    input[type="file"]:focus {
+      outline: none;
+      border-color: var(--button-bg);
+    }
+
+    body.dark-mode select,
+    body.dark-mode input[type="file"] {
+      background-color: #2c2c2c;
+      color: var(--dark-text-color);
+      border-color: var(--border-color);
+    }
+
+    textarea {
+      width: 100%;
+      height: 250px;
+      padding: 15px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      resize: vertical;
+      font-size: 16px;
+      font-family: "Roboto", sans-serif;
+      transition: border-color 0.3s;
+      background-color: #ffffff;
+      color: #000000;
+    }
+
+    body.dark-mode textarea {
+      background-color: #2c2c2c;
+      color: var(--dark-text-color);
+      border-color: var(--border-color);
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--button-bg);
+    }
+
+    .buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: var(--button-bg);
+      border: none;
+      border-radius: 8px;
+      color: #ffffff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      flex: 1 1 120px;
+    }
+
+    button:hover {
+      background-color: var(--button-hover-bg);
+    }
+
+    body.dark-mode button {
+      background-color: var(--dark-button-bg);
+    }
+
+    body.dark-mode button:hover {
+      background-color: var(--dark-button-hover-bg);
+    }
+
+    .result {
+      margin-top: 30px;
+      text-align: left;
+      font-size: 18px;
+    }
+
+    .result > div {
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .count-label {
+      font-weight: 500;
+      flex: 1 1 auto;
+    }
+
+    .count-value {
+      flex: 0 0 auto;
+      font-weight: 700;
+      color: var(--accent-color);
+      margin-left: 10px;
+    }
+
+    .recommended-model {
+      margin-top: 10px;
+      font-size: 16px;
+      color: var(--accent-color);
+      font-weight: 600;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: var(--secondary-text);
+    }
+
+    body.dark-mode footer {
+      color: var(--dark-secondary-text);
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      background-color: var(--progress-bg);
+      border-radius: 8px;
+      overflow: hidden;
+      height: 20px;
+      margin-top: 10px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background-color: var(--progress-fill);
+      transition: width 0.3s, background-color 0.3s;
+    }
+
+    .progress-tooltip {
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #555;
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .progress-container:hover .progress-tooltip {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-5px);
+    }
+
+    body.dark-mode .progress-bar {
+      background-color: var(--dark-progress-fill);
+    }
+
+    /* Overflow Colors */
+    .overflow {
+      color: var(--overflow-color);
+      font-weight: 700;
+    }
+
+    /* Toggle Switch */
+    .toggle-switch {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .toggle-switch input {
+      display: none;
+    }
+
+    .slider {
+      width: 50px;
+      height: 24px;
+      background-color: var(--progress-bg);
+      border-radius: 34px;
+      position: relative;
+      transition: background-color 0.3s;
+    }
+
+    .slider::before {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      left: 2px;
+      top: 2px;
+      background-color: #ffffff;
+      border-radius: 50%;
+      transition: transform 0.3s;
+    }
+
+    input:checked + .slider {
+      background-color: var(--button-bg);
+    }
+
+    input:checked + .slider::before {
+      transform: translateX(26px);
+    }
+
+    .toggle-label {
+      margin-left: 10px;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-color);
+      transition: color 0.3s;
+    }
+
+    body.dark-mode .toggle-label {
+      color: var(--dark-text-color);
+    }
+
+    @media (max-width: 768px) {
+      .controls {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      select, input[type="file"] {
+        width: 100%;
+      }
+
+      .result > div {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+      textarea {
+        height: 200px;
+      }
+      button {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Dark Mode Toggle -->
+  <label class="toggle-switch">
+    <input type="checkbox" id="darkModeToggle" />
+    <span class="slider"></span>
+    <span class="toggle-label">Dark Mode</span>
+  </label>
+
+  <div class="container">
+    <h1>AI Chatbot Token Counter (Tokenizer)</h1>
+
+    <!-- Controls: Model Select + File Upload -->
+    <div class="controls">
+      <div class="model-control">
+        <label for="modelSelect">Select Model:</label>
+        <select id="modelSelect">
+          <option value="8000">ChatGPT 4o (8,000 Tokens)</option>
+          <option value="4000">ChatGPT o1 (4,000 Tokens)</option>
+          <option value="2000">o1 mini (2,000 Tokens)</option>
+          <option value="4000">4o Mini (4,000 Tokens)</option>
+          <option value="5000">Claude Sonnet 3.5 (5,000 Tokens)</option>
+          <option value="3000">Claude Haiku 3.5 (3,000 Tokens)</option>
+          <option value="2000000">Gemini 1.5 Pro (2,000,000 Tokens)</option>
+          <option value="1000000">Gemini 2.0 Flash / 1.5 Flash (1,000,000 Tokens)</option>
+        </select>
+      </div>
+
+      <div class="file-control">
+        <label for="fileUpload">Upload File:</label>
+        <input type="file" id="fileUpload" accept=".txt,.pdf,.mp3,.mp4" />
+      </div>
+    </div>
+
+    <!-- Text Input -->
+    <textarea id="inputText" placeholder="Enter your text here..."></textarea>
+
+    <!-- Action Buttons -->
+    <div class="buttons">
+      <button id="clearButton">Clear</button>
+      <button id="copyButton">Copy Results</button>
+    </div>
+
+    <!-- Results Display -->
+    <div class="result">
+      <div>
+        <span class="count-label">Token Count:</span>
+        <span class="count-value" id="tokenCount">0</span>
+      </div>
+      <div>
+        <span class="count-label">Word Count:</span>
+        <span class="count-value" id="wordCount">0</span>
+      </div>
+      <div>
+        <span class="count-label">Character Count:</span>
+        <span class="count-value" id="charCount">0</span>
+      </div>
+      <div>
+        <span class="count-label">Remaining Tokens:</span>
+        <span class="count-value" id="remainingTokens">0</span>
+      </div>
+      <div class="recommended-model" id="recommendedModel">Recommended Model: N/A</div>
+      <!-- Progress Bar -->
+      <div class="progress-container" id="progressContainer">
+        <div class="progress-bar" id="progressBar"></div>
+        <div class="progress-tooltip" id="progressTooltip">0%</div>
+      </div>
+    </div>
+
+    <footer>
+      &copy; 2024 PyroLLC. All rights reserved. <br>
+      <a href="https://www.pyrollc.com.tr" target="_blank" style="color: var(--accent-color); text-decoration: none;">www.pyrollc.com.tr</a>
+    </footer>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    const inputText = document.getElementById("inputText");
+    const tokenCountEl = document.getElementById("tokenCount");
+    const wordCountEl = document.getElementById("wordCount");
+    const charCountEl = document.getElementById("charCount");
+    const remainingTokensEl = document.getElementById("remainingTokens");
+    const clearButton = document.getElementById("clearButton");
+    const copyButton = document.getElementById("copyButton");
+    const progressBar = document.getElementById("progressBar");
+    const progressTooltip = document.getElementById("progressTooltip");
+    const modelSelect = document.getElementById("modelSelect");
+    const fileUpload = document.getElementById("fileUpload");
+    const darkModeToggle = document.getElementById("darkModeToggle");
+    const progressContainer = document.getElementById("progressContainer");
+    const recommendedModelEl = document.getElementById("recommendedModel");
+
+    // Default Token Limit (initially from the first option in the select)
+    let TOKEN_LIMIT = parseInt(modelSelect.value, 10);
+
+    // Update TOKEN_LIMIT when user changes the model
+    modelSelect.addEventListener("change", function () {
+      TOKEN_LIMIT = parseInt(this.value, 10);
+      updateCounts();
+    });
+
+    // Improved token counting function
+    // 1) Splits on spaces & punctuation
+    // 2) For "words" longer than 6 chars in a row, chunk them
+    function improvedTokenCount(text) {
+      // Regex to split on spaces, punctuation, or any non-alphanumeric sequence
+      // capturing separate tokens
+      const basicTokens = text.match(/(\w+|[^\s\w])/g) || [];
+
+      let finalTokens = [];
+      const maxSubTokenLength = 6; // Sub-chunk size for long sequences
+
+      for (const t of basicTokens) {
+        // If a single token is extremely long (e.g., no spaces),
+        // chunk it into smaller sub-tokens
+        if (t.length > maxSubTokenLength && /^[A-Za-z0-9]+$/.test(t)) {
+          // Break the token into smaller pieces
+          for (let i = 0; i < t.length; i += maxSubTokenLength) {
+            finalTokens.push(t.slice(i, i + maxSubTokenLength));
+          }
+        } else {
+          finalTokens.push(t);
+        }
+      }
+
+      return finalTokens.length;
+    }
+
+    // Word counting function
+    function wordCount(text) {
+      const words = text.trim().split(/\s+/);
+      return text.trim() === "" ? 0 : words.length;
+    }
+
+    // Character counting function
+    function charCount(text) {
+      return text.length;
+    }
+
+    // Update remaining tokens
+    function remainingTokens(tokens) {
+      return TOKEN_LIMIT - tokens;
+    }
+
+    // Determine recommended model based on token count
+    function getRecommendedModel(tokens) {
+      const models = [
+        { name: "o1 mini", limit: 2000 },
+        { name: "Claude Haiku 3.5", limit: 3000 },
+        { name: "ChatGPT o1", limit: 4000 },
+        { name: "4o Mini", limit: 4000 },
+        { name: "Claude Sonnet 3.5", limit: 5000 },
+        { name: "ChatGPT 4o", limit: 8000 },
+        { name: "Gemini 2.0 Flash / 1.5 Flash", limit: 1000000 },
+        { name: "Gemini 1.5 Pro", limit: 2000000 },
+      ];
+
+      // Find the smallest model that can accommodate the tokens
+      for (let model of models) {
+        if (tokens <= model.limit) {
+          return model.name;
+        }
+      }
+
+      // If tokens exceed all models, return the largest model
+      return "Gemini 1.5 Pro";
+    }
+
+    // Update Progress Bar
+    function updateProgressBar(tokens) {
+      const usagePercent = Math.min((tokens / TOKEN_LIMIT) * 100, 100);
+      progressBar.style.width = usagePercent + "%";
+
+      // Update tooltip
+      progressTooltip.textContent = `${Math.round(usagePercent)}%`;
+
+      // Change color based on usage
+      if (tokens > TOKEN_LIMIT) {
+        // Overflow
+        progressBar.style.backgroundColor = "var(--overflow-color)";
+      } else if (usagePercent > 80) {
+        progressBar.style.backgroundColor = "var(--overflow-color)";
+      } else if (usagePercent > 50) {
+        progressBar.style.backgroundColor = "var(--warning-color)";
+      } else {
+        // Default fill color
+        progressBar.style.backgroundColor = "var(--progress-fill)";
+      }
+    }
+
+    // Update all counts (tokens, words, chars, etc.)
+    function updateCounts() {
+      const text = inputText.value || "";
+      const tokens = improvedTokenCount(text);
+      const words = wordCount(text);
+      const chars = charCount(text);
+      const remaining = remainingTokens(tokens);
+
+      tokenCountEl.innerText = tokens;
+      wordCountEl.innerText = words;
+      charCountEl.innerText = chars;
+
+      // If we exceed the limit, display negative in red or set it to 0?
+      if (remaining < 0) {
+        remainingTokensEl.innerHTML = `<span class="overflow">${remaining}</span>`;
+      } else {
+        remainingTokensEl.innerText = remaining;
+      }
+
+      updateProgressBar(tokens);
+
+      // Update Recommended Model
+      const recommendedModel = getRecommendedModel(tokens);
+      recommendedModelEl.innerText = `Recommended Model: ${recommendedModel}`;
+    }
+
+    // Listen for text input changes
+    inputText.addEventListener("input", updateCounts);
+
+    // Clear Button
+    clearButton.addEventListener("click", () => {
+      inputText.value = "";
+      updateCounts();
+    });
+
+    // Copy Button
+    copyButton.addEventListener("click", () => {
+      const tokens = tokenCountEl.innerText;
+      const words = wordCountEl.innerText;
+      const chars = charCountEl.innerText;
+      // remainingTokensEl may contain HTML if negative, so let's parse textContent
+      const remaining = remainingTokensEl.textContent;
+
+      const copyText = `Token Count: ${tokens}\nWord Count: ${words}\nCharacter Count: ${chars}\nRemaining Tokens: ${remaining}`;
+      navigator.clipboard
+        .writeText(copyText)
+        .then(() => {
+          alert("Results copied to clipboard!");
+        })
+        .catch((err) => {
+          console.error("Copy failed:", err);
+          alert("Failed to copy results.");
+        });
+    });
+
+    // File Upload
+    fileUpload.addEventListener("change", (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const fileType = file.type;
+        const reader = new FileReader();
+
+        if (fileType === "text/plain") {
+          // Handle .txt files
+          reader.onload = function (e) {
+            inputText.value = e.target.result;
+            updateCounts();
+          };
+          reader.onerror = function () {
+            alert("Failed to read the text file!");
+          };
+          reader.readAsText(file);
+        } else if (fileType === "application/pdf") {
+          // Handle .pdf files using pdf.js
+          const fileReader = new FileReader();
+          fileReader.onload = function () {
+            const typedarray = new Uint8Array(this.result);
+
+            pdfjsLib.getDocument(typedarray).promise.then(function(pdf) {
+              let maxPages = pdf.numPages;
+              let countPromises = []; // collecting all page promises
+
+              for (let j = 1; j <= maxPages; j++) {
+                countPromises.push(pdf.getPage(j).then(function(page) {
+                  return page.getTextContent().then(function(textContent) {
+                    return textContent.items.map(item => item.str).join(' ');
+                  });
+                }));
+              }
+
+              return Promise.all(countPromises).then(function (texts) {
+                const fullText = texts.join(' ');
+                inputText.value = fullText;
+                updateCounts();
+              });
+            }).catch(function(error){
+              console.error(error);
+              alert("Failed to extract text from PDF!");
+            });
+          };
+          fileReader.onerror = function () {
+            alert("Failed to read the PDF file!");
+          };
+          fileReader.readAsArrayBuffer(file);
+        } else if (fileType === "audio/mpeg" || fileType === "video/mp4") {
+          // Handle .mp3 and .mp4 files
+          alert("MP3 and MP4 files are not supported for token counting. Please upload a text or PDF file.");
+        } else {
+          alert("Unsupported file type! Please upload a .txt, .pdf, .mp3, or .mp4 file.");
+        }
+      }
+    });
+
+    // Dark Mode Toggle
+    darkModeToggle.addEventListener("change", function () {
+      document.body.classList.toggle("dark-mode");
+      // Save preference to localStorage
+      if (darkModeToggle.checked) {
+        localStorage.setItem("darkMode", "enabled");
+      } else {
+        localStorage.setItem("darkMode", "disabled");
+      }
+    });
+
+    // Load Dark Mode preference on page load
+    window.addEventListener("DOMContentLoaded", () => {
+      const darkMode = localStorage.getItem("darkMode");
+      if (darkMode === "enabled") {
+        document.body.classList.add("dark-mode");
+        darkModeToggle.checked = true;
+      }
+      // Trigger initial counts
+      updateCounts();
+    });
+
+    // Show tooltip on progress bar hover
+    progressContainer.addEventListener("mousemove", (e) => {
+      // Position the tooltip
+      const rect = progressContainer.getBoundingClientRect();
+      const xPos = e.clientX - rect.left;
+      const usagePercent = progressBar.style.width;
+      progressTooltip.style.left = xPos + "px";
+      // We already set content in updateProgressBar
+    });
+  </script>
+</body>
+</html>

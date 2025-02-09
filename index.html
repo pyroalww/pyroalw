@@ -176,14 +176,12 @@
 
 
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>pyroalww - Advanced Developer Portfolio</title>
+    <title>pyroalww</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <style>
@@ -797,6 +795,69 @@
     </style>
 </head>
 <body>
+    <div id="update-notification" style="
+    background: linear-gradient(135deg, #ff4d4d, #ff6b6b, #ff8585);
+    color: white;
+    padding: 20px 25px;
+    text-align: center;
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(255, 77, 77, 0.4);
+    z-index: 1001;
+    max-width: 90%;
+    width: 700px;
+    animation: slideDown 0.7s ease-out;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+">
+    <div style="display: flex; align-items: center; gap: 15px; flex: 1;">
+        <i class="fas fa-robot" style="font-size: 24px; color: white;"></i>
+        <span style="font-size: 15px;">🎉 PyroAI 2.0 is here! Experience the new interface, enhanced features, smarter model, and unlimited usage!</span>
+        <a href="https://pyrollc.com.tr/pyroai" style="
+            background: white;
+            color: #ff4d4d;
+            padding: 8px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+            Try Now
+        </a>
+    </div>
+    <button onclick="this.parentElement.style.display='none'" style="
+        background: transparent;
+        border: none;
+        color: white;
+        cursor: pointer;
+        padding: 0 10px;
+        font-size: 22px;
+        margin-left: 15px;
+        transition: transform 0.3s ease;
+    " onmouseover="this.style.transform='rotate(90deg)'" onmouseout="this.style.transform='rotate(0)'">×</button>
+</div>
+
+<style>
+@keyframes slideDown {
+    from {
+        transform: translate(-50%, -150%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+}
+</style>
+
     <header>
         <nav class="container">
             <a href="#" class="logo">pyroalw</a>
@@ -1533,3 +1594,4 @@
             }
                 }    </script></body>
 </html>
+

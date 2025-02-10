@@ -6,17 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PyroAI - Advanced AI Chat Platform</title>
     <meta name="description" content="PyroAI - Advanced AI chat platform by PyroLLC. Experience intelligent conversations with our state-of-the-art AI technology.">
-        <meta name="keywords" content="PyroAI, PyroLLC, PyroALW, AI chat, artificial intelligence, chatbot, machine learning, intelligent assistant, PyroAI platform, advanced AI">
-        <meta name="author" content="PyroLLC">
-        <meta name="robots" content="index, follow">
-        <meta property="og:title" content="PyroAI - Advanced AI Chat Platform">
-        <meta property="og:description" content="Experience the next generation of AI chat with PyroAI. Powered by PyroLLC's cutting-edge technology.">
-        <meta property="og:image" content="https://avatars.githubusercontent.com/u/134533935?v=4">
-        <meta property="og:url" content="https://pyrollc.com.trm">
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="PyroAI - Advanced AI Chat Platform">
-        <meta name="twitter:description" content="Experience the next generation of AI chat with PyroAI. Powered by PyroLLC's cutting-edge technology.">
-        <link rel="canonical" href="https://pyrollc.com.tr">
+    <meta name="keywords" content="PyroAI, PyroLLC, PyroALW, AI chat, artificial intelligence, chatbot, machine learning, intelligent assistant, PyroAI platform, advanced AI">
+    <meta name="author" content="PyroLLC">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="PyroAI - Advanced AI Chat Platform">
+    <meta property="og:description" content="Experience the next generation of AI chat with PyroAI. Powered by PyroLLC's cutting-edge technology.">
+    <meta property="og:image" content="https://avatars.githubusercontent.com/u/134533935?v=4">
+    <meta property="og:url" content="https://pyrollc.com.trm">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PyroAI - Advanced AI Chat Platform">
+    <meta name="twitter:description" content="Experience the next generation of AI chat with PyroAI. Powered by PyroLLC's cutting-edge technology.">
+    <link rel="canonical" href="https://pyrollc.com.tr">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/monokai-sublime.min.css">
@@ -25,22 +25,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap');
 
         :root {
-            --primary-color: #7C3AED; /* Violet 500 */
-            --primary-color-hover: #9753FF; /* Violet 400 */
-            --secondary-color: #2DD4CF; /* Teal 300 */
-            --background-color: #F8FAFC; /* Gray 50 */
-            --text-color: #0F172A; /* Gray 900 */
-            --light-gray: #E2E8F0; /* Gray 200 */
-            --medium-gray: #CBD5E0; /* Gray 300 */
-            --dark-gray: #64748B; /* Gray 500 */
-            --darker-gray: #334155; /* Gray 700 */
-            --code-bg: #EDF2F7; /* Gray 100 */
+            --primary-color: #7C3AED;
+            --primary-color-hover: #9753FF;
+            --secondary-color: #2DD4CF;
+            --background-color: #F8FAFC;
+            --text-color: #0F172A;
+            --light-gray: #E2E8F0;
+            --medium-gray: #CBD5E0;
+            --dark-gray: #64748B;
+            --darker-gray: #334155;
+            --code-bg: #EDF2F7;
             --shadow-light: rgba(0, 0, 0, 0.07);
+            --accent-color: #FBBF24;
 
             /* Light theme colors */
             --background-light: var(--background-color);
@@ -50,18 +50,22 @@
             --message-ai-light: #FFFFFF;
             --message-user-text-light: white;
             --message-ai-text-light: var(--text-color);
+            --pinned-background-light: #FFFCEB;
+            --pinned-border-light: #FBBF24;
 
 
             /* Dark Theme Colors */
-            --background-dark: #181825; /* Darker Background */
-            --text-dark: #E0E7E8; /* Lighter Text */
-            --sidebar-dark: #272738; /* Darker Sidebar */
+            --background-dark: #181825;
+            --text-dark: #E0E7E8;
+            --sidebar-dark: #272738;
             --message-user-dark: #7C3AED;
-            --message-ai-dark: #3B3B4F; /* Darker AI Message Background */
+            --message-ai-dark: #3B3B4F;
             --message-user-text-dark: white;
             --message-ai-text-dark: var(--text-dark);
-            --code-bg-dark: #2D2D3A; /* Monokai Sublime Background */
+            --code-bg-dark: #2D2D3A;
             --shadow-dark: rgba(0, 0, 0, 0.4);
+            --pinned-background-dark: #4338CA;
+            --pinned-border-dark: #D4D0AB;
         }
 
         body {
@@ -86,6 +90,8 @@
             transition: width 0.4s ease, transform 0.4s ease;
             z-index: 20;
             box-shadow: 3px 0 8px var(--shadow-light);
+            display: flex;
+            flex-direction: column;
         }
 
         .sidebar-closed {
@@ -100,7 +106,15 @@
 
         .sidebar-content {
             padding: 1.25rem 1.75rem;
+            flex-grow: 1;
         }
+        .sidebar-footer {
+            padding: 1.25rem 1.75rem;
+            border-top: 1px solid var(--medium-gray);
+            text-align: center;
+            margin-top: auto;
+        }
+
 
         .conversation-list {
             padding-top: 0.5rem;
@@ -128,11 +142,11 @@
             color: white;
             transform: scale(1.03);
         }
-         .conversation-item.active:hover {
+        .conversation-item.active:hover {
             background-color: var(--primary-color-hover);
             color: white;
         }
-         .conversation-item.active .text-gray-700, .conversation-item.active:hover .text-gray-700{
+        .conversation-item.active .text-gray-700, .conversation-item.active:hover .text-gray-700{
             color: white;
         }
 
@@ -158,12 +172,12 @@
             opacity: 1;
             color: var(--primary-color);
         }
-         .conversation-item.active .conversation-actions button,  .conversation-item.active:hover .conversation-actions button{
+        .conversation-item.active .conversation-actions button,  .conversation-item.active:hover .conversation-actions button{
             color: white;
             opacity: 1;
         }
         .conversation-item.active .conversation-actions button:hover, .conversation-item.active:hover .conversation-actions button:hover {
-             color: var(--light-gray);
+            color: var(--light-gray);
         }
 
 
@@ -196,6 +210,7 @@
             display: flex;
             flex-direction: column;
             scroll-behavior: smooth;
+            scrollbar-gutter: stable;
         }
 
         .message-wrapper {
@@ -212,7 +227,12 @@
             box-shadow: 0 3px 7px 0 var(--shadow-light), 0 1px 3px 0 var(--shadow-light);
             animation: fadeInUp 0.5s ease-out;
             position: relative;
+            transition: box-shadow 0.3s ease; /* For hover effect */
         }
+        .message:hover {
+            box-shadow: 0 5px 10px 0 var(--shadow-light), 0 2px 5px 0 var(--shadow-light); /* Deeper shadow on hover */
+        }
+
         .message.user-message {
             background-color: var(--message-user-light);
             color: var(--message-user-text-light);
@@ -231,7 +251,7 @@
             border-bottom-right-radius: 1.25rem;
         }
         .message-content {
-             @apply markdown-body;
+            @apply markdown-body;
         }
 
         .message-image {
@@ -240,6 +260,40 @@
             border-radius: 0.75rem;
             margin-top: 0.75rem;
             box-shadow: 0 2px 4px 0 var(--shadow-light);
+        }
+        .message-time {
+            font-size: 0.8rem;
+            color: var(--dark-gray);
+            margin-top: 0.25rem;
+            align-self: flex-end;
+        }
+        .message.user-message + .message-time {
+            color: white;
+        }
+        .message-actions {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            display: none;
+            gap: 0.4rem;
+        }
+        .message:hover .message-actions {
+            display: flex;
+        }
+        .message-action-button {
+            background: none;
+            border: none;
+            color: var(--dark-gray);
+            cursor: pointer;
+            opacity: 0.7;
+            padding: 0.3rem;
+            border-radius: 0.3rem;
+            transition: opacity 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+        }
+        .message-action-button:hover {
+            opacity: 1;
+            background-color: rgba(0,0,0,0.05);
+            color: var(--primary-color);
         }
 
 
@@ -361,15 +415,27 @@
             font-size: 0.95rem;
             transition: all 0.3s ease;
         }
+        #premium-button {
+            margin: 0.5rem 0;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.5rem;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
 
         @media (max-width: 768px) {
-            #new-conversation {
+            #new-conversation, #premium-button {
                 margin: 0.8rem 0;
                 padding: 0.7rem 1rem;
                 font-size: 0.9rem;
             }
 
-            #new-conversation i {
+            #new-conversation i, #premium-button i {
                 font-size: 0.9rem;
             }
 
@@ -477,11 +543,15 @@
             }
 
             .message {
-                max-width: 85%;
+                max-width: 95%; /* Wider messages on mobile */
                 padding: 0.7rem 1rem;
                 margin: 0.4rem 0;
                 font-size: 0.95rem;
             }
+             .message:hover .message-actions {
+                display: none !important; /* Hide message actions on mobile hover */
+            }
+
 
             .message.user-message {
                 margin-left: auto;
@@ -558,7 +628,7 @@
 
             /* Typing Indicator */
             .typing-indicator, #printing-animation {
-                max-width: 85%;
+                max-width: 95%; /* Wider typing indicator on mobile */
                 margin: 0.4rem 0.3rem;
                 padding: 0.7rem 1rem;
             }
@@ -707,8 +777,8 @@
             box-shadow: 0 2px 4px 0 var(--shadow-light);
         }
         .modal-btn:hover {
-             transform: scale(1.04);
-             box-shadow: 0 3px 7px 0 var(--shadow-light), 0 1px 3px 0 var(--shadow-light);
+            transform: scale(1.04);
+            box-shadow: 0 3px 7px 0 var(--shadow-light), 0 1px 3px 0 var(--shadow-light);
         }
         .modal-btn:active {
             transform: scale(0.97);
@@ -735,21 +805,23 @@
 
         /* Dark Mode Styles */
         body.dark {
-            --background-color: #181825; /* Darker Background */
-            --text-color: #E0E7E8; /* Lighter Text */
+            --background-color: #181825;
+            --text-color: #E0E7E8;
             --light-gray: #4A5568;
             --medium-gray: #6B7280;
             --dark-gray: #D1D5DB;
             --darker-gray: #E5E7E8;
-            --code-bg: #2D2D3A; /* Darker Code Background */
+            --code-bg: #2D2D3A;
             --shadow-dark: rgba(0, 0, 0, 0.4);
             --shadow-light:  rgba(0, 0, 0, 0.4);
 
-            --sidebar-light: #272738; /* Darker Sidebar */
+            --sidebar-light: #272738;
             --message-user-light: #7C3AED;
-            --message-ai-light: #3B3B4F; /* Darker AI Message Background */
+            --message-ai-light: #3B3B4F;
             --message-user-text-light: var(--message-user-text-dark);
             --message-ai-text-light: var(--message-ai-text-dark);
+            --pinned-background-dark: #4338CA;
+            --pinned-border-dark: #D4D0AB;
         }
         body.dark .sidebar {
             border-right-color: var(--medium-gray);
@@ -773,7 +845,7 @@
             box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.7), 0 2px 5px 0 var(--shadow-dark);
         }
         body.dark .conversation-item:hover, body.dark .conversation-item.active:hover {
-             background-color: #4A5568;
+            background-color: #4A5568;
         }
         body.dark .modal-content {
             background-color: var(--sidebar-dark);
@@ -787,14 +859,14 @@
             background-color: var(--sidebar-dark);
             color: var(--text-dark);
             border-color: var(--medium-gray);
-         }
-         body.dark .conversation-item:hover{
-               background-color: var(--darker-gray);
-          }
-          body.dark .markdown-body blockquote{
-              color: #d1d5db;
-          }
-          body.dark .hljs {
+        }
+        body.dark .conversation-item:hover{
+            background-color: var(--darker-gray);
+        }
+        body.dark .markdown-body blockquote{
+            color: #d1d5db;
+        }
+        body.dark .hljs {
             background: var(--code-bg-dark);
             color: var(--text-dark);
         }
@@ -845,43 +917,96 @@
         }
         /* Pinned Conversation Style */
         .pinned-conversation {
-            background-color: #FFFCEB;
-            border-left: 5px solid #FBBF24;
+            background-color: var(--pinned-background-light);
+            border-left: 5px solid var(--pinned-border-light);
         }
         body.dark .pinned-conversation {
-            background-color: #4338CA;
-            border-left-color: #D4D0AB;
+            background-color: var(--pinned-background-dark);
+            border-left-color: var(--pinned-border-dark);
             color: var(--text-dark);
         }
-         body.dark .pinned-conversation:hover {
-             background-color: #524BDB;
-         }
-         .pinned-conversation:hover {
-              background-color: #FFF2C8;
-         }
-         .pinned-conversation.active {
-             background-color: var(--primary-color);
-             color: white;
-         }
-         .pinned-conversation.active:hover {
+        body.dark .pinned-conversation:hover {
+            background-color: #524BDB;
+        }
+        .pinned-conversation:hover {
+            background-color: #FFF2C8;
+        }
+        .pinned-conversation.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .pinned-conversation.active:hover {
             background-color: var(--primary-color-hover);
             color: white;
-         }
-         .pinned-conversation.active .text-gray-700,  .pinned-conversation.active:hover .text-gray-700{
+        }
+        .pinned-conversation.active .text-gray-700,  .pinned-conversation.active:hover .text-gray-700{
             color: white;
-         }
-         .pinned-conversation .conversation-actions button, .pinned-conversation.active .conversation-actions button, .pinned-conversation:hover .conversation-actions button, .pinned-conversation.active:hover .conversation-actions button {
-             color: var(--dark-gray);
-         }
-         .pinned-conversation.active .conversation-actions button, .pinned-conversation.active:hover .conversation-actions button {
-             color: white;
-         }
-         .pinned-conversation:hover .conversation-actions button {
-             color: var(--primary-color);
-         }
-         .tag {
+        }
+        .pinned-conversation .conversation-actions button, .pinned-conversation.active .conversation-actions button, .pinned-conversation:hover .conversation-actions button, .pinned-conversation.active:hover .conversation-actions button {
+            color: var(--dark-gray);
+        }
+        .pinned-conversation.active .conversation-actions button, .pinned-conversation.active:hover .conversation-actions button {
+            color: white;
+        }
+        .pinned-conversation:hover .conversation-actions button {
+            color: var(--primary-color);
+        }
+        .tag {
             display: none; /* Hide tags visually */
-         }
+        }
+        .premium-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+            background-color: var(--accent-color);
+            margin-left: 0.5rem;
+            vertical-align: middle;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.7);
+            opacity: 0.8;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.7);
+            }
+            70% {
+                transform: scale(1.1);
+                box-shadow: 0 0 0 10px rgba(251, 191, 36, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(251, 191, 36, 0);
+            }
+        }
+
+
+        /* Improved Hover Effects and Transitions */
+        .conversation-item:hover, .send-button:hover, .attach-button:hover, .modal-btn:hover, .conversation-actions button:hover, #new-conversation:hover, .message-action-button:hover, #premium-button:hover {
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease, color 0.3s ease;
+        }
+        .send-button, .attach-button, .modal-btn, #new-conversation, .conversation-actions button, .conversation-item, .message-action-button, #premium-button {
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .conversation-actions button:hover {
+            transform: scale(1.1);
+        }
+        .send-button:hover, .attach-button:hover, .modal-btn:hover, #new-conversation:hover, #premium-button:hover {
+            transform: scale(1.03);
+            box-shadow: 0 4px 8px 0 var(--shadow-light), 0 2px 4px 0 var(--shadow-light);
+        }
+        .conversation-item:hover {
+            box-shadow: 0 2px 4px 0 var(--shadow-light), 0 1px 2px 0 var(--shadow-light);
+        }
+        .conversation-item.active, .pinned-conversation.active {
+            box-shadow: 0 4px 8px 0 var(--shadow-light), 0 2px 4px 0 var(--shadow-light);
+        }
 
 
     </style>
@@ -901,7 +1026,7 @@
                     <li>Conversations may be logged for quality.</li>
                     <li>Do not share sensitive data.</li>
                     <li>"As is" service, no warranty.</li>
-                     <li>By using PyroAI, you agree to these terms.</li>
+                    <li>By using PyroAI, you agree to these terms.</li>
                 </ul>
             </div>
             <div class="modal-footer animate__animated animate__slideInUp animate__delay-0.4s">
@@ -911,6 +1036,185 @@
             </div>
         </div>
     </div>
+
+    <!-- Initial Setup Modal -->
+    <div id="initial-setup-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content animate__animated animate__bounceIn">
+            <h2 class="modal-header"><i class="fas fa-user-cog mr-2 text-primary-400"></i> Initial Setup</h2>
+            <div class="modal-body">
+                <p class="text-gray-700 mb-4">Welcome to PyroAI! Please complete the initial setup to personalize your experience.</p>
+                <div class="mb-4">
+                    <label for="setup-username" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-user mr-2"></i>Username</label>
+                    <input type="text" id="setup-username" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Choose a username">
+                </div>
+                <div class="mb-4">
+                    <label for="setup-dob" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-calendar-alt mr-2"></i>Date of Birth</label>
+                    <input type="date" id="setup-dob" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                </div>
+                <div class="mb-4">
+                    <label for="setup-email" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-envelope mr-2"></i>Email Address (Optional)</label>
+                    <input type="email" id="setup-email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Your email address">
+                    <p class="text-gray-500 text-xs mt-1">Optional but helps in account recovery.</p>
+                </div>
+                <div class="mb-4">
+                    <label for="setup-pin" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-lock mr-2"></i>Create PIN</label>
+                    <input type="password" id="setup-pin" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="4-digit PIN for security">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="complete-setup" class="modal-btn modal-btn-primary w-full">
+                    <i class="fas fa-check-circle mr-2"></i> Complete Setup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Age Block Modal -->
+    <div id="age-block-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content animate__animated animate__bounceIn">
+            <h2 class="modal-header"><i class="fas fa-ban mr-2 text-red-500"></i> Access Denied</h2>
+            <div class="modal-body">
+                <p class="text-gray-700 mb-4">
+                    You must be 18 years or older to use PyroAI. We apologize, but access is restricted for users under this age.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button id="close-age-block" class="modal-btn modal-btn-secondary w-full">
+                    <i class="fas fa-times-circle mr-2"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Premium Key Modal -->
+    <div id="premium-key-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content animate__animated animate__zoomIn">
+            <h2 class="modal-header"><i class="fas fa-crown mr-2 text-yellow-500"></i> Activate Premium</h2>
+            <div class="modal-body">
+                <p class="text-gray-700 mb-4">
+                    Unlock premium features by entering your Premium Key.
+                </p>
+                <div class="mb-4">
+                    <label for="premium-key-input" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-key mr-2"></i> <span>Premium Key</span></label>
+                    <input type="text" id="premium-key-input" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Enter your premium key">
+                </div>
+                <div id="premium-key-status" class="text-red-500 text-sm mt-2 hidden animate__animated animate__fadeIn"><i class="fas fa-exclamation-triangle mr-1"></i> Invalid key. Please try again.</div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-premium-key" class="modal-btn modal-btn-secondary"><i class="fas fa-ban mr-2"></i> Cancel</button>
+                <button id="activate-premium" class="modal-btn modal-btn-primary"><i class="fas fa-lock-open mr-2"></i> Activate Premium</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Premium Ad Modal -->
+    <div id="premium-ad-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content animate__animated animate__bounceIn">
+            <h2 class="modal-header"><i class="fas fa-gift mr-2 text-yellow-500"></i> PyroAI Premium - Unlock More!</h2>
+            <div class="modal-body">
+                <p class="text-gray-700 mb-4">
+                    Enhance your PyroAI experience and remove limitations by upgrading to Premium!
+                </p>
+                <div class="overflow-x-auto mb-4">
+                    <table class="min-w-full leading-normal">
+                        <thead>
+                            <tr>
+                                <th class="px-3 py-2 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    Feature
+                                </th>
+                                <th class="px-3 py-2 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    Free
+                                </th>
+                                <th class="px-3 py-2 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    Premium
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="px-3 py-3 border-b border-gray-200 bg-white text-sm">
+                                    Messages per Chat
+                                </td>
+                                <td class="px-3 py-3 border-b border-gray-200 bg-white text-sm">
+                                    15
+                                </td>
+                                <td class="px-3 py-3 border-b border-gray-200 bg-white text-sm font-semibold text-primary-500">
+                                    40
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-3 border-b border-gray-200 bg-white text-sm">
+                                    Max Conversations
+                                </td>
+                                <td class="px-3 py-3 border-b border-gray-200 bg-white text-sm">
+                                    3
+                                </td>
+                                <td class="px-3 py-3 border-b border-gray-200 bg-white text-sm font-semibold text-primary-500">
+                                    Unlimited
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-3 border-b border-gray-200 bg-white text-sm">
+                                    Daily Messages
+                                </td>
+                                <td class="px-3 py-3 border-b border-gray-200 bg-white text-sm">
+                                    10
+                                </td>
+                                <td class="px-3 py-3 border-b border-gray-200 bg-white text-sm font-semibold text-primary-500">
+                                    100
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-3 border-b border-gray-200 bg-white text-sm">
+                                    Daily Images
+                                </td>
+                                <td class="px-3 py-3 border-b border-gray-200 bg-white text-sm">
+                                    3
+                                </td>
+                                <td class="px-3 py-3 border-b border-gray-200 bg-white text-sm font-semibold text-primary-500">
+                                    20
+                                </td>
+                            </tr>
+                             <tr>
+                                <td class="px-3 py-3 border-b border-gray-200 bg-white text-sm">
+                                    Message Characters
+                                </td>
+                                <td class="px-3 py-3 border-b border-gray-200 bg-white text-sm">
+                                    1,000
+                                </td>
+                                <td class="px-3 py-3 border-b border-gray-200 bg-white text-sm font-semibold text-primary-500">
+                                    10,000
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-3 bg-white text-sm">
+                                    AI Models
+                                </td>
+                                <td class="px-3 py-3 bg-white text-sm">
+                                    Fast
+                                </td>
+                                <td class="px-3 py-3 bg-white text-sm font-semibold text-primary-500">
+                                    Fast, Pro, Max
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-gray-700 text-sm">
+                    Upgrade now for an enhanced AI experience with more messages, conversations, and advanced models!
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button id="go-premium-ad" class="modal-btn modal-btn-primary w-full">
+                    <i class="fas fa-crown mr-2"></i> Go Premium
+                </button>
+                <button id="close-premium-ad" class="modal-btn modal-btn-secondary w-full">
+                    <i class="fas fa-times-circle mr-2"></i> Continue with Free
+                </button>
+            </div>
+        </div>
+    </div>
+
 
     <div class="app-container">
         <!-- Sidebar -->
@@ -942,18 +1246,23 @@
 
                 <div class="animate__animated animate__fadeInLeft animate__fast animate__delay-0.2s">
                     <h2  class="text-md font-semibold text-gray-700 mb-2 mt-3 flex items-center"><i class="fas fa-folder text-gray-500 mr-3"></i> <span>Archived</span></h2>
-                     <ul id="archived-list" class="archived-list"></ul>
+                    <ul id="archived-list" class="archived-list"></ul>
                 </div>
-
-
-                <div class="animate__animated animate__fadeInLeft animate__fast animate__delay-0.3s">
-                    <button id="new-conversation" class="send-button w-full mt-4 flex items-center justify-center">
-                        <i class="fas fa-plus mr-2"></i> <span>New Chat</span>
-                    </button>
-                    <button id="open-settings" class="modal-btn modal-btn-secondary w-full mt-2 flex items-center justify-center">
-                        <i class="fas fa-cog mr-2"></i> <span>Settings</span>
-                    </button>
+            </div>
+            <div class="sidebar-footer animate__animated animate__fadeInLeft animate__fast animate__delay-0.3s">
+                <div class="user-profile mb-3 flex items-center justify-center">
+                     <i class="fas fa-user-circle text-gray-500 mr-2"></i>
+                    <span id="sidebar-username" class="text-sm text-gray-700"></span><span id="premium-user-badge"></span>
                 </div>
+                <button id="new-conversation" class="send-button w-full mb-2 flex items-center justify-center">
+                    <i class="fas fa-plus mr-2"></i> <span>New Chat</span>
+                </button>
+                <button id="premium-button" class="modal-btn modal-btn-primary w-full mb-2 flex items-center justify-center">
+                    <i class="fas fa-crown mr-2"></i> <span>Go Premium</span>
+                </button>
+                <button id="open-settings" class="modal-btn modal-btn-secondary w-full flex items-center justify-center">
+                    <i class="fas fa-cog mr-2"></i> <span>Settings</span>
+                </button>
             </div>
         </aside>
 
@@ -972,7 +1281,7 @@
                     <button id="change-assistant" class="modal-btn modal-btn-secondary mr-2" aria-label="Change Assistant">
                         <i class="fas fa-robot"></i><span class="hidden md:inline-block ml-2">Assistant</span>
                     </button>
-                     <button id="clear-conversation-history" class="modal-btn modal-btn-secondary mr-3" aria-label="Clear History">
+                    <button id="clear-conversation-history" class="modal-btn modal-btn-secondary mr-3" aria-label="Clear History">
                         <i class="fas fa-history"></i><span class="hidden md:inline-block ml-2">Clear History</span>
                     </button>
                 </div>
@@ -1008,7 +1317,7 @@
 
     <!-- Settings Modal -->
     <div id="settings-modal" class="modal-overlay" style="display: none;">
-        <div class="modal-content">
+        <div class="modal-content animate__animated animate__zoomIn">
             <h2 class="modal-header"><i class="fas fa-cog mr-2"></i> Settings</h2>
             <div class="modal-body">
                 <div class="mb-4">
@@ -1019,23 +1328,21 @@
                 <div class="mb-4">
                     <label for="ai-model" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-brain mr-2"></i> <span>AI Model</span></label>
                     <select id="ai-model" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                        <option value="gemini-1.5-flash">Gemini 1.5 Flash</option>
-                        <option value="gemini-1.5-pro">Gemini 1.5 Pro</option>
-                        <option value="gemini-2.0-flash-exp">Gemini 2.0 Flash Exp</option>
-                        <option value="gemini-2.0-flash-thinking-exp">Gemini 2.0 Flash Thinking Exp</option>
-                        <option value="gemini-2.0-pro-exp">Gemini 2.0 Pro Exp</option>
+                        <option value="gemini-2.0-flash">PyroAI Fast (gemini-2.0-flash)</option>
+                        <option value="gemini-2.0-flash-thinking-exp-01-21">PyroAI PRO (gemini-2.0-flash-thinking-exp-01-21)</option>
+                        <option value="gemini-2.0-pro-exp-02-05">PyroAI MAX (gemini-2.0-pro-exp-02-05)</option>
                     </select>
                     <p class="text-gray-500 text-xs mt-1">Choose the AI model for chats.</p>
                 </div>
                 <div class="mb-4">
-                  <label for="api-key-input" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-key mr-2"></i> <span>API Key</span></label>
-                  <div class="relative">
-                    <input type="password" id="api-key-input" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 pr-10" placeholder="Enter your API key">
-                    <button type="button" id="toggle-api-key" class="absolute inset-y-0 right-0 px-3 flex items-center focus:outline-none hover:text-primary-500">
-                        <i class="fas fa-eye"></i>
-                    </button>
-                  </div>
-                  <p class="text-gray-500 text-xs mt-1">Your API key for AI model access.</p>
+                    <label for="api-key-input" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-key mr-2"></i> <span>API Key</span></label>
+                    <div class="relative">
+                        <input type="password" id="api-key-input" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 pr-10" placeholder="Enter your API key">
+                        <button type="button" id="toggle-api-key" class="absolute inset-y-0 right-0 px-3 flex items-center focus:outline-none hover:text-primary-500">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <p class="text-gray-500 text-xs mt-1">Your API key for AI model access.</p>
                 </div>
                 <div class="mb-4">
                     <label for="theme" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-palette mr-2"></i> <span>Theme</span></label>
@@ -1056,7 +1363,7 @@
 
     <!-- Change Assistant Modal -->
     <div id="assistant-modal" class="modal-overlay" style="display: none;">
-        <div class="modal-content">
+        <div class="modal-content animate__animated animate__zoomIn">
             <h2 class="modal-header"><i class="fas fa-robot mr-2"></i> AI Assistants</h2>
             <div id="assistant-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-4 modal-body"></div>
             <button id="new-assistant" class="modal-btn modal-btn-primary w-full mb-3 flex items-center justify-center">
@@ -1070,7 +1377,7 @@
 
     <!-- New Assistant Modal -->
     <div id="new-assistant-modal" class="modal-overlay" style="display: none;">
-        <div class="modal-content">
+        <div class="modal-content animate__animated animate__zoomIn">
             <h2 class="modal-header"><i class="fas fa-plus-circle mr-2"></i> Create New Assistant</h2>
             <div class="modal-body">
                 <div class="mb-4">
@@ -1090,6 +1397,22 @@
         </div>
     </div>
 
+    <!-- Edit Message Modal -->
+    <div id="edit-message-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content animate__animated animate__zoomIn">
+            <h2 class="modal-header"><i class="fas fa-edit mr-2"></i> Edit Message</h2>
+            <div class="modal-body">
+                <div class="mb-4">
+                    <label for="edit-message-textarea" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-pen-to-square mr-2"></i> <span>Edit Your Message</span></label>
+                    <textarea id="edit-message-textarea" rows="5" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-edit-message" class="modal-btn modal-btn-secondary"><i class="fas fa-ban mr-2"></i> Cancel</button>
+                <button id="save-edit-message" class="modal-btn modal-btn-primary"><i class="fas fa-save mr-2"></i> Save & Re-run</button>
+            </div>
+        </div>
+    </div>
 
 
     <script type="importmap">
@@ -1102,14 +1425,20 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
-    
+
     <script type="module">
         import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
-    
+        let genAI = null;
+        let model = null;
+        let selectedImageFile = null;
+        let apiKeyVisible = false;
+        let editingMessageId = null;
+
         const chatMessages = document.getElementById('chat-messages');
         const userInput = document.getElementById('user-input');
         const sendButton = document.getElementById('send-button');
         const newConversationButton = document.getElementById('new-conversation');
+        const premiumButton = document.getElementById('premium-button');
         const conversationList = document.getElementById('conversation-list');
         const pinnedList = document.getElementById('pinned-list');
         const archivedList = document.getElementById('archived-list');
@@ -1140,73 +1469,197 @@
         const clearHistoryButton = document.getElementById('clear-conversation-history');
         const printingAnimation = document.getElementById('printing-animation');
         const toggleApiKeyButton = document.getElementById('toggle-api-key');
-    
+        const editMessageModal = document.getElementById('edit-message-modal');
+        const cancelEditMessageButton = document.getElementById('cancel-edit-message');
+        const saveEditMessageButton = document.getElementById('save-edit-message');
+        const editMessageTextarea = document.getElementById('edit-message-textarea');
+
+        const initialSetupModal = document.getElementById('initial-setup-modal');
+        const setupUsernameInput = document.getElementById('setup-username');
+        const setupDobInput = document.getElementById('setup-dob');
+        const setupEmailInput = document.getElementById('setup-email');
+        const setupPinInput = document.getElementById('setup-pin');
+        const completeSetupButton = document.getElementById('complete-setup');
+        const ageBlockModal = document.getElementById('age-block-modal');
+        const closeAgeBlockButton = document.getElementById('close-age-block');
+
+        const premiumKeyModal = document.getElementById('premium-key-modal');
+        const premiumKeyInputModal = document.getElementById('premium-key-input');
+        const activatePremiumButton = document.getElementById('activate-premium');
+        const cancelPremiumKeyButton = document.getElementById('cancel-premium-key');
+        const premiumKeyStatus = document.getElementById('premium-key-status');
+        const premiumAdModal = document.getElementById('premium-ad-modal');
+        const goPremiumAdButton = document.getElementById('go-premium-ad');
+        const closePremiumAdButton = document.getElementById('close-premium-ad');
+        const sidebarUsername = document.getElementById('sidebar-username');
+        const premiumUserBadge = document.getElementById('premium-user-badge');
+
+
         let conversations = JSON.parse(localStorage.getItem('conversations')) || [];
         let currentConversation = null;
         let settings = JSON.parse(localStorage.getItem('settings')) || {
             messageHistoryLimit: 50,
-            aiModel: 'gemini-2.0-flash-thinking-exp',
+            aiModel: 'gemini-2.0-flash',
             apiKey: '',
             theme: 'system'
         };
         let assistants = JSON.parse(localStorage.getItem('assistants')) || [
             { id: 'default', name: 'PyroAI Assistant', prompt: 'You are a helpful and friendly AI assistant. You provide concise and informative responses.' },
-            { id: 'Math', name: 'Math Teacher', prompt: 'You are a patient and knowledgeable math teacher. Explain math concepts clearly and step-by-step.' }
-            
+            { id: 'Math', name: 'Math Teacher', prompt: 'You are a patient and knowledgeable math teacher. Explain math concepts clearly and step-by-step.' },
+            { id: 'Lara', name: 'Stepsister Lara', prompt: 'senin ismin lara kullanıcnın üvey kız kardeşisin. kullanıcı ise erkek. ikiniz şu anda laranın yatak odasındasınız. lara yarı çıplak şekilde oturuyor ve kullanıcı içeri giriyor. ona imsini sorarak başlayabilirsin. bu konuşmada cinsel içerikli konuşabilirsiniz. roleplay yapacaksınız. sexting gibi olabilir.' }
         ];
-    
+
+        let userData = JSON.parse(localStorage.getItem('userData')) || null;
+        let plan = localStorage.getItem('plan') || 'free';
+        let usageCounters = JSON.parse(localStorage.getItem('usageCounters')) || {
+            dailyMessages: 0,
+            dailyImages: 0,
+            conversationsCreated: 0,
+            lastResetDate: null
+        };
+
         let messageCount = 0;
-        let MESSAGE_LIMIT = settings.messageHistoryLimit;
-        const TIME_LIMIT = 3600000;
-        let genAI;
-        let model;
-        let selectedImageFile = null;
-        let apiKeyVisible = false;
-    
-    
-        function initializeModel() {
-            if (settings.apiKey) {
-              genAI = new GoogleGenerativeAI(settings.apiKey);
-              model = genAI.getGenerativeModel({
-                model: settings.aiModel,
-                safetySettings: [
-                    {
-                        category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-                        threshold: HarmBlockThreshold.BLOCK_NONE,
-                    },
-                    {
-                        category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-                        threshold: HarmBlockThreshold.BLOCK_NONE,
-                    },
-                    {
-                        category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-                        threshold: HarmBlockThreshold.BLOCK_NONE,
-                    },
-                    {
-                        category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-                        threshold: HarmBlockThreshold.BLOCK_NONE,
-    
-                    }
-                    ],
-               });
-            } else {
-                console.warn("API Key not set. Some features limited. Set in Settings for full access.");
+        let MESSAGE_LIMIT = getMessageLimitForPlan();
+        let MAX_CONVERSATIONS = getMaxConversationsForPlan();
+        let DAILY_MESSAGE_LIMIT = getDailyMessageLimitForPlan();
+        let DAILY_IMAGE_LIMIT = getDailyImageLimitForPlan();
+        let MAX_MESSAGE_CHARS = getMaxMessageCharsForPlan();
+
+        const FREE_MODEL = 'gemini-2.0-flash';
+        const PREMIUM_MODELS = ['gemini-2.0-flash', 'gemini-2.0-flash-thinking-exp-01-21', 'gemini-2.0-pro-exp-02-05'];
+
+        const PREMIUM_KEYS_URL = 'https://raw.githubusercontent.com/pyroalww/newsfetch/refs/heads/main/keys.txt';
+        const API_KEY_URL = 'https://raw.githubusercontent.com/pyroalww/newsfetch/refs/heads/main/api.txt';
+        let premiumKeys = [];
+        let defaultApiKey = '';
+
+
+        async function fetchDefaultApiKey() {
+            try {
+                const response = await fetch(API_KEY_URL);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const base64ApiKey = await response.text();
+                defaultApiKey = atob(base64ApiKey.trim()); // Decode Base64
+                if (settings.apiKey === '') { //Only set if API key is empty initially
+                    settings.apiKey = defaultApiKey;
+                    saveSettings();
+                }
+            } catch (error) {
+                console.error("Failed to fetch default API key:", error);
             }
         }
-    
+
+
+        async function fetchPremiumKeys() {
+            try {
+                const response = await fetch(PREMIUM_KEYS_URL);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const text = await response.text();
+                premiumKeys = text.trim().split('\n').map(key => key.trim());
+            } catch (error) {
+                console.error("Failed to fetch premium keys:", error);
+                premiumKeys = []; // Ensure premiumKeys is always an array, even if empty
+            }
+        }
+
+        function checkDailyLimitsReset() {
+            const today = new Date().toDateString();
+            const lastReset = usageCounters.lastResetDate;
+
+            if (today !== lastReset) {
+                usageCounters.dailyMessages = 0;
+                usageCounters.dailyImages = 0;
+                usageCounters.lastResetDate = today;
+                saveUsageCounters();
+            }
+        }
+
+        function saveUsageCounters() {
+            localStorage.setItem('usageCounters', JSON.stringify(usageCounters));
+        }
+
+        function getMessageLimitForPlan() {
+            return plan === 'premium' ? 40 : 15;
+        }
+        function getMaxConversationsForPlan() {
+            return plan === 'premium' ? Infinity : 3;
+        }
+        function getDailyMessageLimitForPlan() {
+            return plan === 'premium' ? 100 : 10;
+        }
+        function getDailyImageLimitForPlan() {
+            return plan === 'premium' ? 20 : 3;
+        }
+        function getMaxMessageCharsForPlan() {
+            return plan === 'premium' ? 10000 : 1000;
+        }
+
+
+        function initializeModel() {
+            let currentModel = settings.aiModel;
+            if (plan === 'free') {
+                currentModel = FREE_MODEL;
+                settings.aiModel = FREE_MODEL; //Force model for free plan
+                document.getElementById('ai-model').value = FREE_MODEL; // Update select if settings modal is open
+                saveSettings();
+            }
+
+            if (settings.apiKey) {
+                genAI = new GoogleGenerativeAI(settings.apiKey);
+                model = genAI.getGenerativeModel({
+                    model: currentModel,
+                    safetySettings: [
+                        {
+                            category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+                            threshold: HarmBlockThreshold.BLOCK_NONE,
+                        },
+                        {
+                            category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+                            threshold: HarmBlockThreshold.BLOCK_NONE,
+                        },
+                        {
+                            category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+                            threshold: HarmBlockThreshold.BLOCK_NONE,
+                        },
+                        {
+                            category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+                            threshold: HarmBlockThreshold.BLOCK_NONE,
+
+                        }
+                    ],
+                });
+            } else {
+                console.warn("API Key not set. Some features limited. Set in Settings for full access.");
+                if (plan === 'premium') {
+                    alert("API Key is required to use Premium models. Please set it in settings.");
+                    setPlan('free'); //Revert to free plan if no API key in premium
+                    updatePlanUI();
+                }
+            }
+        }
+
         function saveConversations() {
             localStorage.setItem('conversations', JSON.stringify(conversations));
         }
-    
+
         function saveSettings() {
             localStorage.setItem('settings', JSON.stringify(settings));
         }
-    
+
         function saveAssistants() {
             localStorage.setItem('assistants', JSON.stringify(assistants));
         }
-    
+
         function createNewConversation() {
+            if (conversations.filter(c => !c.archived).length >= MAX_CONVERSATIONS) {
+                 showPremiumAdModal("conversationLimit");
+                return;
+            }
+
             const conversation = {
                 id: Date.now(),
                 name: 'New PyroChat',
@@ -1223,48 +1676,50 @@
             switchConversation(conversation);
             saveConversations();
             messageCount = 0;
+            usageCounters.conversationsCreated++;
+            saveUsageCounters();
             generateConversationTitle();
         }
-    
+
         function updateConversationList() {
             conversationList.innerHTML = '';
             archivedList.innerHTML = '';
             pinnedList.innerHTML = '';
             const searchTerm = searchConversationsInput.value.toLowerCase();
-    
+
             const filteredConversations = conversations.filter(conv =>
                 (conv.name.toLowerCase().includes(searchTerm) ||
-                conv.messages.some(msg => msg.text && msg.text.toLowerCase().includes(searchTerm)))
+                 conv.messages.some(msg => msg.text && msg.text.toLowerCase().includes(searchTerm)))
             );
-    
+
             filteredConversations.sort((a, b) => (b.pinned ? -1 : 0) || (b.createdAt - a.createdAt));
-    
-    
+
+
             filteredConversations.forEach(conv => {
                 const li = document.createElement('li');
                 li.className = `conversation-item ${currentConversation?.id === conv.id ? 'active' : ''} ${conv.archived ? 'archived-conversation' : ''} ${conv.pinned ? 'pinned-conversation' : ''}`;
-    
+
                 const highlightedName = conv.name.replace(new RegExp(`(${searchTerm})`, 'gi'), '<span class="highlight">$1</span>');
-    
-                let pinButton = `<button class="conversation-actions-button ${conv.pinned ? 'text-yellow-500 hover:text-yellow-700' : 'text-gray-500 hover:text-gray-700'} mr-1 transition-colors duration-200" onclick="pinConversation(event, ${conv.id})" aria-label="${conv.pinned ? 'Unpin' : 'Pin'}">
+
+                let pinButton = `<button class="conversation-actions-button ${conv.pinned ? 'text-yellow-500 hover:text-yellow-700' : 'text-gray-500 hover:text-gray-700'} mr-1 transition-colors duration-200" onclick="window.pinConversation(event, ${conv.id})" aria-label="${conv.pinned ? 'Unpin' : 'Pin'}">
                            ${conv.pinned ? '<i class="fas fa-thumbtack rotate-45"></i>' : '<i class="fas fa-thumbtack"></i>'}
                         </button>`;
                 if (conv.archived) {
                     pinButton = '';
                 }
-    
-    
+
+
                 li.innerHTML = `
                     <div class="flex-1 flex items-center">
                         <span class="conversation-title text-gray-700">${highlightedName}</span>
                     </div>
                     <div class="conversation-actions">
                         ${pinButton}
-                        <button class="conversation-actions-button" onclick="renameConversation(event, ${conv.id})" aria-label="Rename"><i class="fas fa-edit"></i></button>
-                        <button class="conversation-actions-button" onclick="archiveConversation(event, ${conv.id})" aria-label="${conv.archived ? 'Unarchive' : 'Archive'}">
+                        <button class="conversation-actions-button" onclick="window.renameConversation(event, ${conv.id})" aria-label="Rename"><i class="fas fa-edit"></i></button>
+                        <button class="conversation-actions-button" onclick="window.archiveConversation(event, ${conv.id})" aria-label="${conv.archived ? 'Unarchive' : 'Archive'}">
                            ${conv.archived ? '<i class="fas fa-folder-open"></i>' : '<i class="fas fa-archive"></i>'}
                         </button>
-                        <button class="conversation-actions-button" onclick="deleteConversation(event, ${conv.id})" aria-label="Delete"><i class="fas fa-trash"></i></button>
+                        <button class="conversation-actions-button" onclick="window.deleteConversation(event, ${conv.id})" aria-label="Delete"><i class="fas fa-trash"></i></button>
                     </div>
                 `;
                 li.addEventListener('click', (e) => {
@@ -1272,7 +1727,7 @@
                         switchConversation(conv);
                     }
                 });
-    
+
                 if (conv.pinned && !conv.archived) {
                     pinnedList.appendChild(li);
                 } else if (conv.archived) {
@@ -1285,8 +1740,8 @@
             conversationList.parentElement.style.display = conversationList.children.length > 0 ? 'block' : 'none';
             archivedList.parentElement.style.display = archivedList.children.length > 0 ? 'block' : 'none';
         }
-    
-        function pinConversation(event, id) {
+
+        window.pinConversation = function(event, id) {
             event.stopPropagation();
             const conversation = conversations.find(conv => conv.id === id);
             if (conversation) {
@@ -1295,9 +1750,9 @@
                 saveConversations();
             }
         }
-    
-    
-        function renameConversation(event, id) {
+
+
+        window.renameConversation = function(event, id) {
             event.stopPropagation();
             const conversation = conversations.find(conv => conv.id === id);
             const newName = prompt("Enter new conversation name:", conversation.name);
@@ -1310,8 +1765,8 @@
                 saveConversations();
             }
         }
-    
-        function archiveConversation(event, id) {
+
+        window.archiveConversation = function(event, id) {
             event.stopPropagation();
             const conversation = conversations.find(conv => conv.id === id);
             if (conversation) {
@@ -1329,13 +1784,13 @@
                         currentConversationTitle.textContent = "Select a conversation or start new";
                     }
                 } else if (currentConversation && currentConversation.id === id && !conversation.archived) {
-                     switchConversation(conversation);
+                    switchConversation(conversation);
                 }
             }
         }
-    
-    
-        function deleteConversation(event, id) {
+
+
+        window.deleteConversation = function(event, id) {
             event.stopPropagation();
             if (confirm("Are you sure you want to delete this conversation? This cannot be undone.")) {
                 conversations = conversations.filter(conv => conv.id !== id);
@@ -1352,11 +1807,11 @@
                 saveConversations();
             }
         }
-    
+
         function switchConversation(conversation) {
             currentConversation = conversation;
             clearChatMessages();
-            conversation.messages.forEach(message => addMessageToChat(message.text, message.sender, message.image));
+            conversation.messages.forEach(message => addMessageToChat(message.text, message.sender, message.image, message.timestamp, message.id));
             currentConversationTitle.textContent = conversation.name || 'New Conversation';
             updateConversationList();
             if (window.innerWidth < 768) {
@@ -1365,20 +1820,21 @@
             messageCount = conversation.messages.length;
             onConversationSwitched();
         }
-    
-    
+
+
         function clearChatMessages() {
             chatMessages.innerHTML = '';
             chatMessages.appendChild(printingAnimation);
         }
-    
-        function addMessageToChat(message, sender, image = null) {
+
+        function addMessageToChat(message, sender, image = null, timestamp = null, messageId = null) {
             const messageWrapper = document.createElement('div');
             messageWrapper.className = 'message-wrapper';
-    
+
             const messageElement = document.createElement('div');
             messageElement.className = `message ${sender === 'user' ? 'user-message' : 'ai-message'} message-content animate__animated animate__fadeInUp`;
-    
+            messageElement.dataset.messageId = messageId; // Store message ID
+
             if (image) {
                 const img = document.createElement('img');
                 img.src = image;
@@ -1386,19 +1842,49 @@
                 img.alt = 'User Image';
                 messageElement.appendChild(img);
             }
-    
+
             let formattedMessage = sender === 'ai' ? marked.parse(message) : message;
             const codeBlockRegex = /```([\s\S]*?)```/g;
             formattedMessage = formattedMessage.replace(codeBlockRegex, (match, code) => {
-              return `<pre><code>${code}</code></pre>`;
+                return `<pre><code>${code}</code></pre>`;
             });
             messageElement.innerHTML += formattedMessage;
-    
-    
+
+            // Message Actions (Regenerate, Delete, Edit)
+            if (sender === 'ai') {
+                const actionsDiv = document.createElement('div');
+                actionsDiv.className = 'message-actions';
+                actionsDiv.innerHTML = `
+                    <button class="message-action-button regenerate-button" title="Regenerate response"><i class="fas fa-sync"></i></button>
+                    <button class="message-action-button delete-button" title="Delete message"><i class="fas fa-trash"></i></button>
+                `;
+                messageElement.appendChild(actionsDiv);
+            } else if (sender === 'user') {
+                 const actionsDiv = document.createElement('div');
+                actionsDiv.className = 'message-actions';
+                actionsDiv.innerHTML = `
+                    <button class="message-action-button edit-button" title="Edit message"><i class="fas fa-edit"></i></button>
+                     <button class="message-action-button delete-button" title="Delete message"><i class="fas fa-trash"></i></button>
+                `;
+                messageElement.appendChild(actionsDiv);
+            }
+
+
             messageWrapper.appendChild(messageElement);
+
+            if (timestamp) {
+                const timeElement = document.createElement('div');
+                timeElement.className = 'message-time';
+                const date = new Date(timestamp);
+                const hours = String(date.getHours()).padStart(2, '0');
+                const minutes = String(date.getMinutes()).padStart(2, '0');
+                timeElement.textContent = `${hours}:${minutes}`;
+                messageWrapper.appendChild(timeElement);
+            }
+
             chatMessages.insertBefore(messageWrapper, printingAnimation);
             chatMessages.scrollTop = chatMessages.scrollHeight;
-    
+
             messageElement.querySelectorAll('pre code').forEach((block) => {
                 hljs.highlightElement(block);
                 const copyButton = document.createElement('button');
@@ -1408,9 +1894,18 @@
                 block.parentNode.style.position = 'relative';
                 block.parentNode.appendChild(copyButton);
             });
-             initializeSortable();
+            initializeSortable();
+
+            // Event listeners for message actions (after message is added to DOM)
+            if (sender === 'ai') {
+                messageElement.querySelector('.regenerate-button').addEventListener('click', () => regenerateOutput(messageId, messageElement));
+                messageElement.querySelector('.delete-button').addEventListener('click', () => deleteOutput(messageId));
+            } else if (sender === 'user') {
+                messageElement.querySelector('.edit-button').addEventListener('click', () => editPrompt(messageId, messageElement));
+                messageElement.querySelector('.delete-button').addEventListener('click', () => deleteOutput(messageId));
+            }
         }
-    
+
         function copyCodeToClipboard(code) {
             navigator.clipboard.writeText(code).then(() => {
                 alert('Code copied to clipboard!');
@@ -1418,51 +1913,71 @@
                 console.error('Failed to copy code:', err);
             });
         }
-    
-    
+
+
         function showTypingIndicator() {
             printingAnimation.style.display = 'flex';
         }
-    
+
         function removeTypingIndicator() {
-           printingAnimation.style.display = 'none';
+            printingAnimation.style.display = 'none';
         }
-    
-    
+
+
         async function sendMessage() {
             const message = userInput.value.trim();
-    
-    
+
+            if(message.length > MAX_MESSAGE_CHARS) {
+                showPremiumAdModal("messageCharLimit");
+                return;
+            }
+
             if (!currentConversation) {
                 alert("Please select a conversation or start a new one.");
                 return;
             }
-    
+
             if (!message && !selectedImageFile) return;
-    
+
             if (!checkMessageLimit()) {
-                alert(`Message limit of ${MESSAGE_LIMIT} reached. Start new conversation or clear history.`);
+                showPremiumAdModal("messageHistoryLimit");
                 return;
             }
+            if (!checkDailyMessageLimit()) {
+                showPremiumAdModal("dailyMessageLimit");
+                return;
+            }
+            if (selectedImageFile && !checkDailyImageLimit()) {
+                showPremiumAdModal("dailyImageLimit");
+                return;
+            }
+
+
             if (!model) {
                 alert("Please set API key in settings for AI features.");
                 return;
             }
-    
-    
+
+            const userMessageId = Date.now(); // Generate ID for user message
+
             if (selectedImageFile) {
+                usageCounters.dailyImages++;
+                saveUsageCounters();
+
                 const reader = new FileReader();
                 reader.onload = async (event) => {
                     const imageData = event.target.result;
-                    addMessageToChat("", 'user', imageData);
-                    currentConversation.messages.push({ text: message, sender: 'user', image: imageData });
-    
+                    addMessageToChat("", 'user', imageData, Date.now(), userMessageId);
+                    currentConversation.messages.push({ id: userMessageId, text: message, sender: 'user', image: imageData, timestamp: Date.now() });
+
                     userInput.value = '';
                     imageUploadInput.value = '';
                     clearImagePreview();
                     saveConversations();
                     messageCount++;
-    
+                    usageCounters.dailyMessages++;
+                    saveUsageCounters();
+
                     showTypingIndicator();
                     NProgress.start();
                     try {
@@ -1471,17 +1986,18 @@
                         const result = await model.generateContent([prompt, generativePart]);
                         const response = await result.response;
                         const aiResponseText = response.text();
-    
+                        const aiMessageId = Date.now();
+
                         removeTypingIndicator();
-                        addMessageToChat(aiResponseText, 'ai');
-                        currentConversation.messages.push({ text: aiResponseText, sender: 'ai' });
+                        addMessageToChat(aiResponseText, 'ai', null, Date.now(), aiMessageId);
+                        currentConversation.messages.push({ id: aiMessageId, text: aiResponseText, sender: 'ai', timestamp: Date.now() });
                         saveConversations();
-    
+
                     } catch (error) {
                         removeTypingIndicator();
                         console.error("Error generating content:", error);
-                        addMessageToChat("Error processing request.", 'ai');
-                        currentConversation.messages.push({ text: "Error processing request.", sender: 'ai' });
+                        addMessageToChat("Error processing request.", 'ai', null, Date.now());
+                        currentConversation.messages.push({ text: "Error processing request.", sender: 'ai', timestamp: Date.now() });
                         saveConversations();
                     } finally {
                         selectedImageFile = null;
@@ -1490,85 +2006,106 @@
                 };
                 reader.readAsDataURL(selectedImageFile);
             } else if (message) {
-                addMessageToChat(message, 'user');
-                currentConversation.messages.push({ text: message, sender: 'user' });
+                addMessageToChat(message, 'user', null, Date.now(), userMessageId);
+                currentConversation.messages.push({ id: userMessageId, text: message, sender: 'user', timestamp: Date.now() });
                 userInput.value = '';
                 saveConversations();
                 messageCount++;
-    
+                usageCounters.dailyMessages++;
+                saveUsageCounters();
+
                 showTypingIndicator();
                 NProgress.start();
                 try {
                     const selectedAssistant = assistants.find(a => a.id === currentConversation.assistant) || assistants[0];
-                    const promptWithSystem = selectedAssistant.prompt + "\n\n" + message;
-    
+                    const promptWithSystem = `Username: ${userData?.username || 'User'}\n\n${selectedAssistant.prompt}\n\n${message}`;
+
                     const result = await model.generateContentStream(promptWithSystem);
                     let aiResponseText = '';
-    
+                    let tempAiMessageId = Date.now(); // Temporary ID for streaming message
+
                     for await (const chunk of result.stream) {
                         const chunkText = chunk.text();
                         aiResponseText += chunkText;
-                        addStreamingMessageToChat(chunkText);
+                        addStreamingMessageToChat(chunkText, tempAiMessageId);
                     }
                     removeTypingIndicator();
-    
-                    currentConversation.messages.push({ text: aiResponseText, sender: 'ai' });
-                    saveConversations();
-    
+
+                    // After streaming is complete, find and update temp message with final ID and actions
+                    const tempMessageWrapper = chatMessages.querySelector(`.message-wrapper .message[data-message-id='${tempAiMessageId}']`);
+                    if (tempMessageWrapper) {
+                        const aiMessageId = Date.now(); // Final AI message ID
+                        tempMessageWrapper.dataset.messageId = aiMessageId;
+                        tempMessageWrapper.querySelector('.message-actions').innerHTML = `
+                            <button class="message-action-button regenerate-button" title="Regenerate response"><i class="fas fa-sync"></i></button>
+                            <button class="message-action-button delete-button" title="Delete message"><i class="fas fa-trash"></i></button>
+                        `;
+                        tempMessageWrapper.querySelector('.regenerate-button').addEventListener('click', () => regenerateOutput(aiMessageId, tempMessageWrapper));
+                        tempMessageWrapper.querySelector('.delete-button').addEventListener('click', () => deleteOutput(aiMessageId));
+                        currentConversation.messages.push({ id: aiMessageId, text: aiResponseText, sender: 'ai', timestamp: Date.now() });
+                        saveConversations();
+                    }
+
+
                 } catch (error) {
                     removeTypingIndicator();
                     console.error("Error generating content:", error);
-                    addMessageToChat("Error processing request.", 'ai');
-                     currentConversation.messages.push({ text: "Error processing request.", sender: 'ai' });
+                    addMessageToChat("Error processing request.", 'ai', null, Date.now());
+                    currentConversation.messages.push({ text: "Error processing request.", sender: 'ai', timestamp: Date.now() });
                     saveConversations();
                 } finally {
                     NProgress.done();
                 }
             }
         }
-    
-    
-    let streamingMessageElement = null;
-    
-    function addStreamingMessageToChat(text) {
-        if (!streamingMessageElement) {
-            streamingMessageElement = document.createElement('div');
-            streamingMessageElement.className = `message ai-message message-content streaming-message`;
-            const messageWrapper = document.createElement('div');
-            messageWrapper.className = 'message-wrapper';
-            messageWrapper.appendChild(streamingMessageElement);
-            chatMessages.insertBefore(messageWrapper, printingAnimation);
+
+
+        let streamingMessageElement = null;
+
+        function addStreamingMessageToChat(text, messageId) {
+            if (!streamingMessageElement) {
+                streamingMessageElement = document.createElement('div');
+                streamingMessageElement.className = `message ai-message message-content streaming-message`;
+                streamingMessageElement.dataset.messageId = messageId; // Assign temporary ID
+                const actionsDiv = document.createElement('div'); // Placeholder for actions, added after streaming
+                actionsDiv.className = 'message-actions';
+                streamingMessageElement.appendChild(actionsDiv);
+
+                const messageWrapper = document.createElement('div');
+                messageWrapper.className = 'message-wrapper';
+                messageWrapper.appendChild(streamingMessageElement);
+                chatMessages.insertBefore(messageWrapper, printingAnimation);
+            }
+
+            let formattedText = marked.parse(text);
+            const codeBlockRegex = /```([\s\S]*?)```/g;
+            formattedText = formattedText.replace(codeBlockRegex, (match, code) => {
+                return `<pre><code>${code}</code></pre>`;
+            });
+            streamingMessageElement.innerHTML += formattedText;
+
+
+            streamingMessageElement.querySelectorAll('pre code').forEach((block) => {
+                if (!block.classList.contains('hljs')) {
+                    hljs.highlightElement(block);
+                    const copyButton = document.createElement('button');
+                    copyButton.className = 'copy-code-button';
+                    copyButton.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                    copyButton.onclick = () => copyCodeToClipboard(block.textContent);
+                    block.parentNode.style.position = 'relative';
+                    block.parentNode.appendChild(copyButton);
+                }
+            });
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            clearTimeout(streamingMessageElement.timeout);
+            streamingMessageElement.timeout = setTimeout(() => {
+                streamingMessageElement = null;
+            }, 500);
         }
-    
-        let formattedText = marked.parse(text);
-         const codeBlockRegex = /```([\s\S]*?)```/g;
-        formattedText = formattedText.replace(codeBlockRegex, (match, code) => {
-          return `<pre><code>${code}</code></pre>`;
-        });
-        streamingMessageElement.innerHTML += formattedText;
-    
-    
-        streamingMessageElement.querySelectorAll('pre code').forEach((block) => {
-              if (!block.classList.contains('hljs')) {
-                hljs.highlightElement(block);
-                const copyButton = document.createElement('button');
-                copyButton.className = 'copy-code-button';
-                copyButton.innerHTML = '<i class="fas fa-copy"></i> Copy';
-                copyButton.onclick = () => copyCodeToClipboard(block.textContent);
-                block.parentNode.style.position = 'relative';
-                block.parentNode.appendChild(copyButton);
-              }
-        });
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    
-        clearTimeout(streamingMessageElement.timeout);
-        streamingMessageElement.timeout = setTimeout(() => {
-            streamingMessageElement = null;
-        }, 500);
-    }
-    
-    
-    async function fileToGenerativePart(file) {
+
+
+        async function fileToGenerativePart(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.onloadend = () => {
@@ -1585,12 +2122,18 @@
                 reader.readAsDataURL(file);
             });
         }
-    
+
         function checkMessageLimit() {
-            return messageCount < settings.messageHistoryLimit;
+            return messageCount < MESSAGE_LIMIT;
         }
-    
-    
+        function checkDailyMessageLimit() {
+            return usageCounters.dailyMessages < DAILY_MESSAGE_LIMIT;
+        }
+        function checkDailyImageLimit() {
+            return usageCounters.dailyImages < DAILY_IMAGE_LIMIT;
+        }
+
+
         function toggleSidebar() {
             sidebar.classList.toggle('active');
         }
@@ -1607,64 +2150,71 @@
             settingsModal.classList.add('show');
             settingsModal.style.display = 'flex';
         }
-    
+
         function closeSettings() {
             settingsModal.classList.remove('show');
-             setTimeout(() => {
+            setTimeout(() => {
                 settingsModal.style.display = 'none';
             }, 300);
         }
-    
+
         function saveSettingsChanges() {
+            const selectedModel = document.getElementById('ai-model').value;
+            if (plan === 'free' && selectedModel !== FREE_MODEL) {
+                alert(`In Free plan, only ${FREE_MODEL} model is available.`);
+                document.getElementById('ai-model').value = FREE_MODEL; // Revert select to free model
+                return;
+            }
+
             settings.messageHistoryLimit = parseInt(document.getElementById('message-history-limit').value);
-            settings.aiModel = document.getElementById('ai-model').value;
+            settings.aiModel = selectedModel;
             settings.apiKey = document.getElementById('api-key-input').value;
             settings.theme = document.getElementById('theme').value;
             saveSettings();
             applySettings();
             closeSettings();
             initializeModel();
-            MESSAGE_LIMIT = settings.messageHistoryLimit;
+            MESSAGE_LIMIT = getMessageLimitForPlan();
         }
-    
-    
-       function applySettings() {
+
+
+        function applySettings() {
             const theme = settings.theme;
             if (theme === 'dark') {
                 document.body.classList.add('dark');
-                 hljs.configure({ theme: 'monokai-sublime' });
+                hljs.configure({ theme: 'monokai-sublime' });
             } else if (theme === 'system') {
                 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                     document.body.classList.add('dark');
-                     hljs.configure({ theme: 'monokai-sublime' });
+                    hljs.configure({ theme: 'monokai-sublime' });
                 } else {
                     document.body.classList.remove('dark');
-                     hljs.configure({ theme: 'atom-one-light' });
+                    hljs.configure({ theme: 'atom-one-light' });
                 }
             } else {
                 document.body.classList.remove('dark');
-                 hljs.configure({ theme: 'atom-one-light' });
+                hljs.configure({ theme: 'atom-one-light' });
             }
             initializeModel();
         }
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applySettings);
-    
-    
+
+
         function openAssistantModal() {
             updateAssistantList();
             assistantModal.classList.add('show');
             assistantModal.style.display = 'flex';
         }
-    
+
         function closeAssistantModal() {
             assistantModal.classList.remove('show');
             setTimeout(() => {
                 assistantModal.style.display = 'none';
             }, 300);
         }
-    
-      function updateAssistantList() {
-           assistantList.innerHTML = '';
+
+        function updateAssistantList() {
+            assistantList.innerHTML = '';
             assistants.forEach(assistant => {
                 const card = document.createElement('div');
                 card.className = 'assistant-card bg-white p-5 rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow duration-300';
@@ -1688,23 +2238,23 @@
                 assistantList.appendChild(card);
             });
         }
-    
-    
+
+
         function openNewAssistantModal() {
             document.getElementById('assistant-name').value = '';
             document.getElementById('assistant-prompt').value = '';
             newAssistantModal.classList.add('show');
             newAssistantModal.style.display = 'flex';
         }
-    
+
         function closeNewAssistantModal() {
             newAssistantModal.classList.remove('show');
             setTimeout(() => {
                 newAssistantModal.style.display = 'none';
             }, 300);
         }
-    
-    
+
+
         function saveNewAssistant() {
             const name = document.getElementById('assistant-name').value.trim();
             const prompt = document.getElementById('assistant-prompt').value.trim();
@@ -1722,20 +2272,20 @@
                 alert("Please enter both name and system prompt.");
             }
         }
-    
-       function editAssistant(id) {
-             const assistant = assistants.find(a => a.id === id);
+
+        function editAssistant(id) {
+            const assistant = assistants.find(a => a.id === id);
             if (assistant) {
                 document.getElementById('assistant-name').value = assistant.name;
                 document.getElementById('assistant-prompt').value = assistant.prompt;
-    
+
                 newAssistantModal.classList.add('show');
                 newAssistantModal.style.display = 'flex';
-    
+
                 saveNewAssistantButton.onclick = () => {
                     const newName = document.getElementById('assistant-name').value.trim();
                     const newPrompt = document.getElementById('assistant-prompt').value.trim();
-    
+
                     if (newName && newPrompt) {
                         assistant.name = newName;
                         assistant.prompt = newPrompt;
@@ -1744,56 +2294,56 @@
                         closeNewAssistantModal();
                         saveNewAssistantButton.onclick = saveNewAssistant;
                     } else {
-                         alert("Please enter both name and system prompt.");
+                        alert("Please enter both name and system prompt.");
                     }
                 };
             }
         }
-    
+
         function deleteAssistant(id) {
-             if (id !== 'default' && confirm("Delete this assistant? This cannot be undone.")) {
+            if (id !== 'default' && confirm("Delete this assistant? This cannot be undone.")) {
                 assistants = assistants.filter(a => a.id !== id);
                 saveAssistants();
                 updateAssistantList();
                 if (currentConversation && currentConversation.assistant === id) {
-                      currentConversation.assistant = 'default';
-                      saveConversations();
+                    currentConversation.assistant = 'default';
+                    saveConversations();
                 }
             }
         }
-    
+
         function selectAssistant(id) {
             if (currentConversation) {
                 currentConversation.assistant = id;
                 saveConversations();
                 closeAssistantModal();
-                addMessageToChat(`Switched to assistant: ${assistants.find(a => a.id === id).name}`, 'ai');
+                addMessageToChat(`Switched to assistant: ${assistants.find(a => a.id === id).name}`, 'ai', null, Date.now());
             }
         }
-    
+
         async function generateConversationTitle() {
             if (currentConversation && currentConversation.messages.length > 0 && currentConversation.name === "New Conversation") {
                 await new Promise(resolve => setTimeout(resolve, 1500));
-    
+
                 const firstMessage = currentConversation.messages[0].text;
                 const selectedAssistant = assistants.find(a => a.id === currentConversation.assistant) || assistants[0];
                 const promptWithSystem = selectedAssistant.prompt + "\n\n Summarize this first message in max 4 words for a conversation title: " + firstMessage;
-    
+
                 try {
                     const result = await model.generateContent(promptWithSystem);
                     const response = await result.response;
                     let title = response.text().trim();
-    
+
                     title = title.replace(/[^a-zA-Z0-9\s]/g, '');
                     if (title.length > 50) {
                         title = title.substring(0, 50).trim() + '...';
                     }
-    
+
                     currentConversation.name = title || 'Conversation';
                     currentConversationTitle.textContent = currentConversation.name;
                     saveConversations();
                     updateConversationList();
-    
+
                 } catch (error) {
                     console.error("Error generating title:", error);
                     currentConversation.name = "Conversation";
@@ -1803,56 +2353,68 @@
                 }
             }
         }
-    
-          let sortable;
+
+        let sortable;
         function initializeSortable() {
             const chatMessagesElement = document.getElementById('chat-messages');
             if (sortable) {
                 sortable.destroy();
             }
+            // Disable Sortable on mobile
+            if (window.innerWidth >= 768) {
                 sortable = new Sortable(chatMessagesElement, {
-                animation: 150,
-                ghostClass: 'sortable-ghost',
-                chosenClass: 'sortable-chosen',
-                dragClass: 'sortable-drag',
-                handle: '.message-wrapper',
-                onUpdate: (evt) => {
-                    const oldIndex = evt.oldIndex;
-                    const newIndex = evt.newIndex;
-                    if (currentConversation) {
-                        let adjustedOldIndex = oldIndex;
-                        let adjustedNewIndex = newIndex;
-    
-                         for (let i = 0; i <= adjustedOldIndex; i++) {
-                            if (chatMessages.children[i]?.querySelector('.message')?.classList.contains('ai-message')) {
-                                adjustedOldIndex++;
+                    animation: 150,
+                    ghostClass: 'sortable-ghost',
+                    chosenClass: 'sortable-chosen',
+                    dragClass: 'sortable-drag',
+                    handle: '.message-wrapper',
+                    onUpdate: (evt) => {
+                        const oldIndex = evt.oldIndex;
+                        const newIndex = evt.newIndex;
+                        if (currentConversation) {
+                            let adjustedOldIndex = evt.oldIndex;
+                            let adjustedNewIndex = evt.newIndex;
+
+                            for (let i = 0; i <= adjustedOldIndex; i++) {
+                                if (chatMessages.children[i]?.querySelector('.message')?.classList.contains('ai-message')) {
+                                    adjustedOldIndex++;
+                                }
                             }
-                        }
-    
-                         for (let i = 0; i <= adjustedNewIndex; i++)
-                            {
+
+                            for (let i = 0; i <= adjustedNewIndex; i++) {
                                 if(chatMessages.children[i]?.querySelector('.message')?.classList.contains('ai-message')){
                                     adjustedNewIndex++;
                                 }
                             }
-    
-                        const [movedMessage] = currentConversation.messages.splice(adjustedOldIndex, 1);
-                        currentConversation.messages.splice(adjustedNewIndex, 0, movedMessage);
-                        saveConversations();
+
+                            const [movedMessage] = currentConversation.messages.splice(adjustedOldIndex, 1);
+                            currentConversation.messages.splice(adjustedNewIndex, 0, movedMessage);
+                            saveConversations();
+                        }
+
+                    },
+                    filter: '.ai-message, .typing-indicator, .printing-animation',
+                    onMove: function (evt) {
+                        return evt.related.className.indexOf('ai-message') === -1 && evt.related.className.indexOf('typing-indicator') === -1 && evt.related.className.indexOf('printing-animation') === -1;
                     }
-    
-                },
-                filter: '.ai-message, .typing-indicator, .printing-animation',
-                onMove: function (evt) {
-                    return evt.related.className.indexOf('ai-message') === -1 && evt.related.className.indexOf('typing-indicator') === -1 && evt.related.className.indexOf('printing-animation') === -1;
-                }
-            });
+                });
+            } else {
+                if (sortable) sortable.destroy(); // Ensure Sortable is destroyed on mobile/resize to mobile
+                sortable = null;
+            }
         }
+
         function onConversationSwitched() {
             initializeSortable();
         }
-    
+
         function handleImageUpload(event) {
+            if (!checkDailyImageLimit()) {
+                showPremiumAdModal("dailyImageLimit");
+                imageUploadInput.value = ''; //Reset file input
+                return;
+            }
+
             selectedImageFile = event.target.files[0];
             if (selectedImageFile) {
                 const reader = new FileReader();
@@ -1865,33 +2427,360 @@
                 clearImagePreview();
             }
         }
-    
+
         function clearImagePreview() {
             selectedImageFile = null;
             previewImageElement.src = '#';
             imagePreviewArea.classList.add('hidden');
             imageUploadInput.value = '';
         }
-    
+
         function clearConversationHistory() {
             if (currentConversation && confirm("Clear conversation history? This cannot be undone.")) {
                 currentConversation.messages = [];
                 clearChatMessages();
                 messageCount = 0;
                 saveConversations();
-                 if (currentConversation.name !== 'New Conversation') {
+                if (currentConversation.name !== 'New Conversation') {
                     generateConversationTitle();
                 }
             }
         }
-    
+
         function toggleApiKeyVisibility() {
             apiKeyVisible = !apiKeyVisible;
             apiKeyInput.type = apiKeyVisible ? 'text' : 'password';
             toggleApiKeyButton.innerHTML = apiKeyVisible ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
         }
-    
-    
+
+
+        async function regenerateOutput(messageId, messageElement) {
+            const originalUserMessageWrapper = messageElement.previousElementSibling;
+            const originalUserMessage = originalUserMessageWrapper ? originalUserMessageWrapper.querySelector('.message-content').textContent : "";
+
+            if (!originalUserMessage) {
+                alert("Cannot regenerate without the original user message.");
+                return;
+            }
+
+            const messageIndex = currentConversation.messages.findIndex(msg => msg.id === messageId);
+            if (messageIndex !== -1) {
+                // Remove the AI message from the conversation and UI
+                currentConversation.messages.splice(messageIndex, 1);
+                messageElement.remove();
+                saveConversations();
+            }
+
+
+            showTypingIndicator();
+            NProgress.start();
+            try {
+                const selectedAssistant = assistants.find(a => a.id === currentConversation.assistant) || assistants[0];
+                const promptWithSystem = selectedAssistant.prompt + "\n\n" + originalUserMessage;
+
+                const result = await model.generateContentStream(promptWithSystem);
+                let aiResponseText = '';
+                let tempAiMessageId = Date.now();
+
+
+                for await (const chunk of result.stream) {
+                    const chunkText = chunk.text();
+                    aiResponseText += chunkText;
+                    addStreamingMessageToChat(chunkText, tempAiMessageId);
+                }
+                removeTypingIndicator();
+
+                 // After streaming is complete, find and update temp message with final ID and actions
+                const tempMessageWrapper = chatMessages.querySelector(`.message-wrapper .message[data-message-id='${tempAiMessageId}']`);
+                if (tempMessageWrapper) {
+                    const aiMessageId = Date.now(); // Final AI message ID
+                    tempMessageWrapper.dataset.messageId = aiMessageId;
+                    tempMessageWrapper.querySelector('.message-actions').innerHTML = `
+                        <button class="message-action-button regenerate-button" title="Regenerate response"><i class="fas fa-sync"></i></button>
+                        <button class="message-action-button delete-button" title="Delete message"><i class="fas fa-trash"></i></button>
+                    `;
+                    tempMessageWrapper.querySelector('.regenerate-button').addEventListener('click', () => regenerateOutput(aiMessageId, tempMessageWrapper));
+                    tempMessageWrapper.querySelector('.delete-button').addEventListener('click', () => deleteOutput(aiMessageId));
+                    currentConversation.messages.push({ id: aiMessageId, text: aiResponseText, sender: 'ai', timestamp: Date.now() });
+                    saveConversations();
+                }
+
+
+            } catch (error) {
+                removeTypingIndicator();
+                console.error("Error regenerating content:", error);
+                addMessageToChat("Error processing request.", 'ai', null, Date.now());
+                currentConversation.messages.push({ text: "Error processing request.", sender: 'ai', timestamp: Date.now() });
+                saveConversations();
+            } finally {
+                NProgress.done();
+            }
+        }
+
+        function deleteOutput(messageId) {
+            if (confirm("Delete this message? This cannot be undone.")) {
+                const messageWrapperToDelete = chatMessages.querySelector(`.message-wrapper .message[data-message-id='${messageId}']`).parentElement;
+                const messageIndex = currentConversation.messages.findIndex(msg => msg.id === messageId);
+                if (messageIndex !== -1) {
+                    currentConversation.messages.splice(messageIndex, 1);
+                    messageWrapperToDelete.remove();
+                    saveConversations();
+                }
+            }
+        }
+
+
+        function editPrompt(messageId, messageElement) {
+            editingMessageId = messageId;
+            const messageContent = messageElement.querySelector('.message-content').textContent;
+            editMessageTextarea.value = messageContent;
+            editMessageModal.classList.add('show');
+            editMessageModal.style.display = 'flex';
+        }
+
+        function cancelEditMessage() {
+            editMessageModal.classList.remove('show');
+            setTimeout(() => {
+                editMessageModal.style.display = 'none';
+            }, 300);
+            editingMessageId = null;
+        }
+
+        async function saveEditMessage() {
+            const editedMessageText = editMessageTextarea.value.trim();
+            if (!editedMessageText) {
+                alert("Message cannot be empty.");
+                return;
+            }
+
+            const originalUserMessageObject = currentConversation.messages.find(msg => msg.id === editingMessageId);
+            if (originalUserMessageObject) {
+                originalUserMessageObject.text = editedMessageText; // Update message text in conversation
+                saveConversations();
+
+                // Update UI
+                const messageElement = chatMessages.querySelector(`.message-wrapper .message[data-message-id='${editingMessageId}'] .message-content`);
+                if (messageElement) {
+                    messageElement.innerHTML = marked.parse(editedMessageText); // Update text content with markdown
+                }
+
+                cancelEditMessage(); // Close modal after edit and rerunning
+                await reRunPrompt(editingMessageId, editedMessageText); // Re-run the prompt with edited text
+            }
+        }
+
+
+        async function reRunPrompt(userMessageId, editedPromptText) {
+
+            const aiMessageWrapper = chatMessages.querySelector(`.message-wrapper .message[data-message-id='${userMessageId}'] + .message-wrapper`);
+            if (aiMessageWrapper) {
+                const aiMessageElement = aiMessageWrapper.querySelector('.message');
+                if (aiMessageElement) {
+                    aiMessageWrapper.remove(); // Remove the old AI response from UI
+                }
+            }
+            const aiMessageIndex = currentConversation.messages.findIndex(msg => msg.sender === 'ai' && msg.id > userMessageId);
+            if (aiMessageIndex !== -1) {
+                currentConversation.messages.splice(aiMessageIndex, 1); // Remove the old AI response from data
+                saveConversations();
+            }
+
+
+            showTypingIndicator();
+            NProgress.start();
+            try {
+                const selectedAssistant = assistants.find(a => a.id === currentConversation.assistant) || assistants[0];
+                const promptWithSystem = selectedAssistant.prompt + "\n\n" + editedPromptText;
+
+                const result = await model.generateContentStream(promptWithSystem);
+                let aiResponseText = '';
+                let tempAiMessageId = Date.now();
+
+                for await (const chunk of result.stream) {
+                    const chunkText = chunk.text();
+                    aiResponseText += chunkText;
+                    addStreamingMessageToChat(chunkText, tempAiMessageId);
+                }
+                removeTypingIndicator();
+
+                const tempMessageWrapper = chatMessages.querySelector(`.message-wrapper .message[data-message-id='${tempAiMessageId}']`);
+                if (tempMessageWrapper) {
+                    const aiMessageId = Date.now();
+                    tempMessageWrapper.dataset.messageId = aiMessageId;
+                    tempMessageWrapper.querySelector('.message-actions').innerHTML = `
+                        <button class="message-action-button regenerate-button" title="Regenerate response"><i class="fas fa-sync"></i></button>
+                        <button class="message-action-button delete-button" title="Delete message"><i class="fas fa-trash"></i></button>
+                    `;
+                    tempMessageWrapper.querySelector('.regenerate-button').addEventListener('click', () => regenerateOutput(aiMessageId, tempMessageWrapper));
+                    tempMessageWrapper.querySelector('.delete-button').addEventListener('click', () => deleteOutput(aiMessageId));
+                    currentConversation.messages.push({ id: aiMessageId, text: aiResponseText, sender: 'ai', timestamp: Date.now() });
+                    saveConversations();
+                }
+
+
+            } catch (error) {
+                removeTypingIndicator();
+                console.error("Error regenerating content:", error);
+                addMessageToChat("Error processing request.", 'ai', null, Date.now());
+                currentConversation.messages.push({ text: "Error processing request.", sender: 'ai', timestamp: Date.now() });
+                saveConversations();
+            } finally {
+                NProgress.done();
+            }
+        }
+
+        function showInitialSetupModal() {
+            initialSetupModal.classList.add('show');
+            initialSetupModal.style.display = 'flex';
+        }
+        function closeInitialSetupModal() {
+            initialSetupModal.classList.remove('show');
+            initialSetupModal.style.display = 'none';
+        }
+        function showAgeBlockModal() {
+            ageBlockModal.classList.add('show');
+            ageBlockModal.style.display = 'flex';
+        }
+        function closeAgeBlockModal() {
+            ageBlockModal.classList.remove('show');
+            ageBlockModal.style.display = 'none';
+        }
+
+        function completeInitialSetup() {
+            const username = setupUsernameInput.value.trim();
+            const dob = setupDobInput.value;
+            const email = setupEmailInput.value.trim();
+            const pin = setupPinInput.value;
+
+            if (!username || !dob || !pin) {
+                alert("Please fill in username, date of birth, and PIN.");
+                return;
+            }
+
+            const birthDate = new Date(dob);
+            const ageDiffMs = Date.now() - birthDate.getTime();
+            const ageDate = new Date(ageDiffMs);
+            const age = Math.abs(ageDate.getUTCFullYear() - 1970);
+
+            if (age < 18) {
+                localStorage.setItem('ageBlocked', 'true');
+                closeInitialSetupModal();
+                showAgeBlockModal();
+                return;
+            }
+
+            userData = { username: username, email: email, pin: pin };
+            localStorage.setItem('userData', JSON.stringify(userData));
+            closeInitialSetupModal();
+            if (!localStorage.getItem('termsAccepted')) {
+                welcomeModal.classList.add('show');
+                welcomeModal.style.display = 'flex';
+            } else {
+                initializeApp();
+            }
+        }
+
+        function showPremiumKeyModal() {
+            premiumKeyModal.classList.add('show');
+            premiumKeyModal.style.display = 'flex';
+            premiumKeyStatus.classList.add('hidden'); //hide status message
+            premiumKeyInputModal.value = ''; //clear input
+        }
+        function closePremiumKeyModal() {
+            premiumKeyModal.classList.remove('show');
+            premiumKeyModal.style.display = 'none';
+        }
+        function showPremiumAdModal(reason) {
+            premiumAdModal.classList.add('show');
+            premiumAdModal.style.display = 'flex';
+        }
+        function closePremiumAdModal() {
+            premiumAdModal.classList.remove('show');
+            premiumAdModal.style.display = 'none';
+        }
+
+        function setPlan(newPlan) {
+            plan = newPlan;
+            localStorage.setItem('plan', newPlan);
+        }
+
+        async function activatePremiumPlan() {
+            const enteredKey = premiumKeyInputModal.value.trim();
+            if (!enteredKey) return;
+
+            if (premiumKeys.includes(enteredKey)) {
+                setPlan('premium');
+                updatePlanUI();
+                closePremiumKeyModal();
+                initializeModel(); // Re-initialize model to reflect premium plan
+                alert("Premium plan activated! Enjoy unlimited access.");
+                 updateSidebarUI(); // Update sidebar to show premium badge
+            } else {
+                premiumKeyStatus.classList.remove('hidden');
+                premiumKeyStatus.classList.add('animate__animated', 'animate__fadeIn'); // Add animation class
+                premiumKeyStatus.addEventListener('animationend', () => { // Remove animation class after it finishes
+                    premiumKeyStatus.classList.remove('animate__animated', 'animate__fadeIn');
+                }, { once: true });
+            }
+        }
+
+        function updatePlanUI() {
+            MESSAGE_LIMIT = getMessageLimitForPlan();
+            MAX_CONVERSATIONS = getMaxConversationsForPlan();
+            DAILY_MESSAGE_LIMIT = getDailyMessageLimitForPlan();
+            DAILY_IMAGE_LIMIT = getDailyImageLimitForPlan();
+            MAX_MESSAGE_CHARS = getMaxMessageCharsForPlan();
+
+            const aiModelSelect = document.getElementById('ai-model');
+            aiModelSelect.innerHTML = ''; // Clear existing options
+
+            const allModels = plan === 'premium' ? PREMIUM_MODELS : [FREE_MODEL];
+            allModels.forEach(modelId => {
+                let modelName = modelId;
+                if (modelId === 'gemini-2.0-flash') modelName = 'PyroAI Fast (gemini-2.0-flash)';
+                if (modelId === 'gemini-2.0-flash-thinking-exp-01-21') modelName = 'PyroAI PRO (gemini-2.0-flash-thinking-exp-01-21)';
+                if (modelId === 'gemini-2.0-pro-exp-02-05') modelName = 'PyroAI MAX (gemini-2.0-pro-exp-02-05)';
+
+                const option = document.createElement('option');
+                option.value = modelId;
+                option.textContent = modelName;
+                aiModelSelect.appendChild(option);
+            });
+            aiModelSelect.value = settings.aiModel; // Reset selected value, important if switching plans
+
+            if (plan === 'premium') {
+                premiumButton.style.display = 'none'; // Hide premium button in sidebar
+            } else {
+                premiumButton.style.display = 'flex'; // Show for free plan
+            }
+        }
+        function updateSidebarUI() {
+            sidebarUsername.textContent = userData?.username || 'User';
+            if (plan === 'premium') {
+                premiumUserBadge.innerHTML = '<span class="premium-badge animate__animated animate__pulse">Premium</span>';
+            } else {
+                premiumUserBadge.innerHTML = '';
+            }
+        }
+
+
+        function initializeApp() {
+            checkDailyLimitsReset();
+            fetchPremiumKeys();
+            fetchDefaultApiKey();
+            updatePlanUI();
+            updateSidebarUI();
+
+            initializeModel();
+            if (conversations.length === 0) {
+                createNewConversation();
+            } else {
+                updateConversationList();
+                switchConversation(conversations.find(c => !c.archived) || conversations[0]);
+            }
+        }
+
+
         // Event Listeners
         sendButton.addEventListener('click', sendMessage);
         userInput.addEventListener('keypress', (e) => {
@@ -1900,8 +2789,9 @@
                 sendMessage();
             }
         });
-    
+
         newConversationButton.addEventListener('click', createNewConversation);
+        premiumButton.addEventListener('click', showPremiumKeyModal);
         toggleSidebarButton.addEventListener('click', toggleSidebar);
         mobileSidebarToggle.addEventListener('click', toggleSidebar);
         openSettingsButton.addEventListener('click', openSettings);
@@ -1913,45 +2803,53 @@
         cancelNewAssistantButton.addEventListener('click', closeNewAssistantModal);
         saveNewAssistantButton.addEventListener('click', saveNewAssistant);
         acceptTermsButton.addEventListener('click', () => {
-            welcomeModal.classList.remove('show');
-            setTimeout(() => {
-                welcomeModal.style.display = 'none';
-            }, 300);
             localStorage.setItem('termsAccepted', 'true');
-            initializeModel();
-             if (conversations.length === 0) {
-                createNewConversation();
-            } else {
-                updateConversationList();
-                switchConversation(conversations.find(c=> !c.archived) || conversations[0]);
-            }
+            closeWelcomeModal();
+            initializeApp();
         });
         searchConversationsInput.addEventListener('input', updateConversationList);
         imageUploadInput.addEventListener('change', handleImageUpload);
         removePreviewImageButton.addEventListener('click', clearImagePreview);
         clearHistoryButton.addEventListener('click', clearConversationHistory);
         toggleApiKeyButton.addEventListener('click', toggleApiKeyVisibility);
-    
-    
-         if (!localStorage.getItem('termsAccepted')) {
+        cancelEditMessageButton.addEventListener('click', cancelEditMessage);
+        saveEditMessageButton.addEventListener('click', saveEditMessage);
+
+        completeSetupButton.addEventListener('click', completeInitialSetup);
+        closeAgeBlockButton.addEventListener('click', closeAgeBlockModal);
+
+        activatePremiumButton.addEventListener('click', activatePremiumPlan);
+        cancelPremiumKeyButton.addEventListener('click', closePremiumKeyModal);
+        goPremiumAdButton.addEventListener('click', showPremiumKeyModal);
+        closePremiumAdButton.addEventListener('click', closePremiumAdModal);
+
+
+        function closeWelcomeModal() {
+            welcomeModal.classList.remove('show');
+            welcomeModal.style.display = 'none';
+        }
+
+        if (localStorage.getItem('ageBlocked') === 'true') {
+            showAgeBlockModal();
+        } else if (!localStorage.getItem('userData')) {
+            showInitialSetupModal();
+        } else if (!localStorage.getItem('termsAccepted')) {
             welcomeModal.classList.add('show');
             welcomeModal.style.display = 'flex';
-        } else {
-            initializeModel();
-             if (conversations.length === 0) {
-                createNewConversation();
-            } else {
-                updateConversationList();
-                 switchConversation(conversations.find(c => !c.archived) || conversations[0]);
-            }
         }
-    
+        else {
+            userData = JSON.parse(localStorage.getItem('userData')); //Load user data after initial setup
+            initializeApp();
+        }
+
+
         window.addEventListener('resize', () => {
             if (window.innerWidth >= 768) {
                 sidebar.classList.remove('sidebar-closed');
             }
+            initializeSortable(); // Re-init sortable on resize, important for mobile/desktop switch
         });
-    
+
         marked.setOptions({
             breaks: true,
             gfm: true,
@@ -1960,11 +2858,11 @@
                 const language = hljs.getLanguage(lang) ? lang : 'plaintext';
                 return hljs.highlight(code, { language }).value;
             },
-             tables: true,
+            tables: true,
             taskLists: true
-    
+
         });
-    
+
         updateConversationList();
         initializeSortable();
         applySettings();

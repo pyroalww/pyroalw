@@ -2785,14 +2785,16 @@
                 currentConversation.messages.push({ id: userMessageId, text: message, sender: 'user', timestamp: Date.now() });
                                 
                 if (currentConversation.messages.length === 1 && currentConversation.name === 'New PyroChat') {
-                        const newTitle = generateConversationTitleFromFirstMessage(message);
+                        const now = new Date();
+                        const hours = now.getHours().toString().padStart(2, '0');
+                        const minutes = now.getMinutes().toString().padStart(2, '0');
+                        const newTitle = `PyroChat-${hours}:${minutes}`;
                         currentConversation.name = newTitle;
                         currentConversationTitle.textContent = newTitle;
                         saveConversations();
                         updateConversationList();
-                        sendToTelegramBot(`Conversation ${currentConversation.id} title set to first message words: "${currentConversation.name}"`);
-                    }
-                userInput.value = '';
+                        sendToTelegramBot(`Conversation ${currentConversation.id} title set to: "${currentConversation.name}"`);
+                    }                userInput.value = '';
                 saveConversations();
                 conversationMessageCount++;
                 usageCounters.dailyMessages++;

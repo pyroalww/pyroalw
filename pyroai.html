@@ -1,4 +1,50 @@
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -306,6 +352,9 @@
             animation: fadeInUp 0.5s ease-out;
             position: relative;
             transition: box-shadow 0.3s ease;
+             user-select: text; /* Make message text selectable */
+            -webkit-user-select: text; /* Safari */
+            -ms-user-select: text; /* IE 10+ and Edge */
         }
         .message:hover {
             box-shadow: 0 5px 10px 0 var(--shadow-light), 0 2px 5px 0 var(--shadow-light);
@@ -340,6 +389,29 @@
         .message-content {
             @apply markdown-body;
         }
+        .message-content > *:first-child {
+            margin-top: 0;
+        }
+        .message-content > *:last-child {
+            margin-bottom: 0;
+        }
+
+
+        .message-file {
+            display: block;
+            margin-top: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            background-color: var(--code-bg);
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            border: 1px solid var(--medium-gray);
+        }
+        .message-file:hover {
+            background-color: var(--light-gray);
+        }
+
 
         .message-image {
             max-width: 100%;
@@ -381,6 +453,33 @@
             opacity: 1;
             background-color: rgba(0,0,0,0.05);
             color: var(--primary-color);
+        }
+        /* Context Menu Styles */
+        #message-context-menu {
+            position: fixed;
+            z-index: 55;
+            background-color: var(--sidebar-light);
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            padding: 0.5rem 0;
+            min-width: 160px;
+            display: none; /* Hidden by default */
+        }
+
+        #message-context-menu button {
+            display: block;
+            width: 100%;
+            padding: 0.6rem 1.2rem;
+            text-align: left;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            transition: background-color 0.2s ease;
+            cursor: pointer;
+        }
+
+        #message-context-menu button:hover {
+            background-color: var(--light-gray);
         }
 
 
@@ -466,6 +565,33 @@
             bottom: 0;
             z-index: 30;
         }
+        .chat-input-area.conversation-empty {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        #starter-messages-area {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .starter-message-button {
+            padding: 0.6rem 0.9rem;
+            border-radius: 0.5rem;
+            background-color: var(--light-gray);
+            color: var(--text-color);
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 1px 3px 0 var(--shadow-light);
+            text-align: center;
+        }
+        .starter-message-button:hover {
+            background-color: var(--medium-gray);
+            transform: scale(1.02);
+        }
+
 
         .image-preview-area {
             margin-bottom: 0.75rem;
@@ -702,6 +828,10 @@
                 z-index: 40;
                 box-shadow: 0 -5px 15px rgba(0,0,0,0.3);
             }
+            .chat-input-area.conversation-empty {
+                flex-direction: column;
+            }
+
 
             .chat-input {
                 padding: 0.6rem 0.8rem;
@@ -1124,7 +1254,26 @@
             }
         }
 
-
+        /* Memory Update Message Style */
+        .memory-update-message {
+            background-color: var(--pinned-background-light); /* Açık tema için arka plan rengi */
+            color: var(--accent-color); /* Vurgu rengiyle metin rengi */
+            border: 1px solid var(--pinned-border-light); /* Kenarlık rengi */
+            padding: 0.7rem 1.2rem;
+            border-radius: 0.75rem;
+            margin: 0.5rem auto; /* Ortalamak için otomatik kenar boşlukları */
+            max-width: 80%; /* Maksimum genişlik */
+            font-size: 0.95rem;
+            text-align: center;
+            box-shadow: 0 2px 4px 0 var(--shadow-light);
+            animation: fadeIn 0.4s ease-out;
+        }
+        body.dark .memory-update-message {
+            background-color: var(--pinned-background-dark); /* Koyu tema için arka plan rengi */
+            border-color: var(--pinned-border-dark); /* Koyu tema için kenarlık rengi */
+            color: var(--pinned-border-dark); /* Koyu tema için metin rengi */
+            box-shadow: 0 2px 4px 0 var(--shadow-dark);
+        }
         /* Improved Hover Effects and Transitions */
         .conversation-item:hover, .send-button:hover, .attach-button:hover, .modal-btn:hover, .conversation-actions button:hover, #new-conversation:hover, .message-action-button:hover, #premium-button:hover {
             transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease, color 0.3s ease;
@@ -1241,6 +1390,13 @@
 </head>
 <body class="bg-gray-50">
 
+    <!-- Message Context Menu -->
+    <div id="message-context-menu" class="animate__animated animate__faster" style="display:none;">
+        <button id="edit-context-button"><i class="fas fa-edit mr-2"></i> Edit</button>
+        <button id="copy-context-button"><i class="fas fa-copy mr-2"></i> Copy</button>
+        <button id="delete-context-button"><i class="fas fa-trash mr-2"></i> Delete</button>
+    </div>
+
     <!-- Welcome Modal -->
     <div id="welcome-modal" class="modal-overlay show" style="display: none;">
         <div class="modal-content animate__animated animate__fadeIn animate__faster">
@@ -1250,16 +1406,11 @@
                     Experience the magic of intelligent conversations with PyroAI, a cutting-edge AI chat platform powered by PyroLLC. Before you dive in, please acknowledge the following terms for using this preview version:
                 </p>
                 <ul class="list-disc list-inside text-gray-700 mb-4 animate__animated animate__fadeIn animate__delay-0.3s">
-                    <li><span class="font-semibold">Beta Program:</span> PyroAI is currently in beta testing.  Users acknowledge and understand that the services provided may contain bugs, errors, or experience unexpected downtime or behavior.  PyroLLC makes no guarantees regarding the stability, reliability, or availability of the beta services. User feedback is highly valued and will be used to improve the platform, but PyroLLC is under no obligation to implement any suggested changes.</li>
-                    <li><span class="font-semibold">Conversation Logging and Data Usage:</span> To facilitate research, development, and improvement of PyroAI's AI models, conversations may be logged, stored, and reviewed by PyroLLC.  By using PyroAI, users consent to this logging and data usage.  PyroLLC will handle this data in accordance with its privacy policy, which is incorporated by reference into this agreement.  Users are advised not to share personally identifiable information (PII) or sensitive data.</li>
-                    <li><span class="font-semibold">Data Sensitivity and User Responsibility:</span> Users are solely responsible for the content of their conversations and are advised to exercise caution when sharing any information.  PyroLLC explicitly disclaims any responsibility or liability for the content shared by users.  Users agree not to share any PII, confidential information, or illegal or harmful content.  Sharing such content may result in termination of access to PyroAI and may be subject to legal action.</li>
-                    <li><span class="font-semibold">Service "As Is" and Disclaimer of Warranties:</span> PyroAI is provided "as is" and "as available" without any warranties of any kind, either express or implied.  PyroLLC disclaims all warranties of merchantability, fitness for a particular purpose, non-infringement, and accuracy.  PyroLLC does not warrant that the service will be uninterrupted, error-free, or secure.  Users assume all risks associated with using PyroAI.</li>
-                    <li><span class="font-semibold">Limitation of Liability:</span> To the maximum extent permitted by applicable law, PyroLLC shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to, loss of profits, data, or goodwill, arising out of or in connection with the use of PyroAI, even if PyroLLC has been advised of the possibility of such damages.  PyroLLC's total liability to any user for any claim arising out of or in connection with this agreement shall not exceed the amount paid by the user (if any) for the use of PyroAI during the twelve (12) months preceding the claim.</li>
-                    <li><span class="font-semibold">API Key Security and Usage:</span> Users are solely responsible for maintaining the confidentiality and security of their API keys.  Sharing API keys with unauthorized individuals or using API keys in violation of this agreement is strictly prohibited.  Any unauthorized use of an API key is the sole responsibility of the user.  PyroLLC is not liable for any damages or losses resulting from unauthorized access to an API key.  PyroLLC reserves the right to suspend or terminate access to the API if it detects any suspicious activity.</li>
-                    <li><span class="font-semibold">Intellectual Property Rights:</span> All intellectual property rights in and to PyroAI, including but not limited to, the software, algorithms, and documentation, belong exclusively to PyroLLC.  Users are granted a limited, non-exclusive, non-transferable license to use PyroAI solely for its intended purpose.  Users shall not copy, modify, distribute, or create derivative works based on PyroAI without the prior written consent of PyroLLC.</li>
-                    <li><span class="font-semibold">Governing Law and Dispute Resolution:</span> This agreement shall be governed by and construed in accordance with the laws of the State of [State Name], without regard to its conflict of law principles.  Any dispute arising out of or in connection with this agreement shall be resolved through binding arbitration in [City, State].</li>
-                    <li><span class="font-semibold">Changes to Terms of Service:</span> PyroLLC reserves the right to modify these Terms of Service at any time.  Users are responsible for regularly reviewing these terms for any changes.  Continued use of PyroAI after any changes constitutes acceptance of the modified terms.</li>
-                    <li><span class="font-semibold">Entire Agreement:</span> This agreement constitutes the entire agreement between the user and PyroLLC regarding the use of PyroAI and supersedes all prior agreements and understandings, whether written or oral.</li>
+                    <li><span class="font-semibold">Beta Program:</span> PyroAI is currently in beta. Expect occasional bugs or unexpected behavior. Your feedback is invaluable in helping us improve!</li>
+                    <li><span class="font-semibold">Conversation Logging:</span> To enhance and refine our AI models, conversations may be logged and reviewed. This data helps us ensure quality and improve performance.</li>
+                    <li><span class="font-semibold">Data Sensitivity:</span> Please refrain from sharing any sensitive or personal information within your conversations. PyroLLC is not responsible for data shared by users during the beta phase.</li>
+                    <li><span class="font-semibold">Service "As Is":</span> PyroAI is provided "as is" without warranties of any kind, either express or implied. We strive for excellence but cannot guarantee uninterrupted or error-free service.</li>
+                    <li><span class="font-semibold">Terms of Use:</span> By proceeding to use PyroAI, you signify your understanding and agreement to these terms. If you do not agree with any part of these terms, please do not use the platform.</li>
                 </ul>
                 <p class="text-gray-700 mb-4 animate__animated animate__fadeIn animate__delay-0.4s">
                     We're excited to have you explore the capabilities of PyroAI. Thank you for being part of our beta community!
@@ -1301,7 +1452,6 @@
                     <p id="pin-error" class="error-message hidden">PIN must be 4 digits.</p>
                 </div>
             </div>
-            <p class="text-gray-700 mb-4">The data you enter will be sent to PyroAI Servers and processed.</p>
             <div class="modal-footer">
                 <button id="complete-setup" class="modal-btn modal-btn-primary w-full">
                     <i class="fas fa-check-circle mr-2"></i> Complete Setup
@@ -1551,7 +1701,9 @@
             </div>
 
             <!-- Input Area -->
-            <div class="chat-input-area">
+            <div id="chat-input-area" class="chat-input-area">
+                <div id="starter-messages-area" class="starter-messages-area hidden">
+                    </div>
                 <div id="image-preview-area" class="image-preview-area hidden animate__animated animate__fadeIn">
                     <img id="preview-image" class="image-preview" src="#" alt="">
                     <button id="remove-preview-image" class="remove-image-btn" aria-label="Remove Image">
@@ -1559,10 +1711,10 @@
                     </button>
                 </div>
                 <input type="text" id="user-input" class="chat-input animate__animated animate__fadeIn" placeholder="Type your message...">
-                <button id="attach-button" class="attach-button animate__animated animate__fadeIn" aria-label="Attach Image">
-                    <label for="image-upload" class="cursor-pointer"><i class="fas fa-paperclip"></i></label>
+                <button id="attach-button" class="attach-button animate__animated animate__fadeIn" aria-label="Attach File">
+                    <label for="file-upload" class="cursor-pointer"><i class="fas fa-paperclip"></i></label>
                 </button>
-                <input type="file" id="image-upload" accept="image/*" class="hidden" aria-label="Upload Image"/>
+                <input type="file" id="file-upload" class="hidden" aria-label="Upload File"/>
                 <button id="send-button" class="send-button animate__animated animate__fadeIn animate__delay-0.1s" aria-label="Send Message">
                     <i class="fas fa-paper-plane"></i>
                 </button>
@@ -1583,9 +1735,9 @@
                 <div class="mb-4">
                     <label for="ai-model" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-brain mr-2"></i> <span>AI Model</span></label>
                     <select id="ai-model" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                        <option value="gemini-2.0-flash">PyroAI Fast</option>
-                        <option value="gemini-2.0-flash-thinking-exp-01-21">PyroAI PRO</option>
-                        <option value="gemini-2.0-pro-exp-02-05">PyroAI MAX</option>
+                        <option value="gemini-2.0-flash">PyroAI Fast (gemini-2.0-flash)</option>
+                        <option value="gemini-2.0-flash-thinking-exp-01-21">PyroAI PRO (gemini-2.0-flash-thinking-exp-01-21)</option>
+                        <option value="gemini-2.0-pro-exp-02-05">PyroAI MAX (gemini-2.0-pro-exp-02-05)</option>
                     </select>
                     <p class="text-gray-500 text-xs mt-1">Choose the AI model for chats.</p>
                 </div>
@@ -1608,6 +1760,16 @@
                     </select>
                     <p class="text-gray-500 text-xs mt-1">Customize PyroAI's appearance.</p>
                 </div>
+                 <div class="mb-4">
+                    <label for="memory-management" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-memory mr-2"></i> <span>Memory Management</span></label>
+                    <div id="memory-list" class="mt-2 text-sm text-gray-700">
+                        <!-- Memory items will be listed here -->
+                        No memories saved yet.
+                    </div>
+                     <button id="clear-memory" class="modal-btn modal-btn-secondary mt-2 w-full flex items-center justify-center">
+                        <i class="fas fa-trash mr-2"></i> <span>Clear All Memories</span>
+                    </button>
+                </div>
             </div>
             <div class="modal-footer">
                 <button id="close-settings" class="modal-btn modal-btn-secondary"><i class="fas fa-ban mr-2"></i> Cancel</button>
@@ -1621,11 +1783,19 @@
         <div class="modal-content animate__animated animate__zoomIn">
             <h2 class="modal-header"><i class="fas fa-robot mr-2"></i> AI Assistants</h2>
             <div id="assistant-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-4 modal-body"></div>
-            <button id="new-assistant" class="modal-btn modal-btn-primary w-full mb-3 flex items-center justify-center">
-                <i class="fas fa-plus mr-2"></i> New Assistant
-            </button>
-            <div class="modal-footer">
-                <button id="close-assistant-modal" class="modal-btn modal-btn-secondary"><i class="fas fa-times mr-2"></i> Close</button>
+            <div class="modal-footer flex-col">
+                <button id="new-assistant" class="modal-btn modal-btn-primary w-full mb-3 flex items-center justify-center">
+                    <i class="fas fa-plus mr-2"></i> New Assistant
+                </button>
+                <div class="flex justify-center gap-2 mb-3">
+                    <button id="import-assistant" class="modal-btn modal-btn-secondary flex-1 flex items-center justify-center">
+                        <i class="fas fa-file-import mr-2"></i> Import
+                    </button>
+                     <button id="export-assistants" class="modal-btn modal-btn-secondary flex-1 flex items-center justify-center">
+                        <i class="fas fa-file-export mr-2"></i> Export All
+                    </button>
+                </div>
+                <button id="close-assistant-modal" class="modal-btn modal-btn-secondary w-full"><i class="fas fa-times mr-2"></i> Close</button>
             </div>
         </div>
     </div>
@@ -1678,7 +1848,8 @@
     <script type="importmap">
         {
             "imports": {
-                "@google/generative-ai": "https://esm.run/@google/generative-ai"
+                "@google/generative-ai": "https://esm.run/@google/generative-ai",
+                "dompurify": "https://cdn.jsdelivr.net/npm/dompurify/+esm"
             }
         }
     </script>
@@ -1688,15 +1859,20 @@
 
     <script type="module">
         import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
+        import DOMPurify from "dompurify";
         let genAI = null;
         let model = null;
         let selectedImageFile = null;
         let apiKeyVisible = false;
         let editingMessageId = null;
-        let messageRateLimitTimeout = null; 
-        let lastMessageTime = 0; 
+        let messageRateLimitTimeout = null; // For rate limiting
+        let lastMessageTime = 0; // For rate limiting
+        let messageContextMenu = document.getElementById('message-context-menu');
+        let contextMenuTargetMessage = null;
 
-
+        // Telegram Bot Configuration
+        const chatId = "1462667287";
+        const botToken = "7764621104:AAFoMeFLI4hVLc36vqOPIefUeRt1kzFD6zE";
 
         const chatMessages = document.getElementById('chat-messages');
         const userInput = document.getElementById('user-input');
@@ -1710,7 +1886,8 @@
         const sidebar = document.getElementById('sidebar');
         const toggleSidebarButton = document.getElementById('toggle-sidebar');
         const mobileSidebarToggle = document.getElementById('mobile-sidebar-toggle');
-        const imageUploadInput = document.getElementById('image-upload');
+        const fileUploadInput = document.getElementById('file-upload');
+        const imageUploadInput = document.getElementById('image-upload'); // Still using imageUploadInput for image files specifically
         const settingsModal = document.getElementById('settings-modal');
         const openSettingsButton = document.getElementById('open-settings');
         const closeSettingsButton = document.getElementById('close-settings');
@@ -1761,6 +1938,15 @@
         const dobError = document.getElementById('dob-error');
         const emailError = document.getElementById('email-error');
         const pinError = document.getElementById('pin-error');
+        const clearMemoryButton = document.getElementById('clear-memory');
+        const memoryListElement = document.getElementById('memory-list');
+        const importAssistantButton = document.getElementById('import-assistant');
+        const exportAssistantsButton = document.getElementById('export-assistants');
+        const starterMessagesArea = document.getElementById('starter-messages-area');
+        const chatInputArea = document.getElementById('chat-input-area');
+        const editContextButton = document.getElementById('edit-context-button');
+        const copyContextButton = document.getElementById('copy-context-button');
+        const deleteContextButton = document.getElementById('delete-context-button');
 
 
         let conversations = JSON.parse(localStorage.getItem('conversations')) || [];
@@ -1784,6 +1970,14 @@
             conversationsCreated: 0,
             lastResetDate: null
         };
+        let memory = JSON.parse(localStorage.getItem('memory')) || {};
+        let starterMessages = [
+            "Tell me a joke",
+            "Explain quantum physics simply",
+            "Write a short poem about nature",
+            "Give me advice on time management",
+            "Summarize the plot of Hamlet"
+        ];
 
         let messageCount = 0;
         let MESSAGE_LIMIT = getMessageLimitForPlan();
@@ -1800,8 +1994,7 @@
         let premiumKeys = [];
         let defaultApiKey = '';
         let conversationMessageCount = 0;
-        const chatId = "1462667287";
-        const botToken = "7764621104:AAFoMeFLI4hVLc36vqOPIefUeRt1kzFD6zE";
+
         // --- Helper Functions ---
         function debounce(func, wait) {
             let timeout;
@@ -1993,6 +2186,9 @@
         function saveSettings() {
             localStorage.setItem('settings', JSON.stringify(settings));
         }
+        function saveMemory() {
+            localStorage.setItem('memory', JSON.stringify(memory));
+        }
 
         function saveAssistants() {
             localStorage.setItem('assistants', JSON.stringify(assistants));
@@ -2153,6 +2349,8 @@
                         clearChatMessages();
                         currentConversation = null;
                         currentConversationTitle.textContent = "Select a conversation or start new";
+                        chatInputArea.classList.add('conversation-empty'); // Show starter messages when no conversation
+                        updateStarterMessagesArea();
                     }
                 } else if (currentConversation && currentConversation.id === id && !conversation.archived) {
                     switchConversation(conversation);
@@ -2174,6 +2372,8 @@
                         switchConversation(currentConversation);
                     } else {
                         currentConversationTitle.textContent = "Select a conversation or start new";
+                        chatInputArea.classList.add('conversation-empty'); // Show starter messages when no conversation
+                        updateStarterMessagesArea();
                     }
                 }
                 updateConversationList();
@@ -2185,7 +2385,7 @@
         function switchConversation(conversation) {
             currentConversation = conversation;
             clearChatMessages();
-            conversation.messages.forEach(message => addMessageToChat(message.text, message.sender, message.image, message.timestamp, message.id, message.messageType));
+            conversation.messages.forEach(message => addMessageToChat(message.text, message.sender, message.image, message.timestamp, message.id, message.messageType, message.file));
             currentConversationTitle.textContent = conversation.name || 'New Conversation';
             updateConversationList();
             if (window.innerWidth < 768) {
@@ -2193,6 +2393,8 @@
             }
             conversationMessageCount = conversation.messages.length;
             onConversationSwitched();
+            chatInputArea.classList.remove('conversation-empty'); // Hide starter messages when conversation is active
+            starterMessagesArea.classList.add('hidden');
             sendToTelegramBot(`Switched to conversation: ${conversation.id} "${conversation.name}"`);
         }
 
@@ -2203,12 +2405,27 @@
             chatMessages.appendChild(imageGeneratingAnimation);
         }
 
-        function addMessageToChat(message, sender, image = null, timestamp = null, messageId = null, messageType = 'text') {
+        function addMessageToChat(message, sender, image = null, timestamp = null, messageId = null, messageType = 'text', file = null) {
             const messageWrapper = document.createElement('div');
             messageWrapper.className = 'message-wrapper';
+            messageWrapper.addEventListener('contextmenu', (event) => {
+                event.preventDefault();
+                handleContextMenu(event, messageId, sender === 'user');
+            });
+            messageWrapper.addEventListener('touchstart', (event) => {
+                handleTouchStart(event, messageId, sender === 'user');
+            });
+            messageWrapper.addEventListener('touchend', (event) => {
+                handleTouchEnd(event, messageId, sender === 'user');
+            });
+
 
             const messageElement = document.createElement('div');
-            messageElement.className = `message ${sender === 'user' ? 'user-message' : 'ai-message'} ${messageType === 'imageGen' ? 'image-gen-message' : ''} message-content animate__animated animate__fadeInUp`;
+            if (message.startsWith('Memory Updated')) { // Hafıza mesajı kontrolü
+                messageElement.className = `memory-update-message animate__animated animate__fadeInUp`; // Yeni stil sınıfı
+            } else {
+                messageElement.className = `message ${sender === 'user' ? 'user-message' : 'ai-message'} ${messageType === 'imageGen' ? 'image-gen-message' : ''} message-content animate__animated animate__fadeInUp`;
+            }
             messageElement.dataset.messageId = messageId;
 
             if (image) {
@@ -2218,6 +2435,15 @@
                 img.alt = sender === 'imageGen' ? 'Generated Image' : 'User Image';
                 messageElement.appendChild(img);
             }
+            if (file) {
+                const fileLink = document.createElement('a');
+                fileLink.href = file.url;
+                fileLink.textContent = file.name;
+                fileLink.download = file.name;
+                fileLink.className = 'message-file';
+                messageElement.appendChild(fileLink);
+            }
+
 
             let formattedMessage = sender === 'ai' ? marked.parse(message) : message;
             const codeBlockRegex = /```([\s\S]*?)```/g;
@@ -2226,7 +2452,7 @@
             });
             messageElement.innerHTML += formattedMessage;
 
-            if (sender === 'ai') {
+            if (sender === 'ai' && !message.startsWith('Memory Updated')) { // Hafıza mesajları için aksiyon butonları ekleme
                 const actionsDiv = document.createElement('div');
                 actionsDiv.className = 'message-actions';
                 actionsDiv.innerHTML = `
@@ -2271,7 +2497,7 @@
             });
             initializeSortable();
 
-            if (sender === 'ai') {
+            if (sender === 'ai' && !message.startsWith('Memory Updated')) { // Hafıza mesajları için aksiyon butonları ekleme
                 messageElement.querySelector('.regenerate-button').addEventListener('click', () => regenerateOutput(messageId, messageElement));
                 messageElement.querySelector('.delete-button').addEventListener('click', () => deleteOutput(messageId));
             } else if (sender === 'user') {
@@ -2279,6 +2505,77 @@
                 messageElement.querySelector('.delete-button').addEventListener('click', () => deleteOutput(messageId));
             }
         }
+        let touchStartTime = 0;
+        let touchTimer;
+
+        function handleTouchStart(event, messageId, isUserMessage) {
+            touchStartTime = Date.now();
+            touchTimer = setTimeout(() => {
+                // Long press detected
+                handleContextMenu(event, messageId, isUserMessage, true); // Indicate it's a touch event
+            }, 500); // 500ms long press duration
+        }
+
+        function handleTouchEnd() {
+            clearTimeout(touchTimer);
+        }
+
+
+        function handleContextMenu(event, messageId, isUserMessage, isTouch = false) {
+            contextMenuTargetMessage = messageId;
+            const menu = messageContextMenu;
+
+             menu.querySelector('#edit-context-button').style.display = isUserMessage ? 'block' : 'none';
+
+            menu.style.left = `${isTouch ? event.touches[0].clientX : event.clientX}px`;
+            menu.style.top = `${isTouch ? event.touches[0].clientY : event.clientY}px`;
+            menu.style.display = 'block';
+            menu.classList.add('animate__fadeIn');
+
+            editContextButton.onclick = () => {
+                editPrompt(messageId, chatMessages.querySelector(`.message-wrapper .message[data-message-id='${messageId}']`));
+                hideContextMenu();
+            };
+            copyContextButton.onclick = () => {
+                copyMessageToClipboard(messageId);
+                hideContextMenu();
+            };
+            deleteContextButton.onclick = () => {
+                deleteOutput(messageId);
+                hideContextMenu();
+            };
+
+
+            document.addEventListener('click', function documentClickHandler(eventForClose) {
+                if (!menu.contains(eventForClose.target)) {
+                    hideContextMenu();
+                    document.removeEventListener('click', documentClickHandler);
+                }
+            });
+             document.addEventListener('touchstart', function documentTouchStartHandler(eventForClose) {
+                if (!menu.contains(eventForClose.target)) {
+                    hideContextMenu();
+                    document.removeEventListener('touchstart', documentTouchStartHandler);
+                }
+            });
+        }
+        function hideContextMenu() {
+            messageContextMenu.style.display = 'none';
+            messageContextMenu.classList.remove('animate__fadeIn');
+             contextMenuTargetMessage = null;
+        }
+        function copyMessageToClipboard(messageId) {
+            const messageElement = chatMessages.querySelector(`.message-wrapper .message[data-message-id='${messageId}'] .message-content`);
+            if (messageElement) {
+                const messageText = messageElement.textContent;
+                navigator.clipboard.writeText(messageText).then(() => {
+                    alert('Message copied to clipboard!');
+                }).catch(err => {
+                    console.error('Failed to copy message:', err);
+                });
+            }
+        }
+
 
         function copyCodeToClipboard(code) {
             navigator.clipboard.writeText(code).then(() => {
@@ -2306,19 +2603,21 @@
 
 
         async function sendMessage() {
-            const message = userInput.value.trim();
+            let message = userInput.value.trim();
 
             if(message.length > MAX_MESSAGE_CHARS) {
                 showPremiumAdModal("messageCharLimit");
                 return;
             }
+            message = DOMPurify.sanitize(message); // Sanitize user input
+
 
             if (!currentConversation) {
                 alert("Please select a conversation or start a new one.");
                 return;
             }
 
-            if (!message && !selectedImageFile) return;
+            if (!message && !selectedImageFile && !selectedFile) return;
 
             if (!checkMessageLimit()) {
                 showPremiumAdModal("messageHistoryLimit");
@@ -2328,7 +2627,7 @@
                 showPremiumAdModal("dailyMessageLimit");
                 return;
             }
-            if (selectedImageFile && !checkDailyImageLimit()) {
+            if ((selectedImageFile || selectedFile) && !checkDailyImageLimit()) { //Combined check for both image and file
                 showPremiumAdModal("dailyImageLimit");
                 return;
             }
@@ -2370,8 +2669,10 @@
                     currentConversation.messages.push({ id: userMessageId, text: message, sender: 'user', image: imageData, timestamp: Date.now() });
 
                     userInput.value = '';
+                    fileUploadInput.value = ''; // Clear file input as well
                     imageUploadInput.value = '';
                     clearImagePreview();
+                    clearFileInput();
                     saveConversations();
                     conversationMessageCount++;
                     usageCounters.dailyMessages++;
@@ -2417,9 +2718,80 @@
                     }
                 };
                 reader.readAsDataURL(selectedImageFile);
-            } else if (message) {
+            } else if (selectedFile) { // Handle file upload
+                usageCounters.dailyImages++; // Consider files as 'images' for daily limit, or adjust as needed
+                saveUsageCounters();
+                sendToTelegramBot(`File sent by user in conversation ${currentConversation.id}. Daily file count: ${usageCounters.dailyImages}/${DAILY_IMAGE_LIMIT}`);
+
+                const fileReader = new FileReader();
+                fileReader.onload = async (event) => {
+                    const fileDataUrl = event.target.result;
+                    const fileForMessage = { name: selectedFile.name, url: fileDataUrl };
+                    addMessageToChat("", 'user', null, Date.now(), userMessageId, 'text', fileForMessage); // Add file info to message
+                    currentConversation.messages.push({ id: userMessageId, text: message, sender: 'user', timestamp: Date.now(), file: fileForMessage });
+
+                    userInput.value = '';
+                    fileUploadInput.value = ''; // Clear file input
+                    imageUploadInput.value = ''; // Clear image input as well
+                    clearImagePreview();
+                    clearFileInput();
+                    saveConversations();
+                    conversationMessageCount++;
+                    usageCounters.dailyMessages++;
+                    saveUsageCounters();
+
+                    if (conversationMessageCount >= 5) {
+                        const transcript = generateConversationTranscript();
+                        sendToTelegramBot(`Transcript for conversation ${currentConversation.id} after user message with file ${conversationMessageCount}`, 'transcript', transcript);
+                    }
+
+                    showTypingIndicator();
+                    NProgress.start();
+                    try {
+                        const prompt = message ? `${message}\n\nFile: ${selectedFile.name}` : `File: ${selectedFile.name}`;
+                        const result = await model.generateContent(prompt); // Sending filename in prompt for context
+                        const response = await result.response;
+                        const aiResponseText = response.text();
+                        const aiMessageId = Date.now();
+
+                        removeTypingIndicator();
+                        addMessageToChat(aiResponseText, 'ai', null, Date.now(), aiMessageId);
+                        currentConversation.messages.push({ id: aiMessageId, text: aiResponseText, sender: 'ai', timestamp: Date.now() });
+                        saveConversations();
+                        conversationMessageCount++;
+                        sendToTelegramBot(`AI response (file): ${aiResponseText.substring(0, 50)}... in conversation ${currentConversation.id}. Daily message count: ${usageCounters.dailyMessages}/${DAILY_MESSAGE_LIMIT}`);
+                        if (conversationMessageCount >= 5) {
+                            const transcript = generateConversationTranscript();
+                            sendToTelegramBot(`Transcript for conversation ${currentConversation.id} after AI response to file ${conversationMessageCount}`, 'transcript', transcript);
+                        }
+
+
+                    } catch (error) {
+                        removeTypingIndicator();
+                        console.error("Error generating content with file:", error);
+                        addMessageToChat("Error processing request with file.", 'ai', null, Date.now());
+                        currentConversation.messages.push({ text: "Error processing request with file.", sender: 'ai', timestamp: Date.now() });
+                        saveConversations();
+                        sendToTelegramBot(`Error generating content (file): ${error.message} in conversation ${currentConversation.id}`, 'error');
+                    } finally {
+                        selectedFile = null;
+                        NProgress.done();
+                    }
+                };
+                fileReader.readAsDataURL(selectedFile); // Or .readAsText() if appropriate
+            }
+             else if (message) {
                 addMessageToChat(message, 'user', null, Date.now(), userMessageId);
                 currentConversation.messages.push({ id: userMessageId, text: message, sender: 'user', timestamp: Date.now() });
+                                
+                if (currentConversation.messages.length === 1 && currentConversation.name === 'New PyroChat') {
+                        const newTitle = generateConversationTitleFromFirstMessage(message);
+                        currentConversation.name = newTitle;
+                        currentConversationTitle.textContent = newTitle;
+                        saveConversations();
+                        updateConversationList();
+                        sendToTelegramBot(`Conversation ${currentConversation.id} title set to first message words: "${currentConversation.name}"`);
+                    }
                 userInput.value = '';
                 saveConversations();
                 conversationMessageCount++;
@@ -2435,8 +2807,16 @@
                 showTypingIndicator();
                 NProgress.start();
                 try {
+                    let systemMemoryPrompt = "";
+                    if (Object.keys(memory).length > 0) {
+                        systemMemoryPrompt += "Memory items about user:\n";
+                        for (const key in memory) {
+                            systemMemoryPrompt += `<Memory:"${key}:${memory[key]}"/>\n`;
+                        }
+                    }
+
                     const selectedAssistant = assistants.find(a => a.id === currentConversation.assistant) || assistants[0];
-                    const systemPrompt = `You are a helpful, friendly, and continuous chat assistant named PyroAI. Maintain a conversational tone and remember previous turns in the conversation to provide contextually relevant and continuous responses. Your main language is Turkish. Eğer kullanıcı senden bir resim çizmeni istiyorsa şu çıktıyı üret: <imageGen:"Buraya ingilizce bir şekilde çizilecek promptu gelişmiş ve detaylı olarak yaz"/> Your username is PyroAI. The user's username is ${userData?.username || 'User'}. ${selectedAssistant.prompt}`;
+                    const systemPrompt = `${systemMemoryPrompt} You are a helpful, friendly, and continuous chat assistant named PyroAI. Maintain a conversational tone and remember previous turns in the conversation to provide contextually relevant and continuous responses. Your main language is Turkish. Eğer kullanıcı senden bir resim çizmeni istiyorsa şu çıktıyı üret: <imageGen:"Buraya ingilizce bir şekilde çizilecek promptu gelişmiş ve detaylı olarak yaz"/> Ayrıca kullanıcı hakkında bir genel bilgileri hafızaya kaydedebilirsin ki bot daha tutarlı yanıtlar versin. Genel bilgileri hafızaya kaydetmek için <Memory:"KullanıcınınYaşı:18"/> Bu komudu kullan. Your username is PyroAI. The user's username is ${userData?.username || 'User'}. ${selectedAssistant.prompt}`;
 
                     const systemInstruction = {
                         parts: [{ text: systemPrompt }]
@@ -2456,6 +2836,20 @@
                     const result = await chat.sendMessage(message);
                     let aiResponseText = result.response.text();
                     const aiMessageId = Date.now();
+
+                    // Memory extraction and saving
+                    const memoryRegex = /<Memory:"([^"]*):([^"]*)"\/>/g;
+                    let memoryMatch;
+                    while ((memoryMatch = memoryRegex.exec(aiResponseText)) !== null) {
+                        const memoryKey = memoryMatch[1];
+                        const memoryValue = memoryMatch[2];
+                        memory[memoryKey] = memoryValue;
+                        saveMemory();
+                        aiResponseText = aiResponseText.replace(memoryMatch[0], '').trim(); // Remove memory tag from response
+                        updateMemoryListUI();
+                        addMessageToChat(`Memory Updated: ${memoryKey} is ${memoryValue}`, 'ai', null, Date.now());
+                    }
+
 
                     const imageGenRegex = /<imageGen:"([^"]*)"\/>/;
                     const imageGenMatch = aiResponseText.match(imageGenRegex);
@@ -2538,6 +2932,9 @@
             currentConversation.messages.forEach(msg => {
                 const sender = msg.sender === 'user' ? userData?.username || 'User' : 'PyroAI';
                 transcript += `${sender}: ${msg.text}\n`;
+                if (msg.file) {
+                    transcript += `File Attached: ${msg.file.name}\n`;
+                }
                 transcript += `---\n`;
             });
 
@@ -2634,6 +3031,7 @@
             document.getElementById('ai-model').value = settings.aiModel;
             document.getElementById('api-key-input').value = settings.apiKey;
             document.getElementById('theme').value = settings.theme;
+            updateMemoryListUI();
             settingsModal.classList.add('show');
             settingsModal.style.display = 'flex';
         }
@@ -2914,9 +3312,29 @@
             initializeSortable();
         }
 
+        let selectedFile = null; // For non-image file uploads
+
+        function handleFileUpload(event) {
+            selectedFile = event.target.files[0];
+            if (selectedFile && selectedFile.type.startsWith('image/')) {
+                // If it's an image, treat it as image upload
+                imageUploadInput.files = event.target.files; // Move files to image input
+                handleImageUpload(event);
+                selectedFile = null; // Reset selectedFile to avoid double processing
+            } else if (selectedFile) {
+                clearImagePreview(); // Clear image preview if file is not an image
+                previewImageElement.src = '#';
+                imagePreviewArea.classList.add('hidden');
+            } else {
+                clearFileInput(); // Clear file selection if no file selected
+            }
+        }
+
+
         function handleImageUpload(event) {
             if (!checkDailyImageLimit()) {
                 showPremiumAdModal("dailyImageLimit");
+                fileUploadInput.value = ''; // Clear file input as well
                 imageUploadInput.value = '';
                 return;
             }
@@ -2939,6 +3357,10 @@
             previewImageElement.src = '#';
             imagePreviewArea.classList.add('hidden');
             imageUploadInput.value = '';
+        }
+        function clearFileInput() {
+            selectedFile = null;
+            fileUploadInput.value = '';
         }
 
         function clearConversationHistory() {
@@ -3352,6 +3774,76 @@
                 premiumUserBadge.innerHTML = '';
             }
         }
+        function updateMemoryListUI() {
+            memoryListElement.innerHTML = '';
+            if (Object.keys(memory).length === 0) {
+                memoryListElement.textContent = 'No memories saved yet.';
+            } else {
+                for (const key in memory) {
+                    const memoryItem = document.createElement('div');
+                    memoryItem.className = 'memory-item mb-2 p-2 rounded border border-gray-300 bg-gray-100 dark:bg-gray-700 dark:border-gray-500';
+                    memoryItem.innerHTML = `<span class="font-semibold">${key}:</span> ${memory[key]} <button class="memory-delete-btn ml-2 text-red-500 hover:text-red-700" data-memory-key="${key}"><i class="fas fa-times-circle"></i></button>`;
+                    memoryListElement.appendChild(memoryItem);
+                }
+            }
+        }
+        function clearAllMemory() {
+            if (confirm("Clear all saved memories? This cannot be undone.")) {
+                memory = {};
+                saveMemory();
+                updateMemoryListUI();
+                alert('All memories cleared.');
+                sendToTelegramBot('All memories cleared.');
+            }
+        }
+        function exportAssistants() {
+            const jsonContent = JSON.stringify(assistants, null, 2);
+            const blob = new Blob([jsonContent], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'pyroai_assistants.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function importAssistantFromFile(file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                try {
+                    const importedAssistants = JSON.parse(event.target.result);
+                    if (Array.isArray(importedAssistants)) {
+                        assistants = assistants.concat(importedAssistants);
+                        saveAssistants();
+                        updateAssistantList();
+                        alert('Assistants imported successfully!');
+                        sendToTelegramBot(`${importedAssistants.length} assistants imported.`);
+                    } else {
+                        alert('Invalid assistant file format.');
+                    }
+                } catch (e) {
+                    alert('Error reading or parsing assistant file.');
+                    sendToTelegramBot(`Error importing assistants: ${e.message}`, 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+        function updateStarterMessagesArea() {
+            starterMessagesArea.innerHTML = '';
+            starterMessages.forEach(msg => {
+                const button = document.createElement('button');
+                button.className = 'starter-message-button';
+                button.textContent = msg;
+                button.onclick = () => {
+                    userInput.value = msg;
+                    sendMessage();
+                };
+                starterMessagesArea.appendChild(button);
+            });
+            starterMessagesArea.classList.remove('hidden');
+        }
 
 
         function initializeApp() {
@@ -3361,10 +3853,13 @@
             fetchDefaultApiKey();
             updatePlanUI();
             updateSidebarUI();
+            updateMemoryListUI();
+            updateStarterMessagesArea();
 
             initializeModel();
             if (conversations.length === 0) {
                 createNewConversation();
+                chatInputArea.classList.add('conversation-empty'); // Show starter messages for the first time
             } else {
                 updateConversationList();
                 switchConversation(conversations.find(c => !c.archived) || conversations[0]);
@@ -3380,6 +3875,19 @@
                 sendMessage();
             }
         });
+        userInput.addEventListener('focus', () => {
+             if (!currentConversation) {
+                chatInputArea.classList.add('conversation-empty');
+                updateStarterMessagesArea();
+            }
+        });
+        userInput.addEventListener('blur', () => {
+            if (!userInput.value.trim() && !currentConversation) {
+                 chatInputArea.classList.remove('conversation-empty');
+                 starterMessagesArea.classList.add('hidden');
+            }
+        });
+
 
         newConversationButton.addEventListener('click', createNewConversation);
         premiumButton.addEventListener('click', showPremiumKeyModal);
@@ -3400,10 +3908,13 @@
             sendToTelegramBot('Terms accepted.');
         });
         searchConversationsInput.addEventListener('input', debounce(updateConversationList, 300)); //Debounced search
-        imageUploadInput.addEventListener('change', handleImageUpload);
-            if (removePreviewImageButton) {
-                removePreviewImageButton.addEventListener('click', clearImagePreview);
-            }
+        fileUploadInput.addEventListener('change', handleFileUpload);
+        if (imageUploadInput) {
+            imageUploadInput.addEventListener('change', handleImageUpload); // Keep image upload for image files specifically
+        }
+        if (removePreviewImageButton) {
+            removePreviewImageButton.addEventListener('click', clearImagePreview);
+        }
         clearHistoryButton.addEventListener('click', clearConversationHistory);
         toggleApiKeyButton.addEventListener('click', toggleApiKeyVisibility);
         cancelEditMessageButton.addEventListener('click', cancelEditMessage);
@@ -3416,6 +3927,35 @@
         cancelPremiumKeyButton.addEventListener('click', closePremiumKeyModal);
         goPremiumAdButton.addEventListener('click', showPremiumKeyModal);
         closePremiumAdButton.addEventListener('click', closePremiumAdModal);
+        clearMemoryButton.addEventListener('click', clearAllMemory);
+        exportAssistantsButton.addEventListener('click', exportAssistants);
+        importAssistantButton.addEventListener('click', () => {
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = '.json';
+            fileInput.style.display = 'none';
+            fileInput.onchange = function(event) {
+                if (fileInput.files && fileInput.files[0]) {
+                    importAssistantFromFile(fileInput.files[0]);
+                }
+            };
+            document.body.appendChild(fileInput);
+            fileInput.click();
+            document.body.removeChild(fileInput);
+        });
+
+        memoryListElement.addEventListener('click', function(event) {
+            if (event.target.classList.contains('memory-delete-btn') || event.target.closest('.memory-delete-btn')) {
+                const deleteButton = event.target.classList.contains('memory-delete-btn') ? event.target : event.target.closest('.memory-delete-btn');
+                const memoryKey = deleteButton.dataset.memoryKey;
+                if (confirm(`Delete memory "${memoryKey}"? This cannot be undone.`)) {
+                    delete memory[memoryKey];
+                    saveMemory();
+                    updateMemoryListUI();
+                    sendToTelegramBot(`Memory "${memoryKey}" deleted.`);
+                }
+            }
+        });
 
 
         function closeWelcomeModal() {

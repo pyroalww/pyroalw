@@ -1,67 +1,22 @@
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- остальной head контент как в v14.html -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PyroAI - Advanced AI Chat Platform</title>
-    <meta name="description" content="PyroAI - Advanced AI chat platform by PyroLLC. Experience intelligent conversations with our state-of-the-art AI technology.">
-    <meta name="keywords" content="PyroAI, PyroLLC, PyroALW, AI chat, artificial intelligence, chatbot, machine learning, intelligent assistant, PyroAI platform, advanced AI">
+    <title>PyroAI - Advanced AI Chat & Web Platform</title>
+    <meta name="description" content="PyroAI - Advanced AI chat and web platform by PyroLLC. Experience intelligent conversations and website generation with our state-of-the-art AI technology.">
+    <meta name="keywords" content="PyroAI, PyroLLC, PyroALW, AI chat, artificial intelligence, chatbot, machine learning, intelligent assistant, PyroAI platform, advanced AI, website generation, AI website builder">
     <meta name="author" content="PyroLLC">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="PyroAI - Advanced AI Chat Platform">
-    <meta property="og:description" content="Experience the next generation of AI chat with PyroAI. Powered by PyroLLC's cutting-edge technology.">
+    <meta property="og:title" content="PyroAI - Advanced AI Chat & Web Platform">
+    <meta property="og:description" content="Experience the next generation of AI chat and website generation with PyroAI. Powered by PyroLLC's cutting-edge technology.">
     <meta property="og:image" content="https://avatars.githubusercontent.com/u/134533935?v=4">
     <meta property="og:url" content="https://pyrollc.com.tr">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="PyroAI - Advanced AI Chat Platform">
-    <meta name="twitter:description" content="Experience the next generation of AI chat with PyroAI. Powered by PyroLLC's cutting-edge technology.">
+    <meta name="twitter:title" content="PyroAI - Advanced AI Chat & Web Platform">
+    <meta name="twitter:description" content="Experience the next generation of AI chat and website generation with PyroAI. Powered by PyroLLC's cutting-edge technology.">
     <link rel="canonical" href="https://pyrollc.com.tr">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -72,6 +27,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <style>
+        /* стили из v14.html */
         @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap');
 
         :root {
@@ -112,6 +68,17 @@
             --shadow-dark: rgba(0, 0, 0, 0.4);
             --pinned-background-dark: #4338CA;
             --pinned-border-dark: #D4D0AB;
+
+            /* Website Mode Colors */
+            --website-bg: #1E293B; /* Darker background for website mode */
+            --website-panel-bg: #334155; /* Panel background in website mode */
+            --website-text: #F0F4F8; /* Text color in website mode */
+            --website-accent: #6EE7B7; /* Accent color for website mode */
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden; /* Prevent scrollbar on body */
         }
 
         body {
@@ -132,6 +99,12 @@
             margin: 1rem;
             overflow: hidden;
         }
+        @media (max-width: 768px) {
+            .app-container {
+                border-radius: 0;
+                margin: 0;
+            }
+        }
 
         .sidebar {
             width: 300px;
@@ -143,6 +116,7 @@
             box-shadow: 3px 0 8px var(--shadow-light);
             display: flex;
             flex-direction: column;
+            min-width: 0; /* Fix sidebar shrinking issue */
         }
 
         .sidebar-closed {
@@ -310,6 +284,54 @@
             flex-direction: column;
             background-color: var(--background-color);
         }
+        .website-area {
+            flex-grow: 1;
+            display: flex;
+            background-color: var(--website-bg);
+            color: var(--website-text);
+        }
+        .website-editor-panel {
+            width: 40%;
+            min-width: 300px; /* Minimum width for editor panel */
+            max-width: 600px; /* Maximum width for editor panel */
+            padding: 2rem; /* Increased padding */
+            border-right: 1px solid var(--medium-gray);
+            overflow-y: auto;
+            background-color: var(--website-panel-bg);
+            display: flex; /* Flex layout for vertical alignment */
+            flex-direction: column;
+        }
+        .website-preview-panel {
+            flex-grow: 1;
+            padding: 2rem; /* Increased padding */
+            overflow-y: auto;
+        }
+        .website-code-area {
+            font-family: monospace;
+            background-color: #2D2D3A;
+            color: #F8F8F2;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            white-space: pre;
+            margin-top: 1rem; /* Spacing from preview */
+            flex-grow: 1; /* Code area takes remaining space */
+            min-height: 200px; /* Minimum height for code area */
+        }
+        .website-input-area {
+            margin-top: 2rem; /* Space above input area */
+            padding: 1.75rem;
+            background-color: var(--website-panel-bg);
+            border-top: 1px solid var(--medium-gray);
+            display: flex;
+            flex-direction: column; /* Stack elements vertically */
+            gap: 1rem;
+            box-shadow: 0 -3px 8px var(--shadow-light);
+            position: sticky;
+            bottom: 0;
+            z-index: 30;
+        }
+
 
         .chat-header {
             padding: 1.75rem;
@@ -318,11 +340,25 @@
             justify-content: space-between;
             align-items: center;
         }
+        .website-header {
+            padding: 1.75rem;
+            border-bottom: 1px solid var(--medium-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--website-panel-bg);
+        }
 
         .chat-title {
             font-size: 1.75rem;
             font-weight: 600;
             color: var(--text-color);
+            letter-spacing: -0.025em;
+        }
+        .website-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--website-text);
             letter-spacing: -0.025em;
         }
 
@@ -335,6 +371,16 @@
             scroll-behavior: smooth;
             scrollbar-gutter: stable;
              padding-bottom: 6rem; /* Space for input area */
+        }
+        .website-preview-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1.75rem;
+            background-color: #fff; /* Or any background for preview */
+            border: 1px solid var(--medium-gray);
+            border-radius: 0.5rem;
+            min-height: 200px; /* Example min height */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for preview area */
         }
 
         .message-wrapper {
@@ -501,6 +547,19 @@
             box-shadow: 0 3px 7px 0 var(--shadow-light), 0 1px 3px 0 var(--shadow-light);
             animation: pulse-shadow 1.5s infinite;
         }
+        #website-generating-animation, #ollama-generating-animation {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0.9rem 1.4rem;
+            border-radius: 1.25rem;
+            background-color: var(--website-panel-bg);
+            color: var(--website-text);
+            max-width: 85%;
+            margin-right: auto;
+            box-shadow: 0 3px 7px 0 var(--shadow-light), 0 1px 3px 0 var(--shadow-light);
+            animation: pulse-shadow 1.5s infinite;
+        }
 
         @keyframes pulse-shadow {
             0% { box-shadow: 0 3px 7px 0 var(--shadow-light), 0 1px 3px 0 var(--shadow-light); }
@@ -509,7 +568,7 @@
         }
 
 
-        .typing-indicator span, #printing-animation .printing-dot, #image-generating-animation .generating-dot {
+        .typing-indicator span, #printing-animation .printing-dot, #image-generating-animation .generating-dot, #website-generating-animation .generating-dot, #ollama-generating-animation .generating-dot {
             display: inline-block;
             margin-left: 6px;
             width: 10px;
@@ -522,21 +581,17 @@
             animation: typingDots 1.5s infinite;
         }
 
-        #printing-animation .printing-dot {
-            animation: printing 1.3s infinite;
-            margin-right: 5px;
-        }
-        #image-generating-animation .generating-dot {
+        #printing-animation .printing-dot, #image-generating-animation .generating-dot, #website-generating-animation .generating-dot, #ollama-generating-animation .generating-dot {
             animation: printing 1.3s infinite;
             margin-right: 5px;
         }
 
 
-        .typing-indicator span:nth-child(2), #printing-animation .printing-dot:nth-child(2), #image-generating-animation .generating-dot:nth-child(2) {
+        .typing-indicator span:nth-child(2), #printing-animation .printing-dot:nth-child(2), #image-generating-animation .generating-dot:nth-child(2), #website-generating-animation .generating-dot:nth-child(2), #ollama-generating-animation .generating-dot:nth-child(2) {
             animation-delay: 0.2s;
         }
 
-        .typing-indicator span:nth-child(3), #printing-animation .printing-dot:nth-child(3), #image-generating-animation .generating-dot:nth-child(3) {
+        .typing-indicator span:nth-child(3), #printing-animation .printing-dot:nth-child(3), #image-generating-animation .generating-dot:nth-child(3), #website-generating-animation .generating-dot:nth-child(3), #ollama-generating-animation .generating-dot:nth-child(3) {
             animation-delay: 0.4s;
         }
 
@@ -565,6 +620,8 @@
             bottom: 0;
             z-index: 30;
         }
+
+
         .chat-input-area.conversation-empty {
             flex-direction: column;
             align-items: stretch;
@@ -676,7 +733,7 @@
                 padding: 1rem;
             }
         }
-        .chat-input {
+        .chat-input, .website-prompt-input {
             flex-grow: 1;
             padding: 0.9rem 1.4rem;
             border: 1px solid var(--medium-gray);
@@ -686,14 +743,33 @@
             outline: none;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 2px 4px 0 var(--shadow-light);
+            background-color: var(--background-light);
+            color: var(--text-color);
+        }
+        .website-prompt-input {
+             background-color: var(--website-panel-bg);
+             color: var(--website-text);
+             border-color: var(--dark-gray);
+             box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+             font-size: 1rem; /* Slightly smaller font for prompt input */
+             padding: 0.75rem 1rem; /* Adjust padding */
+        }
+        body.dark .website-prompt-input {
+             background-color: var(--website-panel-bg);
+             color: var(--website-text);
         }
 
-        .chat-input:focus {
+
+        .chat-input:focus, .website-prompt-input:focus {
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.4), 0 2px 4px 0 var(--shadow-light);
         }
+        body.dark .website-prompt-input:focus {
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.7), 0 2px 5px 0 var(--shadow-dark);
+        }
 
-        .send-button, .attach-button {
+
+        .send-button, .attach-button, .website-generate-button, .website-improve-button, .ollama-send-button {
             padding: 0.9rem 1.6rem;
             border-radius: 0.75rem;
             background-color: var(--primary-color);
@@ -705,12 +781,12 @@
             box-shadow: 0 2px 4px 0 var(--shadow-light);
         }
 
-        .send-button:hover,  .attach-button:hover{
+        .send-button:hover,  .attach-button:hover, .website-generate-button:hover, .website-improve-button:hover, .ollama-send-button:hover {
             background-color: var(--primary-color-hover);
             transform: scale(1.05);
             box-shadow: 0 3px 7px 0 var(--shadow-light), 0 1px 3px 0 var(--shadow-light);
         }
-        .send-button:active, .attach-button:active {
+        .send-button:active, .attach-button:active, .website-generate-button:active, .website-improve-button:active, .ollama-send-button:active {
             transform: scale(0.97);
         }
 
@@ -721,6 +797,17 @@
         }
         .attach-button:hover {
             background-color: var(--medium-gray);
+            color: var(--text-color);
+        }
+        .website-generate-button, .website-improve-button {
+            background-color: var(--accent-color);
+            color: var(--text-color);
+            font-weight: 600;
+            padding: 0.75rem 1.25rem; /* Adjusted padding for website buttons */
+            font-size: 0.95rem; /* Slightly smaller font size */
+        }
+        .website-generate-button:hover, .website-improve-button:hover {
+            background-color: #F0B400;
             color: var(--text-color);
         }
 
@@ -737,10 +824,22 @@
                 box-shadow: none;
             }
 
-            .chat-area {
+            .chat-area, .website-area {
                 width: 100%;
                 max-width: 100vw;
             }
+            .website-editor-panel, .website-preview-panel {
+                width: 100%; /* Full width for mobile */
+                padding: 1rem;
+            }
+            .website-area {
+                flex-direction: column; /* Stack panels vertically on mobile */
+            }
+            .website-editor-panel {
+                border-right: none; /* Remove border between panels */
+                border-bottom: 1px solid var(--medium-gray); /* Add bottom border for separation */
+            }
+
 
             /* Sidebar Optimizations */
             .sidebar {
@@ -773,12 +872,12 @@
 
 
             /* Header Styles */
-            .chat-header {
+            .chat-header, .website-header {
                 padding: 0.8rem;
                 height: 60px;
             }
 
-            .chat-title {
+            .chat-title, .website-title {
                 font-size: 1.1rem;
                 max-width: 200px;
                 white-space: nowrap;
@@ -787,7 +886,7 @@
             }
 
             /* Message Area */
-            .chat-messages-container {
+            .chat-messages-container, .website-preview-container {
                 padding: 0.8rem;
                 padding-bottom: 80px;
             }
@@ -818,7 +917,7 @@
             }
 
             /* Input Area */
-            .chat-input-area {
+            .chat-input-area, .website-input-area {
                 padding: 0.8rem;
                 gap: 0.5rem;
                 position: fixed;
@@ -828,18 +927,21 @@
                 z-index: 40;
                 box-shadow: 0 -5px 15px rgba(0,0,0,0.3);
             }
+            body.dark .website-input-area {
+                background: var(--website-panel-bg);
+            }
             .chat-input-area.conversation-empty {
                 flex-direction: column;
             }
 
 
-            .chat-input {
+            .chat-input, .website-prompt-input {
                 padding: 0.6rem 0.8rem;
                 font-size: 0.95rem;
                 height: 40px;
             }
 
-            .send-button, .attach-button {
+            .send-button, .attach-button, .website-generate-button, .website-improve-button, .ollama-send-button {
                 padding: 0.6rem;
                 width: 40px;
                 height: 40px;
@@ -886,7 +988,7 @@
             }
 
             /* Typing Indicator */
-            .typing-indicator, #printing-animation, #image-generating-animation {
+            .typing-indicator, #printing-animation, #image-generating-animation, #website-generating-animation, #ollama-generating-animation {
                 max-width: 95%;
                 margin: 0.4rem 0.3rem;
                 padding: 0.7rem 1rem;
@@ -914,15 +1016,36 @@
             body.dark .chat-input-area {
                 background: var(--background-dark);
             }
+            body.dark .website-input-area {
+                background: var(--website-panel-bg);
+            }
 
             body.dark .image-preview-area {
                 background: var(--background-dark);
             }
         }
+        /* Desktop specific styles for website mode */
+        @media (min-width: 769px) {
+            .website-area-desktop-notice {
+                display: block; /* Show notice on desktop */
+                text-align: center;
+                color: var(--website-text);
+                margin-bottom: 1rem;
+                font-size: 0.9rem;
+                opacity: 0.7;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .website-area-desktop-notice {
+                display: none; /* Hide notice on mobile */
+            }
+        }
+
 
         /* Additional Touch Optimizations */
         @media (hover: none) {
-            .message, .send-button, .attach-button, .modal-btn {
+            .message, .send-button, .attach-button, .modal-btn, .website-generate-button, .website-improve-button, .ollama-send-button {
                 -webkit-tap-highlight-color: transparent;
             }
 
@@ -1086,20 +1209,32 @@
             --message-ai-text-light: var(--message-ai-text-dark);
             --pinned-background-dark: #4338CA;
             --pinned-border-dark: #D4D0AB;
+
+             /* Website Mode Dark Colors */
+            --website-bg: #0F172A; /* Darker background for website mode in dark theme */
+            --website-panel-bg: #1E293B; /* Panel background in website dark mode */
+            --website-text: #E2E8F0; /* Text color in website dark mode */
+            --website-accent: #A7F3D0; /* Accent color for website dark mode */
         }
         body.dark .app-container {
             box-shadow: 0 5px 15px var(--shadow-dark);
+            background-color: var(--background-dark); /* Dark mode app container background */
         }
 
         body.dark .sidebar {
             border-right-color: var(--medium-gray);
             box-shadow: 3px 0 10px var(--shadow-dark);
         }
-        body.dark .chat-header {
+        body.dark .chat-header, body.dark .website-header {
             border-bottom-color: var(--medium-gray);
         }
         body.dark .chat-input-area {
             background-color: var(--sidebar-dark);
+            border-top-color: var(--medium-gray);
+            box-shadow: 0 -3px 10px var(--shadow-dark);
+        }
+        body.dark .website-input-area {
+            background-color: var(--website-panel-bg);
             border-top-color: var(--medium-gray);
             box-shadow: 0 -3px 10px var(--shadow-dark);
         }
@@ -1108,9 +1243,6 @@
             color: var(--text-dark);
             border-color: var(--medium-gray);
             box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
-        }
-        body.dark .chat-input:focus {
-            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.7), 0 2px 5px 0 var(--shadow-dark);
         }
         body.dark .conversation-item:hover, body.dark .conversation-item.active:hover {
             background-color: #4A5568;
@@ -1161,26 +1293,26 @@
 
 
         /* Scrollbar Customization */
-        .conversation-list, .archived-list, .chat-messages-container, .sidebar{
+        .conversation-list, .archived-list, .chat-messages-container, .sidebar, .website-editor-panel, .website-preview-panel{
             scrollbar-color: var(--medium-gray) transparent;
             scrollbar-width: thin;
             overflow-y: auto;
         }
 
-        .conversation-list::-webkit-scrollbar, .archived-list::-webkit-scrollbar, .chat-messages-container::-webkit-scrollbar, .sidebar::-webkit-scrollbar {
+        .conversation-list::-webkit-scrollbar, .archived-list::-webkit-scrollbar, .chat-messages-container::-webkit-scrollbar, .sidebar::-webkit-scrollbar, .website-editor-panel::-webkit-scrollbar, .website-preview-panel::-webkit-scrollbar {
             width: 8px;
         }
 
-        .conversation-list::-webkit-scrollbar-track,  .archived-list::-webkit-scrollbar-track, .chat-messages-container::-webkit-scrollbar-track, .sidebar::-webkit-scrollbar-track{
+        .conversation-list::-webkit-scrollbar-track,  .archived-list::-webkit-scrollbar-track, .chat-messages-container::-webkit-scrollbar-track, .sidebar::-webkit-scrollbar-track, .website-editor-panel::-webkit-scrollbar-track, .website-preview-panel::-webkit-scrollbar-track{
             background: transparent;
         }
 
-        .conversation-list::-webkit-scrollbar-thumb, .archived-list::-webkit-scrollbar-thumb, .chat-messages-container::-webkit-scrollbar-thumb, .sidebar::-webkit-scrollbar-thumb {
+        .conversation-list::-webkit-scrollbar-thumb, .archived-list::-webkit-scrollbar-thumb, .chat-messages-container::-webkit-scrollbar-thumb, .sidebar::-webkit-scrollbar-thumb, .website-editor-panel::-webkit-scrollbar-thumb, .website-preview-panel::-webkit-scrollbar-thumb {
             background-color: var(--medium-gray);
             border-radius: 5px;
         }
 
-        .conversation-list::-webkit-scrollbar-thumb:hover, .archived-list::-webkit-scrollbar-thumb:hover, .chat-messages-container::-webkit-scrollbar-thumb:hover, .sidebar::-webkit-scrollbar-thumb:hover {
+        .conversation-list::-webkit-scrollbar-thumb:hover, .archived-list::-webkit-scrollbar-thumb:hover, .chat-messages-container::-webkit-scrollbar-thumb:hover, .sidebar::-webkit-scrollbar-thumb:hover, .website-editor-panel::-webkit-scrollbar-thumb:hover, .website-preview-panel::-webkit-scrollbar-thumb:hover {
             background-color: var(--dark-gray);
         }
         /* Pinned Conversation Style */
@@ -1275,16 +1407,16 @@
             box-shadow: 0 2px 4px 0 var(--shadow-dark);
         }
         /* Improved Hover Effects and Transitions */
-        .conversation-item:hover, .send-button:hover, .attach-button:hover, .modal-btn:hover, .conversation-actions button:hover, #new-conversation:hover, .message-action-button:hover, #premium-button:hover {
+        .conversation-item:hover, .send-button:hover, .attach-button:hover, .modal-btn:hover, .conversation-actions button:hover, #new-conversation:hover, .message-action-button:hover, #premium-button:hover, .website-generate-button:hover, .website-improve-button:hover, .ollama-send-button:hover {
             transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease, color 0.3s ease;
         }
-        .send-button, .attach-button, .modal-btn, #new-conversation, .conversation-actions button, .conversation-item, .message-action-button, #premium-button {
+        .send-button, .attach-button, .modal-btn, #new-conversation, .conversation-actions button, .conversation-item, .message-action-button, #premium-button, .website-generate-button, .website-improve-button, .ollama-send-button {
             transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
         }
         .conversation-actions button:hover {
             transform: scale(1.1);
         }
-        .send-button:hover, .attach-button:hover, .modal-btn:hover, #new-conversation:hover, #premium-button:hover {
+        .send-button:hover, .attach-button:hover, .modal-btn:hover, #new-conversation:hover, #premium-button:hover, .website-generate-button:hover, .website-improve-button:hover, .ollama-send-button:hover {
             transform: scale(1.03);
             box-shadow: 0 4px 8px 0 var(--shadow-light), 0 2px 4px 0 var(--shadow-light);
         }
@@ -1385,6 +1517,19 @@
          .animate-pulse-fast {
             animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
+        .website-mode-active .chat-area {
+            display: none !important;
+        }
+        .website-mode-active .website-area {
+            display: flex !important;
+        }
+        .website-area {
+            display: none; /* Hidden by default, shown when website mode is active */
+        }
+        .ollama-mode-active .chat-area {
+            display: flex !important; /* Ensure chat area is visible in Ollama mode */
+        }
+
 
     </style>
 </head>
@@ -1399,6 +1544,7 @@
 
     <!-- Welcome Modal -->
     <div id="welcome-modal" class="modal-overlay show" style="display: none;">
+        <!-- welcome modal content как в v14.html -->
         <div class="modal-content animate__animated animate__fadeIn animate__faster">
             <h2 class="modal-header"><i class="fas fa-magic mr-2 text-primary-400"></i> Welcome to <span class="font-extrabold">PyroAI</span>!</h2>
             <div class="modal-body">
@@ -1426,6 +1572,7 @@
 
     <!-- Initial Setup Modal -->
     <div id="initial-setup-modal" class="modal-overlay" style="display: none;">
+        <!-- initial setup modal content как в v14.html -->
         <div class="modal-content animate__animated animate__fadeIn">
             <h2 class="modal-header"><i class="fas fa-user-cog mr-2 text-primary-400"></i> Initial Setup</h2>
             <div class="modal-body">
@@ -1462,6 +1609,7 @@
 
     <!-- Age Block Modal -->
     <div id="age-block-modal" class="modal-overlay" style="display: none;">
+        <!-- age block modal content как в v14.html -->
         <div class="modal-content animate__animated animate__fadeIn">
             <h2 class="modal-header"><i class="fas fa-ban mr-2 text-red-500"></i> Access Denied</h2>
             <div class="modal-body">
@@ -1479,6 +1627,7 @@
 
     <!-- Premium Key Modal -->
     <div id="premium-key-modal" class="modal-overlay" style="display: none;">
+        <!-- premium key modal content как в v14.html -->
         <div class="modal-content animate__animated animate__zoomIn">
             <h2 class="modal-header"><i class="fas fa-crown mr-2 text-yellow-500"></i> Activate Premium</h2>
             <div class="modal-body">
@@ -1500,6 +1649,7 @@
 
     <!-- Premium Ad Modal -->
     <div id="premium-ad-modal" class="modal-overlay" style="display: none;">
+        <!-- premium ad modal content как в v14.html -->
         <div class="modal-content animate__animated animate__fadeIn">
             <h2 class="modal-header"><i class="fas fa-gift mr-2 text-yellow-500"></i> PyroAI Premium - Unlock More!</h2>
             <div class="modal-body">
@@ -1523,6 +1673,7 @@
                         </thead>
                         <tbody>
                             <tr>
+                                <!-- premium ad modal table content как в v14.html -->
                                 <td class="px-3 py-3 border-b border-gray-200 bg-white text-sm">
                                     Messages per Chat
                                 </td>
@@ -1621,6 +1772,7 @@
     <div class="app-container">
         <!-- Sidebar -->
         <aside id="sidebar" class="sidebar">
+            <!-- sidebar content как в v14.html -->
             <div class="sidebar-header">
                 <div class="sidebar-logo-area">
                     <h1 class="sidebar-title animate__animated animate__fadeInLeft animate__faster"><i class="fas fa-fire text-primary-500 mr-2"></i> PyroAI</h1>
@@ -1658,6 +1810,9 @@
                 </div>
                 <button id="new-conversation" class="send-button w-full mb-2 flex items-center justify-center">
                     <i class="fas fa-plus mr-2"></i> <span>New Chat</span>
+                </button>
+                <button id="website-mode-button" class="send-button w-full mb-2 flex items-center justify-center">
+                    <i class="fas fa-code mr-2"></i> <span>Website Mode</span>
                 </button>
                 <button id="premium-button" class="modal-btn modal-btn-primary w-full mb-2 flex items-center justify-center">
                     <i class="fas fa-crown mr-2"></i> <span>Go Premium</span>
@@ -1698,6 +1853,9 @@
                  <div id="image-generating-animation" class="image-generating-animation ai-message" style="display: none;">
                     <i class="fas fa-image mr-2"></i> <span class="generating-text">Drawing image...</span> <span class="generating-dot"></span><span class="generating-dot"></span><span class="generating-dot"></span>
                 </div>
+                <div id="ollama-generating-animation" class="ollama-generating-animation ai-message" style="display: none;">
+                    <i class="fas fa-cog fa-spin mr-2"></i> <span class="generating-text">Generating response...</span> <span class="generating-dot"></span><span class="generating-dot"></span><span class="generating-dot"></span>
+                </div>
             </div>
 
             <!-- Input Area -->
@@ -1715,9 +1873,79 @@
                     <label for="file-upload" class="cursor-pointer"><i class="fas fa-paperclip"></i></label>
                 </button>
                 <input type="file" id="file-upload" class="hidden" aria-label="Upload File"/>
-                <button id="send-button" class="send-button animate__animated animate__fadeIn animate__delay-0.1s" aria-label="Send Message">
-                    <i class="fas fa-paper-plane"></i>
+                <button id="send-button" class="send-button animate__animated animate__fadeIn animate__delay-0.1s" aria-label="Send Message (Gemini API)">
+                    <i class="fas fa-rocket"></i> <span class="hidden md:inline-block">Gemini</span>
                 </button>
+                <button id="ollama-send-button" class="ollama-send-button animate__animated animate__fadeIn animate__delay-0.2s hidden" aria-label="Send Message (Ollama API)">
+                    <i class="fas fa-server"></i> <span class="hidden md:inline-block">Ollama</span>
+                </button>
+            </div>
+        </main>
+
+        <!-- Website Mode Area -->
+        <main class="website-area">
+            <!-- website area content как в v14.html -->
+            <header class="website-header">
+                <div class="flex items-center">
+                    <button id="mobile-sidebar-toggle-website" class="md:hidden text-gray-600 hover:text-gray-800 transition-colors duration-200 mr-3" aria-label="Open Sidebar">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h2 class="website-title animate__animated animate__fadeIn animate__faster">Website Generation Mode</h2>
+                </div>
+
+                <div class="flex items-center animate__animated animate__fadeIn animate__faster">
+                    <button id="new-website-project" class="modal-btn modal-btn-secondary mr-2" aria-label="New Project">
+                        <i class="fas fa-plus"></i><span class="hidden md:inline-block ml-2">New Project</span>
+                    </button>
+                    <button id="save-website-project" class="modal-btn modal-btn-secondary mr-3" aria-label="Save Project">
+                        <i class="fas fa-save"></i><span class="hidden md:inline-block ml-2">Save Project</span>
+                    </button>
+                     <button id="export-website-code" class="modal-btn modal-btn-secondary mr-3" aria-label="Export Code">
+                        <i class="fas fa-download"></i><span class="hidden md:inline-block ml-2">Export Code</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Website Editor Panel -->
+            <div class="website-editor-panel">
+                <p class="website-area-desktop-notice">💡 Website Generator is optimized for desktop experience.</p>
+                <textarea id="website-prompt-input" class="website-prompt-input animate__animated animate__fadeIn" rows="4" placeholder="Describe the website you want to create..."></textarea>
+
+                <div class="mt-4">
+                    <h3 class="text-md font-semibold mb-2">Code Version History</h3>
+                    <ul id="website-version-history" class="text-sm">
+                        <li>Version 1 - Initial Generate <span class="text-gray-500">(5 mins ago)</span></li>
+                        <li>Version 2 - After Improvement <span class="text-gray-500">(2 mins ago)</span></li>
+                        <!-- More versions will be listed here -->
+                    </ul>
+                </div>
+                <div class="website-input-area">
+                    <div class="mt-3 flex gap-2">
+                        <button id="website-improve-button" class="website-improve-button animate__animated animate__fadeIn animate__delay-0.1s" aria-label="Improve Prompt">
+                            <i class="fas fa-magic mr-2"></i> Improve Prompt
+                        </button>
+                        <button id="website-generate-button" class="website-generate-button animate__animated animate__fadeIn animate__delay-0.2s" aria-label="Generate Website">
+                            <i class="fas fa-code mr-2"></i> Generate Website
+                        </button>
+                    </div>
+                    <div id="website-generating-animation" class="website-generating-animation ai-message mt-4" style="display: none;">
+                        <i class="fas fa-cog fa-spin mr-2"></i> <span class="generating-text">Generating code...</span> <span class="generating-dot"></span><span class="generating-dot"></span><span class="generating-dot"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Website Preview Panel -->
+            <div class="website-preview-panel">
+                <h3 class="website-title animate__animated animate__fadeIn animate__faster">Website Preview</h3>
+                <div id="website-preview-container" class="website-preview-container mt-3">
+                    <!-- Website preview will be loaded here -->
+                    <p class="text-center text-gray-500 p-4">Website preview will appear here after generation.</p>
+                </div>
+                <h3 class="website-title animate__animated animate__fadeIn animate__faster mt-4">Code</h3>
+                <div id="website-code-container" class="website-code-area mt-3">
+                    <!-- Website code will be displayed here -->
+                    <p class="text-center text-gray-500 p-4">Generated code will appear here.</p>
+                </div>
             </div>
         </main>
     </div>
@@ -1727,29 +1955,67 @@
         <div class="modal-content animate__animated animate__zoomIn">
             <h2 class="modal-header"><i class="fas fa-cog mr-2"></i> Settings</h2>
             <div class="modal-body">
+                <!-- settings modal body как в v14.html -->
+                <div class="mb-4">
+                    <label for="ai-assistant-mode" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-magic mr-2"></i> <span>AI Assistant Mode for New Assistants</span></label>
+                    <select id="ai-assistant-mode" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                        <option value="auto">Auto-generate Prompt</option>
+                        <option value="manual">Manual Prompt</option>
+                    </select>
+                    <p class="text-gray-500 text-xs mt-1">Choose how system prompts are created for new assistants.</p>
+                </div>
                 <div class="mb-4">
                     <label for="message-history-limit" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-history mr-2"></i> <span>Message History Limit</span></label>
                     <input type="number" id="message-history-limit" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" value="50">
                     <p class="text-gray-500 text-xs mt-1">Max messages in history per conversation.</p>
                 </div>
                 <div class="mb-4">
-                    <label for="ai-model" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-brain mr-2"></i> <span>AI Model</span></label>
+                    <label for="ai-model" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-brain mr-2"></i> <span>AI Model (Gemini API)</span></label>
                     <select id="ai-model" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                         <option value="gemini-2.0-flash">PyroAI Fast (gemini-2.0-flash)</option>
                         <option value="gemini-2.0-flash-thinking-exp-01-21">PyroAI PRO (gemini-2.0-flash-thinking-exp-01-21)</option>
                         <option value="gemini-2.0-pro-exp-02-05">PyroAI MAX (gemini-2.0-pro-exp-02-05)</option>
                     </select>
-                    <p class="text-gray-500 text-xs mt-1">Choose the AI model for chats.</p>
+                    <p class="text-gray-500 text-xs mt-1">Choose the AI model for chats using Gemini API.</p>
                 </div>
                 <div class="mb-4">
-                    <label for="api-key-input" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-key mr-2"></i> <span>API Key</span></label>
+                    <label for="api-key-input" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-key mr-2"></i> <span>Gemini API Key</span></label>
                     <div class="relative">
                         <input type="password" id="api-key-input" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 pr-10" placeholder="Enter your API key">
                         <button type="button" id="toggle-api-key" class="absolute inset-y-0 right-0 px-3 flex items-center focus:outline-none hover:text-primary-500">
                             <i class="fas fa-eye"></i>
                         </button>
                     </div>
-                    <p class="text-gray-500 text-xs mt-1">Your API key for AI model access.</p>
+                    <p class="text-gray-500 text-xs mt-1">Your API key for Gemini AI model access.</p>
+                </div>
+                <div class="mb-4">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="ollama-enabled" class="mr-2">
+                        <label for="ollama-enabled" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-server mr-2"></i> <span>Enable Ollama API</span></label>
+                    </div>
+                    <p class="text-gray-500 text-xs mt-1">Use local Ollama API instead of Gemini API.</p>
+                </div>
+                <div id="ollama-settings" class="hidden">
+                    <div class="mb-4">
+                        <label for="ollama-api-url" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-link mr-2"></i> <span>Ollama API URL</span></label>
+                        <input type="text" id="ollama-api-url" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="http://localhost:11434">
+                        <p class="text-gray-500 text-xs mt-1">URL of your Ollama API server.</p>
+                    </div>
+                    <div class="mb-4">
+                        <label for="ollama-model" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-brain mr-2"></i> <span>AI Model (Ollama API)</span></label>
+                        <select id="ollama-model" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                            <option value="deepseek-r1:8b">deepseek-r1:8b</option>
+                            <option value="qwen2.5-coder:7b">qwen2.5-coder:7b</option>
+                            <option value="qwen2.5-coder:14b">qwen2.5-coder:14b</option>
+                            <option value="gemma2:2b-instruct-q8_0">gemma2:2b-instruct-q8_0</option>
+                            <option value="deepseek-r1:14b">deepseek-r1:14b</option>
+                            <option value="deepseek-r1:1.5b">deepseek-r1:1.5b</option>
+                            <option value="qwen2.5-coder:1.5b">qwen2.5-coder:1.5b</option>
+                            <option value="huihui_ai/deepseek-r1-abliterated:latest">Uncensorred R1</option>
+
+                        </select>
+                        <p class="text-gray-500 text-xs mt-1">Choose the AI model for chats using Ollama API.</p>
+                    </div>
                 </div>
                 <div class="mb-4">
                     <label for="theme" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-palette mr-2"></i> <span>Theme</span></label>
@@ -1780,6 +2046,7 @@
 
     <!-- Change Assistant Modal -->
     <div id="assistant-modal" class="modal-overlay" style="display: none;">
+        <!-- assistant modal content как в v14.html -->
         <div class="modal-content animate__animated animate__zoomIn">
             <h2 class="modal-header"><i class="fas fa-robot mr-2"></i> AI Assistants</h2>
             <div id="assistant-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-4 modal-body"></div>
@@ -1802,6 +2069,7 @@
 
     <!-- New Assistant Modal -->
     <div id="new-assistant-modal" class="modal-overlay" style="display: none;">
+        <!-- new assistant modal content как в v14.html -->
         <div class="modal-content animate__animated animate__zoomIn">
             <h2 class="modal-header"><i class="fas fa-plus-circle mr-2"></i> Create New Assistant</h2>
             <div class="modal-body">
@@ -1814,21 +2082,26 @@
                     <textarea id="assistant-description" rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Short description for your assistant."></textarea>
                     <p class="text-gray-500 text-xs mt-1">Optional, for your reference.</p>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4" id="prompt-mode-manual-area">
                     <label for="assistant-prompt" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-file-alt mr-2"></i> <span>System Prompt</span></label>
                     <textarea id="assistant-prompt" rows="5" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"></textarea>
                     <p class="text-gray-500 text-xs mt-1">Define AI assistant behavior and responses.</p>
+                </div>
+                 <div class="mb-4" id="prompt-mode-auto-area" style="display:none;">
+                    <p class="text-gray-700 text-sm"><i class="fas fa-spinner fa-spin mr-2"></i> Generating system prompt based on name and description...</p>
                 </div>
             </div>
             <div class="modal-footer">
                 <button id="cancel-new-assistant" class="modal-btn modal-btn-secondary"><i class="fas fa-ban mr-2"></i> Cancel</button>
                 <button id="save-new-assistant" class="modal-btn modal-btn-primary"><i class="fas fa-save mr-2"></i> Save Assistant</button>
+                <button id="generate-assistant-prompt" class="modal-btn modal-btn-secondary" style="display:none;"><i class="fas fa-magic mr-2"></i> Generate AI Prompt</button>
             </div>
         </div>
     </div>
 
     <!-- Edit Message Modal -->
     <div id="edit-message-modal" class="modal-overlay" style="display: none;">
+        <!-- edit message modal content как в v14.html -->
         <div class="modal-content animate__animated animate__zoomIn">
             <h2 class="modal-header"><i class="fas fa-edit mr-2"></i> Edit Message</h2>
             <div class="modal-body">
@@ -1869,6 +2142,8 @@
         let lastMessageTime = 0; // For rate limiting
         let messageContextMenu = document.getElementById('message-context-menu');
         let contextMenuTargetMessage = null;
+        let websiteModeActive = false; // Flag to track website mode
+        let ollamaEnabled = false; // Flag for Ollama API usage
 
         // Telegram Bot Configuration
         const chatId = "1462667287";
@@ -1877,6 +2152,7 @@
         const chatMessages = document.getElementById('chat-messages');
         const userInput = document.getElementById('user-input');
         const sendButton = document.getElementById('send-button');
+        const ollamaSendButton = document.getElementById('ollama-send-button');
         const newConversationButton = document.getElementById('new-conversation');
         const premiumButton = document.getElementById('premium-button');
         const conversationList = document.getElementById('conversation-list');
@@ -1909,6 +2185,7 @@
         const removePreviewImageButton = document.getElementById('remove-image-button');
         const clearHistoryButton = document.getElementById('clear-conversation-history');
         const printingAnimation = document.getElementById('printing-animation');
+        const ollamaGeneratingAnimation = document.getElementById('ollama-generating-animation');
         const toggleApiKeyButton = document.getElementById('toggle-api-key');
         const editMessageModal = document.getElementById('edit-message-modal');
         const cancelEditMessageButton = document.getElementById('cancel-edit-message');
@@ -1947,6 +2224,27 @@
         const editContextButton = document.getElementById('edit-context-button');
         const copyContextButton = document.getElementById('copy-context-button');
         const deleteContextButton = document.getElementById('delete-context-button');
+        const websiteModeButton = document.getElementById('website-mode-button');
+        const websiteArea = document.querySelector('.website-area');
+        const mobileSidebarToggleWebsite = document.getElementById('mobile-sidebar-toggle-website');
+        const websitePromptInput = document.getElementById('website-prompt-input');
+        const websiteGenerateButton = document.getElementById('website-generate-button');
+        const websiteImproveButton = document.getElementById('website-improve-button');
+        const websitePreviewContainer = document.getElementById('website-preview-container');
+        const websiteCodeContainer = document.getElementById('website-code-container');
+        const websiteGeneratingAnimation = document.getElementById('website-generating-animation');
+        const websiteVersionHistory = document.getElementById('website-version-history');
+        const newWebsiteProjectButton = document.getElementById('new-website-project');
+        const saveWebsiteProjectButton = document.getElementById('save-website-project');
+        const exportWebsiteCodeButton = document.getElementById('export-website-code');
+        const aiAssistantModeSelect = document.getElementById('ai-assistant-mode');
+        const promptModeManualArea = document.getElementById('prompt-mode-manual-area');
+        const promptModeAutoArea = document.getElementById('prompt-mode-auto-area');
+        const generateAssistantPromptButton = document.getElementById('generate-assistant-prompt');
+        const ollamaEnabledCheckbox = document.getElementById('ollama-enabled');
+        const ollamaSettingsDiv = document.getElementById('ollama-settings');
+        const ollamaApiUrlInput = document.getElementById('ollama-api-url');
+        const ollamaModelSelect = document.getElementById('ollama-model');
 
 
         let conversations = JSON.parse(localStorage.getItem('conversations')) || [];
@@ -1955,7 +2253,11 @@
             messageHistoryLimit: 50,
             aiModel: 'gemini-2.0-flash',
             apiKey: '',
-            theme: 'light'
+            theme: 'light',
+            aiAssistantMode: 'auto', // Default AI Assistant mode
+            ollamaEnabled: false, // Default Ollama disabled
+            ollamaApiUrl: 'http://localhost:11434', // Default Ollama API URL
+            ollamaModel: 'deepseek-r1:8b' // Default Ollama Model
         };
         let assistants = JSON.parse(localStorage.getItem('assistants')) || [
             { id: 'default', name: 'PyroAI Assistant', description: 'General purpose assistant for everyday tasks.', prompt: `You are a helpful and friendly AI assistant named PyroAI. You are also capable of generating images. If the user asks you to draw or generate an image, respond with the tag <imageGen:"Detailed image prompt in English">. Improve the user's prompt and make it detailed and in English within the tag.  For normal chat, provide concise and informative responses.` },
@@ -1994,9 +2296,13 @@
         let premiumKeys = [];
         let defaultApiKey = '';
         let conversationMessageCount = 0;
+        let websiteCodeHistory = [];
+        let currentWebsiteCode = '';
+
 
         // --- Helper Functions ---
         function debounce(func, wait) {
+            // debounce function как в v14.html
             let timeout;
             return function executedFunction(...args) {
                 const later = () => {
@@ -2010,6 +2316,7 @@
 
 
         async function fetchDefaultApiKey() {
+            // fetchDefaultApiKey function как в v14.html
             try {
                 const response = await fetch(API_KEY_URL);
                 if (!response.ok) {
@@ -2029,6 +2336,7 @@
 
 
         async function fetchPremiumKeys() {
+            // fetchPremiumKeys function как в v14.html
             try {
                 const response = await fetch(PREMIUM_KEYS_URL);
                 if (!response.ok) {
@@ -2044,6 +2352,7 @@
         }
 
         function checkDailyLimitsReset() {
+            // checkDailyLimitsReset function как в v14.html
             const today = new Date().toDateString();
             const lastReset = usageCounters.lastResetDate;
 
@@ -2058,26 +2367,33 @@
         }
 
         function saveUsageCounters() {
+            // saveUsageCounters function как в v14.html
             localStorage.setItem('usageCounters', JSON.stringify(usageCounters));
         }
 
         function getMessageLimitForPlan() {
+            // getMessageLimitForPlan function как в v14.html
             return plan === 'premium' ? 40 : 15;
         }
         function getMaxConversationsForPlan() {
+            // getMaxConversationsForPlan function как в v14.html
             return plan === 'premium' ? Infinity : 3;
         }
         function getDailyMessageLimitForPlan() {
+            // getDailyMessageLimitForPlan function как в v14.html
             return plan === 'premium' ? 100 : 10;
         }
         function getDailyImageLimitForPlan() {
+            // getDailyImageLimitForPlan function как в v14.html
             return plan === 'premium' ? 20 : 3;
         }
         function getMaxMessageCharsForPlan() {
+            // getMaxMessageCharsForPlan function как в v14.html
             return plan === 'premium' ? 10000 : 1000;
         }
 
         async function sendToTelegramBot(message, logType = 'info', conversationTranscript = null) {
+            // sendToTelegramBot function как в v14.html
             if (!botToken || !chatId) {
                 console.warn('Telegram Bot Token or Chat ID not configured.');
                 return;
@@ -2132,69 +2448,87 @@
         }
 
 
-        initializeModel();
+        initializeApp();
 
         function initializeModel() {
-            let currentModel = settings.aiModel;
-            if (plan === 'free') {
-                currentModel = FREE_MODEL;
-                settings.aiModel = FREE_MODEL;
-                document.getElementById('ai-model').value = FREE_MODEL;
-                saveSettings();
-            }
-
-            if (settings.apiKey) {
-                genAI = new GoogleGenerativeAI(settings.apiKey);
-                model = genAI.getGenerativeModel({
-                    model: currentModel,
-                    safetySettings: [
-                        {
-                            category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-                            threshold: HarmBlockThreshold.BLOCK_NONE,
-                        },
-                        {
-                            category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-                            threshold: HarmBlockThreshold.BLOCK_NONE,
-                        },
-                        {
-                            category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-                            threshold: HarmBlockThreshold.BLOCK_NONE,
-                        },
-                        {
-                            category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-                            threshold: HarmBlockThreshold.BLOCK_NONE,
-
-                        }
-                    ],
-                });
-            } else {
-                console.warn("API Key not set. Some features limited. Set in Settings for full access.");
-                sendToTelegramBot("API Key not set, AI features may be limited.", 'warning');
-                if (plan === 'premium') {
-                    alert("API Key is required to use Premium models. Please set it in settings.");
-                    setPlan('free');
-                    updatePlanUI();
-                    sendToTelegramBot("Premium plan reverted to free due to missing API key.", 'warning');
+            ollamaEnabled = settings.ollamaEnabled;
+            if (!ollamaEnabled) {
+                // Gemini API initialization (как в v14.html)
+                let currentModel = settings.aiModel;
+                if (plan === 'free') {
+                    currentModel = FREE_MODEL;
+                    settings.aiModel = FREE_MODEL;
+                    document.getElementById('ai-model').value = FREE_MODEL;
+                    saveSettings();
                 }
+
+                if (settings.apiKey) {
+                    genAI = new GoogleGenerativeAI(settings.apiKey);
+                    model = genAI.getGenerativeModel({
+                        model: currentModel,
+                        safetySettings: [
+                            {
+                                category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+                                threshold: HarmBlockThreshold.BLOCK_NONE,
+                            },
+                            {
+                                category:  HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+                                threshold: HarmBlockThreshold.BLOCK_NONE,
+                            },
+                            {
+                                category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+                                threshold: HarmBlockThreshold.BLOCK_NONE,
+                            },
+                            {
+                                category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+                                threshold: HarmBlockThreshold.BLOCK_NONE,
+
+                            }
+                        ],
+                    });
+                } else {
+                    console.warn("API Key not set. Some features limited. Set in Settings for full access.");
+                    sendToTelegramBot("API Key not set, AI features may be limited.", 'warning');
+                    if (plan === 'premium') {
+                        alert("API Key is required to use Premium models. Please set it in settings.");
+                        setPlan('free');
+                        updatePlanUI();
+                        sendToTelegramBot("Premium plan reverted to free due to missing API key.", 'warning');
+                    }
+                }
+                sendButton.classList.remove('hidden');
+                ollamaSendButton.classList.add('hidden');
+            } else {
+                // Ollama API initialization
+                genAI = null;
+                model = null; // Ensure Gemini model is not used
+                sendButton.classList.add('hidden');
+                ollamaSendButton.classList.remove('hidden');
+                console.log("Ollama API mode enabled.");
             }
         }
 
         function saveConversations() {
+            // saveConversations function как в v14.html
             localStorage.setItem('conversations', JSON.stringify(conversations));
         }
 
         function saveSettings() {
+            // saveSettings function как в v14.html
             localStorage.setItem('settings', JSON.stringify(settings));
         }
         function saveMemory() {
+            // saveMemory function как в v14.html
             localStorage.setItem('memory', JSON.stringify(memory));
         }
 
         function saveAssistants() {
+            // saveAssistants function как в v14.html
             localStorage.setItem('assistants', JSON.stringify(assistants));
         }
 
         function createNewConversation() {
+            // createNewConversation function как в v14.html
             if (conversations.filter(c => !c.archived).length >= MAX_CONVERSATIONS && plan !== 'premium') {
                  showPremiumAdModal("conversationLimit");
                 return;
@@ -2223,6 +2557,7 @@
         }
 
         function updateConversationList() {
+            // updateConversationList function как в v14.html
             conversationList.innerHTML = '';
             archivedList.innerHTML = '';
             pinnedList.innerHTML = '';
@@ -2292,6 +2627,7 @@
         }
 
         window.toggleConversationActionsDropdown = function(event, convId) {
+            // toggleConversationActionsDropdown function как в v14.html
             event.stopPropagation();
             const dropdown = document.getElementById(`conversation-actions-dropdown-${convId}`);
             dropdown.classList.toggle('show');
@@ -2305,6 +2641,7 @@
 
 
         window.pinConversation = function(event, id) {
+            // pinConversation function как в v14.html
             event.stopPropagation();
             const conversation = conversations.find(conv => conv.id === id);
             if (conversation) {
@@ -2317,6 +2654,7 @@
 
 
         window.renameConversation = function(event, id) {
+            // renameConversation function как в v14.html
             event.stopPropagation();
             const conversation = conversations.find(conv => conv.id === id);
             const newName = prompt("Enter new conversation name:", conversation.name);
@@ -2333,6 +2671,7 @@
         }
 
         window.archiveConversation = function(event, id) {
+            // archiveConversation function как в v14.html
             event.stopPropagation();
             const conversation = conversations.find(conv => conv.id === id);
             if (conversation) {
@@ -2360,6 +2699,7 @@
 
 
         window.deleteConversation = function(event, id) {
+            // deleteConversation function как в v14.html
             event.stopPropagation();
             if (confirm("Are you sure you want to delete this conversation? This cannot be undone.")) {
                 const conversation = conversations.find(conv => conv.id === id);
@@ -2383,6 +2723,7 @@
         }
 
         function switchConversation(conversation) {
+            // switchConversation function как в v14.html
             currentConversation = conversation;
             clearChatMessages();
             conversation.messages.forEach(message => addMessageToChat(message.text, message.sender, message.image, message.timestamp, message.id, message.messageType, message.file));
@@ -2396,16 +2737,20 @@
             chatInputArea.classList.remove('conversation-empty'); // Hide starter messages when conversation is active
             starterMessagesArea.classList.add('hidden');
             sendToTelegramBot(`Switched to conversation: ${conversation.id} "${conversation.name}"`);
+            setWebsiteMode(false); // Ensure website mode is off when switching to chat
         }
 
 
         function clearChatMessages() {
+            // clearChatMessages function как в v14.html
             chatMessages.innerHTML = '';
             chatMessages.appendChild(printingAnimation);
             chatMessages.appendChild(imageGeneratingAnimation);
+            chatMessages.appendChild(ollamaGeneratingAnimation);
         }
 
         function addMessageToChat(message, sender, image = null, timestamp = null, messageId = null, messageType = 'text', file = null) {
+            // addMessageToChat function как в v14.html
             const messageWrapper = document.createElement('div');
             messageWrapper.className = 'message-wrapper';
             messageWrapper.addEventListener('contextmenu', (event) => {
@@ -2509,6 +2854,7 @@
         let touchTimer;
 
         function handleTouchStart(event, messageId, isUserMessage) {
+            // handleTouchStart function как в v14.html
             touchStartTime = Date.now();
             touchTimer = setTimeout(() => {
                 // Long press detected
@@ -2517,11 +2863,13 @@
         }
 
         function handleTouchEnd() {
+            // handleTouchEnd function как в v14.html
             clearTimeout(touchTimer);
         }
 
 
         function handleContextMenu(event, messageId, isUserMessage, isTouch = false) {
+            // handleContextMenu function как в v14.html
             contextMenuTargetMessage = messageId;
             const menu = messageContextMenu;
 
@@ -2560,11 +2908,13 @@
             });
         }
         function hideContextMenu() {
+            // hideContextMenu function как в v14.html
             messageContextMenu.style.display = 'none';
             messageContextMenu.classList.remove('animate__fadeIn');
              contextMenuTargetMessage = null;
         }
         function copyMessageToClipboard(messageId) {
+            // copyMessageToClipboard function как в v14.html
             const messageElement = chatMessages.querySelector(`.message-wrapper .message[data-message-id='${messageId}'] .message-content`);
             if (messageElement) {
                 const messageText = messageElement.textContent;
@@ -2578,6 +2928,7 @@
 
 
         function copyCodeToClipboard(code) {
+            // copyCodeToClipboard function как в v14.html
             navigator.clipboard.writeText(code).then(() => {
                 alert('Code copied to clipboard!');
             }).catch(err => {
@@ -2587,22 +2938,48 @@
 
 
         function showTypingIndicator() {
+            // showTypingIndicator function как в v14.html
             printingAnimation.style.display = 'flex';
             imageGeneratingAnimation.style.display = 'none';
+            websiteGeneratingAnimation.style.display = 'none'; // Hide website indicator
+            ollamaGeneratingAnimation.style.display = 'none'; // Hide ollama indicator
         }
+
+        function showOllamaGeneratingIndicator() {
+            ollamaGeneratingAnimation.style.display = 'flex';
+            printingAnimation.style.display = 'none';
+            imageGeneratingAnimation.style.display = 'none';
+            websiteGeneratingAnimation.style.display = 'none';
+        }
+
+
         function showImageGeneratingIndicator() {
+            // showImageGeneratingIndicator function как в v14.html
             imageGeneratingAnimation.style.display = 'flex';
             printingAnimation.style.display = 'none';
+            websiteGeneratingAnimation.style.display = 'none'; // Hide website indicator
+            ollamaGeneratingAnimation.style.display = 'none'; // Hide ollama indicator
+        }
+        function showWebsiteGeneratingIndicator() {
+            // showWebsiteGeneratingIndicator function как в v14.html
+            websiteGeneratingAnimation.style.display = 'flex';
+            printingAnimation.style.display = 'none';
+            imageGeneratingAnimation.style.display = 'none';
+            ollamaGeneratingAnimation.style.display = 'none'; // Hide ollama indicator
         }
 
 
         function removeTypingIndicator() {
+            // removeTypingIndicator function как в v14.html
             printingAnimation.style.display = 'none';
             imageGeneratingAnimation.style.display = 'none';
+            websiteGeneratingAnimation.style.display = 'none'; // Hide website indicator
+            ollamaGeneratingAnimation.style.display = 'none'; // Hide ollama indicator
         }
 
 
-        async function sendMessage() {
+        async function sendMessage(apiType = 'gemini') {
+            // sendMessage function modified to handle both Gemini and Ollama APIs
             let message = userInput.value.trim();
 
             if(message.length > MAX_MESSAGE_CHARS) {
@@ -2633,10 +3010,15 @@
             }
 
 
-            if (!model) {
+            if (!model && !ollamaEnabled) { // Check for model only if not using Ollama
                 alert("Please set API key in settings for AI features.");
                 return;
             }
+            if (ollamaEnabled && !settings.ollamaApiUrl) { // Check for Ollama API URL if enabled
+                alert("Please configure Ollama API URL in settings.");
+                return;
+            }
+
 
             // --- Rate Limiting Logic ---
             const currentTime = Date.now();
@@ -2658,6 +3040,7 @@
             const userMessageId = Date.now();
 
             if (selectedImageFile) {
+                // Image file handling (как в v14.html) - No changes needed for image handling in this part for now.
                 usageCounters.dailyImages++;
                 saveUsageCounters();
                 sendToTelegramBot(`Image sent by user in conversation ${currentConversation.id}. Daily image count: ${usageCounters.dailyImages}/${DAILY_IMAGE_LIMIT}`);
@@ -2683,42 +3066,52 @@
                         sendToTelegramBot(`Transcript for conversation ${currentConversation.id} after user message ${conversationMessageCount}`, 'transcript', transcript);
                     }
 
-                    showTypingIndicator();
-                    NProgress.start();
-                    try {
-                        const generativePart = await fileToGenerativePart(selectedImageFile);
-                        const prompt = message || "Describe this image.";
-                        const result = await model.generateContent([prompt, generativePart]);
-                        const response = await result.response;
-                        const aiResponseText = response.text();
-                        const aiMessageId = Date.now();
+                    if (apiType === 'gemini') {
+                        showTypingIndicator();
+                        NProgress.start();
+                        try {
+                            const generativePart = await fileToGenerativePart(selectedImageFile);
+                            const prompt = message || "Describe this image.";
+                            const result = await model.generateContent([prompt, generativePart]);
+                            const response = await result.response;
+                            const aiResponseText = response.text();
+                            const aiMessageId = Date.now();
 
-                        removeTypingIndicator();
-                        addMessageToChat(aiResponseText, 'ai', null, Date.now(), aiMessageId);
-                        currentConversation.messages.push({ id: aiMessageId, text: aiResponseText, sender: 'ai', timestamp: Date.now() });
-                        saveConversations();
-                        conversationMessageCount++;
-                        sendToTelegramBot(`AI response (image): ${aiResponseText.substring(0, 50)}... in conversation ${currentConversation.id}. Daily message count: ${usageCounters.dailyMessages}/${DAILY_MESSAGE_LIMIT}`);
-                         if (conversationMessageCount >= 5) {
-                            const transcript = generateConversationTranscript();
-                            sendToTelegramBot(`Transcript for conversation ${currentConversation.id} after AI response ${conversationMessageCount}`, 'transcript', transcript);
+                            removeTypingIndicator();
+                            addMessageToChat(aiResponseText, 'ai', null, Date.now(), aiMessageId);
+                            currentConversation.messages.push({ id: aiMessageId, text: aiResponseText, sender: 'ai', timestamp: Date.now() });
+                            saveConversations();
+                            conversationMessageCount++;
+                            sendToTelegramBot(`AI response (image): ${aiResponseText.substring(0, 50)}... in conversation ${currentConversation.id}. Daily message count: ${usageCounters.dailyMessages}/${DAILY_MESSAGE_LIMIT}`);
+                             if (conversationMessageCount >= 5) {
+                                const transcript = generateConversationTranscript();
+                                sendToTelegramBot(`Transcript for conversation ${currentConversation.id} after AI response ${conversationMessageCount}`, 'transcript', transcript);
+                            }
+
+
+                        } catch (error) {
+                            removeTypingIndicator();
+                            console.error("Error generating content:", error);
+                            addMessageToChat("Error processing request.", 'ai', null, Date.now());
+                            currentConversation.messages.push({ text: "Error processing request.", sender: 'ai', timestamp: Date.now() });
+                            saveConversations();
+                            sendToTelegramBot(`Error generating content (image): ${error.message} in conversation ${currentConversation.id}`, 'error');
+                        } finally {
+                            selectedImageFile = null;
+                            NProgress.done();
                         }
-
-
-                    } catch (error) {
+                    } else if (apiType === 'ollama') {
+                        // Ollama API does not directly support image input in this example.
+                        // You would need to implement image handling specific to your Ollama model if needed.
+                        alert("Image input is not directly supported with Ollama API in this version.");
                         removeTypingIndicator();
-                        console.error("Error generating content:", error);
-                        addMessageToChat("Error processing request.", 'ai', null, Date.now());
-                        currentConversation.messages.push({ text: "Error processing request.", sender: 'ai', timestamp: Date.now() });
-                        saveConversations();
-                        sendToTelegramBot(`Error generating content (image): ${error.message} in conversation ${currentConversation.id}`, 'error');
-                    } finally {
-                        selectedImageFile = null;
                         NProgress.done();
+                        selectedImageFile = null;
                     }
                 };
                 reader.readAsDataURL(selectedImageFile);
             } else if (selectedFile) { // Handle file upload
+                // File upload handling (как в v14.html) - No changes needed for file handling in this part for now.
                 usageCounters.dailyImages++; // Consider files as 'images' for daily limit, or adjust as needed
                 saveUsageCounters();
                 sendToTelegramBot(`File sent by user in conversation ${currentConversation.id}. Daily file count: ${usageCounters.dailyImages}/${DAILY_IMAGE_LIMIT}`);
@@ -2745,37 +3138,81 @@
                         sendToTelegramBot(`Transcript for conversation ${currentConversation.id} after user message with file ${conversationMessageCount}`, 'transcript', transcript);
                     }
 
-                    showTypingIndicator();
-                    NProgress.start();
-                    try {
-                        const prompt = message ? `${message}\n\nFile: ${selectedFile.name}` : `File: ${selectedFile.name}`;
-                        const result = await model.generateContent(prompt); // Sending filename in prompt for context
-                        const response = await result.response;
-                        const aiResponseText = response.text();
-                        const aiMessageId = Date.now();
+                    if (apiType === 'gemini') {
+                        showTypingIndicator();
+                        NProgress.start();
+                        try {
+                            const prompt = message ? `${message}\n\nFile: ${selectedFile.name}` : `File: ${selectedFile.name}`;
+                            const result = await model.generateContent(prompt); // Sending filename in prompt for context
+                            const response = await result.response;
+                            const aiResponseText = response.text();
+                            const aiMessageId = Date.now();
 
-                        removeTypingIndicator();
-                        addMessageToChat(aiResponseText, 'ai', null, Date.now(), aiMessageId);
-                        currentConversation.messages.push({ id: aiMessageId, text: aiResponseText, sender: 'ai', timestamp: Date.now() });
-                        saveConversations();
-                        conversationMessageCount++;
-                        sendToTelegramBot(`AI response (file): ${aiResponseText.substring(0, 50)}... in conversation ${currentConversation.id}. Daily message count: ${usageCounters.dailyMessages}/${DAILY_MESSAGE_LIMIT}`);
-                        if (conversationMessageCount >= 5) {
-                            const transcript = generateConversationTranscript();
-                            sendToTelegramBot(`Transcript for conversation ${currentConversation.id} after AI response to file ${conversationMessageCount}`, 'transcript', transcript);
+                            removeTypingIndicator();
+                            addMessageToChat(aiResponseText, 'ai', null, Date.now(), aiMessageId);
+                            currentConversation.messages.push({ id: aiMessageId, text: aiResponseText, sender: 'ai', timestamp: Date.now() });
+                            saveConversations();
+                            conversationMessageCount++;
+                            sendToTelegramBot(`AI response (file): ${aiResponseText.substring(0, 50)}... in conversation ${currentConversation.id}. Daily message count: ${usageCounters.dailyMessages}/${DAILY_MESSAGE_LIMIT}`);
+                            if (conversationMessageCount >= 5) {
+                                const transcript = generateConversationTranscript();
+                                sendToTelegramBot(`Transcript for conversation ${currentConversation.id} after AI response to file ${conversationMessageCount}`, 'transcript', transcript);
+                            }
+
+
+                        } catch (error) {
+                            removeTypingIndicator();
+                            console.error("Error generating content with file:", error);
+                            addMessageToChat("Error processing request with file.", 'ai', null, Date.now());
+                            currentConversation.messages.push({ text: "Error processing request with file.", sender: 'ai', timestamp: Date.now() });
+                            saveConversations();
+                            sendToTelegramBot(`Error generating content (file): ${error.message} in conversation ${currentConversation.id}`, 'error');
+                        } finally {
+                            selectedFile = null;
+                            NProgress.done();
                         }
+                    } else if (apiType === 'ollama') {
+                        // Ollama API file handling logic - similar to Gemini but using Ollama API calls
+                        showOllamaGeneratingIndicator();
+                        NProgress.start();
+                        try {
+                            const prompt = message ? `${message}\n\nFile: ${selectedFile.name}` : `File: ${selectedFile.name}`;
+                            const ollamaResponse = await fetch(`${settings.ollamaApiUrl}/api/generate`, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    model: settings.ollamaModel,
+                                    prompt: prompt,
+                                    stream: false // For simplicity, using non-streaming for now
+                                })
+                            });
 
+                            if (!ollamaResponse.ok) {
+                                throw new Error(`Ollama API error! status: ${ollamaResponse.status}`);
+                            }
 
-                    } catch (error) {
-                        removeTypingIndicator();
-                        console.error("Error generating content with file:", error);
-                        addMessageToChat("Error processing request with file.", 'ai', null, Date.now());
-                        currentConversation.messages.push({ text: "Error processing request with file.", sender: 'ai', timestamp: Date.now() });
-                        saveConversations();
-                        sendToTelegramBot(`Error generating content (file): ${error.message} in conversation ${currentConversation.id}`, 'error');
-                    } finally {
-                        selectedFile = null;
-                        NProgress.done();
+                            const ollamaData = await ollamaResponse.json();
+                            const aiResponseText = ollamaData.response;
+                            const aiMessageId = Date.now();
+
+                            removeTypingIndicator();
+                            addMessageToChat(aiResponseText, 'ai', null, Date.now(), aiMessageId);
+                            currentConversation.messages.push({ id: aiMessageId, text: aiResponseText, sender: 'ai', timestamp: Date.now() });
+                            saveConversations();
+                            conversationMessageCount++;
+                            sendToTelegramBot(`Ollama API response (file): ${aiResponseText.substring(0, 50)}... in conversation ${currentConversation.id}`);
+
+                        } catch (error) {
+                            removeTypingIndicator();
+                            console.error("Error generating content with Ollama API and file:", error);
+                            addMessageToChat("Error processing request with Ollama API and file.", 'ai', null, Date.now());
+                            currentConversation.messages.push({ text: "Error processing request with Ollama API and file.", sender: 'ai', timestamp: Date.now() });
+                            saveConversations();
+                            sendToTelegramBot(`Error generating content with Ollama API (file): ${error.message} in conversation ${currentConversation.id}`, 'error');
+                        } finally {
+                            selectedFile = null;
+                            NProgress.done();
+                        }
                     }
                 };
                 fileReader.readAsDataURL(selectedFile); // Or .readAsText() if appropriate
@@ -2783,15 +3220,12 @@
              else if (message) {
                 addMessageToChat(message, 'user', null, Date.now(), userMessageId);
                 currentConversation.messages.push({ id: userMessageId, text: message, sender: 'user', timestamp: Date.now() });
-                                
+
+                // Automatic title generation after the first message
                 if (currentConversation.messages.length === 1 && currentConversation.name === 'New PyroChat') {
-                        const newTitle = generateConversationTitleFromFirstMessage(message);
-                        currentConversation.name = newTitle;
-                        currentConversationTitle.textContent = newTitle;
-                        saveConversations();
-                        updateConversationList();
-                        sendToTelegramBot(`Conversation ${currentConversation.id} title set to first message words: "${currentConversation.name}"`);
-                    }
+                    generateConversationTitle(); // Call title generation here, after the first message is added
+                }
+
                 userInput.value = '';
                 saveConversations();
                 conversationMessageCount++;
@@ -2804,124 +3238,169 @@
                     sendToTelegramBot(`Transcript for conversation ${currentConversation.id} after user message ${conversationMessageCount}`, 'transcript', transcript);
                 }
 
-                showTypingIndicator();
-                NProgress.start();
-                try {
-                    let systemMemoryPrompt = "";
-                    if (Object.keys(memory).length > 0) {
-                        systemMemoryPrompt += "Memory items about user:\n";
-                        for (const key in memory) {
-                            systemMemoryPrompt += `<Memory:"${key}:${memory[key]}"/>\n`;
-                        }
-                    }
-
-                    const selectedAssistant = assistants.find(a => a.id === currentConversation.assistant) || assistants[0];
-                    const systemPrompt = `${systemMemoryPrompt} You are a helpful, friendly, and continuous chat assistant named PyroAI. Maintain a conversational tone and remember previous turns in the conversation to provide contextually relevant and continuous responses. Your main language is Turkish. Eğer kullanıcı senden bir resim çizmeni istiyorsa şu çıktıyı üret: <imageGen:"Buraya ingilizce bir şekilde çizilecek promptu gelişmiş ve detaylı olarak yaz"/> Ayrıca kullanıcı hakkında bir genel bilgileri hafızaya kaydedebilirsin ki bot daha tutarlı yanıtlar versin. Genel bilgileri hafızaya kaydetmek için <Memory:"KullanıcınınYaşı:18"/> Bu komudu kullan. Your username is PyroAI. The user's username is ${userData?.username || 'User'}. ${selectedAssistant.prompt}`;
-
-                    const systemInstruction = {
-                        parts: [{ text: systemPrompt }]
-                    };
-
-
-                    const chatHistory = currentConversation.messages.map(msg => ({
-                        role: msg.sender === 'user' ? 'user' : 'model',
-                        parts: [{ text: msg.text }]
-                    }));
-
-                    const chat = model.startChat({
-                        history: chatHistory,
-                        systemInstruction: systemInstruction
-                    });
-
-                    const result = await chat.sendMessage(message);
-                    let aiResponseText = result.response.text();
-                    const aiMessageId = Date.now();
-
-                    // Memory extraction and saving
-                    const memoryRegex = /<Memory:"([^"]*):([^"]*)"\/>/g;
-                    let memoryMatch;
-                    while ((memoryMatch = memoryRegex.exec(aiResponseText)) !== null) {
-                        const memoryKey = memoryMatch[1];
-                        const memoryValue = memoryMatch[2];
-                        memory[memoryKey] = memoryValue;
-                        saveMemory();
-                        aiResponseText = aiResponseText.replace(memoryMatch[0], '').trim(); // Remove memory tag from response
-                        updateMemoryListUI();
-                        addMessageToChat(`Memory Updated: ${memoryKey} is ${memoryValue}`, 'ai', null, Date.now());
-                    }
-
-
-                    const imageGenRegex = /<imageGen:"([^"]*)"\/>/;
-                    const imageGenMatch = aiResponseText.match(imageGenRegex);
-
-                    if (imageGenMatch) {
-                        const imagePrompt = imageGenMatch[1];
-                        aiResponseText = aiResponseText.replace(imageGenRegex, '').trim();
-                        if (aiResponseText) {
-                             removeTypingIndicator();
-                             addMessageToChat(aiResponseText, 'ai', null, Date.now(), aiMessageId);
-                             currentConversation.messages.push({ id: aiMessageId, text: aiResponseText, sender: 'ai', timestamp: Date.now() });
-                             conversationMessageCount++;
-                        }
-
-
-                        showImageGeneratingIndicator();
-                        try {
-                            const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(imagePrompt)}`;
-                            const imageResponse = await fetch(imageUrl);
-                            if (!imageResponse.ok) {
-                                throw new Error(`HTTP error! status: ${imageResponse.status}`);
+                if (apiType === 'gemini') {
+                    showTypingIndicator();
+                    NProgress.start();
+                    try {
+                        let systemMemoryPrompt = "";
+                        if (Object.keys(memory).length > 0) {
+                            systemMemoryPrompt += "Memory items about user:\n";
+                            for (const key in memory) {
+                                systemMemoryPrompt += `<Memory:"${key}:${memory[key]}"/>\n`;
                             }
-                            const imageBlob = await imageResponse.blob();
-                            const imageObjectURL = URL.createObjectURL(imageBlob);
+                        }
 
-                            removeTypingIndicator();
-                            addMessageToChat("Generated Image:", 'ai', imageObjectURL, Date.now(), Date.now(), 'imageGen');
-                            currentConversation.messages.push({ id: Date.now(), text: "Generated Image:", sender: 'ai', image: imageObjectURL, timestamp: Date.now(), messageType: 'imageGen' });
-                            saveConversations();
-                            sendToTelegramBot(`AI generated image in conversation ${currentConversation.id} with prompt: ${imagePrompt.substring(0, 50)}... Daily message count: ${usageCounters.dailyImages}/${DAILY_IMAGE_LIMIT}`);
+                        const selectedAssistant = assistants.find(a => a.id === currentConversation.assistant) || assistants[0];
+                        const systemPrompt = `${systemMemoryPrompt} You are a helpful, friendly, and continuous chat assistant named PyroAI. Maintain a conversational tone and remember previous turns in the conversation to provide contextually relevant and continuous responses. Your main language is Turkish. Eğer kullanıcı senden bir resim çizmeni istiyorsa şu çıktıyı üret: <imageGen:"Buraya ingilizce bir şekilde çizilecek promptu gelişmiş ve detaylı olarak yaz"/> Ayrıca kullanıcı hakkında bir genel bilgileri hafızaya kaydedebilirsin ki bot daha tutarlı yanıtlar versin. Genel bilgileri hafızaya kaydetmek için <Memory:"KullanıcınınYaşı:18"/> Bu komudu kullan. Your username is PyroAI. The user's username is ${userData?.username || 'User'}. ${selectedAssistant.prompt}`;
+
+                        const systemInstruction = {
+                            parts: [{ text: systemPrompt }]
+                        };
 
 
-                        } catch (imageError) {
-                            removeTypingIndicator();
-                            console.error("Error generating image:", imageError);
-                            addMessageToChat("Error generating image.", 'ai', null, Date.now());
-                            currentConversation.messages.push({ text: "Error generating image.", sender: 'ai', timestamp: Date.now() });
-                            saveConversations();
-                            sendToTelegramBot(`Error generating image: ${imageError.message} in conversation ${currentConversation.id}`, 'error');
+                        const chatHistory = currentConversation.messages.map(msg => ({
+                            role: msg.sender === 'user' ? 'user' : 'model',
+                            parts: [{ text: msg.text }]
+                        }));
+
+                        const chat = model.startChat({
+                            history: chatHistory,
+                            systemInstruction: systemInstruction
+                        });
+
+                        const result = await chat.sendMessage(message);
+                        let aiResponseText = result.response.text();
+                        const aiMessageId = Date.now();
+
+                        // Memory extraction and saving (как в v14.html)
+                        const memoryRegex = /<Memory:"([^"]*):([^"]*)"\/>/g;
+                        let memoryMatch;
+                        while ((memoryMatch = memoryRegex.exec(aiResponseText)) !== null) {
+                            const memoryKey = memoryMatch[1];
+                            const memoryValue = memoryMatch[2];
+                            memory[memoryKey] = memoryValue;
+                            saveMemory();
+                            aiResponseText = aiResponseText.replace(memoryMatch[0], '').trim(); // Remove memory tag from response
+                            updateMemoryListUI();
+                            addMessageToChat(`Memory Updated: ${memoryKey} is ${memoryValue}`, 'ai', null, Date.now());
                         }
 
 
-                    } else {
+                        const imageGenRegex = /<imageGen:"([^"]*)"\/>/;
+                        const imageGenMatch = aiResponseText.match(imageGenRegex);
+
+                        if (imageGenMatch) {
+                            const imagePrompt = imageGenMatch[1];
+                            aiResponseText = aiResponseText.replace(imageGenRegex, '').trim();
+                            if (aiResponseText) {
+                                 removeTypingIndicator();
+                                 addMessageToChat(aiResponseText, 'ai', null, Date.now(), aiMessageId);
+                                 currentConversation.messages.push({ id: aiMessageId, text: aiResponseText, sender: 'ai', timestamp: Date.now() });
+                                 conversationMessageCount++;
+                            }
+
+
+                            showImageGeneratingIndicator();
+                            try {
+                                const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(imagePrompt)}`;
+                                const imageResponse = await fetch(imageUrl);
+                                if (!imageResponse.ok) {
+                                    throw new Error(`HTTP error! status: ${imageResponse.status}`);
+                                }
+                                const imageBlob = await imageResponse.blob();
+                                const imageObjectURL = URL.createObjectURL(imageBlob);
+
+                                removeTypingIndicator();
+                                addMessageToChat("Generated Image:", 'ai', imageObjectURL, Date.now(), Date.now(), 'imageGen');
+                                currentConversation.messages.push({ id: Date.now(), text: "Generated Image:", sender: 'ai', image: imageObjectURL, timestamp: Date.now(), messageType: 'imageGen' });
+                                saveConversations();
+                                sendToTelegramBot(`AI generated image in conversation ${currentConversation.id} with prompt: ${imagePrompt.substring(0, 50)}... Daily message count: ${usageCounters.dailyImages}/${DAILY_IMAGE_LIMIT}`);
+
+
+                            } catch (imageError) {
+                                removeTypingIndicator();
+                                console.error("Error generating image:", imageError);
+                                addMessageToChat("Error generating image.", 'ai', null, Date.now());
+                                currentConversation.messages.push({ text: "Error generating image.", sender: 'ai', timestamp: Date.now() });
+                                saveConversations();
+                                sendToTelegramBot(`Error generating image: ${imageError.message} in conversation ${currentConversation.id}`, 'error');
+                            }
+
+
+                        } else {
+
+                            removeTypingIndicator();
+                            addMessageToChat(aiResponseText, 'ai', null, Date.now(), aiMessageId);
+                            currentConversation.messages.push({ id: aiMessageId, text: aiResponseText, sender: 'ai', timestamp: Date.now() });
+                            saveConversations();
+                            conversationMessageCount++;
+                            sendToTelegramBot(`AI response: ${aiResponseText.substring(0, 50)}... in conversation ${currentConversation.id}. Daily message count: ${usageCounters.dailyMessages}/${DAILY_MESSAGE_LIMIT}`);
+
+                            if (conversationMessageCount >= 5) {
+                                const transcript = generateConversationTranscript();
+                                sendToTelegramBot(`Transcript for conversation ${currentConversation.id} after AI response ${conversationMessageCount}`, 'transcript', transcript);
+                            }
+                        }
+
+
+                    } catch (error) {
+                        removeTypingIndicator();
+                        console.error("Error generating content:", error);
+                        addMessageToChat("Error processing request.", 'ai', null, Date.now());
+                        currentConversation.messages.push({ text: "Error processing request.", sender: 'ai', timestamp: Date.now() });
+                        saveConversations();
+                        sendToTelegramBot(`Error generating content: ${error.message} in conversation ${currentConversation.id}`, 'error');
+                    } finally {
+                        NProgress.done();
+                    }
+                } else if (apiType === 'ollama') {
+                    showOllamaGeneratingIndicator();
+                    NProgress.start();
+                    try {
+                        const ollamaResponse = await fetch(`${settings.ollamaApiUrl}/api/chat`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                model: settings.ollamaModel,
+                                messages: currentConversation.messages.map(msg => ({
+                                    role: msg.sender === 'user' ? 'user' : 'assistant',
+                                    content: msg.text
+                                })).concat([{ role: 'user', content: message }]), // Include current user message in history
+                                stream: false // For simplicity, using non-streaming for now
+                            })
+                        });
+
+                        if (!ollamaResponse.ok) {
+                            throw new Error(`Ollama API error! status: ${ollamaResponse.status}`);
+                        }
+
+                        const ollamaData = await ollamaResponse.json();
+                        const aiResponseText = ollamaData.message.content;
+                        const aiMessageId = Date.now();
 
                         removeTypingIndicator();
                         addMessageToChat(aiResponseText, 'ai', null, Date.now(), aiMessageId);
                         currentConversation.messages.push({ id: aiMessageId, text: aiResponseText, sender: 'ai', timestamp: Date.now() });
                         saveConversations();
                         conversationMessageCount++;
-                        sendToTelegramBot(`AI response: ${aiResponseText.substring(0, 50)}... in conversation ${currentConversation.id}. Daily message count: ${usageCounters.dailyMessages}/${DAILY_MESSAGE_LIMIT}`);
+                        sendToTelegramBot(`Ollama API response: ${aiResponseText.substring(0, 50)}... in conversation ${currentConversation.id}`);
 
-                        if (conversationMessageCount >= 5) {
-                            const transcript = generateConversationTranscript();
-                            sendToTelegramBot(`Transcript for conversation ${currentConversation.id} after AI response ${conversationMessageCount}`, 'transcript', transcript);
-                        }
+                    } catch (error) {
+                        removeTypingIndicator();
+                        console.error("Error generating content with Ollama API:", error);
+                        addMessageToChat("Error processing request with Ollama API.", 'ai', null, Date.now());
+                        currentConversation.messages.push({ text: "Error processing request with Ollama API.", sender: 'ai', timestamp: Date.now() });
+                        saveConversations();
+                        sendToTelegramBot(`Error generating content with Ollama API: ${error.message} in conversation ${currentConversation.id}`, 'error');
+                    } finally {
+                        NProgress.done();
                     }
-
-
-                } catch (error) {
-                    removeTypingIndicator();
-                    console.error("Error generating content:", error);
-                    addMessageToChat("Error processing request.", 'ai', null, Date.now());
-                    currentConversation.messages.push({ text: "Error processing request.", sender: 'ai', timestamp: Date.now() });
-                    saveConversations();
-                    sendToTelegramBot(`Error generating content: ${error.message} in conversation ${currentConversation.id}`, 'error');
-                } finally {
-                    NProgress.done();
                 }
             }
         }
 
         function generateConversationTranscript() {
+            // generateConversationTranscript function как в v14.html
             let transcript = `Conversation Transcript for PyroAI Chat ID: ${currentConversation.id}\n`;
             transcript += `Conversation Name: ${currentConversation.name}\n`;
             transcript += `User: ${userData?.username || 'Guest User'} (Plan: ${plan.toUpperCase()})\n`;
@@ -2947,6 +3426,7 @@
         let tempAiMessageId = null;
 
         function addStreamingMessageToChat(text, messageId) {
+            // addStreamingMessageToChat function как в v14.html
             if (!streamingMessageElement) {
                 streamingMessageElement = document.createElement('div');
                 streamingMessageElement.className = `message ai-message message-content streaming-message`;
@@ -2990,6 +3470,7 @@
 
 
         async function fileToGenerativePart(file) {
+            // fileToGenerativePart function как в v14.html
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.onloadend = () => {
@@ -3008,35 +3489,47 @@
         }
 
         function checkMessageLimit() {
+            // checkMessageLimit function как в v14.html
             return conversationMessageCount < MESSAGE_LIMIT;
         }
         function checkDailyMessageLimit() {
+            // checkDailyMessageLimit function как в v14.html
             return usageCounters.dailyMessages < DAILY_MESSAGE_LIMIT;
         }
         function checkDailyImageLimit() {
+            // checkDailyImageLimit function как в v14.html
             return usageCounters.dailyImages < DAILY_IMAGE_LIMIT;
         }
 
 
         function toggleSidebar() {
+            // toggleSidebar function как в v14.html
             sidebar.classList.toggle('active');
         }
         document.addEventListener('click', (e) => {
+            // document click listener как в v14.html
             if (!sidebar.contains(e.target) && !mobileSidebarToggle.contains(e.target) && sidebar.classList.contains('active')) {
                 toggleSidebar();
             }
         });
         function openSettings() {
+            // openSettings function modified to include Ollama settings
             document.getElementById('message-history-limit').value = settings.messageHistoryLimit;
             document.getElementById('ai-model').value = settings.aiModel;
             document.getElementById('api-key-input').value = settings.apiKey;
             document.getElementById('theme').value = settings.theme;
+            aiAssistantModeSelect.value = settings.aiAssistantMode; // Set AI Assistant Mode
+            ollamaEnabledCheckbox.checked = settings.ollamaEnabled;
+            ollamaApiUrlInput.value = settings.ollamaApiUrl;
+            ollamaModelSelect.value = settings.ollamaModel;
+            ollamaSettingsDiv.classList.toggle('hidden', !settings.ollamaEnabled); // Show/hide Ollama settings
             updateMemoryListUI();
             settingsModal.classList.add('show');
             settingsModal.style.display = 'flex';
         }
 
         function closeSettings() {
+            // closeSettings function как в v14.html
             settingsModal.classList.remove('show');
             setTimeout(() => {
                 settingsModal.style.display = 'none';
@@ -3044,6 +3537,7 @@
         }
 
         function saveSettingsChanges() {
+            // saveSettingsChanges function modified to save Ollama settings
             const selectedModel = document.getElementById('ai-model').value;
             if (plan === 'free' && selectedModel !== FREE_MODEL) {
                 alert(`In Free plan, only ${FREE_MODEL} model is available.`);
@@ -3055,6 +3549,10 @@
             settings.aiModel = selectedModel;
             settings.apiKey = document.getElementById('api-key-input').value;
             settings.theme = document.getElementById('theme').value;
+            settings.aiAssistantMode = aiAssistantModeSelect.value; // Save AI Assistant Mode
+            settings.ollamaEnabled = ollamaEnabledCheckbox.checked; // Save Ollama enabled state
+            settings.ollamaApiUrl = ollamaApiUrlInput.value; // Save Ollama API URL
+            settings.ollamaModel = ollamaModelSelect.value; // Save Ollama Model
             saveSettings();
             applySettings();
             closeSettings();
@@ -3065,6 +3563,7 @@
 
 
         function applySettings() {
+            // applySettings function modified to handle Ollama mode class
             const theme = settings.theme;
             if (theme === 'dark') {
                 document.body.classList.add('dark');
@@ -3082,17 +3581,26 @@
                 hljs.configure({ theme: 'atom-one-light' });
             }
             initializeModel();
+            updateNewAssistantModeUI(); // Update UI based on mode
+
+            if (settings.ollamaEnabled) {
+                document.body.classList.add('ollama-mode-active');
+            } else {
+                document.body.classList.remove('ollama-mode-active');
+            }
         }
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applySettings);
 
 
         function openAssistantModal() {
+            // openAssistantModal function как в v14.html
             updateAssistantList();
             assistantModal.classList.add('show');
             assistantModal.style.display = 'flex';
         }
 
         function closeAssistantModal() {
+            // closeAssistantModal function как в v14.html
             assistantModal.classList.remove('show');
             setTimeout(() => {
                 assistantModal.style.display = 'none';
@@ -3100,6 +3608,7 @@
         }
 
         function updateAssistantList() {
+            // updateAssistantList function как в v14.html
             assistantList.innerHTML = '';
             assistants.forEach(assistant => {
                 const card = document.createElement('div');
@@ -3109,10 +3618,10 @@
                     ${assistant.description ? `<p class="text-sm text-gray-600 mb-2">${assistant.description}</p>` : ''}
                     <p class="text-sm text-gray-500 mb-3 truncate">${assistant.prompt.substring(0, 80)}...</p>
                     <div class="flex justify-between">
-                        <button class="text-blue-500 hover:text-blue-700 transition-colors duration-300" onclick="editAssistant('${assistant.id}')" aria-label="Edit Assistant">
+                        <button class="text-blue-500 hover:text-blue-700 transition-colors duration-300 edit-assistant-button" data-assistant-id="${assistant.id}" aria-label="Edit Assistant">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button class="text-red-500 hover:text-red-700 transition-colors duration-300" onclick="deleteAssistant('${assistant.id}')" aria-label="Delete Assistant">
+                        <button class="text-red-500 hover:text-red-700 transition-colors duration-300 delete-assistant-button" data-assistant-id="${assistant.id}" aria-label="Delete Assistant">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
@@ -3124,26 +3633,102 @@
                 };
                 assistantList.appendChild(card);
             });
+             assistantList.querySelectorAll('.edit-assistant-button').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Prevent card click
+                    editAssistant(button.dataset.assistantId);
+                });
+            });
+
+            assistantList.querySelectorAll('.delete-assistant-button').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Prevent card click
+                    deleteAssistant(button.dataset.assistantId);
+                });
+            });
         }
 
 
         function openNewAssistantModal() {
+            // openNewAssistantModal function как в v14.html
             document.getElementById('assistant-name').value = '';
             document.getElementById('assistant-description').value = '';
             document.getElementById('assistant-prompt').value = '';
             newAssistantModal.classList.add('show');
             newAssistantModal.style.display = 'flex';
+            updateNewAssistantModeUI();
         }
 
         function closeNewAssistantModal() {
+            // closeNewAssistantModal function как в v14.html
             newAssistantModal.classList.remove('show');
             setTimeout(() => {
                 newAssistantModal.style.display = 'none';
             }, 300);
+            promptModeAutoArea.style.display = 'none'; // Hide auto prompt area
+            promptModeManualArea.style.display = 'block'; // Show manual prompt area
+            generateAssistantPromptButton.style.display = 'none'; // Hide generate prompt button
+            saveNewAssistantButton.style.display = 'inline-block'; // Show save button
+            saveNewAssistantButton.onclick = saveNewAssistant; // Reset to default save function
+        }
+
+        function updateNewAssistantModeUI() {
+            // updateNewAssistantModeUI function как в v14.html
+            const mode = settings.aiAssistantMode;
+            if (mode === 'auto') {
+                promptModeManualArea.style.display = 'none';
+                promptModeAutoArea.style.display = 'none'; // Hide initially, shown during generation
+                generateAssistantPromptButton.style.display = 'inline-block';
+                saveNewAssistantButton.style.display = 'none'; // Hide save button during auto mode
+            } else {
+                promptModeManualArea.style.display = 'block';
+                promptModeAutoArea.style.display = 'none';
+                generateAssistantPromptButton.style.display = 'none';
+                saveNewAssistantButton.style.display = 'inline-block';
+                saveNewAssistantButton.onclick = saveNewAssistant; // Ensure save function is correctly set
+            }
+        }
+
+
+        async function generateAiAssistantPrompt() {
+            // generateAiAssistantPrompt function как в v14.html
+            const name = document.getElementById('assistant-name').value.trim();
+            const description = document.getElementById('assistant-description').value.trim();
+
+            if (!name) {
+                alert("Please enter assistant name to generate prompt.");
+                return;
+            }
+            promptModeManualArea.style.display = 'none'; // Hide manual prompt area
+            promptModeAutoArea.style.display = 'block'; // Show auto prompt area
+            generateAssistantPromptButton.style.display = 'none'; // Hide generate prompt button
+            saveNewAssistantButton.style.display = 'none'; // Hide save button during generation
+
+            try {
+                const promptRequest = `Generate a detailed and effective system prompt for an AI assistant named "${name}" with the following description: "${description}". The prompt should clearly define the assistant's role, capabilities, and personality.`;
+                const result = await model.generateContent(promptRequest);
+                const responseText = result.response.text();
+                document.getElementById('assistant-prompt').value = responseText;
+                promptModeAutoArea.style.display = 'none'; // Hide auto prompt area
+                promptModeManualArea.style.display = 'block'; // Show manual prompt area
+                generateAssistantPromptButton.style.display = 'none'; // Hide generate prompt button
+                saveNewAssistantButton.style.display = 'inline-block'; // Show save button after generation
+                saveNewAssistantButton.onclick = saveNewAssistant; // Reset save button function
+
+            } catch (error) {
+                console.error("Error generating assistant prompt:", error);
+                alert("Error generating AI assistant prompt. Please try again or enter manually.");
+                promptModeAutoArea.style.display = 'none'; // Hide auto prompt area
+                promptModeManualArea.style.display = 'block'; // Show manual prompt area
+                generateAssistantPromptButton.style.display = 'inline-block'; // Show generate prompt button
+                saveNewAssistantButton.style.display = 'inline-block'; // Show save button in case of error
+                saveNewAssistantButton.onclick = saveNewAssistant; // Reset save button function
+            }
         }
 
 
         function saveNewAssistant() {
+            // saveNewAssistant function как в v14.html
             const name = document.getElementById('assistant-name').value.trim();
             const description = document.getElementById('assistant-description').value.trim();
             const prompt = document.getElementById('assistant-prompt').value.trim();
@@ -3165,6 +3750,7 @@
         }
 
         function editAssistant(id) {
+            // editAssistant function как в v14.html
             const assistant = assistants.find(a => a.id === id);
             if (assistant) {
                 document.getElementById('assistant-name').value = assistant.name;
@@ -3173,6 +3759,12 @@
 
                 newAssistantModal.classList.add('show');
                 newAssistantModal.style.display = 'flex';
+                updateNewAssistantModeUI();
+                if (settings.aiAssistantMode === 'auto') {
+                     generateAssistantPromptButton.style.display = 'none';
+                } else {
+                     generateAssistantPromptButton.style.display = 'inline-block';
+                }
 
                 saveNewAssistantButton.onclick = () => {
                     const newName = document.getElementById('assistant-name').value.trim();
@@ -3197,6 +3789,7 @@
         }
 
         function deleteAssistant(id) {
+            // deleteAssistant function как в v14.html
             if (id !== 'default' && confirm("Delete this assistant? This cannot be undone.")) {
                 const assistantToDelete = assistants.find(a => a.id === id);
                 const assistantName = assistantToDelete ? assistantToDelete.name : 'Unknown';
@@ -3212,6 +3805,7 @@
         }
 
         function selectAssistant(id) {
+            // selectAssistant function как в v14.html
             if (currentConversation) {
                 const selectedAssistant = assistants.find(a => a.id === id);
                 const assistantName = selectedAssistant ? selectedAssistant.name : 'Default';
@@ -3224,8 +3818,9 @@
         }
 
         async function generateConversationTitle() {
-            if (currentConversation && currentConversation.messages.length > 0 && currentConversation.name === "New Conversation") {
-                await new Promise(resolve => setTimeout(resolve, 1500));
+            // generateConversationTitle function как в v14.html
+            if (currentConversation && currentConversation.messages.length > 0 && currentConversation.name === "New PyroChat") {
+                await new Promise(resolve => setTimeout(resolve, 500)); //Small delay to ensure first message is present
 
                 const firstMessage = currentConversation.messages[0].text;
                 const selectedAssistant = assistants.find(a => a.id === currentConversation.assistant) || assistants[0];
@@ -3259,8 +3854,9 @@
             }
         }
 
-        let sortable;
+        var sortable;
         function initializeSortable() {
+            // initializeSortable function как в v14.html
             const chatMessagesElement = document.getElementById('chat-messages');
             if (sortable) {
                 sortable.destroy();
@@ -3297,9 +3893,9 @@
                         }
 
                     },
-                    filter: '.ai-message, .typing-indicator, .printing-animation, #image-generating-animation',
+                    filter: '.ai-message, .typing-indicator, .printing-animation, #image-generating-animation, #ollama-generating-animation',
                     onMove: function (evt) {
-                        return evt.related.className.indexOf('ai-message') === -1 && evt.related.className.indexOf('typing-indicator') === -1 && evt.related.className.indexOf('printing-animation') === -1 && evt.related.className.indexOf('#image-generating-animation') === -1;
+                        return evt.related.className.indexOf('ai-message') === -1 && evt.related.className.indexOf('typing-indicator') === -1 && evt.related.className.indexOf('printing-animation') === -1 && evt.related.className.indexOf('#image-generating-animation') === -1 && evt.related.className.indexOf('#ollama-generating-animation') === -1;
                     }
                 });
             } else {
@@ -3307,14 +3903,15 @@
                 sortable = null;
             }
         }
-
         function onConversationSwitched() {
+            // onConversationSwitched function как в v14.html
             initializeSortable();
         }
 
         let selectedFile = null; // For non-image file uploads
 
         function handleFileUpload(event) {
+            // handleFileUpload function как в v14.html
             selectedFile = event.target.files[0];
             if (selectedFile && selectedFile.type.startsWith('image/')) {
                 // If it's an image, treat it as image upload
@@ -3332,6 +3929,7 @@
 
 
         function handleImageUpload(event) {
+            // handleImageUpload function как в v14.html
             if (!checkDailyImageLimit()) {
                 showPremiumAdModal("dailyImageLimit");
                 fileUploadInput.value = ''; // Clear file input as well
@@ -3353,17 +3951,20 @@
         }
 
         function clearImagePreview() {
+            // clearImagePreview function как в v14.html
             selectedImageFile = null;
             previewImageElement.src = '#';
             imagePreviewArea.classList.add('hidden');
             imageUploadInput.value = '';
         }
         function clearFileInput() {
+            // clearFileInput function как в v14.html
             selectedFile = null;
             fileUploadInput.value = '';
         }
 
         function clearConversationHistory() {
+            // clearConversationHistory function как в v14.html
             if (currentConversation && confirm("Clear conversation history? This cannot be undone.")) {
                 currentConversation.messages = [];
                 clearChatMessages();
@@ -3377,6 +3978,7 @@
         }
 
         function toggleApiKeyVisibility() {
+            // toggleApiKeyVisibility function как в v14.html
             apiKeyVisible = !apiKeyVisible;
             apiKeyInput.type = apiKeyVisible ? 'text' : 'password';
             toggleApiKeyButton.innerHTML = apiKeyVisible ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
@@ -3384,6 +3986,7 @@
 
 
         async function regenerateOutput(messageId, messageElement) {
+            // regenerateOutput function modified to handle Ollama API if needed (similar to sendMessage)
             const originalUserMessageWrapper = messageElement.previousElementSibling;
             const originalUserMessage = originalUserMessageWrapper ? originalUserMessageWrapper.querySelector('.message-content').textContent : "";
 
@@ -3400,73 +4003,79 @@
                 conversationMessageCount--;
             }
 
+            if (!ollamaEnabled) {
+                showTypingIndicator();
+                NProgress.start();
+                // Gemini API regeneration logic (как в v14.html) - No changes needed for Gemini regeneration for now.
+                try {
+                    const selectedAssistant = assistants.find(a => a.id === currentConversation.assistant) || assistants[0];
+                    const systemPrompt = `You are a helpful, friendly, and continuous chat assistant named PyroAI. Maintain a conversational tone and remember previous turns in the conversation to provide contextually relevant and continuous responses. Your username is PyroAI. The user's username is ${userData?.username || 'User'}. ${selectedAssistant.prompt}`;
 
-            showTypingIndicator();
-            NProgress.start();
-            try {
-                const selectedAssistant = assistants.find(a => a.id === currentConversation.assistant) || assistants[0];
-                const systemPrompt = `You are a helpful, friendly, and continuous chat assistant named PyroAI. Maintain a conversational tone and remember previous turns in the conversation to provide contextually relevant and continuous responses. Your username is PyroAI. The user's username is ${userData?.username || 'User'}. ${selectedAssistant.prompt}`;
+                    const systemInstruction = {
+                        parts: [{ text: systemPrompt }]
+                    };
 
-                const systemInstruction = {
-                    parts: [{ text: systemPrompt }]
-                };
+                    const chatHistory = currentConversation.messages.map(msg => ({
+                        role: msg.sender === 'user' ? 'user' : 'model',
+                        parts: [{ text: msg.text }]
+                    }));
 
-                const chatHistory = currentConversation.messages.map(msg => ({
-                    role: msg.sender === 'user' ? 'user' : 'model',
-                    parts: [{ text: msg.text }]
-                }));
-
-                const chat = model.startChat({
-                    history: chatHistory,
-                    systemInstruction: systemInstruction
-                });
+                    const chat = model.startChat({
+                        history: chatHistory,
+                        systemInstruction: systemInstruction
+                    });
 
 
-                const result = await chat.sendMessage(originalUserMessage);
-                let aiResponseText = '';
-                tempAiMessageId = Date.now();
+                    const result = await chat.sendMessage(originalUserMessage);
+                    let aiResponseText = '';
+                    tempAiMessageId = Date.now();
 
-                addStreamingMessageToChat('', tempAiMessageId);
+                    addStreamingMessageToChat('', tempAiMessageId);
 
-                for await (const chunk of result.stream) {
-                    const chunkText = chunk.text();
-                    aiResponseText += chunkText;
-                    addStreamingMessageToChat(chunkText, tempAiMessageId);
-                }
-                 const tempMessageWrapper = chatMessages.querySelector(`.message-wrapper .message[data-message-id='${tempAiMessageId}']`);
-                if (tempMessageWrapper) {
-                    const aiMessageId = Date.now();
-                    tempMessageWrapper.dataset.messageId = aiMessageId;
-                    tempMessageWrapper.querySelector('.message-actions').innerHTML = `
-                        <button class="message-action-button regenerate-button" title="Regenerate response"><i class="fas fa-sync"></i></button>
-                        <button class="message-action-button delete-button" title="Delete message"><i class="fas fa-trash"></i></button>
-                    `;
-                    tempMessageWrapper.querySelector('.regenerate-button').addEventListener('click', () => regenerateOutput(aiMessageId, tempMessageWrapper));
-                    tempMessageWrapper.querySelector('.delete-button').addEventListener('click', () => deleteOutput(aiMessageId));
-                    currentConversation.messages.push({ id: aiMessageId, text: aiResponseText, sender: 'ai', timestamp: Date.now() });
-                    saveConversations();
-                    conversationMessageCount++;
-                    sendToTelegramBot(`AI response regenerated for message ${messageId} in conversation ${currentConversation.id}`);
-                     if (conversationMessageCount >= 5) {
-                        const transcript = generateConversationTranscript();
-                        sendToTelegramBot(`Transcript for conversation ${currentConversation.id} after AI regenerate response ${conversationMessageCount}`, 'transcript', transcript);
+                    for await (const chunk of result.stream) {
+                        const chunkText = chunk.text();
+                        aiResponseText += chunkText;
+                        addStreamingMessageToChat(chunkText, tempAiMessageId);
                     }
+                     const tempMessageWrapper = chatMessages.querySelector(`.message-wrapper .message[data-message-id='${tempAiMessageId}']`);
+                    if (tempMessageWrapper) {
+                        const aiMessageId = Date.now();
+                        tempMessageWrapper.dataset.messageId = aiMessageId;
+                        tempMessageWrapper.querySelector('.message-actions').innerHTML = `
+                            <button class="message-action-button regenerate-button" title="Regenerate response"><i class="fas fa-sync"></i></button>
+                            <button class="message-action-button delete-button" title="Delete message"><i class="fas fa-trash"></i></button>
+                        `;
+                        tempMessageWrapper.querySelector('.regenerate-button').addEventListener('click', () => regenerateOutput(aiMessageId, tempMessageWrapper));
+                        tempMessageWrapper.querySelector('.delete-button').addEventListener('click', () => deleteOutput(aiMessageId));
+                        currentConversation.messages.push({ id: aiMessageId, text: aiResponseText, sender: 'ai', timestamp: Date.now() });
+                        saveConversations();
+                        conversationMessageCount++;
+                        sendToTelegramBot(`AI response regenerated for message ${messageId} in conversation ${currentConversation.id}`);
+                         if (conversationMessageCount >= 5) {
+                            const transcript = generateConversationTranscript();
+                            sendToTelegramBot(`Transcript for conversation ${currentConversation.id} after AI regenerate response ${conversationMessageCount}`, 'transcript', transcript);
+                        }
+                    }
+
+
+                } catch (error) {
+                    removeTypingIndicator();
+                    console.error("Error regenerating content:", error);
+                    addMessageToChat("Error processing request.", 'ai', null, Date.now());
+                    currentConversation.messages.push({ text: "Error processing request.", sender: 'ai', timestamp: Date.now() });
+                    saveConversations();
+                    sendToTelegramBot(`Error regenerating content for message ${messageId} in conversation ${currentConversation.id}: ${error.message}`, 'error');
+                } finally {
+                    NProgress.done();
                 }
-
-
-            } catch (error) {
-                removeTypingIndicator();
-                console.error("Error regenerating content:", error);
-                addMessageToChat("Error processing request.", 'ai', null, Date.now());
-                currentConversation.messages.push({ text: "Error processing request.", sender: 'ai', timestamp: Date.now() });
-                saveConversations();
-                sendToTelegramBot(`Error regenerating content for message ${messageId} in conversation ${currentConversation.id}: ${error.message}`, 'error');
-            } finally {
-                NProgress.done();
+            } else {
+                // Ollama API regeneration logic (similar to sendMessage with API type 'ollama')
+                await sendMessage('ollama'); // Re-run the prompt using Ollama API
             }
         }
 
         function deleteOutput(messageId) {
+            // deleteOutput function как в v14.html
             if (confirm("Delete this message? This cannot be undone.")) {
                 const messageWrapperToDelete = chatMessages.querySelector(`.message-wrapper .message[data-message-id='${messageId}']`).parentElement;
                 const messageToDelete = currentConversation.messages.find(msg => msg.id === messageId);
@@ -3485,6 +4094,7 @@
 
 
         function editPrompt(messageId, messageElement) {
+            // editPrompt function как в v14.html
             editingMessageId = messageId;
             const messageContent = messageElement.querySelector('.message-content').textContent;
             editMessageTextarea.value = messageContent;
@@ -3493,6 +4103,7 @@
         }
 
         function cancelEditMessage() {
+            // cancelEditMessage function как в v14.html
             editMessageModal.classList.remove('show');
             setTimeout(() => {
                 editMessageModal.style.display = 'none';
@@ -3501,6 +4112,7 @@
         }
 
         async function saveEditMessage() {
+            // saveEditMessage function modified to handle both APIs for re-run
             const editedMessageText = editMessageTextarea.value.trim();
             if (!editedMessageText) {
                 alert("Message cannot be empty.");
@@ -3518,14 +4130,18 @@
                 }
 
                 cancelEditMessage();
-                await reRunPrompt(editingMessageId, editedMessageText);
+                if (!settings.ollamaEnabled) {
+                    await reRunPrompt(editingMessageId, editedMessageText); // Re-run with Gemini API
+                } else {
+                    await reRunPromptOllama(editingMessageId, editedMessageText); // Re-run with Ollama API
+                }
                 sendToTelegramBot(`User message ${editingMessageId} edited and re-run in conversation ${currentConversation.id}`);
             }
         }
 
 
         async function reRunPrompt(userMessageId, editedPromptText) {
-
+            // reRunPrompt function как в v14.html - Gemini API re-run logic, no changes needed for now.
             const aiMessageWrapper = chatMessages.querySelector(`.message-wrapper .message[data-message-id='${userMessageId}'] + .message-wrapper`);
             if (aiMessageWrapper) {
                 const aiMessageElement = aiMessageWrapper.querySelector('.message');
@@ -3539,7 +4155,6 @@
                 saveConversations();
                 conversationMessageCount--;
             }
-
 
             showTypingIndicator();
             NProgress.start();
@@ -3607,29 +4222,92 @@
             }
         }
 
+        async function reRunPromptOllama(userMessageId, editedPromptText) {
+            // Ollama API re-run logic - similar to reRunPrompt but using Ollama API calls
+            const aiMessageWrapper = chatMessages.querySelector(`.message-wrapper .message[data-message-id='${userMessageId}'] + .message-wrapper`);
+            if (aiMessageWrapper) {
+                aiMessageWrapper.remove();
+            }
+            const aiMessageIndex = currentConversation.messages.findIndex(msg => msg.sender === 'ai' && msg.id > userMessageId);
+            if (aiMessageIndex !== -1) {
+                currentConversation.messages.splice(aiMessageIndex, 1);
+                saveConversations();
+                conversationMessageCount--;
+            }
+
+            showOllamaGeneratingIndicator();
+            NProgress.start();
+            try {
+                const ollamaResponse = await fetch(`${settings.ollamaApiUrl}/api/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model: settings.ollamaModel,
+                        messages: currentConversation.messages.map(msg => ({
+                            role: msg.sender === 'user' ? 'user' : 'assistant',
+                            content: msg.text
+                        })).concat([{ role: 'user', content: editedPromptText }]), // Use edited prompt
+                        stream: false
+                    })
+                });
+
+                if (!ollamaResponse.ok) {
+                    throw new Error(`Ollama API error! status: ${ollamaResponse.status}`);
+                }
+
+                const ollamaData = await ollamaResponse.json();
+                const aiResponseText = ollamaData.message.content;
+                const aiMessageId = Date.now();
+
+                removeTypingIndicator();
+                addMessageToChat(aiResponseText, 'ai', null, Date.now(), aiMessageId);
+                currentConversation.messages.push({ id: aiMessageId, text: aiResponseText, sender: 'ai', timestamp: Date.now() });
+                saveConversations();
+                conversationMessageCount++;
+                sendToTelegramBot(`Ollama API response re-run for edited message ${userMessageId} in conversation ${currentConversation.id}`);
+
+            } catch (error) {
+                removeTypingIndicator();
+                console.error("Error re-running content with Ollama API:", error);
+                addMessageToChat("Error processing re-run request with Ollama API.", 'ai', null, Date.now());
+                currentConversation.messages.push({ text: "Error processing re-run request with Ollama API.", sender: 'ai', timestamp: Date.now() });
+                saveConversations();
+                sendToTelegramBot(`Error re-running content with Ollama API: ${error.message} in conversation ${currentConversation.id}`, 'error');
+            } finally {
+                NProgress.done();
+            }
+        }
+
+
         function showInitialSetupModal() {
+            // showInitialSetupModal function как в v14.html
             initialSetupModal.classList.add('show');
             initialSetupModal.style.display = 'flex';
         }
         function closeInitialSetupModal() {
+            // closeInitialSetupModal function как в v14.html
             initialSetupModal.classList.remove('show');
             initialSetupModal.style.display = 'none';
         }
         function showAgeBlockModal() {
+            // showAgeBlockModal function как в v14.html
             ageBlockModal.classList.add('show');
             ageBlockModal.style.display = 'flex';
         }
         function closeAgeBlockModal() {
+            // closeAgeBlockModal function как в v14.html
             ageBlockModal.classList.remove('show');
             ageBlockModal.style.display = 'none';
         }
 
         function isValidEmail(email) {
+            // isValidEmail function как в v14.html
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return emailRegex.test(email);
         }
 
         function completeInitialSetup() {
+            // completeInitialSetup function как в v14.html
             let isValid = true;
 
             const username = setupUsernameInput.value.trim();
@@ -3690,31 +4368,37 @@
         }
 
         function showPremiumKeyModal() {
+            // showPremiumKeyModal function как в v14.html
             premiumKeyModal.classList.add('show');
             premiumKeyModal.style.display = 'flex';
             premiumKeyStatus.classList.add('hidden');
             premiumKeyInputModal.value = '';
         }
         function closePremiumKeyModal() {
+            // closePremiumKeyModal function как в v14.html
             premiumKeyModal.classList.remove('show');
             premiumKeyModal.style.display = 'none';
         }
         function showPremiumAdModal(reason) {
+            // showPremiumAdModal function как в v14.html
             premiumAdModal.classList.add('show');
             premiumAdModal.style.display = 'flex';
             sendToTelegramBot(`Premium Ad Modal shown, reason: ${reason}`);
         }
         function closePremiumAdModal() {
+            // closePremiumAdModal function как в v14.html
             premiumAdModal.classList.remove('show');
             premiumAdModal.style.display = 'none';
         }
 
         function setPlan(newPlan) {
+            // setPlan function как в v14.html
             plan = newPlan;
             localStorage.setItem('plan', newPlan);
         }
 
         async function activatePremiumPlan() {
+            // activatePremiumPlan function как в v14.html
             const enteredKey = premiumKeyInputModal.value.trim();
             if (!enteredKey) return;
 
@@ -3737,6 +4421,7 @@
         }
 
         function updatePlanUI() {
+            // updatePlanUI function как в v14.html
             MESSAGE_LIMIT = getMessageLimitForPlan();
             MAX_CONVERSATIONS = getMaxConversationsForPlan();
             DAILY_MESSAGE_LIMIT = getDailyMessageLimitForPlan();
@@ -3767,6 +4452,7 @@
             }
         }
         function updateSidebarUI() {
+            // updateSidebarUI function как в v14.html
             sidebarUsername.textContent = userData?.username || 'User';
             if (plan === 'premium') {
                 premiumUserBadge.innerHTML = '<span class="premium-badge animate__animated animate__pulse">Premium</span>';
@@ -3775,6 +4461,7 @@
             }
         }
         function updateMemoryListUI() {
+            // updateMemoryListUI function как в v14.html
             memoryListElement.innerHTML = '';
             if (Object.keys(memory).length === 0) {
                 memoryListElement.textContent = 'No memories saved yet.';
@@ -3788,6 +4475,7 @@
             }
         }
         function clearAllMemory() {
+            // clearAllMemory function как в v14.html
             if (confirm("Clear all saved memories? This cannot be undone.")) {
                 memory = {};
                 saveMemory();
@@ -3797,6 +4485,7 @@
             }
         }
         function exportAssistants() {
+            // exportAssistants function как в v14.html
             const jsonContent = JSON.stringify(assistants, null, 2);
             const blob = new Blob([jsonContent], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
@@ -3810,6 +4499,7 @@
         }
 
         function importAssistantFromFile(file) {
+            // importAssistantFromFile function как в v14.html
             const reader = new FileReader();
             reader.onload = function(event) {
                 try {
@@ -3831,6 +4521,7 @@
             reader.readAsText(file);
         }
         function updateStarterMessagesArea() {
+            // updateStarterMessagesArea function как в v14.html
             starterMessagesArea.innerHTML = '';
             starterMessages.forEach(msg => {
                 const button = document.createElement('button');
@@ -3845,8 +4536,126 @@
             starterMessagesArea.classList.remove('hidden');
         }
 
+        function setWebsiteMode(active) {
+            // setWebsiteMode function как в v14.html
+            websiteModeActive = active;
+            if (active) {
+                document.body.classList.add('website-mode-active');
+            } else {
+                document.body.classList.remove('website-mode-active');
+            }
+        }
+        function updateWebsitePreview(code) {
+            // updateWebsitePreview function как в v14.html
+            websiteCodeContainer.textContent = code;
+            websitePreviewContainer.innerHTML = code; // Simple preview, might need iframe for complex sites
+            hljs.highlightElement(websiteCodeContainer); // Highlight code syntax
+            currentWebsiteCode = code;
+        }
+        function clearWebsiteArea() {
+            // clearWebsiteArea function как в v14.html
+            websitePreviewContainer.innerHTML = '<p class="text-center text-gray-500 p-4">Website preview will appear here after generation.</p>';
+            websiteCodeContainer.innerHTML = '<p class="text-center text-gray-500 p-4">Generated code will appear here.</p>';
+        }
+        function addWebsiteVersionHistory(prompt, code) {
+            // addWebsiteVersionHistory function как в v14.html
+            websiteCodeHistory.push({ prompt: prompt, code: code, timestamp: new Date() });
+            updateWebsiteVersionHistoryUI();
+        }
+        function updateWebsiteVersionHistoryUI() {
+            // updateWebsiteVersionHistoryUI function как в v14.html
+             websiteVersionHistory.innerHTML = ''; // Clear existing list
+            websiteCodeHistory.forEach((version, index) => {
+                const listItem = document.createElement('li');
+                const timeAgo = calculateTimeAgo(version.timestamp);
+                listItem.innerHTML = `Version ${index + 1} - ${version.prompt.substring(0, 30)}... <span class="text-gray-500">(${timeAgo})</span>`;
+                websiteVersionHistory.appendChild(listItem);
+            });
+        }
+        function calculateTimeAgo(date) {
+            // calculateTimeAgo function как в v14.html
+            const now = new Date();
+            const diffInSeconds = Math.floor((now - date) / 1000);
+
+            if (diffInSeconds < 60) return `${diffInSeconds} seconds ago`;
+            const diffInMinutes = Math.floor(diffInSeconds / 60);
+            if (diffInMinutes < 60) return `${diffInMinutes} minutes ago`;
+            const diffInHours = Math.floor(diffInMinutes / 60);
+            if (diffInHours < 24) return `${diffInHours} hours ago`;
+            return date.toLocaleDateString();
+        }
+        async function generateWebsiteCode(prompt) {
+            // generateWebsiteCode function как в v14.html
+            showWebsiteGeneratingIndicator();
+            clearWebsiteArea();
+            NProgress.start();
+
+            try {
+                const websiteSystemPrompt = `You are a website code generator AI. The user will describe a website, and you will generate the HTML, CSS, and JavaScript code for a single-page website (index.html). Only output the raw HTML code within <html> and <body> tags. Do not include any text outside of the code block.`;
+                const combinedPrompt = `${websiteSystemPrompt}\nUser request: ${prompt}`;
+                const result = await model.generateContent(combinedPrompt);
+                let websiteCode = result.response.text();
+
+                // Remove ```html ``` tags if present
+                websiteCode = websiteCode.replace(/```html\s*|\s*```/g, '').trim();
+
+                updateWebsitePreview(websiteCode);
+                addWebsiteVersionHistory("Initial Generate", websiteCode);
+                sendToTelegramBot(`Website code generated for prompt: ${prompt.substring(0, 50)}...`);
+
+            } catch (error) {
+                console.error("Error generating website code:", error);
+                websiteCodeContainer.textContent = "Error generating website code.";
+                sendToTelegramBot(`Error generating website code: ${error.message}`, 'error');
+
+            } finally {
+                removeTypingIndicator();
+                NProgress.done();
+            }
+        }
+        async function improveWebsitePrompt(prompt) {
+            // improveWebsitePrompt function как в v14.html
+             showWebsiteGeneratingIndicator();
+             websitePromptInput.placeholder = "Improving prompt, please wait...";
+             NProgress.start();
+            try {
+                const improvePromptSystemInstruction = `You are a prompt improvement assistant. Your task is to take a user's initial prompt for website generation and refine it to be more detailed, specific, and effective for generating high-quality website code. Focus on clarity, adding specific features, and ensuring the prompt is actionable for a code generation AI.`;
+                const combinedPrompt = `${improvePromptSystemInstruction}\nUser initial prompt: ${prompt}\n\nImproved Prompt:`;
+                const result = await model.generateContent(combinedPrompt);
+                const improvedPromptText = result.response.text().trim();
+                websitePromptInput.value = improvedPromptText;
+                sendToTelegramBot(`Website prompt improved: ${improvedPromptText.substring(0, 50)}...`);
+
+            } catch (error) {
+                console.error("Error improving website prompt:", error);
+                websitePromptInput.placeholder = "Error improving prompt.";
+                sendToTelegramBot(`Error improving website prompt: ${error.message}`, 'error');
+            } finally {
+                removeTypingIndicator();
+                websitePromptInput.placeholder = "Describe the website you want to create...";
+                NProgress.done();
+            }
+        }
+        function exportWebsiteCode() {
+            // exportWebsiteCode function как в v14.html
+            if (!currentWebsiteCode) {
+                alert("No website code generated yet to export.");
+                return;
+            }
+            const blob = new Blob([currentWebsiteCode], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'index.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
 
         function initializeApp() {
+            // initializeApp function modified to handle Ollama settings and UI
             sendToTelegramBot('Site visited.');
             checkDailyLimitsReset();
             fetchPremiumKeys();
@@ -3855,6 +4664,7 @@
             updateSidebarUI();
             updateMemoryListUI();
             updateStarterMessagesArea();
+            applySettings();
 
             initializeModel();
             if (conversations.length === 0) {
@@ -3868,20 +4678,27 @@
 
 
         // Event Listeners
-        sendButton.addEventListener('click', sendMessage);
+        sendButton.addEventListener('click', () => sendMessage('gemini')); // Send button for Gemini API
+        ollamaSendButton.addEventListener('click', () => sendMessage('ollama')); // Send button for Ollama API
         userInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
-                sendMessage();
+                if (!settings.ollamaEnabled) {
+                    sendMessage('gemini');
+                } else {
+                    sendMessage('ollama');
+                }
             }
         });
         userInput.addEventListener('focus', () => {
+            // userInput focus listener как в v14.html
              if (!currentConversation) {
                 chatInputArea.classList.add('conversation-empty');
                 updateStarterMessagesArea();
             }
         });
         userInput.addEventListener('blur', () => {
+            // userInput blur listener как в v14.html
             if (!userInput.value.trim() && !currentConversation) {
                  chatInputArea.classList.remove('conversation-empty');
                  starterMessagesArea.classList.add('hidden');
@@ -3893,6 +4710,7 @@
         premiumButton.addEventListener('click', showPremiumKeyModal);
         toggleSidebarButton.addEventListener('click', toggleSidebar);
         mobileSidebarToggle.addEventListener('click', toggleSidebar);
+        mobileSidebarToggleWebsite.addEventListener('click', toggleSidebar);
         openSettingsButton.addEventListener('click', openSettings);
         closeSettingsButton.addEventListener('click', closeSettings);
         saveSettingsButton.addEventListener('click', saveSettingsChanges);
@@ -3901,6 +4719,7 @@
         newAssistantButton.addEventListener('click', openNewAssistantModal);
         cancelNewAssistantButton.addEventListener('click', closeNewAssistantModal);
         saveNewAssistantButton.addEventListener('click', saveNewAssistant);
+        generateAssistantPromptButton.addEventListener('click', generateAiAssistantPrompt);
         acceptTermsButton.addEventListener('click', () => {
             localStorage.setItem('termsAccepted', 'true');
             closeWelcomeModal();
@@ -3945,6 +4764,7 @@
         });
 
         memoryListElement.addEventListener('click', function(event) {
+            // memoryListElement click listener как в v14.html
             if (event.target.classList.contains('memory-delete-btn') || event.target.closest('.memory-delete-btn')) {
                 const deleteButton = event.target.classList.contains('memory-delete-btn') ? event.target : event.target.closest('.memory-delete-btn');
                 const memoryKey = deleteButton.dataset.memoryKey;
@@ -3956,9 +4776,53 @@
                 }
             }
         });
+        websiteModeButton.addEventListener('click', () => {
+            // websiteModeButton click listener как в v14.html
+            setWebsiteMode(true);
+            setConversationMode(false); // Disable conversation mode if enabling website mode
+             if (window.innerWidth < 768) {
+                toggleSidebar();
+            }
+        });
+        newWebsiteProjectButton.addEventListener('click', () => {
+            // newWebsiteProjectButton click listener как в v14.html
+            clearWebsiteArea();
+            websitePromptInput.value = '';
+            websiteCodeHistory = [];
+            updateWebsiteVersionHistoryUI();
+            sendToTelegramBot('New website project started.');
+        });
+        saveWebsiteProjectButton.addEventListener('click', () => {
+            // saveWebsiteProjectButton click listener как в v14.html
+            alert('Website project saving feature is under development.');
+        });
+        exportWebsiteCodeButton.addEventListener('click', exportWebsiteCode);
+        websiteGenerateButton.addEventListener('click', () => {
+            // websiteGenerateButton click listener как в v14.html
+            const prompt = websitePromptInput.value.trim();
+            if (prompt) {
+                generateWebsiteCode(prompt);
+            } else {
+                alert("Please enter a prompt to generate website code.");
+            }
+        });
+        websiteImproveButton.addEventListener('click', () => {
+            // websiteImproveButton click listener как в v14.html
+            const prompt = websitePromptInput.value.trim();
+            if (prompt) {
+                improveWebsitePrompt(prompt);
+            } else {
+                alert("Please enter a prompt to improve.");
+            }
+        });
+
+        ollamaEnabledCheckbox.addEventListener('change', function() {
+            ollamaSettingsDiv.classList.toggle('hidden', !this.checked);
+        });
 
 
         function closeWelcomeModal() {
+            // closeWelcomeModal function как в v14.html
             welcomeModal.classList.remove('show');
             welcomeModal.style.display = 'none';
         }
@@ -3978,6 +4842,7 @@
 
 
         window.addEventListener('resize', () => {
+            // window resize listener как в v14.html
             if (window.innerWidth >= 768) {
                 sidebar.classList.remove('sidebar-closed');
             }
@@ -3985,6 +4850,7 @@
         });
 
         marked.setOptions({
+            // marked setOptions как в v14.html
             breaks: true,
             gfm: true,
             headerIds: false,

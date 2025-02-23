@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WARNING | pyrollc</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+        }
+        .warning-box {
+            background: #dc3545;
+            color: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+            text-align: center;
+        }
+        .warning-symbol {
+            font-size: 56px;
+            margin-bottom: 20px;
+        }
+        .warning-message {
+            font-size: 24px;
+            line-height: 1.4;
+            font-weight: 500;
+        }
+        .info-box {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #6c757d;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+            opacity: 0.8;
+        }
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        .info-label {
+            font-weight: 500;
+        }
+        .expand-btn {
+            width: 100%;
+            padding: 8px;
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="warning-box">
+            <div class="warning-symbol">⚠️</div>
+            <div class="warning-message" id="warningMessage"></div>
+        </div>
+
+        <div class="info-box">
+            <button class="expand-btn" onclick="toggleInfo()"> Powered by PYROLLC | show details ▼</button>
+            <div id="infoContent" class="hidden">
+                <div class="info-row">
+                    <span class="info-label">IP Address</span>
+                    <span id="ipAddress">Loading...</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Browser</span>
+                    <span id="browserInfo"></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Time</span>
+                    <span id="currentTime"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const message = urlParams.get('message') || 'WARNING: Please contact with us. critical@pyrollc.com.tr ';
+        document.getElementById('warningMessage').textContent = message;
+
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('ipAddress').textContent = data.ip;
+            })
+            .catch(() => {
+                document.getElementById('ipAddress').textContent = 'Not available';
+            });
+
+        document.getElementById('browserInfo').textContent = 
+            navigator.userAgent.split(')')[0].split('(')[1];
+
+        function updateTime() {
+            document.getElementById('currentTime').textContent = 
+                new Date().toLocaleString('en-US');
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        function toggleInfo() {
+            const content = document.getElementById('infoContent');
+            const btn = document.querySelector('.expand-btn');
+            content.classList.toggle('hidden');
+            btn.textContent = content.classList.contains('hidden') ? 
+                'System Information ▼' : 'System Information ▲';
+        }
+    </script>
+</body>
+</html>

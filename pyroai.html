@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- остальной head контент как в v14.html -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PyroAI - Advanced AI Chat & Web Platform</title>
@@ -27,7 +26,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <style>
-        /* стили из v14.html */
         @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap');
 
         :root {
@@ -70,15 +68,15 @@
             --pinned-border-dark: #D4D0AB;
 
             /* Website Mode Colors */
-            --website-bg: #1E293B; /* Darker background for website mode */
-            --website-panel-bg: #334155; /* Panel background in website mode */
-            --website-text: #F0F4F8; /* Text color in website mode */
-            --website-accent: #6EE7B7; /* Accent color for website mode */
+            --website-bg: #1E293B;
+            --website-panel-bg: #334155;
+            --website-text: #F0F4F8;
+            --website-accent: #6EE7B7;
         }
 
         html, body {
             height: 100%;
-            overflow: hidden; /* Prevent scrollbar on body */
+            overflow: hidden;
         }
 
         body {
@@ -111,18 +109,18 @@
             background-color: var(--sidebar-light);
             border-right: 1px solid var(--medium-gray);
             overflow-y: auto;
-            transition: width 0.4s ease, transform 0.4s ease;
+            transition: width 0.4s ease, margin-left 0.3s ease; /* Changed transition */
             z-index: 20;
             box-shadow: 3px 0 8px var(--shadow-light);
             display: flex;
             flex-direction: column;
-            min-width: 0; /* Fix sidebar shrinking issue */
+            margin-left: 0; /* Default sidebar position */
         }
 
         .sidebar-closed {
-            transform: translateX(-100%);
-            width: 0;
+            margin-left: -300px; /* Hide sidebar to the left */
         }
+
 
         .sidebar-header {
             padding: 1.75rem;
@@ -292,18 +290,18 @@
         }
         .website-editor-panel {
             width: 40%;
-            min-width: 300px; /* Minimum width for editor panel */
-            max-width: 600px; /* Maximum width for editor panel */
-            padding: 2rem; /* Increased padding */
+            min-width: 300px;
+            max-width: 600px;
+            padding: 2rem;
             border-right: 1px solid var(--medium-gray);
             overflow-y: auto;
             background-color: var(--website-panel-bg);
-            display: flex; /* Flex layout for vertical alignment */
+            display: flex;
             flex-direction: column;
         }
         .website-preview-panel {
             flex-grow: 1;
-            padding: 2rem; /* Increased padding */
+            padding: 2rem;
             overflow-y: auto;
         }
         .website-code-area {
@@ -314,17 +312,17 @@
             border-radius: 0.5rem;
             overflow-x: auto;
             white-space: pre;
-            margin-top: 1rem; /* Spacing from preview */
-            flex-grow: 1; /* Code area takes remaining space */
-            min-height: 200px; /* Minimum height for code area */
+            margin-top: 1rem;
+            flex-grow: 1;
+            min-height: 200px;
         }
         .website-input-area {
-            margin-top: 2rem; /* Space above input area */
+            margin-top: 2rem;
             padding: 1.75rem;
             background-color: var(--website-panel-bg);
             border-top: 1px solid var(--medium-gray);
             display: flex;
-            flex-direction: column; /* Stack elements vertically */
+            flex-direction: column;
             gap: 1rem;
             box-shadow: 0 -3px 8px var(--shadow-light);
             position: sticky;
@@ -370,17 +368,17 @@
             flex-direction: column;
             scroll-behavior: smooth;
             scrollbar-gutter: stable;
-             padding-bottom: 6rem; /* Space for input area */
+             padding-bottom: 6rem;
         }
         .website-preview-container {
             flex-grow: 1;
             overflow-y: auto;
             padding: 1.75rem;
-            background-color: #fff; /* Or any background for preview */
+            background-color: #fff;
             border: 1px solid var(--medium-gray);
             border-radius: 0.5rem;
-            min-height: 200px; /* Example min height */
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for preview area */
+            min-height: 200px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .message-wrapper {
@@ -398,9 +396,9 @@
             animation: fadeInUp 0.5s ease-out;
             position: relative;
             transition: box-shadow 0.3s ease;
-             user-select: text; /* Make message text selectable */
-            -webkit-user-select: text; /* Safari */
-            -ms-user-select: text; /* IE 10+ and Edge */
+             user-select: text;
+            -webkit-user-select: text;
+            -ms-user-select: text;
         }
         .message:hover {
             box-shadow: 0 5px 10px 0 var(--shadow-light), 0 2px 5px 0 var(--shadow-light);
@@ -509,7 +507,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             padding: 0.5rem 0;
             min-width: 160px;
-            display: none; /* Hidden by default */
+            display: none;
         }
 
         #message-context-menu button {
@@ -751,8 +749,8 @@
              color: var(--website-text);
              border-color: var(--dark-gray);
              box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
-             font-size: 1rem; /* Slightly smaller font for prompt input */
-             padding: 0.75rem 1rem; /* Adjust padding */
+             font-size: 1rem;
+             padding: 0.75rem 1rem;
         }
         body.dark .website-prompt-input {
              background-color: var(--website-panel-bg);
@@ -803,8 +801,8 @@
             background-color: var(--accent-color);
             color: var(--text-color);
             font-weight: 600;
-            padding: 0.75rem 1.25rem; /* Adjusted padding for website buttons */
-            font-size: 0.95rem; /* Slightly smaller font size */
+            padding: 0.75rem 1.25rem;
+            font-size: 0.95rem;
         }
         .website-generate-button:hover, .website-improve-button:hover {
             background-color: #F0B400;
@@ -814,7 +812,6 @@
 
         /* Enhanced Mobile Styles */
         @media (max-width: 768px) {
-            /* Core Layout */
             .app-container {
                 width: 100vw;
                 max-width: 100%;
@@ -829,34 +826,34 @@
                 max-width: 100vw;
             }
             .website-editor-panel, .website-preview-panel {
-                width: 100%; /* Full width for mobile */
+                width: 100%;
                 padding: 1rem;
             }
             .website-area {
-                flex-direction: column; /* Stack panels vertically on mobile */
+                flex-direction: column;
             }
             .website-editor-panel {
-                border-right: none; /* Remove border between panels */
-                border-bottom: 1px solid var(--medium-gray); /* Add bottom border for separation */
+                border-right: none;
+                border-bottom: 1px solid var(--medium-gray);
             }
 
 
             /* Sidebar Optimizations */
             .sidebar {
                 width: 260px;
-                transform: translateX(-100%);
                 position: fixed;
                 height: 100vh;
                 z-index: 50;
-                transition: transform 0.3s ease;
                 box-shadow: 5px 0 15px rgba(0,0,0,0.3);
+                margin-left: -260px; /* Initially hidden off-screen */
+            }
+            .sidebar.active {
+                margin-left: 0; /* Slide in the sidebar */
             }
             #mobile-sidebar-toggle {
                 display: block;
             }
-            .sidebar.active {
-                transform: translateX(0);
-            }
+
              .sidebar-header {
                 padding: 1.2rem;
             }
@@ -1027,7 +1024,7 @@
         /* Desktop specific styles for website mode */
         @media (min-width: 769px) {
             .website-area-desktop-notice {
-                display: block; /* Show notice on desktop */
+                display: block;
                 text-align: center;
                 color: var(--website-text);
                 margin-bottom: 1rem;
@@ -1038,7 +1035,7 @@
 
         @media (max-width: 768px) {
             .website-area-desktop-notice {
-                display: none; /* Hide notice on mobile */
+                display: none;
             }
         }
 
@@ -1211,14 +1208,14 @@
             --pinned-border-dark: #D4D0AB;
 
              /* Website Mode Dark Colors */
-            --website-bg: #0F172A; /* Darker background for website mode in dark theme */
-            --website-panel-bg: #1E293B; /* Panel background in website dark mode */
-            --website-text: #E2E8F0; /* Text color in website dark mode */
-            --website-accent: #A7F3D0; /* Accent color for website dark mode */
+            --website-bg: #0F172A;
+            --website-panel-bg: #1E293B;
+            --website-text: #E2E8F0;
+            --website-accent: #A7F3D0;
         }
         body.dark .app-container {
             box-shadow: 0 5px 15px var(--shadow-dark);
-            background-color: var(--background-dark); /* Dark mode app container background */
+            background-color: var(--background-dark);
         }
 
         body.dark .sidebar {
@@ -1352,7 +1349,7 @@
             color: var(--primary-color);
         }
         .tag {
-            display: none; /* Hide tags visually */
+            display: none;
         }
         .premium-badge {
             display: inline-flex;
@@ -1388,22 +1385,22 @@
 
         /* Memory Update Message Style */
         .memory-update-message {
-            background-color: var(--pinned-background-light); /* Açık tema için arka plan rengi */
-            color: var(--accent-color); /* Vurgu rengiyle metin rengi */
-            border: 1px solid var(--pinned-border-light); /* Kenarlık rengi */
+            background-color: var(--pinned-background-light);
+            color: var(--accent-color);
+            border: 1px solid var(--pinned-border-light);
             padding: 0.7rem 1.2rem;
             border-radius: 0.75rem;
-            margin: 0.5rem auto; /* Ortalamak için otomatik kenar boşlukları */
-            max-width: 80%; /* Maksimum genişlik */
+            margin: 0.5rem auto;
+            max-width: 80%;
             font-size: 0.95rem;
             text-align: center;
             box-shadow: 0 2px 4px 0 var(--shadow-light);
             animation: fadeIn 0.4s ease-out;
         }
         body.dark .memory-update-message {
-            background-color: var(--pinned-background-dark); /* Koyu tema için arka plan rengi */
-            border-color: var(--pinned-border-dark); /* Koyu tema için kenarlık rengi */
-            color: var(--pinned-border-dark); /* Koyu tema için metin rengi */
+            background-color: var(--pinned-background-dark);
+            border-color: var(--pinned-border-dark);
+            color: var(--pinned-border-dark);
             box-shadow: 0 2px 4px 0 var(--shadow-dark);
         }
         /* Improved Hover Effects and Transitions */
@@ -1497,19 +1494,19 @@
 
         /* Enhanced Input Validation Styles */
         input:invalid, textarea:invalid {
-            border-color: #EF4444; /* Red border for invalid inputs */
-            box-shadow: 0 0 0 1px #EF4444; /* Red shadow */
+            border-color: #EF4444;
+            box-shadow: 0 0 0 1px #EF4444;
         }
 
         input:focus:invalid, textarea:focus:invalid {
             border-color: #EF4444;
-            box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.5); /* More pronounced red shadow on focus */
+            box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.5);
         }
         .error-message {
             color: #EF4444;
             font-size: 0.875rem;
             margin-top: 0.25rem;
-            display: block; /* Ensure it takes full width */
+            display: block;
         }
         .hidden {
             display: none !important;
@@ -1524,16 +1521,50 @@
             display: flex !important;
         }
         .website-area {
-            display: none; /* Hidden by default, shown when website mode is active */
+            display: none;
         }
         .ollama-mode-active .chat-area {
-            display: flex !important; /* Ensure chat area is visible in Ollama mode */
+            display: flex !important;
+        }
+        /* Toast Notification */
+        #toast-notification-area {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 60;
+            pointer-events: none;
         }
 
+        .toast {
+            background-color: var(--sidebar-light);
+            color: var(--text-color);
+            padding: 1rem 1.5rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+            transform: translateY(-20px);
+            pointer-events: auto;
+        }
 
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        body.dark .toast {
+             background-color: var(--sidebar-dark);
+             color: var(--text-dark);
+        }
     </style>
 </head>
 <body class="bg-gray-50">
+
+    <!-- Toast Notification Area -->
+    <div id="toast-notification-area"></div>
 
     <!-- Message Context Menu -->
     <div id="message-context-menu" class="animate__animated animate__faster" style="display:none;">
@@ -1544,23 +1575,19 @@
 
     <!-- Welcome Modal -->
     <div id="welcome-modal" class="modal-overlay show" style="display: none;">
-        <!-- welcome modal content как в v14.html -->
         <div class="modal-content animate__animated animate__fadeIn animate__faster">
             <h2 class="modal-header"><i class="fas fa-magic mr-2 text-primary-400"></i> Welcome to <span class="font-extrabold">PyroAI</span>!</h2>
             <div class="modal-body">
                 <p class="text-gray-700 mb-4 animate__animated animate__fadeIn animate__delay-0.2s">
-                    Experience the magic of intelligent conversations with PyroAI, a cutting-edge AI chat platform powered by PyroLLC. Before you dive in, please acknowledge the following terms for using this preview version:
+                    Experience intelligent conversations with PyroAI, powered by PyroLLC. Please acknowledge these terms:
                 </p>
                 <ul class="list-disc list-inside text-gray-700 mb-4 animate__animated animate__fadeIn animate__delay-0.3s">
-                    <li><span class="font-semibold">Beta Program:</span> PyroAI is currently in beta. Expect occasional bugs or unexpected behavior. Your feedback is invaluable in helping us improve!</li>
-                    <li><span class="font-semibold">Conversation Logging:</span> To enhance and refine our AI models, conversations may be logged and reviewed. This data helps us ensure quality and improve performance.</li>
-                    <li><span class="font-semibold">Data Sensitivity:</span> Please refrain from sharing any sensitive or personal information within your conversations. PyroLLC is not responsible for data shared by users during the beta phase.</li>
-                    <li><span class="font-semibold">Service "As Is":</span> PyroAI is provided "as is" without warranties of any kind, either express or implied. We strive for excellence but cannot guarantee uninterrupted or error-free service.</li>
-                    <li><span class="font-semibold">Terms of Use:</span> By proceeding to use PyroAI, you signify your understanding and agreement to these terms. If you do not agree with any part of these terms, please do not use the platform.</li>
+                    <li><span class="font-semibold">Beta Program:</span> PyroAI is in beta. Expect bugs. Feedback is welcome!</li>
+                    <li><span class="font-semibold">Conversation Logging:</span> Conversations may be logged for AI model improvement.</li>
+                    <li><span class="font-semibold">Data Sensitivity:</span> Avoid sharing sensitive info. PyroLLC is not responsible for user data during beta.</li>
+                    <li><span class="font-semibold">Service "As Is":</span> Provided "as is" without warranties.</li>
+                    <li><span class="font-semibold">Terms of Use:</span> By using PyroAI, you agree to these terms.</li>
                 </ul>
-                <p class="text-gray-700 mb-4 animate__animated animate__fadeIn animate__delay-0.4s">
-                    We're excited to have you explore the capabilities of PyroAI. Thank you for being part of our beta community!
-                </p>
             </div>
             <div class="modal-footer animate__animated animate__slideInUp animate__delay-0.5s">
                 <button id="accept-terms" class="modal-btn modal-btn-primary w-full">
@@ -1572,15 +1599,14 @@
 
     <!-- Initial Setup Modal -->
     <div id="initial-setup-modal" class="modal-overlay" style="display: none;">
-        <!-- initial setup modal content как в v14.html -->
         <div class="modal-content animate__animated animate__fadeIn">
             <h2 class="modal-header"><i class="fas fa-user-cog mr-2 text-primary-400"></i> Initial Setup</h2>
             <div class="modal-body">
-                <p class="text-gray-700 mb-4">Welcome to PyroAI! Please complete the initial setup to personalize your experience.</p>
+                <p class="text-gray-700 mb-6">Personalize your PyroAI experience.</p>
                 <div class="mb-4">
                     <label for="setup-username" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-user mr-2"></i>Username</label>
-                    <input type="text" id="setup-username" class="mt-1 block w-full" placeholder="Choose a username" required minlength="3" maxlength="20">
-                    <p id="username-error" class="error-message hidden">Username must be between 3 and 20 characters.</p>
+                    <input type="text" id="setup-username" class="mt-1 block w-full" placeholder="Choose username (3-20 chars)" required minlength="3" maxlength="20">
+                    <p id="username-error" class="error-message hidden">Username must be 3-20 characters.</p>
                 </div>
                 <div class="mb-4">
                     <label for="setup-dob" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-calendar-alt mr-2"></i>Date of Birth</label>
@@ -1588,14 +1614,14 @@
                     <p id="dob-error" class="error-message hidden">Please select your date of birth.</p>
                 </div>
                 <div class="mb-4">
-                    <label for="setup-email" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-envelope mr-2"></i>Email Address (Optional)</label>
-                    <input type="email" id="setup-email" class="mt-1 block w-full" placeholder="Your email address">
-                    <p class="text-gray-500 text-xs mt-1">Optional but helps in account recovery.</p>
+                    <label for="setup-email" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-envelope mr-2"></i>Email (Optional)</label>
+                    <input type="email" id="setup-email" class="mt-1 block w-full" placeholder="Your email (optional)">
+                    <p class="text-gray-500 text-xs mt-1">For account recovery.</p>
                     <p id="email-error" class="error-message hidden">Invalid email format.</p>
                 </div>
-                <div class="mb-4">
+                <div class="mb-6">
                     <label for="setup-pin" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-lock mr-2"></i>Create PIN</label>
-                    <input type="password" id="setup-pin" class="mt-1 block w-full" placeholder="4-digit PIN for security" required pattern="[0-9]{4}">
+                    <input type="password" id="setup-pin" class="mt-1 block w-full" placeholder="4-digit PIN" required pattern="[0-9]{4}">
                     <p id="pin-error" class="error-message hidden">PIN must be 4 digits.</p>
                 </div>
             </div>
@@ -1609,12 +1635,11 @@
 
     <!-- Age Block Modal -->
     <div id="age-block-modal" class="modal-overlay" style="display: none;">
-        <!-- age block modal content как в v14.html -->
         <div class="modal-content animate__animated animate__fadeIn">
             <h2 class="modal-header"><i class="fas fa-ban mr-2 text-red-500"></i> Access Denied</h2>
             <div class="modal-body">
                 <p class="text-gray-700 mb-4">
-                    You must be 18 years or older to use PyroAI. We apologize, but access is restricted for users under this age.
+                    You must be 18+ to use PyroAI. Access restricted for users under 18.
                 </p>
             </div>
             <div class="modal-footer">
@@ -1627,7 +1652,6 @@
 
     <!-- Premium Key Modal -->
     <div id="premium-key-modal" class="modal-overlay" style="display: none;">
-        <!-- premium key modal content как в v14.html -->
         <div class="modal-content animate__animated animate__zoomIn">
             <h2 class="modal-header"><i class="fas fa-crown mr-2 text-yellow-500"></i> Activate Premium</h2>
             <div class="modal-body">
@@ -1636,7 +1660,7 @@
                 </p>
                 <div class="mb-4">
                     <label for="premium-key-input" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-key mr-2"></i> <span>Premium Key</span></label>
-                    <input type="text" id="premium-key-input" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Enter your premium key">
+                    <input type="text" id="premium-key-input" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Enter premium key">
                 </div>
                 <div id="premium-key-status" class="text-red-500 text-sm mt-2 hidden animate__animated animate__fadeIn"><i class="fas fa-exclamation-triangle mr-1"></i> Invalid key. Please try again.</div>
             </div>
@@ -1649,12 +1673,11 @@
 
     <!-- Premium Ad Modal -->
     <div id="premium-ad-modal" class="modal-overlay" style="display: none;">
-        <!-- premium ad modal content как в v14.html -->
         <div class="modal-content animate__animated animate__fadeIn">
             <h2 class="modal-header"><i class="fas fa-gift mr-2 text-yellow-500"></i> PyroAI Premium - Unlock More!</h2>
             <div class="modal-body">
                 <p class="text-gray-700 mb-4">
-                    Enhance your PyroAI experience and remove limitations by upgrading to Premium!
+                    Enhance your PyroAI experience and remove limitations with Premium!
                 </p>
                 <div class="overflow-x-auto mb-4">
                     <table class="min-w-full leading-normal">
@@ -1673,7 +1696,6 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <!-- premium ad modal table content как в v14.html -->
                                 <td class="px-3 py-3 border-b border-gray-200 bg-white text-sm">
                                     Messages per Chat
                                 </td>
@@ -1733,10 +1755,10 @@
                                     AI Models
                                 </td>
                                 <td class="px-3 py-3 bg-white text-sm">
-                                    Fast
+                                    UltraLight
                                 </td>
                                 <td class="px-3 py-3 bg-white text-sm font-semibold text-primary-500">
-                                    Fast, Pro, Max
+                                    UltraLight, Pro, Max
                                 </td>
                             </tr>
                             <tr>
@@ -1754,7 +1776,7 @@
                     </table>
                 </div>
                 <p class="text-gray-700 text-sm">
-                    Upgrade now for an enhanced AI experience with more messages, conversations, advanced models, and image generation!
+                    Upgrade for enhanced AI, more messages, conversations, advanced models, and image generation!
                 </p>
             </div>
             <div class="modal-footer">
@@ -1772,7 +1794,6 @@
     <div class="app-container">
         <!-- Sidebar -->
         <aside id="sidebar" class="sidebar">
-            <!-- sidebar content как в v14.html -->
             <div class="sidebar-header">
                 <div class="sidebar-logo-area">
                     <h1 class="sidebar-title animate__animated animate__fadeInLeft animate__faster"><i class="fas fa-fire text-primary-500 mr-2"></i> PyroAI</h1>
@@ -1846,7 +1867,6 @@
 
             <!-- Chat Messages -->
             <div id="chat-messages" class="chat-messages-container">
-                <!-- Messages will be appended here -->
                 <div id="printing-animation" class="printing-animation ai-message" style="display: none;">
                     <span class="printing-dot"></span><span class="printing-dot"></span><span class="printing-dot"></span>
                 </div>
@@ -1884,7 +1904,6 @@
 
         <!-- Website Mode Area -->
         <main class="website-area">
-            <!-- website area content как в v14.html -->
             <header class="website-header">
                 <div class="flex items-center">
                     <button id="mobile-sidebar-toggle-website" class="md:hidden text-gray-600 hover:text-gray-800 transition-colors duration-200 mr-3" aria-label="Open Sidebar">
@@ -1916,7 +1935,6 @@
                     <ul id="website-version-history" class="text-sm">
                         <li>Version 1 - Initial Generate <span class="text-gray-500">(5 mins ago)</span></li>
                         <li>Version 2 - After Improvement <span class="text-gray-500">(2 mins ago)</span></li>
-                        <!-- More versions will be listed here -->
                     </ul>
                 </div>
                 <div class="website-input-area">
@@ -1938,12 +1956,10 @@
             <div class="website-preview-panel">
                 <h3 class="website-title animate__animated animate__fadeIn animate__faster">Website Preview</h3>
                 <div id="website-preview-container" class="website-preview-container mt-3">
-                    <!-- Website preview will be loaded here -->
                     <p class="text-center text-gray-500 p-4">Website preview will appear here after generation.</p>
                 </div>
                 <h3 class="website-title animate__animated animate__fadeIn animate__faster mt-4">Code</h3>
                 <div id="website-code-container" class="website-code-area mt-3">
-                    <!-- Website code will be displayed here -->
                     <p class="text-center text-gray-500 p-4">Generated code will appear here.</p>
                 </div>
             </div>
@@ -1955,7 +1971,6 @@
         <div class="modal-content animate__animated animate__zoomIn">
             <h2 class="modal-header"><i class="fas fa-cog mr-2"></i> Settings</h2>
             <div class="modal-body">
-                <!-- settings modal body как в v14.html -->
                 <div class="mb-4">
                     <label for="ai-assistant-mode" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-magic mr-2"></i> <span>AI Assistant Mode for New Assistants</span></label>
                     <select id="ai-assistant-mode" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
@@ -1972,16 +1987,16 @@
                 <div class="mb-4">
                     <label for="ai-model" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-brain mr-2"></i> <span>AI Model (Gemini API)</span></label>
                     <select id="ai-model" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                        <option value="gemini-2.0-flash">PyroAI Fast (gemini-2.0-flash)</option>
-                        <option value="gemini-2.0-flash-thinking-exp-01-21">PyroAI PRO (gemini-2.0-flash-thinking-exp-01-21)</option>
-                        <option value="gemini-2.0-pro-exp-02-05">PyroAI MAX (gemini-2.0-pro-exp-02-05)</option>
+                        <option value="gemini-2.0-flash-lite">PyroAI UltraLight</option>
+                        <option value="gemini-2.0-flash-thinking-exp-01-21">PyroAI PRO</option>
+                        <option value="gemini-2.0-pro-exp-02-05">PyroAI MAX</option>
                     </select>
-                    <p class="text-gray-500 text-xs mt-1">Choose the AI model for chats using Gemini API.</p>
+                    <p class="text-gray-500 text-xs mt-1">Choose AI model for Gemini API chats.</p>
                 </div>
                 <div class="mb-4">
                     <label for="api-key-input" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-key mr-2"></i> <span>Gemini API Key</span></label>
                     <div class="relative">
-                        <input type="password" id="api-key-input" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 pr-10" placeholder="Enter your API key">
+                        <input type="password" id="api-key-input" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 pr-10" placeholder="Enter API key">
                         <button type="button" id="toggle-api-key" class="absolute inset-y-0 right-0 px-3 flex items-center focus:outline-none hover:text-primary-500">
                             <i class="fas fa-eye"></i>
                         </button>
@@ -1993,7 +2008,7 @@
                         <input type="checkbox" id="ollama-enabled" class="mr-2">
                         <label for="ollama-enabled" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-server mr-2"></i> <span>Enable Ollama API</span></label>
                     </div>
-                    <p class="text-gray-500 text-xs mt-1">Use local Ollama API instead of Gemini API.</p>
+                    <p class="text-gray-500 text-xs mt-1">Use local Ollama API instead of Gemini.</p>
                 </div>
                 <div id="ollama-settings" class="hidden">
                     <div class="mb-4">
@@ -2012,9 +2027,8 @@
                             <option value="deepseek-r1:1.5b">deepseek-r1:1.5b</option>
                             <option value="qwen2.5-coder:1.5b">qwen2.5-coder:1.5b</option>
                             <option value="huihui_ai/deepseek-r1-abliterated:latest">Uncensorred R1</option>
-
                         </select>
-                        <p class="text-gray-500 text-xs mt-1">Choose the AI model for chats using Ollama API.</p>
+                        <p class="text-gray-500 text-xs mt-1">Choose AI model for Ollama API chats.</p>
                     </div>
                 </div>
                 <div class="mb-4">
@@ -2029,7 +2043,6 @@
                  <div class="mb-4">
                     <label for="memory-management" class="block text-sm font-medium text-gray-700 flex items-center"><i class="fas fa-memory mr-2"></i> <span>Memory Management</span></label>
                     <div id="memory-list" class="mt-2 text-sm text-gray-700">
-                        <!-- Memory items will be listed here -->
                         No memories saved yet.
                     </div>
                      <button id="clear-memory" class="modal-btn modal-btn-secondary mt-2 w-full flex items-center justify-center">
@@ -2046,7 +2059,6 @@
 
     <!-- Change Assistant Modal -->
     <div id="assistant-modal" class="modal-overlay" style="display: none;">
-        <!-- assistant modal content как в v14.html -->
         <div class="modal-content animate__animated animate__zoomIn">
             <h2 class="modal-header"><i class="fas fa-robot mr-2"></i> AI Assistants</h2>
             <div id="assistant-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-4 modal-body"></div>
@@ -2069,7 +2081,6 @@
 
     <!-- New Assistant Modal -->
     <div id="new-assistant-modal" class="modal-overlay" style="display: none;">
-        <!-- new assistant modal content как в v14.html -->
         <div class="modal-content animate__animated animate__zoomIn">
             <h2 class="modal-header"><i class="fas fa-plus-circle mr-2"></i> Create New Assistant</h2>
             <div class="modal-body">
@@ -2101,7 +2112,6 @@
 
     <!-- Edit Message Modal -->
     <div id="edit-message-modal" class="modal-overlay" style="display: none;">
-        <!-- edit message modal content как в v14.html -->
         <div class="modal-content animate__animated animate__zoomIn">
             <h2 class="modal-header"><i class="fas fa-edit mr-2"></i> Edit Message</h2>
             <div class="modal-body">
@@ -2138,12 +2148,13 @@
         let selectedImageFile = null;
         let apiKeyVisible = false;
         let editingMessageId = null;
-        let messageRateLimitTimeout = null; // For rate limiting
-        let lastMessageTime = 0; // For rate limiting
+        let messageRateLimitTimeout = null;
+        let lastMessageTime = 0;
         let messageContextMenu = document.getElementById('message-context-menu');
         let contextMenuTargetMessage = null;
-        let websiteModeActive = false; // Flag to track website mode
-        let ollamaEnabled = false; // Flag for Ollama API usage
+        let websiteModeActive = false;
+        let ollamaEnabled = false;
+        let messageCooldown = false;
 
         // Telegram Bot Configuration
         const chatId = "1462667287";
@@ -2163,7 +2174,7 @@
         const toggleSidebarButton = document.getElementById('toggle-sidebar');
         const mobileSidebarToggle = document.getElementById('mobile-sidebar-toggle');
         const fileUploadInput = document.getElementById('file-upload');
-        const imageUploadInput = document.getElementById('image-upload'); // Still using imageUploadInput for image files specifically
+        const imageUploadInput = document.getElementById('image-upload');
         const settingsModal = document.getElementById('settings-modal');
         const openSettingsButton = document.getElementById('open-settings');
         const closeSettingsButton = document.getElementById('close-settings');
@@ -2245,23 +2256,24 @@
         const ollamaSettingsDiv = document.getElementById('ollama-settings');
         const ollamaApiUrlInput = document.getElementById('ollama-api-url');
         const ollamaModelSelect = document.getElementById('ollama-model');
+        const toastNotificationArea = document.getElementById('toast-notification-area');
 
 
         let conversations = JSON.parse(localStorage.getItem('conversations')) || [];
         let currentConversation = null;
         let settings = JSON.parse(localStorage.getItem('settings')) || {
             messageHistoryLimit: 50,
-            aiModel: 'gemini-2.0-flash',
+            aiModel: 'gemini-2.0-flash-lite',
             apiKey: '',
             theme: 'light',
-            aiAssistantMode: 'auto', // Default AI Assistant mode
-            ollamaEnabled: false, // Default Ollama disabled
-            ollamaApiUrl: 'http://localhost:11434', // Default Ollama API URL
-            ollamaModel: 'deepseek-r1:8b' // Default Ollama Model
+            aiAssistantMode: 'auto',
+            ollamaEnabled: false,
+            ollamaApiUrl: 'http://localhost:11434',
+            ollamaModel: 'deepseek-r1:8b'
         };
         let assistants = JSON.parse(localStorage.getItem('assistants')) || [
-            { id: 'default', name: 'PyroAI Assistant', description: 'General purpose assistant for everyday tasks.', prompt: `You are a helpful and friendly AI assistant named PyroAI. You are also capable of generating images. If the user asks you to draw or generate an image, respond with the tag <imageGen:"Detailed image prompt in English">. Improve the user's prompt and make it detailed and in English within the tag.  For normal chat, provide concise and informative responses.` },
-            { id: 'Math', name: 'Math Teacher', description: 'Expert in mathematics, explains concepts clearly.', prompt: `You are a patient and knowledgeable math teacher. Explain math concepts clearly and step-by-step. You are also capable of generating images. If the user asks you to draw or generate an image, respond with the tag <imageGen:"Detailed image prompt in English">. Improve the user's prompt and make it detailed and in English within the tag.` }
+            { id: 'default', name: 'PyroAI Assistant', description: 'General purpose assistant.', prompt: `You are a helpful and friendly AI assistant named PyroAI. You can generate images. For image requests, use <imageGen:"Detailed image prompt in English">. Improve user prompts within the tag. For normal chat, be concise and informative.` },
+            { id: 'Math', name: 'Math Teacher', description: 'Expert in mathematics.', prompt: `You are a patient and knowledgeable math teacher. Explain math concepts clearly, step-by-step. You can also generate images. For image requests, use <imageGen:"Detailed image prompt in English">. Improve user prompts within the tag.` }
         ];
 
         let userData = JSON.parse(localStorage.getItem('userData')) || null;
@@ -2288,8 +2300,8 @@
         let DAILY_IMAGE_LIMIT = getDailyImageLimitForPlan();
         let MAX_MESSAGE_CHARS = getMaxMessageCharsForPlan();
 
-        const FREE_MODEL = 'gemini-2.0-flash';
-        const PREMIUM_MODELS = ['gemini-2.0-flash', 'gemini-2.0-flash-thinking-exp-01-21', 'gemini-2.0-pro-exp-02-05'];
+        const FREE_MODEL = 'gemini-2.0-flash-lite';
+        const PREMIUM_MODELS = ['gemini-2.0-flash-lite', 'gemini-2.0-flash-thinking-exp-01-21', 'gemini-2.0-pro-exp-02-05'];
 
         const PREMIUM_KEYS_URL = 'https://raw.githubusercontent.com/pyroalww/newsfetch/refs/heads/main/keys.txt';
         const API_KEY_URL = 'https://raw.githubusercontent.com/pyroalww/newsfetch/refs/heads/main/api.txt';
@@ -2302,7 +2314,6 @@
 
         // --- Helper Functions ---
         function debounce(func, wait) {
-            // debounce function как в v14.html
             let timeout;
             return function executedFunction(...args) {
                 const later = () => {
@@ -2316,7 +2327,6 @@
 
 
         async function fetchDefaultApiKey() {
-            // fetchDefaultApiKey function как в v14.html
             try {
                 const response = await fetch(API_KEY_URL);
                 if (!response.ok) {
@@ -2336,7 +2346,6 @@
 
 
         async function fetchPremiumKeys() {
-            // fetchPremiumKeys function как в v14.html
             try {
                 const response = await fetch(PREMIUM_KEYS_URL);
                 if (!response.ok) {
@@ -2352,7 +2361,6 @@
         }
 
         function checkDailyLimitsReset() {
-            // checkDailyLimitsReset function как в v14.html
             const today = new Date().toDateString();
             const lastReset = usageCounters.lastResetDate;
 
@@ -2367,40 +2375,39 @@
         }
 
         function saveUsageCounters() {
-            // saveUsageCounters function как в v14.html
             localStorage.setItem('usageCounters', JSON.stringify(usageCounters));
         }
 
         function getMessageLimitForPlan() {
-            // getMessageLimitForPlan function как в v14.html
             return plan === 'premium' ? 40 : 15;
         }
         function getMaxConversationsForPlan() {
-            // getMaxConversationsForPlan function как в v14.html
             return plan === 'premium' ? Infinity : 3;
         }
         function getDailyMessageLimitForPlan() {
-            // getDailyMessageLimitForPlan function как в v14.html
             return plan === 'premium' ? 100 : 10;
         }
         function getDailyImageLimitForPlan() {
-            // getDailyImageLimitForPlan function как в v14.html
             return plan === 'premium' ? 20 : 3;
         }
         function getMaxMessageCharsForPlan() {
-            // getMaxMessageCharsForPlan function как в v14.html
             return plan === 'premium' ? 10000 : 1000;
         }
 
         async function sendToTelegramBot(message, logType = 'info', conversationTranscript = null) {
-            // sendToTelegramBot function как в v14.html
             if (!botToken || !chatId) {
                 console.warn('Telegram Bot Token or Chat ID not configured.');
                 return;
             }
 
             const logPrefix = `[PyroAI - ${logType.toUpperCase()}]`;
-            const fullMessage = `${logPrefix} ${message} - ${new Date().toLocaleString()}`; // Added timestamp to logs
+            const username = userData?.username || 'Guest';
+            // Note: Client-side IP detection is limited and may not be accurate due to privacy restrictions and NAT.
+            // For accurate IP logging, server-side implementation is recommended.
+            // This example uses a placeholder for client-side attempts or indicates server-side logging.
+            const clientIP = 'Client IP (Server-side logging recommended)'; // Placeholder for client IP.
+
+            const fullMessage = `${logPrefix} User: ${username}, IP: ${clientIP}, Message: ${message} - ${new Date().toLocaleString()}`;
             const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
             const postData = {
@@ -2453,7 +2460,6 @@
         function initializeModel() {
             ollamaEnabled = settings.ollamaEnabled;
             if (!ollamaEnabled) {
-                // Gemini API initialization (как в v14.html)
                 let currentModel = settings.aiModel;
                 if (plan === 'free') {
                     currentModel = FREE_MODEL;
@@ -2467,30 +2473,17 @@
                     model = genAI.getGenerativeModel({
                         model: currentModel,
                         safetySettings: [
-                            {
-                                category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-                                threshold: HarmBlockThreshold.BLOCK_NONE,
-                            },
-                            {
-                                category:  HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-                                threshold: HarmBlockThreshold.BLOCK_NONE,
-                            },
-                            {
-                                category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-                                threshold: HarmBlockThreshold.BLOCK_NONE,
-                            },
-                            {
-                                category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-                                threshold: HarmBlockThreshold.BLOCK_NONE,
-
-                            }
+                            { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
+                            { category:  HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE },
+                            { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_NONE },
+                            { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE }
                         ],
                     });
                 } else {
-                    console.warn("API Key not set. Some features limited. Set in Settings for full access.");
+                    console.warn("API Key not set. Features limited. Set in Settings.");
                     sendToTelegramBot("API Key not set, AI features may be limited.", 'warning');
                     if (plan === 'premium') {
-                        alert("API Key is required to use Premium models. Please set it in settings.");
+                        alert("API Key required for Premium models. Set in settings.");
                         setPlan('free');
                         updatePlanUI();
                         sendToTelegramBot("Premium plan reverted to free due to missing API key.", 'warning');
@@ -2499,9 +2492,8 @@
                 sendButton.classList.remove('hidden');
                 ollamaSendButton.classList.add('hidden');
             } else {
-                // Ollama API initialization
                 genAI = null;
-                model = null; // Ensure Gemini model is not used
+                model = null;
                 sendButton.classList.add('hidden');
                 ollamaSendButton.classList.remove('hidden');
                 console.log("Ollama API mode enabled.");
@@ -2509,26 +2501,21 @@
         }
 
         function saveConversations() {
-            // saveConversations function как в v14.html
             localStorage.setItem('conversations', JSON.stringify(conversations));
         }
 
         function saveSettings() {
-            // saveSettings function как в v14.html
             localStorage.setItem('settings', JSON.stringify(settings));
         }
         function saveMemory() {
-            // saveMemory function как в v14.html
             localStorage.setItem('memory', JSON.stringify(memory));
         }
 
         function saveAssistants() {
-            // saveAssistants function как в v14.html
             localStorage.setItem('assistants', JSON.stringify(assistants));
         }
 
         function createNewConversation() {
-            // createNewConversation function как в v14.html
             if (conversations.filter(c => !c.archived).length >= MAX_CONVERSATIONS && plan !== 'premium') {
                  showPremiumAdModal("conversationLimit");
                 return;
@@ -2557,7 +2544,6 @@
         }
 
         function updateConversationList() {
-            // updateConversationList function как в v14.html
             conversationList.innerHTML = '';
             archivedList.innerHTML = '';
             pinnedList.innerHTML = '';
@@ -2627,7 +2613,6 @@
         }
 
         window.toggleConversationActionsDropdown = function(event, convId) {
-            // toggleConversationActionsDropdown function как в v14.html
             event.stopPropagation();
             const dropdown = document.getElementById(`conversation-actions-dropdown-${convId}`);
             dropdown.classList.toggle('show');
@@ -2641,20 +2626,19 @@
 
 
         window.pinConversation = function(event, id) {
-            // pinConversation function как в v14.html
             event.stopPropagation();
             const conversation = conversations.find(conv => conv.id === id);
             if (conversation) {
                 conversation.pinned = !conversation.pinned;
                 updateConversationList();
                 saveConversations();
+                sendToastNotification(conversation.pinned ? `Conversation "${conversation.name}" pinned` : `Conversation "${conversation.name}" unpinned`);
                 sendToTelegramBot(`Conversation ${conversation.id} ${conversation.pinned ? 'pinned' : 'unpinned'}.`);
             }
         }
 
 
         window.renameConversation = function(event, id) {
-            // renameConversation function как в v14.html
             event.stopPropagation();
             const conversation = conversations.find(conv => conv.id === id);
             const newName = prompt("Enter new conversation name:", conversation.name);
@@ -2666,12 +2650,12 @@
                     currentConversationTitle.textContent = newName.trim();
                 }
                 saveConversations();
+                sendToastNotification(`Conversation renamed to "${conversation.name}"`);
                 sendToTelegramBot(`Conversation ${conversation.id} renamed from "${oldName}" to "${conversation.name}".`);
             }
         }
 
         window.archiveConversation = function(event, id) {
-            // archiveConversation function как в v14.html
             event.stopPropagation();
             const conversation = conversations.find(conv => conv.id === id);
             if (conversation) {
@@ -2679,6 +2663,7 @@
                 conversation.pinned = false;
                 updateConversationList();
                 saveConversations();
+                sendToastNotification(conversation.archived ? `Conversation "${conversation.name}" archived` : `Conversation "${conversation.name}" unarchived`);
                 sendToTelegramBot(`Conversation ${conversation.id} ${conversation.archived ? 'archived' : 'unarchived'}.`);
                 if (currentConversation && currentConversation.id === id && conversation.archived) {
                     const nextConversation = conversations.find(c => !c.archived && !c.pinned) || conversations.find(c => !c.archived);
@@ -2688,7 +2673,7 @@
                         clearChatMessages();
                         currentConversation = null;
                         currentConversationTitle.textContent = "Select a conversation or start new";
-                        chatInputArea.classList.add('conversation-empty'); // Show starter messages when no conversation
+                        chatInputArea.classList.add('conversation-empty');
                         updateStarterMessagesArea();
                     }
                 } else if (currentConversation && currentConversation.id === id && !conversation.archived) {
@@ -2699,7 +2684,6 @@
 
 
         window.deleteConversation = function(event, id) {
-            // deleteConversation function как в v14.html
             event.stopPropagation();
             if (confirm("Are you sure you want to delete this conversation? This cannot be undone.")) {
                 const conversation = conversations.find(conv => conv.id === id);
@@ -2712,18 +2696,18 @@
                         switchConversation(currentConversation);
                     } else {
                         currentConversationTitle.textContent = "Select a conversation or start new";
-                        chatInputArea.classList.add('conversation-empty'); // Show starter messages when no conversation
+                        chatInputArea.classList.add('conversation-empty');
                         updateStarterMessagesArea();
                     }
                 }
                 updateConversationList();
                 saveConversations();
+                sendToastNotification(`Conversation "${conversationName}" deleted`);
                 sendToTelegramBot(`Conversation "${conversationName}" (${id}) deleted.`);
             }
         }
 
         function switchConversation(conversation) {
-            // switchConversation function как в v14.html
             currentConversation = conversation;
             clearChatMessages();
             conversation.messages.forEach(message => addMessageToChat(message.text, message.sender, message.image, message.timestamp, message.id, message.messageType, message.file));
@@ -2734,15 +2718,14 @@
             }
             conversationMessageCount = conversation.messages.length;
             onConversationSwitched();
-            chatInputArea.classList.remove('conversation-empty'); // Hide starter messages when conversation is active
+            chatInputArea.classList.remove('conversation-empty');
             starterMessagesArea.classList.add('hidden');
             sendToTelegramBot(`Switched to conversation: ${conversation.id} "${conversation.name}"`);
-            setWebsiteMode(false); // Ensure website mode is off when switching to chat
+            setWebsiteMode(false);
         }
 
 
         function clearChatMessages() {
-            // clearChatMessages function как в v14.html
             chatMessages.innerHTML = '';
             chatMessages.appendChild(printingAnimation);
             chatMessages.appendChild(imageGeneratingAnimation);
@@ -2750,7 +2733,6 @@
         }
 
         function addMessageToChat(message, sender, image = null, timestamp = null, messageId = null, messageType = 'text', file = null) {
-            // addMessageToChat function как в v14.html
             const messageWrapper = document.createElement('div');
             messageWrapper.className = 'message-wrapper';
             messageWrapper.addEventListener('contextmenu', (event) => {
@@ -2766,8 +2748,8 @@
 
 
             const messageElement = document.createElement('div');
-            if (message.startsWith('Memory Updated')) { // Hafıza mesajı kontrolü
-                messageElement.className = `memory-update-message animate__animated animate__fadeInUp`; // Yeni stil sınıfı
+            if (message.startsWith('Memory Updated')) {
+                messageElement.className = `memory-update-message animate__animated animate__fadeInUp`;
             } else {
                 messageElement.className = `message ${sender === 'user' ? 'user-message' : 'ai-message'} ${messageType === 'imageGen' ? 'image-gen-message' : ''} message-content animate__animated animate__fadeInUp`;
             }
@@ -2797,7 +2779,7 @@
             });
             messageElement.innerHTML += formattedMessage;
 
-            if (sender === 'ai' && !message.startsWith('Memory Updated')) { // Hafıza mesajları için aksiyon butonları ekleme
+            if (sender === 'ai' && !message.startsWith('Memory Updated')) {
                 const actionsDiv = document.createElement('div');
                 actionsDiv.className = 'message-actions';
                 actionsDiv.innerHTML = `
@@ -2842,7 +2824,7 @@
             });
             initializeSortable();
 
-            if (sender === 'ai' && !message.startsWith('Memory Updated')) { // Hafıza mesajları için aksiyon butonları ekleme
+            if (sender === 'ai' && !message.startsWith('Memory Updated')) {
                 messageElement.querySelector('.regenerate-button').addEventListener('click', () => regenerateOutput(messageId, messageElement));
                 messageElement.querySelector('.delete-button').addEventListener('click', () => deleteOutput(messageId));
             } else if (sender === 'user') {
@@ -2854,22 +2836,18 @@
         let touchTimer;
 
         function handleTouchStart(event, messageId, isUserMessage) {
-            // handleTouchStart function как в v14.html
             touchStartTime = Date.now();
             touchTimer = setTimeout(() => {
-                // Long press detected
-                handleContextMenu(event, messageId, isUserMessage, true); // Indicate it's a touch event
-            }, 500); // 500ms long press duration
+                handleContextMenu(event, messageId, isUserMessage, true);
+            }, 500);
         }
 
         function handleTouchEnd() {
-            // handleTouchEnd function как в v14.html
             clearTimeout(touchTimer);
         }
 
 
         function handleContextMenu(event, messageId, isUserMessage, isTouch = false) {
-            // handleContextMenu function как в v14.html
             contextMenuTargetMessage = messageId;
             const menu = messageContextMenu;
 
@@ -2908,18 +2886,16 @@
             });
         }
         function hideContextMenu() {
-            // hideContextMenu function как в v14.html
             messageContextMenu.style.display = 'none';
             messageContextMenu.classList.remove('animate__fadeIn');
              contextMenuTargetMessage = null;
         }
         function copyMessageToClipboard(messageId) {
-            // copyMessageToClipboard function как в v14.html
             const messageElement = chatMessages.querySelector(`.message-wrapper .message[data-message-id='${messageId}'] .message-content`);
             if (messageElement) {
                 const messageText = messageElement.textContent;
                 navigator.clipboard.writeText(messageText).then(() => {
-                    alert('Message copied to clipboard!');
+                    sendToastNotification('Message copied to clipboard!');
                 }).catch(err => {
                     console.error('Failed to copy message:', err);
                 });
@@ -2928,9 +2904,8 @@
 
 
         function copyCodeToClipboard(code) {
-            // copyCodeToClipboard function как в v14.html
             navigator.clipboard.writeText(code).then(() => {
-                alert('Code copied to clipboard!');
+                sendToastNotification('Code copied to clipboard!');
             }).catch(err => {
                 console.error('Failed to copy code:', err);
             });
@@ -2938,11 +2913,10 @@
 
 
         function showTypingIndicator() {
-            // showTypingIndicator function как в v14.html
             printingAnimation.style.display = 'flex';
             imageGeneratingAnimation.style.display = 'none';
-            websiteGeneratingAnimation.style.display = 'none'; // Hide website indicator
-            ollamaGeneratingAnimation.style.display = 'none'; // Hide ollama indicator
+            websiteGeneratingAnimation.style.display = 'none';
+            ollamaGeneratingAnimation.style.display = 'none';
         }
 
         function showOllamaGeneratingIndicator() {
@@ -2954,40 +2928,35 @@
 
 
         function showImageGeneratingIndicator() {
-            // showImageGeneratingIndicator function как в v14.html
             imageGeneratingAnimation.style.display = 'flex';
             printingAnimation.style.display = 'none';
-            websiteGeneratingAnimation.style.display = 'none'; // Hide website indicator
-            ollamaGeneratingAnimation.style.display = 'none'; // Hide ollama indicator
+            websiteGeneratingAnimation.style.display = 'none';
+            ollamaGeneratingAnimation.style.display = 'none';
         }
         function showWebsiteGeneratingIndicator() {
-            // showWebsiteGeneratingIndicator function как в v14.html
             websiteGeneratingAnimation.style.display = 'flex';
             printingAnimation.style.display = 'none';
             imageGeneratingAnimation.style.display = 'none';
-            ollamaGeneratingAnimation.style.display = 'none'; // Hide ollama indicator
+            ollamaGeneratingAnimation.style.display = 'none';
         }
 
 
         function removeTypingIndicator() {
-            // removeTypingIndicator function как в v14.html
             printingAnimation.style.display = 'none';
             imageGeneratingAnimation.style.display = 'none';
-            websiteGeneratingAnimation.style.display = 'none'; // Hide website indicator
-            ollamaGeneratingAnimation.style.display = 'none'; // Hide ollama indicator
+            websiteGeneratingAnimation.style.display = 'none';
+            ollamaGeneratingAnimation.style.display = 'none';
         }
 
 
         async function sendMessage(apiType = 'gemini') {
-            // sendMessage function modified to handle both Gemini and Ollama APIs
             let message = userInput.value.trim();
 
             if(message.length > MAX_MESSAGE_CHARS) {
                 showPremiumAdModal("messageCharLimit");
                 return;
             }
-            message = DOMPurify.sanitize(message); // Sanitize user input
-
+            message = DOMPurify.sanitize(message);
 
             if (!currentConversation) {
                 alert("Please select a conversation or start a new one.");
@@ -3004,43 +2973,54 @@
                 showPremiumAdModal("dailyMessageLimit");
                 return;
             }
-            if ((selectedImageFile || selectedFile) && !checkDailyImageLimit()) { //Combined check for both image and file
+            if ((selectedImageFile || selectedFile) && !checkDailyImageLimit()) {
                 showPremiumAdModal("dailyImageLimit");
                 return;
             }
 
 
-            if (!model && !ollamaEnabled) { // Check for model only if not using Ollama
-                alert("Please set API key in settings for AI features.");
+            if (!model && !ollamaEnabled) {
+                alert("Set API key in settings for AI features.");
                 return;
             }
-            if (ollamaEnabled && !settings.ollamaApiUrl) { // Check for Ollama API URL if enabled
-                alert("Please configure Ollama API URL in settings.");
+            if (ollamaEnabled && !settings.ollamaApiUrl) {
+                alert("Configure Ollama API URL in settings.");
                 return;
             }
 
+            if (messageCooldown) {
+                sendToastNotification("Please wait before sending another message.");
+                return;
+            }
+            messageCooldown = true;
+            sendButton.disabled = true;
+            ollamaSendButton.disabled = true;
+            setTimeout(() => {
+                messageCooldown = false;
+                sendButton.disabled = false;
+                ollamaSendButton.disabled = false;
+            }, 1500);
 
-            // --- Rate Limiting Logic ---
+
             const currentTime = Date.now();
-            if (currentTime - lastMessageTime < 500) { // 500ms delay between messages
+            if (currentTime - lastMessageTime < 500) {
                 if (!messageRateLimitTimeout) {
-                    sendButton.classList.add('animate-pulse-fast'); // Visual feedback for rate limit
+                    sendButton.classList.add('animate-pulse-fast');
                     userInput.placeholder = "Sending messages too fast, please wait...";
                     messageRateLimitTimeout = setTimeout(() => {
                         sendButton.classList.remove('animate-pulse-fast');
                         userInput.placeholder = "Type your message...";
                         messageRateLimitTimeout = null;
-                    }, 2000); // Reset after 2 seconds
+                    }, 2000);
                 }
-                return; // Exit function if sending too fast
+                return;
             }
-            lastMessageTime = currentTime; // Update last message time
+            lastMessageTime = currentTime;
 
 
             const userMessageId = Date.now();
 
             if (selectedImageFile) {
-                // Image file handling (как в v14.html) - No changes needed for image handling in this part for now.
                 usageCounters.dailyImages++;
                 saveUsageCounters();
                 sendToTelegramBot(`Image sent by user in conversation ${currentConversation.id}. Daily image count: ${usageCounters.dailyImages}/${DAILY_IMAGE_LIMIT}`);
@@ -3052,7 +3032,7 @@
                     currentConversation.messages.push({ id: userMessageId, text: message, sender: 'user', image: imageData, timestamp: Date.now() });
 
                     userInput.value = '';
-                    fileUploadInput.value = ''; // Clear file input as well
+                    fileUploadInput.value = '';
                     imageUploadInput.value = '';
                     clearImagePreview();
                     clearFileInput();
@@ -3101,8 +3081,6 @@
                             NProgress.done();
                         }
                     } else if (apiType === 'ollama') {
-                        // Ollama API does not directly support image input in this example.
-                        // You would need to implement image handling specific to your Ollama model if needed.
                         alert("Image input is not directly supported with Ollama API in this version.");
                         removeTypingIndicator();
                         NProgress.done();
@@ -3110,9 +3088,8 @@
                     }
                 };
                 reader.readAsDataURL(selectedImageFile);
-            } else if (selectedFile) { // Handle file upload
-                // File upload handling (как в v14.html) - No changes needed for file handling in this part for now.
-                usageCounters.dailyImages++; // Consider files as 'images' for daily limit, or adjust as needed
+            } else if (selectedFile) {
+                usageCounters.dailyImages++;
                 saveUsageCounters();
                 sendToTelegramBot(`File sent by user in conversation ${currentConversation.id}. Daily file count: ${usageCounters.dailyImages}/${DAILY_IMAGE_LIMIT}`);
 
@@ -3120,12 +3097,12 @@
                 fileReader.onload = async (event) => {
                     const fileDataUrl = event.target.result;
                     const fileForMessage = { name: selectedFile.name, url: fileDataUrl };
-                    addMessageToChat("", 'user', null, Date.now(), userMessageId, 'text', fileForMessage); // Add file info to message
+                    addMessageToChat("", 'user', null, Date.now(), userMessageId, 'text', fileForMessage);
                     currentConversation.messages.push({ id: userMessageId, text: message, sender: 'user', timestamp: Date.now(), file: fileForMessage });
 
                     userInput.value = '';
-                    fileUploadInput.value = ''; // Clear file input
-                    imageUploadInput.value = ''; // Clear image input as well
+                    fileUploadInput.value = '';
+                    imageUploadInput.value = '';
                     clearImagePreview();
                     clearFileInput();
                     saveConversations();
@@ -3143,7 +3120,7 @@
                         NProgress.start();
                         try {
                             const prompt = message ? `${message}\n\nFile: ${selectedFile.name}` : `File: ${selectedFile.name}`;
-                            const result = await model.generateContent(prompt); // Sending filename in prompt for context
+                            const result = await model.generateContent(prompt);
                             const response = await result.response;
                             const aiResponseText = response.text();
                             const aiMessageId = Date.now();
@@ -3172,7 +3149,6 @@
                             NProgress.done();
                         }
                     } else if (apiType === 'ollama') {
-                        // Ollama API file handling logic - similar to Gemini but using Ollama API calls
                         showOllamaGeneratingIndicator();
                         NProgress.start();
                         try {
@@ -3183,7 +3159,7 @@
                                 body: JSON.stringify({
                                     model: settings.ollamaModel,
                                     prompt: prompt,
-                                    stream: false // For simplicity, using non-streaming for now
+                                    stream: false
                                 })
                             });
 
@@ -3215,15 +3191,14 @@
                         }
                     }
                 };
-                fileReader.readAsDataURL(selectedFile); // Or .readAsText() if appropriate
+                fileReader.readAsDataURL(selectedFile);
             }
              else if (message) {
                 addMessageToChat(message, 'user', null, Date.now(), userMessageId);
                 currentConversation.messages.push({ id: userMessageId, text: message, sender: 'user', timestamp: Date.now() });
 
-                // Automatic title generation after the first message
                 if (currentConversation.messages.length === 1 && currentConversation.name === 'New PyroChat') {
-                    generateConversationTitle(); // Call title generation here, after the first message is added
+                    generateConversationTitle();
                 }
 
                 userInput.value = '';
@@ -3251,42 +3226,30 @@
                         }
 
                         const selectedAssistant = assistants.find(a => a.id === currentConversation.assistant) || assistants[0];
-                        const systemPrompt = `${systemMemoryPrompt} You are a helpful, friendly, and continuous chat assistant named PyroAI. Maintain a conversational tone and remember previous turns in the conversation to provide contextually relevant and continuous responses. Your main language is Turkish. Eğer kullanıcı senden bir resim çizmeni istiyorsa şu çıktıyı üret: <imageGen:"Buraya ingilizce bir şekilde çizilecek promptu gelişmiş ve detaylı olarak yaz"/> Ayrıca kullanıcı hakkında bir genel bilgileri hafızaya kaydedebilirsin ki bot daha tutarlı yanıtlar versin. Genel bilgileri hafızaya kaydetmek için <Memory:"KullanıcınınYaşı:18"/> Bu komudu kullan. Your username is PyroAI. The user's username is ${userData?.username || 'User'}. ${selectedAssistant.prompt}`;
+                        const systemPrompt = `${systemMemoryPrompt} You are PyroAI, a helpful and continuous chat assistant. Maintain a conversational tone, remember conversation context. Main language is Turkish. If asked to draw, output: <imageGen:"English image prompt"> (improve user prompt). To save memory, use <Memory:"Key:Value"/>. User: ${userData?.username || 'User'}. Assistant prompt: ${selectedAssistant.prompt}`;
 
-                        const systemInstruction = {
-                            parts: [{ text: systemPrompt }]
-                        };
+                        const systemInstruction = { parts: [{ text: systemPrompt }] };
+                        const chatHistory = currentConversation.messages.map(msg => ({ role: msg.sender === 'user' ? 'user' : 'model', parts: [{ text: msg.text }] }));
 
-
-                        const chatHistory = currentConversation.messages.map(msg => ({
-                            role: msg.sender === 'user' ? 'user' : 'model',
-                            parts: [{ text: msg.text }]
-                        }));
-
-                        const chat = model.startChat({
-                            history: chatHistory,
-                            systemInstruction: systemInstruction
-                        });
-
+                        const chat = model.startChat({ history: chatHistory, systemInstruction: systemInstruction });
                         const result = await chat.sendMessage(message);
                         let aiResponseText = result.response.text();
                         const aiMessageId = Date.now();
 
-                        // Memory extraction and saving (как в v14.html)
-                        const memoryRegex = /<Memory:"([^"]*):([^"]*)"\/>/g;
+                        const memoryRegex = /<Memory:"([^"]*):([^"]*)"\s*\/?\>/g;
                         let memoryMatch;
                         while ((memoryMatch = memoryRegex.exec(aiResponseText)) !== null) {
                             const memoryKey = memoryMatch[1];
                             const memoryValue = memoryMatch[2];
                             memory[memoryKey] = memoryValue;
                             saveMemory();
-                            aiResponseText = aiResponseText.replace(memoryMatch[0], '').trim(); // Remove memory tag from response
+                            aiResponseText = aiResponseText.replace(memoryMatch[0], '').trim();
                             updateMemoryListUI();
                             addMessageToChat(`Memory Updated: ${memoryKey} is ${memoryValue}`, 'ai', null, Date.now());
                         }
 
 
-                        const imageGenRegex = /<imageGen:"([^"]*)"\/>/;
+                        const imageGenRegex = /<imageGen:"([^"]*)"\s*\/?\>/;
                         const imageGenMatch = aiResponseText.match(imageGenRegex);
 
                         if (imageGenMatch) {
@@ -3314,7 +3277,7 @@
                                 addMessageToChat("Generated Image:", 'ai', imageObjectURL, Date.now(), Date.now(), 'imageGen');
                                 currentConversation.messages.push({ id: Date.now(), text: "Generated Image:", sender: 'ai', image: imageObjectURL, timestamp: Date.now(), messageType: 'imageGen' });
                                 saveConversations();
-                                sendToTelegramBot(`AI generated image in conversation ${currentConversation.id} with prompt: ${imagePrompt.substring(0, 50)}... Daily message count: ${usageCounters.dailyImages}/${DAILY_IMAGE_LIMIT}`);
+                                sendToTelegramBot(`AI generated image in conversation ${currentConversation.id} with prompt: ${imagePrompt.substring(0, 50)}... Daily image count: ${usageCounters.dailyImages}/${DAILY_IMAGE_LIMIT}`);
 
 
                             } catch (imageError) {
@@ -3365,8 +3328,8 @@
                                 messages: currentConversation.messages.map(msg => ({
                                     role: msg.sender === 'user' ? 'user' : 'assistant',
                                     content: msg.text
-                                })).concat([{ role: 'user', content: message }]), // Include current user message in history
-                                stream: false // For simplicity, using non-streaming for now
+                                })).concat([{ role: 'user', content: message }]),
+                                stream: false
                             })
                         });
 
@@ -3400,7 +3363,6 @@
         }
 
         function generateConversationTranscript() {
-            // generateConversationTranscript function как в v14.html
             let transcript = `Conversation Transcript for PyroAI Chat ID: ${currentConversation.id}\n`;
             transcript += `Conversation Name: ${currentConversation.name}\n`;
             transcript += `User: ${userData?.username || 'Guest User'} (Plan: ${plan.toUpperCase()})\n`;
@@ -3426,7 +3388,6 @@
         let tempAiMessageId = null;
 
         function addStreamingMessageToChat(text, messageId) {
-            // addStreamingMessageToChat function как в v14.html
             if (!streamingMessageElement) {
                 streamingMessageElement = document.createElement('div');
                 streamingMessageElement.className = `message ai-message message-content streaming-message`;
@@ -3470,7 +3431,6 @@
 
 
         async function fileToGenerativePart(file) {
-            // fileToGenerativePart function как в v14.html
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.onloadend = () => {
@@ -3489,47 +3449,40 @@
         }
 
         function checkMessageLimit() {
-            // checkMessageLimit function как в v14.html
             return conversationMessageCount < MESSAGE_LIMIT;
         }
         function checkDailyMessageLimit() {
-            // checkDailyMessageLimit function как в v14.html
             return usageCounters.dailyMessages < DAILY_MESSAGE_LIMIT;
         }
         function checkDailyImageLimit() {
-            // checkDailyImageLimit function как в v14.html
             return usageCounters.dailyImages < DAILY_IMAGE_LIMIT;
         }
 
 
         function toggleSidebar() {
-            // toggleSidebar function как в v14.html
             sidebar.classList.toggle('active');
         }
         document.addEventListener('click', (e) => {
-            // document click listener как в v14.html
             if (!sidebar.contains(e.target) && !mobileSidebarToggle.contains(e.target) && sidebar.classList.contains('active')) {
                 toggleSidebar();
             }
         });
         function openSettings() {
-            // openSettings function modified to include Ollama settings
             document.getElementById('message-history-limit').value = settings.messageHistoryLimit;
             document.getElementById('ai-model').value = settings.aiModel;
             document.getElementById('api-key-input').value = settings.apiKey;
             document.getElementById('theme').value = settings.theme;
-            aiAssistantModeSelect.value = settings.aiAssistantMode; // Set AI Assistant Mode
+            aiAssistantModeSelect.value = settings.aiAssistantMode;
             ollamaEnabledCheckbox.checked = settings.ollamaEnabled;
             ollamaApiUrlInput.value = settings.ollamaApiUrl;
             ollamaModelSelect.value = settings.ollamaModel;
-            ollamaSettingsDiv.classList.toggle('hidden', !settings.ollamaEnabled); // Show/hide Ollama settings
+            ollamaSettingsDiv.classList.toggle('hidden', !settings.ollamaEnabled);
             updateMemoryListUI();
             settingsModal.classList.add('show');
             settingsModal.style.display = 'flex';
         }
 
         function closeSettings() {
-            // closeSettings function как в v14.html
             settingsModal.classList.remove('show');
             setTimeout(() => {
                 settingsModal.style.display = 'none';
@@ -3537,7 +3490,6 @@
         }
 
         function saveSettingsChanges() {
-            // saveSettingsChanges function modified to save Ollama settings
             const selectedModel = document.getElementById('ai-model').value;
             if (plan === 'free' && selectedModel !== FREE_MODEL) {
                 alert(`In Free plan, only ${FREE_MODEL} model is available.`);
@@ -3549,21 +3501,21 @@
             settings.aiModel = selectedModel;
             settings.apiKey = document.getElementById('api-key-input').value;
             settings.theme = document.getElementById('theme').value;
-            settings.aiAssistantMode = aiAssistantModeSelect.value; // Save AI Assistant Mode
-            settings.ollamaEnabled = ollamaEnabledCheckbox.checked; // Save Ollama enabled state
-            settings.ollamaApiUrl = ollamaApiUrlInput.value; // Save Ollama API URL
-            settings.ollamaModel = ollamaModelSelect.value; // Save Ollama Model
+            settings.aiAssistantMode = aiAssistantModeSelect.value;
+            settings.ollamaEnabled = ollamaEnabledCheckbox.checked;
+            settings.ollamaApiUrl = ollamaApiUrlInput.value;
+            settings.ollamaModel = ollamaModelSelect.value;
             saveSettings();
             applySettings();
             closeSettings();
             initializeModel();
             MESSAGE_LIMIT = getMessageLimitForPlan();
+            sendToastNotification('Settings saved');
             sendToTelegramBot('Settings updated and saved.');
         }
 
 
         function applySettings() {
-            // applySettings function modified to handle Ollama mode class
             const theme = settings.theme;
             if (theme === 'dark') {
                 document.body.classList.add('dark');
@@ -3581,7 +3533,7 @@
                 hljs.configure({ theme: 'atom-one-light' });
             }
             initializeModel();
-            updateNewAssistantModeUI(); // Update UI based on mode
+            updateNewAssistantModeUI();
 
             if (settings.ollamaEnabled) {
                 document.body.classList.add('ollama-mode-active');
@@ -3593,14 +3545,12 @@
 
 
         function openAssistantModal() {
-            // openAssistantModal function как в v14.html
             updateAssistantList();
             assistantModal.classList.add('show');
             assistantModal.style.display = 'flex';
         }
 
         function closeAssistantModal() {
-            // closeAssistantModal function как в v14.html
             assistantModal.classList.remove('show');
             setTimeout(() => {
                 assistantModal.style.display = 'none';
@@ -3608,7 +3558,6 @@
         }
 
         function updateAssistantList() {
-            // updateAssistantList function как в v14.html
             assistantList.innerHTML = '';
             assistants.forEach(assistant => {
                 const card = document.createElement('div');
@@ -3635,14 +3584,14 @@
             });
              assistantList.querySelectorAll('.edit-assistant-button').forEach(button => {
                 button.addEventListener('click', (event) => {
-                    event.stopPropagation(); // Prevent card click
+                    event.stopPropagation();
                     editAssistant(button.dataset.assistantId);
                 });
             });
 
             assistantList.querySelectorAll('.delete-assistant-button').forEach(button => {
                 button.addEventListener('click', (event) => {
-                    event.stopPropagation(); // Prevent card click
+                    event.stopPropagation();
                     deleteAssistant(button.dataset.assistantId);
                 });
             });
@@ -3650,7 +3599,6 @@
 
 
         function openNewAssistantModal() {
-            // openNewAssistantModal function как в v14.html
             document.getElementById('assistant-name').value = '';
             document.getElementById('assistant-description').value = '';
             document.getElementById('assistant-prompt').value = '';
@@ -3660,38 +3608,35 @@
         }
 
         function closeNewAssistantModal() {
-            // closeNewAssistantModal function как в v14.html
             newAssistantModal.classList.remove('show');
             setTimeout(() => {
                 newAssistantModal.style.display = 'none';
             }, 300);
-            promptModeAutoArea.style.display = 'none'; // Hide auto prompt area
-            promptModeManualArea.style.display = 'block'; // Show manual prompt area
-            generateAssistantPromptButton.style.display = 'none'; // Hide generate prompt button
-            saveNewAssistantButton.style.display = 'inline-block'; // Show save button
-            saveNewAssistantButton.onclick = saveNewAssistant; // Reset to default save function
+            promptModeAutoArea.style.display = 'none';
+            promptModeManualArea.style.display = 'block';
+            generateAssistantPromptButton.style.display = 'none';
+            saveNewAssistantButton.style.display = 'inline-block';
+            saveNewAssistantButton.onclick = saveNewAssistant;
         }
 
         function updateNewAssistantModeUI() {
-            // updateNewAssistantModeUI function как в v14.html
             const mode = settings.aiAssistantMode;
             if (mode === 'auto') {
                 promptModeManualArea.style.display = 'none';
-                promptModeAutoArea.style.display = 'none'; // Hide initially, shown during generation
+                promptModeAutoArea.style.display = 'none';
                 generateAssistantPromptButton.style.display = 'inline-block';
-                saveNewAssistantButton.style.display = 'none'; // Hide save button during auto mode
+                saveNewAssistantButton.style.display = 'none';
             } else {
                 promptModeManualArea.style.display = 'block';
                 promptModeAutoArea.style.display = 'none';
                 generateAssistantPromptButton.style.display = 'none';
                 saveNewAssistantButton.style.display = 'inline-block';
-                saveNewAssistantButton.onclick = saveNewAssistant; // Ensure save function is correctly set
+                saveNewAssistantButton.onclick = saveNewAssistant;
             }
         }
 
 
         async function generateAiAssistantPrompt() {
-            // generateAiAssistantPrompt function как в v14.html
             const name = document.getElementById('assistant-name').value.trim();
             const description = document.getElementById('assistant-description').value.trim();
 
@@ -3699,36 +3644,35 @@
                 alert("Please enter assistant name to generate prompt.");
                 return;
             }
-            promptModeManualArea.style.display = 'none'; // Hide manual prompt area
-            promptModeAutoArea.style.display = 'block'; // Show auto prompt area
-            generateAssistantPromptButton.style.display = 'none'; // Hide generate prompt button
-            saveNewAssistantButton.style.display = 'none'; // Hide save button during generation
+            promptModeManualArea.style.display = 'none';
+            promptModeAutoArea.style.display = 'block';
+            generateAssistantPromptButton.style.display = 'none';
+            saveNewAssistantButton.style.display = 'none';
 
             try {
                 const promptRequest = `Generate a detailed and effective system prompt for an AI assistant named "${name}" with the following description: "${description}". The prompt should clearly define the assistant's role, capabilities, and personality.`;
                 const result = await model.generateContent(promptRequest);
                 const responseText = result.response.text();
                 document.getElementById('assistant-prompt').value = responseText;
-                promptModeAutoArea.style.display = 'none'; // Hide auto prompt area
-                promptModeManualArea.style.display = 'block'; // Show manual prompt area
-                generateAssistantPromptButton.style.display = 'none'; // Hide generate prompt button
-                saveNewAssistantButton.style.display = 'inline-block'; // Show save button after generation
-                saveNewAssistantButton.onclick = saveNewAssistant; // Reset save button function
+                promptModeAutoArea.style.display = 'none';
+                promptModeManualArea.style.display = 'block';
+                generateAssistantPromptButton.style.display = 'none';
+                saveNewAssistantButton.style.display = 'inline-block';
+                saveNewAssistantButton.onclick = saveNewAssistant;
 
             } catch (error) {
                 console.error("Error generating assistant prompt:", error);
                 alert("Error generating AI assistant prompt. Please try again or enter manually.");
-                promptModeAutoArea.style.display = 'none'; // Hide auto prompt area
-                promptModeManualArea.style.display = 'block'; // Show manual prompt area
-                generateAssistantPromptButton.style.display = 'inline-block'; // Show generate prompt button
-                saveNewAssistantButton.style.display = 'inline-block'; // Show save button in case of error
-                saveNewAssistantButton.onclick = saveNewAssistant; // Reset save button function
+                promptModeAutoArea.style.display = 'none';
+                promptModeManualArea.style.display = 'block';
+                generateAssistantPromptButton.style.display = 'inline-block';
+                saveNewAssistantButton.style.display = 'inline-block';
+                saveNewAssistantButton.onclick = saveNewAssistant;
             }
         }
 
 
         function saveNewAssistant() {
-            // saveNewAssistant function как в v14.html
             const name = document.getElementById('assistant-name').value.trim();
             const description = document.getElementById('assistant-description').value.trim();
             const prompt = document.getElementById('assistant-prompt').value.trim();
@@ -3743,6 +3687,7 @@
                 saveAssistants();
                 updateAssistantList();
                 closeNewAssistantModal();
+                sendToastNotification(`New assistant "${name}" created`);
                 sendToTelegramBot(`New assistant created: ${name} (${newAssistant.id})`);
             } else {
                 alert("Please enter both name and system prompt.");
@@ -3750,7 +3695,6 @@
         }
 
         function editAssistant(id) {
-            // editAssistant function как в v14.html
             const assistant = assistants.find(a => a.id === id);
             if (assistant) {
                 document.getElementById('assistant-name').value = assistant.name;
@@ -3780,6 +3724,7 @@
                         updateAssistantList();
                         closeNewAssistantModal();
                         saveNewAssistantButton.onclick = saveNewAssistant;
+                        sendToastNotification(`Assistant "${newName}" updated`);
                         sendToTelegramBot(`Assistant edited: from "${oldName}" to "${newName}" (${assistant.id})`);
                     } else {
                         alert("Please enter both name and system prompt.");
@@ -3789,7 +3734,6 @@
         }
 
         function deleteAssistant(id) {
-            // deleteAssistant function как в v14.html
             if (id !== 'default' && confirm("Delete this assistant? This cannot be undone.")) {
                 const assistantToDelete = assistants.find(a => a.id === id);
                 const assistantName = assistantToDelete ? assistantToDelete.name : 'Unknown';
@@ -3800,12 +3744,12 @@
                     currentConversation.assistant = 'default';
                     saveConversations();
                 }
+                sendToastNotification(`Assistant "${assistantName}" deleted`);
                 sendToTelegramBot(`Assistant "${assistantName}" (${id}) deleted.`);
             }
         }
 
         function selectAssistant(id) {
-            // selectAssistant function как в v14.html
             if (currentConversation) {
                 const selectedAssistant = assistants.find(a => a.id === id);
                 const assistantName = selectedAssistant ? selectedAssistant.name : 'Default';
@@ -3813,14 +3757,14 @@
                 saveConversations();
                 closeAssistantModal();
                 addMessageToChat(`Switched to assistant: ${assistantName}`, 'ai', null, Date.now());
+                sendToastNotification(`Switched to assistant: ${assistantName}`);
                 sendToTelegramBot(`Switched conversation ${currentConversation.id} to assistant: "${assistantName}" (${id})`);
             }
         }
 
         async function generateConversationTitle() {
-            // generateConversationTitle function как в v14.html
             if (currentConversation && currentConversation.messages.length > 0 && currentConversation.name === "New PyroChat") {
-                await new Promise(resolve => setTimeout(resolve, 500)); //Small delay to ensure first message is present
+                await new Promise(resolve => setTimeout(resolve, 500));
 
                 const firstMessage = currentConversation.messages[0].text;
                 const selectedAssistant = assistants.find(a => a.id === currentConversation.assistant) || assistants[0];
@@ -3841,6 +3785,7 @@
                     currentConversationTitle.textContent = currentConversation.name;
                     saveConversations();
                     updateConversationList();
+                    sendToastNotification(`Conversation title updated to "${currentConversation.name}"`);
                     sendToTelegramBot(`Conversation ${currentConversation.id} title generated from "${oldTitle}" to "${currentConversation.name}"`);
 
                 } catch (error) {
@@ -3856,7 +3801,6 @@
 
         var sortable;
         function initializeSortable() {
-            // initializeSortable function как в v14.html
             const chatMessagesElement = document.getElementById('chat-messages');
             if (sortable) {
                 sortable.destroy();
@@ -3904,35 +3848,31 @@
             }
         }
         function onConversationSwitched() {
-            // onConversationSwitched function как в v14.html
             initializeSortable();
         }
 
-        let selectedFile = null; // For non-image file uploads
+        let selectedFile = null;
 
         function handleFileUpload(event) {
-            // handleFileUpload function как в v14.html
             selectedFile = event.target.files[0];
             if (selectedFile && selectedFile.type.startsWith('image/')) {
-                // If it's an image, treat it as image upload
-                imageUploadInput.files = event.target.files; // Move files to image input
+                imageUploadInput.files = event.target.files;
                 handleImageUpload(event);
-                selectedFile = null; // Reset selectedFile to avoid double processing
+                selectedFile = null;
             } else if (selectedFile) {
-                clearImagePreview(); // Clear image preview if file is not an image
+                clearImagePreview();
                 previewImageElement.src = '#';
                 imagePreviewArea.classList.add('hidden');
             } else {
-                clearFileInput(); // Clear file selection if no file selected
+                clearFileInput();
             }
         }
 
 
         function handleImageUpload(event) {
-            // handleImageUpload function как в v14.html
             if (!checkDailyImageLimit()) {
                 showPremiumAdModal("dailyImageLimit");
-                fileUploadInput.value = ''; // Clear file input as well
+                fileUploadInput.value = '';
                 imageUploadInput.value = '';
                 return;
             }
@@ -3951,25 +3891,23 @@
         }
 
         function clearImagePreview() {
-            // clearImagePreview function как в v14.html
             selectedImageFile = null;
             previewImageElement.src = '#';
             imagePreviewArea.classList.add('hidden');
             imageUploadInput.value = '';
         }
         function clearFileInput() {
-            // clearFileInput function как в v14.html
             selectedFile = null;
             fileUploadInput.value = '';
         }
 
         function clearConversationHistory() {
-            // clearConversationHistory function как в v14.html
             if (currentConversation && confirm("Clear conversation history? This cannot be undone.")) {
                 currentConversation.messages = [];
                 clearChatMessages();
                 conversationMessageCount = 0;
                 saveConversations();
+                sendToastNotification('Conversation history cleared');
                 sendToTelegramBot(`Conversation history cleared for ${currentConversation.id}`);
                 if (currentConversation.name !== 'New Conversation') {
                     generateConversationTitle();
@@ -3978,7 +3916,6 @@
         }
 
         function toggleApiKeyVisibility() {
-            // toggleApiKeyVisibility function как в v14.html
             apiKeyVisible = !apiKeyVisible;
             apiKeyInput.type = apiKeyVisible ? 'text' : 'password';
             toggleApiKeyButton.innerHTML = apiKeyVisible ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
@@ -3986,7 +3923,6 @@
 
 
         async function regenerateOutput(messageId, messageElement) {
-            // regenerateOutput function modified to handle Ollama API if needed (similar to sendMessage)
             const originalUserMessageWrapper = messageElement.previousElementSibling;
             const originalUserMessage = originalUserMessageWrapper ? originalUserMessageWrapper.querySelector('.message-content').textContent : "";
 
@@ -4006,24 +3942,14 @@
             if (!ollamaEnabled) {
                 showTypingIndicator();
                 NProgress.start();
-                // Gemini API regeneration logic (как в v14.html) - No changes needed for Gemini regeneration for now.
                 try {
                     const selectedAssistant = assistants.find(a => a.id === currentConversation.assistant) || assistants[0];
-                    const systemPrompt = `You are a helpful, friendly, and continuous chat assistant named PyroAI. Maintain a conversational tone and remember previous turns in the conversation to provide contextually relevant and continuous responses. Your username is PyroAI. The user's username is ${userData?.username || 'User'}. ${selectedAssistant.prompt}`;
+                    const systemPrompt = `You are PyroAI, a helpful and continuous chat assistant. Maintain a conversational tone, remember conversation context. Main language is Turkish. If asked to draw, output: <imageGen:"English image prompt"> (improve user prompt). To save memory, use <Memory:"Key:Value"/>. User: ${userData?.username || 'User'}. Assistant prompt: ${selectedAssistant.prompt}`;
 
-                    const systemInstruction = {
-                        parts: [{ text: systemPrompt }]
-                    };
+                     const systemInstruction = { parts: [{ text: systemPrompt }] };
+                    const chatHistory = currentConversation.messages.map(msg => ({ role: msg.sender === 'user' ? 'user' : 'model', parts: [{ text: msg.text }] }));
 
-                    const chatHistory = currentConversation.messages.map(msg => ({
-                        role: msg.sender === 'user' ? 'user' : 'model',
-                        parts: [{ text: msg.text }]
-                    }));
-
-                    const chat = model.startChat({
-                        history: chatHistory,
-                        systemInstruction: systemInstruction
-                    });
+                    const chat = model.startChat({ history: chatHistory, systemInstruction: systemInstruction });
 
 
                     const result = await chat.sendMessage(originalUserMessage);
@@ -4050,6 +3976,7 @@
                         currentConversation.messages.push({ id: aiMessageId, text: aiResponseText, sender: 'ai', timestamp: Date.now() });
                         saveConversations();
                         conversationMessageCount++;
+                        sendToastNotification('AI response regenerated');
                         sendToTelegramBot(`AI response regenerated for message ${messageId} in conversation ${currentConversation.id}`);
                          if (conversationMessageCount >= 5) {
                             const transcript = generateConversationTranscript();
@@ -4069,13 +3996,11 @@
                     NProgress.done();
                 }
             } else {
-                // Ollama API regeneration logic (similar to sendMessage with API type 'ollama')
-                await sendMessage('ollama'); // Re-run the prompt using Ollama API
+                await sendMessage('ollama');
             }
         }
 
         function deleteOutput(messageId) {
-            // deleteOutput function как в v14.html
             if (confirm("Delete this message? This cannot be undone.")) {
                 const messageWrapperToDelete = chatMessages.querySelector(`.message-wrapper .message[data-message-id='${messageId}']`).parentElement;
                 const messageToDelete = currentConversation.messages.find(msg => msg.id === messageId);
@@ -4087,6 +4012,7 @@
                     currentConversation.messages.splice(messageIndex, 1);
                     messageWrapperToDelete.remove();
                     saveConversations();
+                    sendToastNotification('Message deleted');
                     sendToTelegramBot(`Message ${messageId} deleted from conversation ${currentConversation.id}`);
                 }
             }
@@ -4094,7 +4020,6 @@
 
 
         function editPrompt(messageId, messageElement) {
-            // editPrompt function как в v14.html
             editingMessageId = messageId;
             const messageContent = messageElement.querySelector('.message-content').textContent;
             editMessageTextarea.value = messageContent;
@@ -4103,7 +4028,6 @@
         }
 
         function cancelEditMessage() {
-            // cancelEditMessage function как в v14.html
             editMessageModal.classList.remove('show');
             setTimeout(() => {
                 editMessageModal.style.display = 'none';
@@ -4112,7 +4036,6 @@
         }
 
         async function saveEditMessage() {
-            // saveEditMessage function modified to handle both APIs for re-run
             const editedMessageText = editMessageTextarea.value.trim();
             if (!editedMessageText) {
                 alert("Message cannot be empty.");
@@ -4131,23 +4054,20 @@
 
                 cancelEditMessage();
                 if (!settings.ollamaEnabled) {
-                    await reRunPrompt(editingMessageId, editedMessageText); // Re-run with Gemini API
+                    await reRunPrompt(editingMessageId, editedMessageText);
                 } else {
-                    await reRunPromptOllama(editingMessageId, editedMessageText); // Re-run with Ollama API
+                    await reRunPromptOllama(editingMessageId, editedMessageText);
                 }
+                sendToastNotification('Message edited and re-run');
                 sendToTelegramBot(`User message ${editingMessageId} edited and re-run in conversation ${currentConversation.id}`);
             }
         }
 
 
         async function reRunPrompt(userMessageId, editedPromptText) {
-            // reRunPrompt function как в v14.html - Gemini API re-run logic, no changes needed for now.
             const aiMessageWrapper = chatMessages.querySelector(`.message-wrapper .message[data-message-id='${userMessageId}'] + .message-wrapper`);
             if (aiMessageWrapper) {
-                const aiMessageElement = aiMessageWrapper.querySelector('.message');
-                if (aiMessageElement) {
-                    aiMessageWrapper.remove();
-                }
+                aiMessageWrapper.remove();
             }
             const aiMessageIndex = currentConversation.messages.findIndex(msg => msg.sender === 'ai' && msg.id > userMessageId);
             if (aiMessageIndex !== -1) {
@@ -4160,21 +4080,12 @@
             NProgress.start();
             try {
                 const selectedAssistant = assistants.find(a => a.id === currentConversation.assistant) || assistants[0];
-                const systemPrompt = `You are a helpful, friendly, and continuous chat assistant named PyroAI. Maintain a conversational tone and remember previous turns in the conversation to provide contextually relevant and continuous responses. Your username is PyroAI. The user's username is ${userData?.username || 'User'}. ${selectedAssistant.prompt}`;
+                const systemPrompt = `You are PyroAI, a helpful and continuous chat assistant. Maintain a conversational tone, remember conversation context. Main language is Turkish. If asked to draw, output: <imageGen:"English image prompt"> (improve user prompt). To save memory, use <Memory:"Key:Value"/>. User: ${userData?.username || 'User'}. Assistant prompt: ${selectedAssistant.prompt}`;
 
-                 const systemInstruction = {
-                    parts: [{ text: systemPrompt }]
-                };
+                 const systemInstruction = { parts: [{ text: systemPrompt }] };
+                const chatHistory = currentConversation.messages.map(msg => ({ role: msg.sender === 'user' ? 'user' : 'model', parts: [{ text: msg.text }] }));
 
-                const chatHistory = currentConversation.messages.map(msg => ({
-                    role: msg.sender === 'user' ? 'user' : 'model',
-                    parts: [{ text: msg.text }]
-                }));
-
-                const chat = model.startChat({
-                    history: chatHistory,
-                    systemInstruction: systemInstruction
-                });
+                const chat = model.startChat({ history: chatHistory, systemInstruction: systemInstruction });
 
                 const result = await chat.sendMessage(editedPromptText);
                 let aiResponseText = '';
@@ -4202,6 +4113,7 @@
                     currentConversation.messages.push({ id: aiMessageId, text: aiResponseText, sender: 'ai', timestamp: Date.now() });
                     saveConversations();
                     conversationMessageCount++;
+                    sendToastNotification('AI response re-run');
                     sendToTelegramBot(`AI response re-run for edited message ${userMessageId} in conversation ${currentConversation.id}`);
                      if (conversationMessageCount >= 5) {
                         const transcript = generateConversationTranscript();
@@ -4223,7 +4135,6 @@
         }
 
         async function reRunPromptOllama(userMessageId, editedPromptText) {
-            // Ollama API re-run logic - similar to reRunPrompt but using Ollama API calls
             const aiMessageWrapper = chatMessages.querySelector(`.message-wrapper .message[data-message-id='${userMessageId}'] + .message-wrapper`);
             if (aiMessageWrapper) {
                 aiMessageWrapper.remove();
@@ -4246,7 +4157,7 @@
                         messages: currentConversation.messages.map(msg => ({
                             role: msg.sender === 'user' ? 'user' : 'assistant',
                             content: msg.text
-                        })).concat([{ role: 'user', content: editedPromptText }]), // Use edited prompt
+                        })).concat([{ role: 'user', content: editedPromptText }]),
                         stream: false
                     })
                 });
@@ -4264,6 +4175,7 @@
                 currentConversation.messages.push({ id: aiMessageId, text: aiResponseText, sender: 'ai', timestamp: Date.now() });
                 saveConversations();
                 conversationMessageCount++;
+                sendToastNotification('Ollama AI response re-run');
                 sendToTelegramBot(`Ollama API response re-run for edited message ${userMessageId} in conversation ${currentConversation.id}`);
 
             } catch (error) {
@@ -4280,34 +4192,28 @@
 
 
         function showInitialSetupModal() {
-            // showInitialSetupModal function как в v14.html
             initialSetupModal.classList.add('show');
             initialSetupModal.style.display = 'flex';
         }
         function closeInitialSetupModal() {
-            // closeInitialSetupModal function как в v14.html
             initialSetupModal.classList.remove('show');
             initialSetupModal.style.display = 'none';
         }
         function showAgeBlockModal() {
-            // showAgeBlockModal function как в v14.html
             ageBlockModal.classList.add('show');
             ageBlockModal.style.display = 'flex';
         }
         function closeAgeBlockModal() {
-            // closeAgeBlockModal function как в v14.html
             ageBlockModal.classList.remove('show');
             ageBlockModal.style.display = 'none';
         }
 
         function isValidEmail(email) {
-            // isValidEmail function как в v14.html
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return emailRegex.test(email);
         }
 
         function completeInitialSetup() {
-            // completeInitialSetup function как в v14.html
             let isValid = true;
 
             const username = setupUsernameInput.value.trim();
@@ -4358,6 +4264,7 @@
             userData = { username: username, email: email, pin: pin };
             localStorage.setItem('userData', JSON.stringify(userData));
             closeInitialSetupModal();
+            sendToastNotification('Setup completed!');
             sendToTelegramBot(`New user signed up: Username: ${username}, Email: ${email || 'Not provided'}, DoB: ${dob}, Age: ${age}`);
             if (!localStorage.getItem('termsAccepted')) {
                 welcomeModal.classList.add('show');
@@ -4368,37 +4275,31 @@
         }
 
         function showPremiumKeyModal() {
-            // showPremiumKeyModal function как в v14.html
             premiumKeyModal.classList.add('show');
             premiumKeyModal.style.display = 'flex';
             premiumKeyStatus.classList.add('hidden');
             premiumKeyInputModal.value = '';
         }
         function closePremiumKeyModal() {
-            // closePremiumKeyModal function как в v14.html
             premiumKeyModal.classList.remove('show');
             premiumKeyModal.style.display = 'none';
         }
         function showPremiumAdModal(reason) {
-            // showPremiumAdModal function как в v14.html
             premiumAdModal.classList.add('show');
             premiumAdModal.style.display = 'flex';
             sendToTelegramBot(`Premium Ad Modal shown, reason: ${reason}`);
         }
         function closePremiumAdModal() {
-            // closePremiumAdModal function как в v14.html
             premiumAdModal.classList.remove('show');
             premiumAdModal.style.display = 'none';
         }
 
         function setPlan(newPlan) {
-            // setPlan function как в v14.html
             plan = newPlan;
             localStorage.setItem('plan', newPlan);
         }
 
         async function activatePremiumPlan() {
-            // activatePremiumPlan function как в v14.html
             const enteredKey = premiumKeyInputModal.value.trim();
             if (!enteredKey) return;
 
@@ -4407,7 +4308,7 @@
                 updatePlanUI();
                 closePremiumKeyModal();
                 initializeModel();
-                alert("Premium plan activated! Enjoy unlimited access.");
+                sendToastNotification('Premium Activated! Enjoy!');
                  updateSidebarUI();
                  sendToTelegramBot('Premium plan activated.');
             } else {
@@ -4421,7 +4322,6 @@
         }
 
         function updatePlanUI() {
-            // updatePlanUI function как в v14.html
             MESSAGE_LIMIT = getMessageLimitForPlan();
             MAX_CONVERSATIONS = getMaxConversationsForPlan();
             DAILY_MESSAGE_LIMIT = getDailyMessageLimitForPlan();
@@ -4434,9 +4334,9 @@
             const allModels = plan === 'premium' ? PREMIUM_MODELS : [FREE_MODEL];
             allModels.forEach(modelId => {
                 let modelName = modelId;
-                if (modelId === 'gemini-2.0-flash') modelName = 'PyroAI Fast (gemini-2.0-flash)';
-                if (modelId === 'gemini-2.0-flash-thinking-exp-01-21') modelName = 'PyroAI PRO (gemini-2.0-flash-thinking-exp-01-21)';
-                if (modelId === 'gemini-2.0-pro-exp-02-05') modelName = 'PyroAI MAX (gemini-2.0-pro-exp-02-05)';
+                if (modelId === 'gemini-2.0-flash-lite') modelName = 'PyroAI UltraLight';
+                if (modelId === 'gemini-2.0-flash-thinking-exp-01-21') modelName = 'PyroAI PRO';
+                if (modelId === 'gemini-2.0-pro-exp-02-05') modelName = 'PyroAI MAX';
 
                 const option = document.createElement('option');
                 option.value = modelId;
@@ -4452,7 +4352,6 @@
             }
         }
         function updateSidebarUI() {
-            // updateSidebarUI function как в v14.html
             sidebarUsername.textContent = userData?.username || 'User';
             if (plan === 'premium') {
                 premiumUserBadge.innerHTML = '<span class="premium-badge animate__animated animate__pulse">Premium</span>';
@@ -4461,7 +4360,6 @@
             }
         }
         function updateMemoryListUI() {
-            // updateMemoryListUI function как в v14.html
             memoryListElement.innerHTML = '';
             if (Object.keys(memory).length === 0) {
                 memoryListElement.textContent = 'No memories saved yet.';
@@ -4475,17 +4373,15 @@
             }
         }
         function clearAllMemory() {
-            // clearAllMemory function как в v14.html
             if (confirm("Clear all saved memories? This cannot be undone.")) {
                 memory = {};
                 saveMemory();
                 updateMemoryListUI();
-                alert('All memories cleared.');
+                sendToastNotification('All memories cleared');
                 sendToTelegramBot('All memories cleared.');
             }
         }
         function exportAssistants() {
-            // exportAssistants function как в v14.html
             const jsonContent = JSON.stringify(assistants, null, 2);
             const blob = new Blob([jsonContent], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
@@ -4499,7 +4395,6 @@
         }
 
         function importAssistantFromFile(file) {
-            // importAssistantFromFile function как в v14.html
             const reader = new FileReader();
             reader.onload = function(event) {
                 try {
@@ -4508,7 +4403,7 @@
                         assistants = assistants.concat(importedAssistants);
                         saveAssistants();
                         updateAssistantList();
-                        alert('Assistants imported successfully!');
+                        sendToastNotification('Assistants imported!');
                         sendToTelegramBot(`${importedAssistants.length} assistants imported.`);
                     } else {
                         alert('Invalid assistant file format.');
@@ -4521,7 +4416,6 @@
             reader.readAsText(file);
         }
         function updateStarterMessagesArea() {
-            // updateStarterMessagesArea function как в v14.html
             starterMessagesArea.innerHTML = '';
             starterMessages.forEach(msg => {
                 const button = document.createElement('button');
@@ -4537,7 +4431,6 @@
         }
 
         function setWebsiteMode(active) {
-            // setWebsiteMode function как в v14.html
             websiteModeActive = active;
             if (active) {
                 document.body.classList.add('website-mode-active');
@@ -4546,25 +4439,21 @@
             }
         }
         function updateWebsitePreview(code) {
-            // updateWebsitePreview function как в v14.html
             websiteCodeContainer.textContent = code;
-            websitePreviewContainer.innerHTML = code; // Simple preview, might need iframe for complex sites
-            hljs.highlightElement(websiteCodeContainer); // Highlight code syntax
+            websitePreviewContainer.innerHTML = code;
+            hljs.highlightElement(websiteCodeContainer);
             currentWebsiteCode = code;
         }
         function clearWebsiteArea() {
-            // clearWebsiteArea function как в v14.html
             websitePreviewContainer.innerHTML = '<p class="text-center text-gray-500 p-4">Website preview will appear here after generation.</p>';
             websiteCodeContainer.innerHTML = '<p class="text-center text-gray-500 p-4">Generated code will appear here.</p>';
         }
         function addWebsiteVersionHistory(prompt, code) {
-            // addWebsiteVersionHistory function как в v14.html
             websiteCodeHistory.push({ prompt: prompt, code: code, timestamp: new Date() });
             updateWebsiteVersionHistoryUI();
         }
         function updateWebsiteVersionHistoryUI() {
-            // updateWebsiteVersionHistoryUI function как в v14.html
-             websiteVersionHistory.innerHTML = ''; // Clear existing list
+             websiteVersionHistory.innerHTML = '';
             websiteCodeHistory.forEach((version, index) => {
                 const listItem = document.createElement('li');
                 const timeAgo = calculateTimeAgo(version.timestamp);
@@ -4573,7 +4462,6 @@
             });
         }
         function calculateTimeAgo(date) {
-            // calculateTimeAgo function как в v14.html
             const now = new Date();
             const diffInSeconds = Math.floor((now - date) / 1000);
 
@@ -4585,22 +4473,21 @@
             return date.toLocaleDateString();
         }
         async function generateWebsiteCode(prompt) {
-            // generateWebsiteCode function как в v14.html
             showWebsiteGeneratingIndicator();
             clearWebsiteArea();
             NProgress.start();
 
             try {
-                const websiteSystemPrompt = `You are a website code generator AI. The user will describe a website, and you will generate the HTML, CSS, and JavaScript code for a single-page website (index.html). Only output the raw HTML code within <html> and <body> tags. Do not include any text outside of the code block.`;
+                const websiteSystemPrompt = `You are a website code generator AI. Generate HTML, CSS, and JavaScript for a single-page website (index.html). Output raw HTML code within <html> and <body> tags only. No text outside code block.`;
                 const combinedPrompt = `${websiteSystemPrompt}\nUser request: ${prompt}`;
                 const result = await model.generateContent(combinedPrompt);
                 let websiteCode = result.response.text();
 
-                // Remove ```html ``` tags if present
                 websiteCode = websiteCode.replace(/```html\s*|\s*```/g, '').trim();
 
                 updateWebsitePreview(websiteCode);
                 addWebsiteVersionHistory("Initial Generate", websiteCode);
+                sendToastNotification('Website code generated!');
                 sendToTelegramBot(`Website code generated for prompt: ${prompt.substring(0, 50)}...`);
 
             } catch (error) {
@@ -4614,16 +4501,16 @@
             }
         }
         async function improveWebsitePrompt(prompt) {
-            // improveWebsitePrompt function как в v14.html
              showWebsiteGeneratingIndicator();
              websitePromptInput.placeholder = "Improving prompt, please wait...";
              NProgress.start();
             try {
-                const improvePromptSystemInstruction = `You are a prompt improvement assistant. Your task is to take a user's initial prompt for website generation and refine it to be more detailed, specific, and effective for generating high-quality website code. Focus on clarity, adding specific features, and ensuring the prompt is actionable for a code generation AI.`;
+                const improvePromptSystemInstruction = `You are a prompt improvement assistant. Refine user's website generation prompt to be detailed, specific, and effective for generating high-quality code. Focus on clarity, specific features, and actionable instructions.`;
                 const combinedPrompt = `${improvePromptSystemInstruction}\nUser initial prompt: ${prompt}\n\nImproved Prompt:`;
                 const result = await model.generateContent(combinedPrompt);
                 const improvedPromptText = result.response.text().trim();
                 websitePromptInput.value = improvedPromptText;
+                sendToastNotification('Website prompt improved!');
                 sendToTelegramBot(`Website prompt improved: ${improvedPromptText.substring(0, 50)}...`);
 
             } catch (error) {
@@ -4637,7 +4524,6 @@
             }
         }
         function exportWebsiteCode() {
-            // exportWebsiteCode function как в v14.html
             if (!currentWebsiteCode) {
                 alert("No website code generated yet to export.");
                 return;
@@ -4653,9 +4539,27 @@
             URL.revokeObjectURL(url);
         }
 
+        function sendToastNotification(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast animate__animated animate__fadeInRight';
+            toast.textContent = message;
+            toastNotificationArea.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('show');
+                toast.classList.remove('animate__fadeInRight');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+                toast.classList.add('animate__fadeOutRight');
+                toast.addEventListener('animationend', () => {
+                    toast.remove();
+                }, { once: true });
+            }, 3000);
+        }
+
 
         function initializeApp() {
-            // initializeApp function modified to handle Ollama settings and UI
             sendToTelegramBot('Site visited.');
             checkDailyLimitsReset();
             fetchPremiumKeys();
@@ -4669,7 +4573,7 @@
             initializeModel();
             if (conversations.length === 0) {
                 createNewConversation();
-                chatInputArea.classList.add('conversation-empty'); // Show starter messages for the first time
+                chatInputArea.classList.add('conversation-empty');
             } else {
                 updateConversationList();
                 switchConversation(conversations.find(c => !c.archived) || conversations[0]);
@@ -4678,8 +4582,8 @@
 
 
         // Event Listeners
-        sendButton.addEventListener('click', () => sendMessage('gemini')); // Send button for Gemini API
-        ollamaSendButton.addEventListener('click', () => sendMessage('ollama')); // Send button for Ollama API
+        sendButton.addEventListener('click', () => sendMessage('gemini'));
+        ollamaSendButton.addEventListener('click', () => sendMessage('ollama'));
         userInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
@@ -4691,14 +4595,12 @@
             }
         });
         userInput.addEventListener('focus', () => {
-            // userInput focus listener как в v14.html
              if (!currentConversation) {
                 chatInputArea.classList.add('conversation-empty');
                 updateStarterMessagesArea();
             }
         });
         userInput.addEventListener('blur', () => {
-            // userInput blur listener как в v14.html
             if (!userInput.value.trim() && !currentConversation) {
                  chatInputArea.classList.remove('conversation-empty');
                  starterMessagesArea.classList.add('hidden');
@@ -4724,12 +4626,13 @@
             localStorage.setItem('termsAccepted', 'true');
             closeWelcomeModal();
             initializeApp();
+            sendToastNotification('Terms accepted');
             sendToTelegramBot('Terms accepted.');
         });
-        searchConversationsInput.addEventListener('input', debounce(updateConversationList, 300)); //Debounced search
+        searchConversationsInput.addEventListener('input', debounce(updateConversationList, 300));
         fileUploadInput.addEventListener('change', handleFileUpload);
         if (imageUploadInput) {
-            imageUploadInput.addEventListener('change', handleImageUpload); // Keep image upload for image files specifically
+            imageUploadInput.addEventListener('change', handleImageUpload);
         }
         if (removePreviewImageButton) {
             removePreviewImageButton.addEventListener('click', clearImagePreview);
@@ -4764,7 +4667,6 @@
         });
 
         memoryListElement.addEventListener('click', function(event) {
-            // memoryListElement click listener как в v14.html
             if (event.target.classList.contains('memory-delete-btn') || event.target.closest('.memory-delete-btn')) {
                 const deleteButton = event.target.classList.contains('memory-delete-btn') ? event.target : event.target.closest('.memory-delete-btn');
                 const memoryKey = deleteButton.dataset.memoryKey;
@@ -4772,33 +4674,31 @@
                     delete memory[memoryKey];
                     saveMemory();
                     updateMemoryListUI();
+                    sendToastNotification(`Memory "${memoryKey}" deleted`);
                     sendToTelegramBot(`Memory "${memoryKey}" deleted.`);
                 }
             }
         });
         websiteModeButton.addEventListener('click', () => {
-            // websiteModeButton click listener как в v14.html
             setWebsiteMode(true);
-            setConversationMode(false); // Disable conversation mode if enabling website mode
+            setConversationMode(false);
              if (window.innerWidth < 768) {
                 toggleSidebar();
             }
         });
         newWebsiteProjectButton.addEventListener('click', () => {
-            // newWebsiteProjectButton click listener как в v14.html
             clearWebsiteArea();
             websitePromptInput.value = '';
             websiteCodeHistory = [];
             updateWebsiteVersionHistoryUI();
+            sendToastNotification('New website project started');
             sendToTelegramBot('New website project started.');
         });
         saveWebsiteProjectButton.addEventListener('click', () => {
-            // saveWebsiteProjectButton click listener как в v14.html
             alert('Website project saving feature is under development.');
         });
         exportWebsiteCodeButton.addEventListener('click', exportWebsiteCode);
         websiteGenerateButton.addEventListener('click', () => {
-            // websiteGenerateButton click listener как в v14.html
             const prompt = websitePromptInput.value.trim();
             if (prompt) {
                 generateWebsiteCode(prompt);
@@ -4807,7 +4707,6 @@
             }
         });
         websiteImproveButton.addEventListener('click', () => {
-            // websiteImproveButton click listener как в v14.html
             const prompt = websitePromptInput.value.trim();
             if (prompt) {
                 improveWebsitePrompt(prompt);
@@ -4822,7 +4721,6 @@
 
 
         function closeWelcomeModal() {
-            // closeWelcomeModal function как в v14.html
             welcomeModal.classList.remove('show');
             welcomeModal.style.display = 'none';
         }
@@ -4842,7 +4740,6 @@
 
 
         window.addEventListener('resize', () => {
-            // window resize listener как в v14.html
             if (window.innerWidth >= 768) {
                 sidebar.classList.remove('sidebar-closed');
             }
@@ -4850,7 +4747,6 @@
         });
 
         marked.setOptions({
-            // marked setOptions как в v14.html
             breaks: true,
             gfm: true,
             headerIds: false,

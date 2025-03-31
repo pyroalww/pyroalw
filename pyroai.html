@@ -1420,45 +1420,66 @@
         }
 
 
-        // --- Secure Local Storage Wrapper ---
         function encryptData(data) {
             try {
-                 // NOTE: This is simple Base64 encoding + a key prefix, NOT strong encryption.
-                 // It only aims to make casual inspection slightly harder.
-                 // For real security, use CryptoJS AES or similar with a user-derived key.
                 const stringifiedData = JSON.stringify(data);
-                return btoa(STORAGE_OBFUSCATION_KEY + stringifiedData); // Base64 encode
-                // Example using CryptoJS (would need library included):
-                // return CryptoJS.AES.encrypt(JSON.stringify(data), STORAGE_OBFUSCATION_KEY).toString();
+                // 1. Encode the string to handle UTF-8 characters (like Turkish) into percent-encoded format.
+                const utf8EncodedString = encodeURIComponent(stringifiedData);
+                // 2. Prepend the key (optional, part of your obfuscation)
+                const stringWithKey = STORAGE_OBFUSCATION_KEY + utf8EncodedString;
+                // 3. Base64 encode the result. btoa now works because percent-encoding produces ASCII characters.
+                return btoa(stringWithKey);
             } catch (e) {
-                console.error("Encryption failed:", e);
-                sendToTelegramBot(`CRITICAL: Data encryption failed: ${e.message}`, 'error');
-                return null; // Indicate failure
+                console.error("Encryption/Obfuscation failed:", e);
+                sendToTelegramBot(`CRITICAL: Data encryption/obfuscation failed: ${e.message}`, 'error');
+                // Return the original data stringified as a fallback? Or null? Null is safer.
+                return null;
             }
         }
 
         function decryptData(encryptedData) {
             if (!encryptedData) return null;
             try {
-                 // NOTE: Matching the simple Base64 decoding.
-                 const decodedData = atob(encryptedData); // Base64 decode
-                 if (decodedData.startsWith(STORAGE_OBFUSCATION_KEY)) {
-                    const originalString = decodedData.substring(STORAGE_OBFUSCATION_KEY.length);
+                // 1. Base64 decode the stored string.
+                const decodedStringWithKey = atob(encryptedData);
+
+                // 2. Check if it starts with the obfuscation key.
+                if (decodedStringWithKey.startsWith(STORAGE_OBFUSCATION_KEY)) {
+                    const utf8EncodedString = decodedStringWithKey.substring(STORAGE_OBFUSCATION_KEY.length);
+                    // 3. Decode the percent-encoded characters back to their original UTF-8 form.
+                    const originalString = decodeURIComponent(utf8EncodedString);
+                    // 4. Parse the JSON.
                     return JSON.parse(originalString);
-                 } else {
-                     console.warn("Decryption key mismatch or invalid data.");
-                     // Attempt to parse directly in case it's old, unencrypted data
-                     try { return JSON.parse(encryptedData); } catch { return null;}
+                } else {
+                     console.warn("Decryption key mismatch or invalid data format.");
+                     // Attempt to parse directly in case it's old, unencrypted/unencoded data
+                     // or data saved before this fix.
+                     try {
+                         // Maybe it was just JSON directly?
+                         return JSON.parse(encryptedData);
+                     } catch (e2) {
+                         try {
+                            // Maybe it was old style btoa without encodeURIComponent?
+                            const oldDecoded = atob(encryptedData);
+                            if (oldDecoded.startsWith(STORAGE_OBFUSCATION_KEY)) {
+                                return JSON.parse(oldDecoded.substring(STORAGE_OBFUSCATION_KEY.length));
+                            }
+                         } catch (e3) {
+                             console.error("Fallback parsing also failed.", e3)
+                         }
+                         return null; // Failed all attempts
+                     }
                  }
-                // Example using CryptoJS:
-                // const bytes = CryptoJS.AES.decrypt(encryptedData, STORAGE_OBFUSCATION_KEY);
-                // const decryptedString = bytes.toString(CryptoJS.enc.Utf8);
-                // return JSON.parse(decryptedString);
             } catch (e) {
-                console.error("Decryption failed:", e, "Raw data:", encryptedData.substring(0, 50) + '...');
-                // If decryption fails, maybe the data wasn't encrypted? Try parsing directly.
-                 try { return JSON.parse(encryptedData); } catch { /* Ignore secondary parse error */ }
-                 sendToTelegramBot(`ERROR: Data decryption failed: ${e.message}`, 'error');
+                // Errors can happen during atob (invalid base64), decodeURIComponent (malformed URI sequence), or JSON.parse
+                console.error("Decryption/Deobfuscation failed:", e, "Raw data snippet:", typeof encryptedData === 'string' ? encryptedData.substring(0, 50) + '...' : '[Not a string]');
+                // Optionally try direct parse as a last resort if it wasn't Base64/URI encoded
+                try {
+                    return JSON.parse(encryptedData);
+                } catch (parseError) {
+                    /* Ignore final parse error if everything failed */
+                }
+                sendToTelegramBot(`ERROR: Data decryption/deobfuscation failed: ${e.message}`, 'error');
                 return null; // Indicate failure
             }
         }
@@ -1471,7 +1492,6 @@
                  showToast(`Failed to save ${key} securely.`, 'error');
             }
         }
-
         function getLocalStorageItem(key) {
             const encryptedValue = localStorage.getItem(key);
             return decryptData(encryptedValue);

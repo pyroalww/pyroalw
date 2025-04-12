@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PurnaHub</title>
+    <style>
+        /* Sayfa kenarlarındaki boşlukları kaldır ve iframe'in tam ekran olmasını sağla */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden; /* Ana sayfada kaydırma çubuğu olmasın */
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none; /* iframe kenarlığı olmasın */
+        }
+    </style>
+</head>
+<body>
+
+    <iframe id="ngrokFrame" src="https://253f-212-253-222-173.ngrok-free.app">
+        <p>Tarayıcınız iframe desteklemiyor veya içerik yüklenemedi.</p>
+    </iframe>
+
+    <script>
+        // --- OTOMATİK TIKLAMA GİRİŞİMİ (Büyük İhtimalle Çalışmayacak) ---
+        const iframe = document.getElementById('ngrokFrame');
+
+        iframe.onload = function() {
+            console.log('Iframe yüklendi. İçeriğe erişmeye çalışılıyor...');
+            try {
+                // iframe içeriğindeki belgeye erişmeye çalış
+                const iframeDoc = iframe.contentWindow.document;
+
+                // Belirtilen sınıflara sahip butonu bulmaya çalış
+                // Not: Sınıf seçicisi çok uzun ve özel karakterler içerebilir (\:, /).
+                // Daha basit bir seçici veya metin içeriğiyle arama daha güvenilir olabilir.
+                // Örneğin, sadece metni "Visit Site" olan butonu arayalım.
+                let visitButton = null;
+                const buttons = iframeDoc.querySelectorAll('button');
+                for (const btn of buttons) {
+                    // Buton metnini kontrol et (baştaki/sondaki boşlukları temizle)
+                    if (btn.textContent.trim() === 'Visit Site') {
+                        // Ek olarak, düğmenin mavi arka plan sınıfına sahip olup olmadığını kontrol edebiliriz.
+                        if (btn.classList.contains('bg-blue-600')) {
+                           visitButton = btn;
+                           console.log('Hedef buton bulundu:', visitButton);
+                           break; // Butonu bulduk, döngüden çık
+                        }
+                    }
+                }
+
+
+                if (visitButton) {
+                    console.log('Butona tıklanıyor...');
+                    visitButton.click();
+                    console.log('Butona tıklandı (eğer Same-Origin Policy izin verdiyse).');
+                } else {
+                    console.log('Belirtilen "Visit Site" butonu iframe içinde bulunamadı.');
+                }
+
+            } catch (e) {
+                console.error('Iframe içeriğine erişilemedi! Bu muhtemelen Same-Origin Policy (Aynı Köken Politikası) kısıtlamasından kaynaklanıyor.', e);
+                // Kullanıcıya bilgi vermek için sayfaya bir mesaj ekleyebiliriz (isteğe bağlı)
+                /*
+                const warning = document.createElement('p');
+                warning.textContent = 'Güvenlik kısıtlamaları nedeniyle "Visit Site" butonuna otomatik tıklanamadı. Lütfen butona manuel olarak tıklayın.';
+                warning.style.position = 'absolute';
+                warning.style.top = '10px';
+                warning.style.left = '10px';
+                warning.style.backgroundColor = 'yellow';
+                warning.style.padding = '10px';
+                warning.style.border = '1px solid red';
+                warning.style.zIndex = '1000'; // iframe'in üzerinde görünmesi için
+                document.body.appendChild(warning);
+                */
+            }
+        };
+
+        // iframe yüklenirken hata olursa konsola yazdır
+        iframe.onerror = function() {
+            console.error('Iframe yüklenirken bir hata oluştu.');
+        };
+
+        console.log('Sayfa yüklendi, iframe yüklenmesi bekleniyor...');
+    </script>
+
+</body>
+</html>

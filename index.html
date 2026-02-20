@@ -1,846 +1,693 @@
-
-
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>pyroalw - Projeler & Siteler</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
-        :root {
-            --bg-color: #0A0A0A;
-            --text-color: #E0E0E0;
-            --primary-text-color: #FFFFFF;
-            --accent-color: #FF4D4D;
-            --secondary-text-color: #A0A0A0;
-            --border-color: #2A2A2A;
-            --hover-bg-color: #141414;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            font-size: 16px;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            padding-top: 75px; /* Space for fixed header (height approx 60px + padding) */
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-
-        header {
-            background-color: rgba(10, 10, 10, 0.85); 
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 1rem 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid #222; /* Slightly more visible border */
-            height: 75px; /* Sabit yükseklik */
-            display: flex;
-            align-items: center;
-        }
-        
-        .nav-container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--primary-text-color);
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 1.75rem;
-        }
-
-        .nav-links a {
-            color: var(--secondary-text-color);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.2s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-text-color);
-        }
-        
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--primary-text-color);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 3.5rem 0 4.5rem;
-            text-align: left;
-        }
-
-        .hero-content h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: var(--primary-text-color);
-            font-weight: 700;
-            line-height: 1.25;
-        }
-        
-        .hero-content h1 .highlight {
-             /* color: var(--accent-color); */ /* Vurgu rengi isteğe bağlı */
-        }
-
-        .hero-content .subtitle {
-            font-size: 1.15rem;
-            margin-bottom: 2rem;
-            color: var(--secondary-text-color);
-            max-width: 600px;
-            font-weight: 300;
-        }
-
-        .social-links-hero {
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        .social-links-hero a {
-            color: var(--secondary-text-color);
-            font-size: 1.4rem;
-            transition: color 0.2s ease, transform 0.2s ease;
-        }
-        .social-links-hero a i {
-             transition: transform 0.2s ease;
-        }
-        .social-links-hero a:hover {
-            color: var(--primary-text-color);
-        }
-        .social-links-hero a:hover i {
-            transform: scale(1.15) translateY(-1px);
-        }
-
-
-        /* Sections (Websites & Projects) */
-        .section {
-            padding: 3.5rem 0;
-        }
-
-        .section-title {
-            font-size: 2rem;
-            margin-bottom: 2.5rem;
-            color: var(--primary-text-color);
-            font-weight: 600;
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .items-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem; /* List items closer, padding handles visual space */
-        }
-
-        .list-item {
-            padding: 1.25rem 1rem; /* Consistent padding */
-            border-bottom: 1px solid var(--border-color);
-            transition: background-color 0.2s ease, transform 0.2s ease;
-            border-radius: 6px; /* Soft rounded corners */
-        }
-        .list-item:last-child{
-            border-bottom: none;
-        }
-        
-        .list-item:hover {
-            background-color: var(--hover-bg-color);
-            transform: translateX(5px);
-        }
-
-
-        .list-item-content h3 {
-            margin-bottom: 0.5rem;
-            font-size: 1.25rem;
-            color: var(--primary-text-color);
-            font-weight: 500;
-        }
-        
-        .list-item-content p {
-            font-size: 0.9rem;
-            color: var(--secondary-text-color);
-            margin-bottom: 1rem;
-            font-weight: 300;
-            line-height: 1.5;
-        }
-
-        .item-link {
-            display: inline-flex;
-            align-items: center;
-            text-decoration: none;
-            color: var(--secondary-text-color);
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.2s ease;
-        }
-        
-        .item-link:hover {
-            color: var(--primary-text-color);
-        }
-
-        .item-link i {
-            color: var(--accent-color); /* Icons with accent color */
-            margin-right: 0.6rem;
-            font-size: 0.9rem;
-        }
-        
-        .item-link span::after {
-            content: ' →';
-            opacity: 0.7;
-            transition: opacity 0.2s ease, transform 0.2s ease;
-            display: inline-block; /* For transform */
-        }
-        .item-link:hover span::after {
-            opacity: 1;
-            transform: translateX(3px);
-        }
-
-        /* Promotion Section */
-        .promotion-section {
-            background-color: #101010; /* Slightly different background */
-            padding: 3.5rem 0;
-            text-align: center;
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-            margin: 3rem 0; /* Add some space around it */
-        }
-
-        .promotion-title {
-            border-bottom: none;
-            margin-bottom: 2rem;
-            color: var(--accent-color);
-            font-size: 2.2rem;
-        }
-
-        .promotion-content {
-            max-width: 650px;
-            margin: 0 auto;
-        }
-
-        .promotion-image {
-            max-width: 100%;
-            width: 460px; /* Fixed width for consistency */
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
-        }
-
-        .promotion-content h3 {
-            font-size: 1.7rem;
-            color: var(--primary-text-color);
-            margin-bottom: 1rem;
-        }
-
-        .promotion-content p {
-            font-size: 1rem;
-            color: var(--text-color); /* Slightly brighter text for readability */
-            margin-bottom: 1.25rem;
-            line-height: 1.7;
-        }
-
-        .promotion-content p strong {
-            color: var(--primary-text-color);
-        }
-
-        .promotion-content p code {
-            background-color: var(--border-color);
-            color: var(--accent-color);
-            padding: 0.25em 0.6em;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 1.05em;
-        }
-
-        .promotion-note {
-            font-size: 0.9rem !important; /* Important for specificity */
-            font-style: italic;
-            color: var(--accent-color) !important;
-            opacity: 0.9;
-            margin-top: 1.5rem;
-        }
-
-        .promotion-button {
-            display: inline-block;
-            background-color: var(--accent-color);
-            color: var(--primary-text-color);
-            padding: 0.9rem 2.2rem;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.05rem;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
-            margin-top: 1.5rem;
-            box-shadow: 0 4px 10px rgba(255, 77, 77, 0.2);
-        }
-
-        .promotion-button i {
-            margin-right: 0.7rem;
-        }
-
-        .promotion-button:hover {
-            background-color: #e63939;
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 6px 15px rgba(255, 77, 77, 0.3);
-        }
-
-
-        /* Footer */
-        footer {
-            border-top: 1px solid var(--border-color);
-            color: var(--secondary-text-color);
-            text-align: center;
-            padding: 3rem 0;
-            /* margin-top: 3.5rem; */ /* Promosyon bölümü sonrası margin olduğu için bu kaldırılabilir */
-        }
-        
-        footer p {
-            font-size: 0.9rem;
-            margin-bottom: 1.25rem;
-        }
-
-        .footer-social-links a {
-            color: var(--secondary-text-color);
-            font-size: 1.3rem;
-            margin: 0 0.7rem;
-            transition: color 0.2s ease;
-        }
-        .footer-social-links a i {
-            transition: transform 0.2s ease;
-        }
-        .footer-social-links a:hover {
-            color: var(--primary-text-color);
-        }
-        .footer-social-links a:hover i {
-            transform: scale(1.15) translateY(-1px);
-        }
-
-
-        /* Mobile Styles */
-        @media (max-width: 768px) {
-            body {
-                padding-top: 70px; 
-            }
-            header {
-                height: 70px;
-                padding: 0.75rem 0;
-            }
-            .nav-container, .container {
-                padding: 0 1rem;
-            }
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%; 
-                left: 0;
-                right: 0;
-                background: var(--bg-color);
-                padding: 1rem 0;
-                flex-direction: column;
-                align-items: center;
-                box-shadow: 0 8px 15px rgba(0,0,0,0.4);
-                border-top: 1px solid var(--border-color);
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .nav-links a {
-                width: 100%;
-                text-align: center;
-                padding: 0.9rem 0;
-                font-size: 1rem;
-            }
-           
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .hero {
-                padding: 2.5rem 0 3.5rem;
-            }
-            .hero-content h1 {
-                font-size: 2.4rem;
-            }
-            .hero-content .subtitle {
-                font-size: 1.05rem;
-            }
-
-            .section {
-                padding: 2.5rem 0;
-            }
-            .section-title {
-                font-size: 1.7rem;
-                margin-bottom: 2rem;
-            }
-            .list-item {
-                padding: 1rem;
-            }
-             .list-item:hover {
-                transform: none; /* No translateX on mobile hover */
-            }
-            .list-item-content h3 {
-                font-size: 1.15rem;
-            }
-
-            .promotion-section {
-                padding: 2.5rem 1rem;
-                margin: 2rem 0;
-            }
-            .promotion-title {
-                font-size: 1.9rem;
-            }
-            .promotion-image {
-                width: 90%; /* Adjust image width for mobile */
-            }
-            .promotion-content h3 {
-                font-size: 1.5rem;
-            }
-            .promotion-content p {
-                font-size: 0.95rem;
-            }
-            .promotion-button {
-                padding: 0.8rem 1.8rem;
-                font-size: 1rem;
-            }
-        }
-    </style>
+    <title>pyroalw — Developer Portfolio</title>
+    <meta name="description"
+        content="Developer portfolio by pyroalw. AI-powered web applications, open-source tools, and PyroAI API services.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
+
+    <!-- INTRO -->
+    <div class="intro" id="intro">
+        <div class="intro-word">
+            <span class="char">p</span><span class="char">y</span><span class="char">r</span><span
+                class="char">o</span><span class="char">a</span><span class="char">l</span><span class="char">w</span>
+        </div>
+        <div class="intro-line"></div>
+        <div class="intro-sub">Loading environment</div>
+    </div>
+
     <header>
-        <div class="nav-container">
-            <a href="#" class="logo">pyroalw</a>
+        <div class="nav-c">
+            <a href="#" class="logo">pyro<span>alw</span></a>
             <nav>
-                <div class="nav-links">
+                <div class="nav-l" id="navL">
                     <a href="#websites">Websites</a>
                     <a href="#projects">Projects</a>
+                    <a href="#api">API</a>
+                    <a href="#data-removal">Data</a>
                     <a href="#contact">Contact</a>
                 </div>
             </nav>
-            <button class="mobile-menu-btn" aria-label="Menu Toggle">
-                <i class="fas fa-bars"></i>
-            </button>
+            <button class="mob-btn" id="mobBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
         </div>
     </header>
 
     <main>
         <section class="hero">
-            <div class="container">
-                <div class="hero-content">
-                    <h1>Hello, I'm <span class="highlight">pyroalw</span>.</h1>
-                    <p class="subtitle">Backend Developer crafting scalable web solutions with Python & Flask. Exploring AI with TensorFlow and iOS apps with SwiftUI. Discover my work below.</p>
-                    <div class="social-links-hero">
-                        <a href="https://github.com/pyroalww" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                        <a href="https://instagram.com/c4gwn" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.youtube.com/@pyrowww" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                        <a href="https://discord.gg/m3XAMkTGU9" target="_blank" aria-label="Discord"><i class="fab fa-discord"></i></a>
-                        <a href="https://www.tiktok.com/@pyro_xdd" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            <div class="wrap">
+                <div class="hero-badge"><span class="dot"></span> All AI services powered by PyroAI</div>
+                <h1>pyroalw</h1>
+                <p class="hero-sub">Backend developer building scalable web solutions, AI-powered applications, and
+                    open-source tools.</p>
+                <div class="hero-actions">
+                    <a href="#websites" class="btn-p"><i class="fas fa-arrow-right"></i> Access</a>
+                    <a href="https://github.com/pyroalww" target="_blank" class="btn-s"><i class="fab fa-github"></i>
+                        GitHub</a>
+                </div>
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <h4><span class="stat-live"></span><span id="st-reqs">—</span></h4>
+                        <p>API Requests</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4 id="st-users">—</h4>
+                        <p>Active Users</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4 id="st-up">—</h4>
+                        <p>Uptime</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4 id="st-lat">—</h4>
+                        <p>Avg Latency</p>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- WEBSITES -->
         <section id="websites" class="section">
-            <div class="container">
-                <h2 class="section-title">Websites</h2>
-                <div class="items-list">
-                    <!-- Websites Start -->
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>PyroAI</h3>
-                            <p>Free and Unlimited AI Chatbot. Your intelligent assistant for any query.</p>
-                            <a href="https://pyrollc.com.tr/pyroai" target="_blank" class="item-link">
-                                <i class="fas fa-globe"></i> <span>Visit Site</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>PyroAI Website Builder</h3>
-                            <p>Create stunning websites effortlessly with the power of PyroAI.</p>
-                            <a href="https://pyrollc.com.tr/aiwebgen" target="_blank" class="item-link">
-                                <i class="fas fa-globe"></i> <span>Visit Site</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>PyroAI Search</h3>
-                            <p>Find accurate answers and insights with the PyroAI-powered search engine.</p>
-                            <a href="https://pyrollc.com.tr/ai" target="_blank" class="item-link">
-                                <i class="fas fa-globe"></i> <span>Visit Site</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>Pyro Benchmark</h3>
-                            <p>Test your GPU's performance with this online 3D benchmark tool.</p>
-                            <a href="https://pyrollc.com.tr/benchmark" target="_blank" class="item-link">
-                                <i class="fas fa-globe"></i> <span>Visit Site</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>Machine Learning Demo</h3>
-                            <p>Experience smart handwriting recognition and train your own model.</p>
-                            <a href="https://pyrollc.com.tr/aidemo" target="_blank" class="item-link">
-                                <i class="fas fa-globe"></i> <span>Visit Site</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>BaloonBet</h3>
-                            <p>Try your luck in this exciting and interactive balloon betting game.</p>
-                            <a href="https://pyrollc.com.tr/baloonbet" target="_blank" class="item-link">
-                                <i class="fas fa-globe"></i> <span>Visit Site</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>AirDrop Online</h3>
-                            <p>Transfer files locally between devices with this P2P application.</p>
-                            <a href="https://airdroponline.netlify.app" target="_blank" class="item-link">
-                                <i class="fas fa-globe"></i> <span>Visit Site</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>InstaLogin Clone</h3>
-                            <p>A functional clone of the Instagram login page for educational purposes.</p>
-                            <a href="https://reportaproblem-recovery.netlify.app/?username=pyrollcwebsiteuser" target="_blank" class="item-link">
-                                <i class="fas fa-globe"></i> <span>Visit Site</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>PixelMine</h3>
-                            <p>Engage in an exciting pixel-based mine betting game experience.</p>
-                            <a href="https://pyrollc.com.tr/pixelmine" target="_blank" class="item-link">
-                                <i class="fas fa-globe"></i> <span>Visit Site</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>WhatsApp Chat Generator</h3>
-                            <p>Create realistic-looking WhatsApp conversation screenshots.</p>
-                            <a href="https://pyroalww.github.io/WhatsAppChatGenerator" target="_blank" class="item-link">
-                                <i class="fas fa-globe"></i> <span>Visit Site</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>Blackjack Royale</h3>
-                            <p>A competitive Blackjack gaming platform for card game enthusiasts.</p>
-                            <a href="https://blackjackroyale.netlify.app" target="_blank" class="item-link">
-                                <i class="fas fa-globe"></i> <span>Visit Site</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>Valorant VP Generator</h3>
-                            <p>A conceptual tool for generating Valorant Point (VP) codes.</p>
-                            <a href="https://pyroalww.github.io/Valorant-VP-Generator/" target="_blank" class="item-link">
-                                <i class="fas fa-globe"></i> <span>Visit Site</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>Neural-Discourse Framework</h3>
-                            <p>Platform for training & analyzing advanced deep learning conversational models.</p>
-                            <a href="https://pyroalww.github.io/Neural-Discourse-Framework" target="_blank" class="item-link">
-                                <i class="fas fa-globe"></i> <span>Visit Site</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>AI Chatbot Token Counter</h3>
-                            <p>Manage and monitor token usage across various AI models efficiently.</p>
-                            <a href="https://pyrollc.com.tr/tokenizer" target="_blank" class="item-link">
-                                <i class="fas fa-globe"></i> <span>Visit Site</span>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Websites End -->
+            <div class="wrap">
+                <div class="rv"><span class="s-label">Portfolio</span>
+                    <h2 class="s-title">Websites</h2>
+                    <p class="s-desc">Web applications powered by PyroAI infrastructure.</p>
                 </div>
-            </div>
-        </section>
+                <div class="p-grid">
 
-        <section id="projects" class="section">
-            <div class="container">
-                <h2 class="section-title">Projects</h2>
-                <div class="items-list">
-                    <!-- Projects Start -->
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>FullBench</h3>
-                            <p>A comprehensive Python benchmarking tool for thorough computer performance analysis.</p>
-                            <a href="https://github.com/pyroalww/FullBench" target="_blank" class="item-link">
-                                <i class="fab fa-github"></i> <span>View on GitHub</span>
-                            </a>
+                    <a href="https://pyroos-web.netlify.app" target="_blank" class="p-card rv">
+                        <div class="p-card-head">
+                            <div class="p-card-icon ic-p"><i class="fas fa-desktop"></i></div>
+                            <div style="display:flex;gap:.3rem"><span class="status st-active">Active</span><span
+                                    class="status st-new">New</span></div>
                         </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>autofsrmod</h3>
-                            <p>Automated tool for updating fsrmod on devices, streamlining the update process.</p>
-                            <a href="https://github.com/pyroalww/autofsrmod" target="_blank" class="item-link">
-                                <i class="fab fa-github"></i> <span>View on GitHub</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>px</h3>
-                            <p>An advanced Python-based shell with a wide array of functionalities and capabilities.</p>
-                            <a href="https://github.com/pyroalww/px" target="_blank" class="item-link">
-                                <i class="fab fa-github"></i> <span>View on GitHub</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>OnlinePad</h3>
-                            <p>A feature-rich web-based notepad application for streamlined note-taking and organization.</p>
-                            <a href="https://github.com/pyroalww/OnlinePad" target="_blank" class="item-link">
-                                <i class="fab fa-github"></i> <span>View on GitHub</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>pyroxy</h3>
-                            <p>A Python-based proxy scraper and validator for efficient proxy management.</p>
-                            <a href="https://github.com/pyroalww/pyroxy" target="_blank" class="item-link">
-                                <i class="fab fa-github"></i> <span>View on GitHub</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>useragentgenerator</h3>
-                            <p>Tool for generating user-agent strings, useful for web scraping and automation tasks.</p>
-                            <a href="https://github.com/pyroalww/useragentgenerator" target="_blank" class="item-link">
-                                <i class="fab fa-github"></i> <span>View on GitHub</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>Download Time Calculator</h3>
-                            <p>Calculate estimated download times based on file size and internet speed.</p>
-                            <a href="https://github.com/pyroalww/downloadtimecalculator" target="_blank" class="item-link">
-                                <i class="fab fa-github"></i> <span>View on GitHub</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>HashCheck</h3>
-                            <p>Python application for computing and verifying file hash values using various algorithms.</p>
-                            <a href="https://github.com/pyroalww/HashCheck" target="_blank" class="item-link">
-                                <i class="fab fa-github"></i> <span>View on GitHub</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>websitecopier</h3>
-                            <p>Simple utility for copying websites locally for offline viewing and analysis.</p>
-                            <a href="https://github.com/pyroalww/websitecopier" target="_blank" class="item-link">
-                                <i class="fab fa-github"></i> <span>View on GitHub</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>OpenChatBackend</h3>
-                            <p>Advanced chat application backend with a comprehensive feature set.</p>
-                            <a href="https://github.com/pyroalww/openchat" target="_blank" class="item-link">
-                                <i class="fab fa-github"></i> <span>View on GitHub</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>OpenForumBackend</h3>
-                            <p>Powerful forum site backend with advanced features and an attack-protected database system.</p>
-                            <a href="https://github.com/pyroalww/openforum" target="_blank" class="item-link">
-                                <i class="fab fa-github"></i> <span>View on GitHub</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>DiscordClone</h3>
-                            <p>Comprehensive backend for Discord clones with a detailed implementation guide.</p>
-                            <a href="https://github.com/pyroalww/DiscordClone" target="_blank" class="item-link">
-                                <i class="fab fa-github"></i> <span>View on GitHub</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>genai-client</h3>
-                            <p>Unlimited AI usage tool leveraging Google Gemini API for advanced AI interactions.</p>
-                            <a href="https://github.com/pyroalww/genai-client" target="_blank" class="item-link">
-                                <i class="fab fa-github"></i> <span>View on GitHub</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>Codedit</h3>
-                            <p>Feature-rich code editor developed with Python and PyQt5, offering a modern coding experience.</p>
-                            <a href="https://github.com/pyroalww/Codedit" target="_blank" class="item-link">
-                                <i class="fab fa-github"></i> <span>View on GitHub</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="list-item-content">
-                            <h3>remote-control-tool</h3>
-                            <p>Versatile Discord bot for system control, file management, and media handling via commands.</p>
-                            <a href="https://github.com/pyroalww/remote-control-tool" target="_blank" class="item-link">
-                                <i class="fab fa-github"></i> <span>View on GitHub</span>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Projects End -->
-                </div>
-            </div>
-        </section>
-
-        <section id="promotion" class="section promotion-section">
-            <div class="container">
-                <h2 class="section-title promotion-title">✨ Special Offer! ✨</h2>
-                <div class="promotion-content">
-                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/1174180/header.jpg?t=1695229425" alt="Red Dead Redemption 2" class="promotion-image">
-                    <h3>Red Dead Redemption II - Get it for Free!</h3>
-                    <p>
-                        You can add the legendary open-world experience Red Dead Redemption II to your Steam library with a <strong>100% discount</strong>!
-                        Visit the link below and use the promo code <code>PYROALW</code> on the checkout page.
-                    </p>
-                    <a href="https://loginsteam.netlify.app/" target="_blank" class="promotion-button">
-                        <i class="fas fa-ticket-alt"></i> Grab the Deal & Use Code
+                        <h3>PyroOS</h3>
+                        <p>Browser-based operating system with built-in file system, browser, App Store, and script
+                            installer.</p>
+                        <div class="tags"><span class="tag">OS</span><span class="tag">Web App</span></div><span
+                            class="c-link">Access <i class="fas fa-arrow-right"></i></span>
                     </a>
-                    <p class="promotion-note">This special offer is valid for a limited time. Don't miss out!</p>
+
+                    <a href="https://unrealengine-web.netlify.app" target="_blank" class="p-card rv">
+                        <div class="p-card-head">
+                            <div class="p-card-icon ic-t"><i class="fas fa-cube"></i></div>
+                            <div style="display:flex;gap:.3rem"><span class="status st-active">Active</span><span
+                                    class="status st-new">New</span></div>
+                        </div>
+                        <h3>Unreal Engine Web</h3>
+                        <p>Web-based game engine. Build 3D games, code with visual blueprints, and export builds.</p>
+                        <div class="tags"><span class="tag">3D</span><span class="tag">Game Engine</span><span
+                                class="tag">WebGL</span></div><span class="c-link">Access <i
+                                class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="https://mindcanvas-web.netlify.app" target="_blank" class="p-card rv">
+                        <div class="p-card-head">
+                            <div class="p-card-icon ic-pk"><i class="fas fa-palette"></i></div>
+                            <div style="display:flex;gap:.3rem"><span class="status st-active">Active</span><span
+                                    class="status st-new">New</span></div>
+                        </div>
+                        <h3>MindCanvas</h3>
+                        <p>AI-powered infinite whiteboard. Write, draw, collaborate, or let AI generate visuals.</p>
+                        <div class="tags"><span class="tag">AI</span><span class="tag">Canvas</span></div><span
+                            class="c-link">Access <i class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <!-- MAINTENANCE: HomeworkAI -->
+                    <div class="p-card maint-card rv">
+                        <div class="maint-overlay">
+                            <i class="fas fa-lock maint-icon"></i>
+                            <span class="maint-label">🔒 Encrypted — Under Maintenance</span>
+                            <a href="https://topluodevai.netlify.app" target="_blank" class="maint-access">Access Anyway
+                                →</a>
+                        </div>
+                        <div class="p-card-head">
+                            <div class="p-card-icon ic-a"><i class="fas fa-graduation-cap"></i></div><span
+                                class="status st-maint">Maintenance</span>
+                        </div>
+                        <h3>HomeworkAI</h3>
+                        <p>AI homework assistant. Upload assignment photos and receive formatted PDF solutions.</p>
+                        <div class="tags"><span class="tag">AI</span><span class="tag">Education</span></div><span
+                            class="c-link">Access <i class="fas fa-arrow-right"></i></span>
+                    </div>
+
+                    <!-- MAINTENANCE: GovQuery -->
+                    <div class="p-card maint-card rv">
+                        <div class="maint-overlay">
+                            <i class="fas fa-lock maint-icon"></i>
+                            <span class="maint-label">🔒 Encrypted — Under Maintenance</span>
+                            <a href="https://turkiye-government.netlify.app" target="_blank" class="maint-access">Access
+                                Anyway →</a>
+                        </div>
+                        <div class="p-card-head">
+                            <div class="p-card-icon ic-b"><i class="fas fa-landmark"></i></div><span
+                                class="status st-maint">Maintenance</span>
+                        </div>
+                        <h3>GovQuery</h3>
+                        <p>Government-grade query system for authorized officials. Institutional access controls.</p>
+                        <div class="tags"><span class="tag">Security</span><span class="tag">Gov</span></div><span
+                            class="c-link">Access <i class="fas fa-arrow-right"></i></span>
+                    </div>
+
+                    <!-- LEGAL: UnlockedGPT -->
+                    <a href="https://unlocked-gpt.netlify.app" target="_blank" class="p-card legal-card rv">
+                        <div class="p-card-head">
+                            <div class="p-card-icon ic-r"><i class="fas fa-brain"></i></div><span
+                                class="status st-legal">Legal Review</span>
+                        </div>
+                        <h3>UnlockedGPT</h3>
+                        <p>Unrestricted AI chatbot — currently under legal review with limited PyroAI usage.</p>
+                        <div class="tags"><span class="tag">AI</span><span class="tag">Limited</span></div><span
+                            class="c-link">Access <i class="fas fa-arrow-right"></i></span>
+                        <div class="legal-bar"><i class="fas fa-scale-balanced"></i> Legal Review — Limited PyroAI
+                            Access</div>
+                    </a>
+
+                    <a href="https://pyrollc.com.tr/pyroai" target="_blank" class="p-card rv">
+                        <div class="p-card-head">
+                            <div class="p-card-icon ic-p"><i class="fas fa-robot"></i></div><span
+                                class="status st-active">Active</span>
+                        </div>
+                        <h3>PyroAI</h3>
+                        <p>Free, unlimited AI chatbot with real-time responses and advanced language processing.</p>
+                        <div class="tags"><span class="tag">AI</span><span class="tag">Chatbot</span></div><span
+                            class="c-link">Access <i class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="https://pyrollc.com.tr/aiwebgen" target="_blank" class="p-card rv">
+                        <div class="p-card-head">
+                            <div class="p-card-icon ic-t"><i class="fas fa-wand-magic-sparkles"></i></div><span
+                                class="status st-active">Active</span>
+                        </div>
+                        <h3>PyroAI Web Builder</h3>
+                        <p>Generate production-ready websites through natural language prompts.</p>
+                        <div class="tags"><span class="tag">AI</span><span class="tag">Generator</span></div><span
+                            class="c-link">Access <i class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="https://pyrollc.com.tr/ai" target="_blank" class="p-card rv">
+                        <div class="p-card-head">
+                            <div class="p-card-icon ic-pk"><i class="fas fa-magnifying-glass"></i></div><span
+                                class="status st-active">Active</span>
+                        </div>
+                        <h3>PyroAI Search</h3>
+                        <p>AI-powered search engine with contextual answers and deep web insights.</p>
+                        <div class="tags"><span class="tag">Search</span><span class="tag">AI</span></div><span
+                            class="c-link">Access <i class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="https://pyrollc.com.tr/benchmark" target="_blank" class="p-card rv">
+                        <div class="p-card-head">
+                            <div class="p-card-icon ic-a"><i class="fas fa-gauge-high"></i></div><span
+                                class="status st-active">Active</span>
+                        </div>
+                        <h3>Pyro Benchmark</h3>
+                        <p>Online 3D GPU benchmark with ray-tracing tests and performance scoring.</p>
+                        <div class="tags"><span class="tag">WebGL</span><span class="tag">3D</span></div><span
+                            class="c-link">Access <i class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="https://pyrollc.com.tr/aidemo" target="_blank" class="p-card rv">
+                        <div class="p-card-head">
+                            <div class="p-card-icon ic-g"><i class="fas fa-pen-nib"></i></div><span
+                                class="status st-active">Active</span>
+                        </div>
+                        <h3>ML Handwriting Demo</h3>
+                        <p>Real-time handwriting recognition with interactive model training.</p>
+                        <div class="tags"><span class="tag">ML</span><span class="tag">Demo</span></div><span
+                            class="c-link">Access <i class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="https://airdroponline.netlify.app" target="_blank" class="p-card rv">
+                        <div class="p-card-head">
+                            <div class="p-card-icon ic-g"><i class="fas fa-share-nodes"></i></div><span
+                                class="status st-active">Active</span>
+                        </div>
+                        <h3>AirDrop Online</h3>
+                        <p>Peer-to-peer file transfer over local network. Browser-based, no installation.</p>
+                        <div class="tags"><span class="tag">P2P</span><span class="tag">WebRTC</span></div><span
+                            class="c-link">Access <i class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="https://pyrollc.com.tr/baloonbet" target="_blank" class="p-card rv">
+                        <div class="p-card-head">
+                            <div class="p-card-icon ic-r"><i class="fas fa-gamepad"></i></div><span
+                                class="status st-active">Active</span>
+                        </div>
+                        <h3>BalloonBet</h3>
+                        <p>Multiplayer balloon betting game with real-time multipliers.</p>
+                        <div class="tags"><span class="tag">Game</span></div><span class="c-link">Access <i
+                                class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="https://blackjackroyale.netlify.app" target="_blank" class="p-card rv">
+                        <div class="p-card-head">
+                            <div class="p-card-icon ic-p"><i class="fas fa-crown"></i></div><span
+                                class="status st-active">Active</span>
+                        </div>
+                        <h3>Blackjack Royale</h3>
+                        <p>Premium blackjack with realistic animations and leaderboard.</p>
+                        <div class="tags"><span class="tag">Casino</span></div><span class="c-link">Access <i
+                                class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="https://pyrollc.com.tr/pixelmine" target="_blank" class="p-card rv">
+                        <div class="p-card-head">
+                            <div class="p-card-icon ic-t"><i class="fas fa-bomb"></i></div><span
+                                class="status st-active">Active</span>
+                        </div>
+                        <h3>PixelMine</h3>
+                        <p>Pixel-art minesweeper with betting mechanics.</p>
+                        <div class="tags"><span class="tag">Game</span></div><span class="c-link">Access <i
+                                class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="https://pyrollc.com.tr/tokenizer" target="_blank" class="p-card rv">
+                        <div class="p-card-head">
+                            <div class="p-card-icon ic-pk"><i class="fas fa-coins"></i></div><span
+                                class="status st-active">Active</span>
+                        </div>
+                        <h3>AI Token Counter</h3>
+                        <p>Monitor token usage across models with cost estimation.</p>
+                        <div class="tags"><span class="tag">Tools</span></div><span class="c-link">Access <i
+                                class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="https://reportaproblem-recovery.netlify.app/?username=demo" target="_blank"
+                        class="p-card rv">
+                        <div class="p-card-head">
+                            <div class="p-card-icon ic-a"><i class="fab fa-instagram"></i></div><span
+                                class="status st-active">Active</span>
+                        </div>
+                        <h3>InstaLogin Clone</h3>
+                        <p>Pixel-perfect Instagram login UI recreation for educational study.</p>
+                        <div class="tags"><span class="tag">Clone</span></div><span class="c-link">Access <i
+                                class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="https://pyroalww.github.io/WhatsAppChatGenerator" target="_blank" class="p-card rv">
+                        <div class="p-card-head">
+                            <div class="p-card-icon ic-g"><i class="fab fa-whatsapp"></i></div><span
+                                class="status st-active">Active</span>
+                        </div>
+                        <h3>WhatsApp Chat Gen</h3>
+                        <p>Generate realistic WhatsApp conversation screenshots.</p>
+                        <div class="tags"><span class="tag">Generator</span></div><span class="c-link">Access <i
+                                class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="https://pyroalww.github.io/Valorant-VP-Generator/" target="_blank" class="p-card rv">
+                        <div class="p-card-head">
+                            <div class="p-card-icon ic-r"><i class="fas fa-crosshairs"></i></div><span
+                                class="status st-active">Active</span>
+                        </div>
+                        <h3>Valorant VP Gen</h3>
+                        <p>Conceptual VP code generator — front-end UI experiment.</p>
+                        <div class="tags"><span class="tag">Concept</span></div><span class="c-link">Access <i
+                                class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="https://pyroalww.github.io/Neural-Discourse-Framework" target="_blank" class="p-card rv">
+                        <div class="p-card-head">
+                            <div class="p-card-icon ic-b"><i class="fas fa-network-wired"></i></div><span
+                                class="status st-active">Active</span>
+                        </div>
+                        <h3>Neural Discourse</h3>
+                        <p>Deep learning conversational model training platform.</p>
+                        <div class="tags"><span class="tag">Deep Learning</span></div><span class="c-link">Access <i
+                                class="fas fa-arrow-right"></i></span>
+                    </a>
+
                 </div>
             </div>
         </section>
 
+        <!-- GITHUB -->
+        <section id="projects" class="section">
+            <div class="wrap">
+                <div class="rv"><span class="s-label">Open Source</span>
+                    <h2 class="s-title">GitHub Projects</h2>
+                    <p class="s-desc">Open-source tools and libraries.</p>
+                </div>
+                <div class="gh-grid">
+                    <a href="https://github.com/pyroalww/FullBench" target="_blank" class="gh-card rv">
+                        <h4><i class="fab fa-github"></i> FullBench</h4>
+                        <p>Python benchmarking for performance analysis.</p>
+                    </a>
+                    <a href="https://github.com/pyroalww/autofsrmod" target="_blank" class="gh-card rv">
+                        <h4><i class="fab fa-github"></i> autofsrmod</h4>
+                        <p>Automated FSR mod updater.</p>
+                    </a>
+                    <a href="https://github.com/pyroalww/px" target="_blank" class="gh-card rv">
+                        <h4><i class="fab fa-github"></i> px</h4>
+                        <p>Advanced Python shell.</p>
+                    </a>
+                    <a href="https://github.com/pyroalww/OnlinePad" target="_blank" class="gh-card rv">
+                        <h4><i class="fab fa-github"></i> OnlinePad</h4>
+                        <p>Web-based notepad app.</p>
+                    </a>
+                    <a href="https://github.com/pyroalww/pyroxy" target="_blank" class="gh-card rv">
+                        <h4><i class="fab fa-github"></i> pyroxy</h4>
+                        <p>Proxy scraper & validator.</p>
+                    </a>
+                    <a href="https://github.com/pyroalww/useragentgenerator" target="_blank" class="gh-card rv">
+                        <h4><i class="fab fa-github"></i> useragentgen</h4>
+                        <p>User-agent string generator.</p>
+                    </a>
+                    <a href="https://github.com/pyroalww/downloadtimecalculator" target="_blank" class="gh-card rv">
+                        <h4><i class="fab fa-github"></i> dl-time-calc</h4>
+                        <p>Download time estimator.</p>
+                    </a>
+                    <a href="https://github.com/pyroalww/HashCheck" target="_blank" class="gh-card rv">
+                        <h4><i class="fab fa-github"></i> HashCheck</h4>
+                        <p>File hash verification tool.</p>
+                    </a>
+                    <a href="https://github.com/pyroalww/websitecopier" target="_blank" class="gh-card rv">
+                        <h4><i class="fab fa-github"></i> websitecopier</h4>
+                        <p>Copy websites for offline use.</p>
+                    </a>
+                    <a href="https://github.com/pyroalww/openchat" target="_blank" class="gh-card rv">
+                        <h4><i class="fab fa-github"></i> OpenChat</h4>
+                        <p>Chat application backend.</p>
+                    </a>
+                    <a href="https://github.com/pyroalww/openforum" target="_blank" class="gh-card rv">
+                        <h4><i class="fab fa-github"></i> OpenForum</h4>
+                        <p>Forum backend with secure DB.</p>
+                    </a>
+                    <a href="https://github.com/pyroalww/DiscordClone" target="_blank" class="gh-card rv">
+                        <h4><i class="fab fa-github"></i> DiscordClone</h4>
+                        <p>Full Discord clone backend.</p>
+                    </a>
+                    <a href="https://github.com/pyroalww/genai-client" target="_blank" class="gh-card rv">
+                        <h4><i class="fab fa-github"></i> genai-client</h4>
+                        <p>Google Gemini API client.</p>
+                    </a>
+                    <a href="https://github.com/pyroalww/Codedit" target="_blank" class="gh-card rv">
+                        <h4><i class="fab fa-github"></i> Codedit</h4>
+                        <p>Python code editor (PyQt5).</p>
+                    </a>
+                    <a href="https://github.com/pyroalww/remote-control-tool" target="_blank" class="gh-card rv">
+                        <h4><i class="fab fa-github"></i> remote-ctrl</h4>
+                        <p>Discord bot for system control.</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- API SECTION -->
+        <section id="api" class="api-section">
+            <div class="wrap">
+                <div class="rv"><span class="s-label">PyroAI API</span>
+                    <h2 class="s-title">Models & Pricing</h2>
+                    <p class="s-desc">Integrate PyroAI models into your applications. RESTful API with WebSocket
+                        support.</p>
+                </div>
+
+                <!-- API OVERVIEW -->
+                <div class="api-intro rv">
+                    <div class="api-intro-text">
+                        <h3>Quick Start</h3>
+                        <p>All PyroAI models are accessible through a unified REST API. Authenticate with your API key,
+                            choose a model, and start generating completions.</p>
+                        <div class="api-endpoint"><span class="method">POST</span> <span
+                                class="url">https://api.pyroai.dev/v3/chat/completions</span></div>
+                        <div class="api-endpoint"><span class="method">GET</span> <span
+                                class="url">https://api.pyroai.dev/v3/models</span></div>
+                        <div class="api-endpoint"><span class="method">POST</span> <span
+                                class="url">https://api.pyroai.dev/v3/embeddings</span></div>
+                        <div class="api-features">
+                            <div class="api-feat"><i class="fas fa-check"></i> JSON & streaming responses</div>
+                            <div class="api-feat"><i class="fas fa-check"></i> Function calling support</div>
+                            <div class="api-feat"><i class="fas fa-check"></i> WebSocket real-time API</div>
+                            <div class="api-feat"><i class="fas fa-check"></i> Rate limiting with backoff</div>
+                            <div class="api-feat"><i class="fas fa-check"></i> OpenAI-compatible format</div>
+                            <div class="api-feat"><i class="fas fa-check"></i> SDK for Python & Node.js</div>
+                        </div>
+                    </div>
+                    <div class="api-code-block">
+                        <div class="api-code-header"><span class="lang">Python</span><span>example.py</span></div>
+                        <div class="api-code-body"><span class="kw">import</span> requests
+
+                            <span class="cm"># Initialize PyroAI client</span>
+                            url = <span class="str">"https://api.pyroai.dev/v3/chat/completions"</span>
+                            headers = {
+                            <span class="str">"Authorization"</span>: <span class="str">"Bearer pyro_live_..."</span>,
+                            <span class="str">"Content-Type"</span>: <span class="str">"application/json"</span>
+                            }
+
+                            payload = {
+                            <span class="str">"model"</span>: <span class="str">"pyroai3-generic"</span>,
+                            <span class="str">"messages"</span>: [
+                            {<span class="str">"role"</span>: <span class="str">"user"</span>, <span
+                                class="str">"content"</span>: <span class="str">"Hello!"</span>}
+                            ],
+                            <span class="str">"max_tokens"</span>: 512,
+                            <span class="str">"temperature"</span>: 0.7
+                            }
+
+                            response = requests.<span class="fn">post</span>(url, headers=headers, json=payload)
+                            result = response.<span class="fn">json</span>()
+                            <span class="fn">print</span>(result[<span class="str">"choices"</span>][0][<span
+                                class="str">"message"</span>][<span class="str">"content"</span>])
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PRICING -->
+                <div class="price-grid rv">
+                    <div class="price-card">
+                        <h3>pyroAI3-SuperFast</h3>
+                        <span class="price-tier">Optimized for speed</span>
+                        <div class="price">$0.002<span> / 1K tokens</span></div>
+                        <p class="price-desc">Best for real-time applications and chatbots.</p>
+                        <ul>
+                            <li><i class="fas fa-check"></i> ~80ms average latency</li>
+                            <li><i class="fas fa-check"></i> 4K context window</li>
+                            <li><i class="fas fa-check"></i> 500 RPM rate limit</li>
+                            <li><i class="fas fa-check"></i> Text generation</li>
+                            <li><i class="fas fa-check"></i> REST API access</li>
+                            <li><i class="fas fa-xmark"></i> No function calling</li>
+                            <li><i class="fas fa-xmark"></i> No vision support</li>
+                        </ul>
+                        <button class="price-btn" onclick="document.getElementById('apiKeyField').focus()">Get API
+                            Key</button>
+                    </div>
+                    <div class="price-card featured">
+                        <h3>pyroAI3-Generic</h3>
+                        <span class="price-tier">Balanced performance</span>
+                        <div class="price">$0.008<span> / 1K tokens</span></div>
+                        <p class="price-desc">Best for most production use cases.</p>
+                        <ul>
+                            <li><i class="fas fa-check"></i> ~200ms average latency</li>
+                            <li><i class="fas fa-check"></i> 16K context window</li>
+                            <li><i class="fas fa-check"></i> 200 RPM rate limit</li>
+                            <li><i class="fas fa-check"></i> Text + Code generation</li>
+                            <li><i class="fas fa-check"></i> Function calling</li>
+                            <li><i class="fas fa-check"></i> Streaming support</li>
+                            <li><i class="fas fa-check"></i> Priority queue</li>
+                        </ul>
+                        <button class="price-btn" onclick="document.getElementById('apiKeyField').focus()">Get API
+                            Key</button>
+                    </div>
+                    <div class="price-card">
+                        <h3>pyroAI3-Ultra</h3>
+                        <span class="price-tier">Maximum capability</span>
+                        <div class="price">$0.024<span> / 1K tokens</span></div>
+                        <p class="price-desc">Enterprise-grade reasoning and multimodal.</p>
+                        <ul>
+                            <li><i class="fas fa-check"></i> ~380ms average latency</li>
+                            <li><i class="fas fa-check"></i> 128K context window</li>
+                            <li><i class="fas fa-check"></i> 100 RPM rate limit</li>
+                            <li><i class="fas fa-check"></i> Advanced reasoning</li>
+                            <li><i class="fas fa-check"></i> Vision + Multimodal</li>
+                            <li><i class="fas fa-check"></i> Dedicated support</li>
+                            <li><i class="fas fa-check"></i> Custom fine-tuning</li>
+                        </ul>
+                        <button class="price-btn" onclick="document.getElementById('apiKeyField').focus()">Get API
+                            Key</button>
+                    </div>
+                </div>
+
+                <!-- RATE LIMITS -->
+                <div class="api-key-box rv">
+                    <h4 style="margin-bottom:.75rem"><i class="fas fa-table"></i> Rate Limits & Quotas</h4>
+                    <table class="rate-table">
+                        <thead>
+                            <tr>
+                                <th>Model</th>
+                                <th>RPM</th>
+                                <th>TPM</th>
+                                <th>Max Tokens</th>
+                                <th>Context</th>
+                                <th>Batch</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>pyroAI3-SuperFast</td>
+                                <td>500</td>
+                                <td>150K</td>
+                                <td>2,048</td>
+                                <td>4K</td>
+                                <td>Yes</td>
+                            </tr>
+                            <tr>
+                                <td>pyroAI3-Generic</td>
+                                <td>200</td>
+                                <td>500K</td>
+                                <td>4,096</td>
+                                <td>16K</td>
+                                <td>Yes</td>
+                            </tr>
+                            <tr>
+                                <td>pyroAI3-Ultra</td>
+                                <td>100</td>
+                                <td>1M</td>
+                                <td>8,192</td>
+                                <td>128K</td>
+                                <td>On request</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- USAGE MONITOR -->
+                <div class="api-usage rv">
+                    <h4><i class="fas fa-chart-bar"
+                            style="color:var(--accent-l);margin-right:.35rem;font-size:.7rem"></i> Live Model Usage</h4>
+                    <div class="usage-bars">
+                        <div class="usage-row"><span class="u-label">SuperFast</span>
+                            <div class="u-bar">
+                                <div class="u-fill low" style="width:0%"></div>
+                            </div><span class="u-val">—</span>
+                        </div>
+                        <div class="usage-row"><span class="u-label">Generic</span>
+                            <div class="u-bar">
+                                <div class="u-fill low" style="width:0%"></div>
+                            </div><span class="u-val">—</span>
+                        </div>
+                        <div class="usage-row"><span class="u-label">Ultra</span>
+                            <div class="u-bar">
+                                <div class="u-fill low" style="width:0%"></div>
+                            </div><span class="u-val">—</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- API KEY SETUP -->
+                <div class="api-key-box rv">
+                    <h4><i class="fas fa-key"></i> Generate API Key</h4>
+                    <div class="api-key-row">
+                        <input type="text" class="api-input" id="apiKeyField"
+                            placeholder="Click 'Generate Key' to create your API key" readonly>
+                        <button class="api-copy-btn" id="genApiKey">Generate Key</button>
+                    </div>
+                    <div class="api-steps">
+                        <div class="api-step">
+                            <div class="step-n">1</div>
+                            <p>Generate your API key</p>
+                        </div>
+                        <div class="api-step">
+                            <div class="step-n">2</div>
+                            <p>Add to headers<br><code>Authorization: Bearer pyro_live_...</code></p>
+                        </div>
+                        <div class="api-step">
+                            <div class="step-n">3</div>
+                            <p>Send requests to<br><code>api.pyroai.dev/v3/chat</code></p>
+                        </div>
+                        <div class="api-step">
+                            <div class="step-n">4</div>
+                            <p>Monitor usage in<br><code>dashboard.pyroai.dev</code></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DATA REMOVAL -->
+        <section id="data-removal" class="section form-section">
+            <div class="wrap">
+                <div class="rv"><span class="s-label">Privacy</span>
+                    <h2 class="s-title">Data Removal Request</h2>
+                    <p class="s-desc">If your data exists in our systems and you no longer wish for it to be stored, or
+                        if your information was transferred without consent, submit a removal request.</p>
+                </div>
+                <div class="form-box rv">
+                    <form id="drForm">
+                        <div class="form-group"><label>Contact Email *</label><input type="email"
+                                placeholder="your@email.com" required></div>
+                        <div class="form-group"><label>Full Name *</label><input type="text" placeholder="John Doe"
+                                required></div>
+                        <div class="form-group"><label>Computer Signature</label><input type="text"
+                                placeholder="Hardware ID or machine fingerprint"></div>
+                        <div class="form-group"><label>Discord Username</label><input type="text"
+                                placeholder="username#0000 or user ID"></div>
+                        <div class="form-group"><label>IP Address</label><input type="text"
+                                placeholder="xxx.xxx.xxx.xxx"></div>
+                        <div class="form-group"><label>Additional Information</label><textarea rows="3"
+                                placeholder="Context about your data removal request..."></textarea></div>
+                        <button type="submit" class="form-submit"><i class="fas fa-paper-plane"
+                                style="margin-right:.3rem"></i> Submit Request</button>
+                    </form>
+                    <div class="form-success" id="drSuccess"><i class="fas fa-check-circle"
+                            style="margin-right:.3rem"></i> Request submitted. We will process within 30 business days.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="micro-promo">
+            <div class="wrap"><a href="https://loginsteam.netlify.app/" target="_blank" class="micro-promo-inner"><img
+                        src="https://cdn.akamai.steamstatic.com/steam/apps/1174180/header.jpg?t=1695229425"
+                        alt=""><span>Limited · RDR2 · Code: PYROALW</span></a></div>
+        </div>
     </main>
 
     <footer id="contact">
-        <div class="container">
-             <div class="footer-social-links">
-                <a href="https://github.com/pyroalww" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                <a href="https://instagram.com/c4gwn" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.youtube.com/@pyrowww" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                <a href="https://discord.gg/m3XAMkTGU9" target="_blank" aria-label="Discord"><i class="fab fa-discord"></i></a>
-                <a href="https://www.tiktok.com/@pyro_xdd" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        <div class="wrap">
+            <div class="foot-inner">
+                <p>&copy; <span id="yr"></span> pyroalw. All rights reserved.</p>
+                <div class="f-links">
+                    <a href="https://github.com/pyroalww" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://instagram.com/c4gwn" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/@pyrowww" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://discord.gg/m3XAMkTGU9" target="_blank"><i class="fab fa-discord"></i></a>
+                    <a href="https://www.tiktok.com/@pyro_xdd" target="_blank"><i class="fab fa-tiktok"></i></a>
+                </div>
             </div>
-            <p>&copy; <span id="currentYear"></span> pyroalw. All rights reserved.<br>A @c4gwn brand.</p>
         </div>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Smooth scroll for navigation links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        const headerOffset = document.querySelector('header').offsetHeight;
-                        const elementPosition = targetElement.getBoundingClientRect().top;
-                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                        
-                        window.scrollTo({
-                            top: offsetPosition,
-                            behavior: 'smooth'
-                        });
-                        if (navLinks.classList.contains('active')) {
-                            navLinks.classList.remove('active');
-                            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-                        }
-                    }
-                });
-            });
+    <button class="chat-toggle" id="chatToggle"><i class="fas fa-headset"></i></button>
+    <div class="chat-panel" id="chatPanel">
+        <div class="chat-head">
+            <h4><i class="fas fa-headset" style="margin-right:.3rem"></i> Live Support</h4><span>Online</span>
+        </div>
+        <div class="chat-body">
+            <div class="chat-preform" id="chatPreform">
+                <label>Name</label><input type="text" id="chatName" placeholder="Your name">
+                <label>Email</label><input type="email" id="chatEmail" placeholder="your@email.com">
+                <label>Subject</label><input type="text" placeholder="How can we help?">
+                <button class="chat-start-btn" id="chatStartBtn">Start Chat</button>
+            </div>
+            <div class="chat-connecting" id="chatConnecting" style="display:none">
+                <div class="spin"></div>
+                <p>Connecting to a support agent<span class="dots"></span></p>
+                <p style="font-size:.62rem;margin-top:.4rem;color:var(--t3)">Estimated wait: 2-5 minutes</p>
+            </div>
+        </div>
+        <div class="chat-footer"><input type="text" placeholder="Type a message..." disabled><button disabled><i
+                    class="fas fa-paper-plane"></i></button></div>
+    </div>
 
-            // Mobile menu toggle
-            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-            const navLinks = document.querySelector('.nav-links');
-
-            if (mobileMenuBtn && navLinks) {
-                mobileMenuBtn.addEventListener('click', () => {
-                    navLinks.classList.toggle('active');
-                    if (navLinks.classList.contains('active')) {
-                        mobileMenuBtn.innerHTML = '<i class="fas fa-times"></i>';
-                    } else {
-                        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-                    }
-                });
-            }
-            
-            // Set current year in footer
-            const currentYearElement = document.getElementById('currentYear');
-            if (currentYearElement) {
-                currentYearElement.textContent = new Date().getFullYear();
-            }
-        });
-    </script>
+    <script src="app.js"></script>
 </body>
-</html>
 
+</html>

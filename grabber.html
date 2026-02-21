@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Build Your Own Malware — Custom Tool Builder | pyrollc</title>
+    <meta name="description"
+        content="Configure and order custom-built data extraction tools. Choose target OS, select modules like keylogger, backdoor, AV bypass, and more. Fully modular, built to order.">
+    <meta name="keywords"
+        content="custom malware builder, data grabber, keylogger, backdoor, AV bypass, crypto stealer, discord grabber, chrome stealer, custom tool, pyrollc, pyroalw, c4gwn">
+    <meta name="author" content="PYROALW">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#060608">
+    <link rel="canonical" href="https://www.pyrollc.com.tr/grabber">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Build Your Own Malware — Custom Tool Builder">
+    <meta property="og:description"
+        content="Fully modular custom malware builder. Windows, Linux, macOS. Keylogger, backdoor, AV bypass, crypto stealer, and more.">
+    <meta property="og:url" content="https://www.pyrollc.com.tr/grabber">
+    <meta property="og:site_name" content="pyroalw">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Build Your Own Malware — pyroalw">
+    <meta name="twitter:description"
+        content="Custom-built data extraction tools. Choose modules, configure output, order online.">
+    <script
+        type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Custom Malware Builder","description":"Build your own data extraction tool with modular features","brand":{"@type":"Brand","name":"pyroalw"},"offers":{"@type":"Offer","priceCurrency":"USD","price":"5.00","availability":"https://schema.org/InStock"}}</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="grabber.css">
+</head>
+
+<body>
+    <header>
+        <div class="nav-c">
+            <a href="index.html" class="logo">pyro<span>alw</span></a>
+            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="wrap">
+            <!-- PROGRESS -->
+            <div class="progress-bar">
+                <div class="pb-fill" id="pbFill"></div>
+                <div class="pb-steps">
+                    <div class="pb-step active" data-step="1"><span>1</span>
+                        <p>Configure</p>
+                    </div>
+                    <div class="pb-step" data-step="2"><span>2</span>
+                        <p>Pricing</p>
+                    </div>
+                    <div class="pb-step" data-step="3"><span>3</span>
+                        <p>Checkout</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PHASE 1 -->
+            <section class="phase active" id="phase1">
+                <div class="phase-head">
+                    <span class="s-label"><i class="fas fa-skull-crossbones"></i> Step 1 of 3</span>
+                    <h1>Build Your Own Malware</h1>
+                    <p class="s-desc">Select target platform, modules, and features. Live pricing updates as you
+                        configure.</p>
+                </div>
+
+                <!-- OS -->
+                <div class="cfg-section">
+                    <h3 class="cfg-title"><i class="fas fa-laptop"></i> Target Operating System</h3>
+                    <div class="os-grid">
+                        <label class="os-card" data-price="5"><input type="radio" name="os" value="windows" checked>
+                            <div class="os-inner"><i class="fab fa-windows"></i><strong>Windows</strong><span
+                                    class="os-price">$5.00</span></div>
+                        </label>
+                        <label class="os-card" data-price="20"><input type="radio" name="os" value="linux">
+                            <div class="os-inner"><i class="fab fa-linux"></i><strong>Linux</strong><span
+                                    class="os-price">$20.00</span></div>
+                        </label>
+                        <label class="os-card" data-price="50"><input type="radio" name="os" value="macos">
+                            <div class="os-inner"><i class="fab fa-apple"></i><strong>macOS</strong><span
+                                    class="os-price">$50.00</span></div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- GRABBER TARGETS -->
+                <div class="cfg-section">
+                    <h3 class="cfg-title"><i class="fas fa-crosshairs"></i> Data Targets</h3>
+                    <div class="toggle-grid">
+                        <label class="toggle-card" data-price="5" data-key="chrome"><input type="checkbox" name="target"
+                                value="chrome">
+                            <div class="toggle-inner">
+                                <div class="tg-icon ic-b"><i class="fab fa-chrome"></i></div>
+                                <div><strong>Chrome Browser</strong>
+                                    <p>Extract browser data</p>
+                                </div><span class="tg-price">+$5.00</span>
+                            </div>
+                        </label>
+                        <label class="toggle-card" data-price="2" data-key="discord"><input type="checkbox"
+                                name="target" value="discord">
+                            <div class="toggle-inner">
+                                <div class="tg-icon ic-pk"><i class="fab fa-discord"></i></div>
+                                <div><strong>Discord</strong>
+                                    <p>Token & session data</p>
+                                </div><span class="tg-price">+$2.00</span>
+                            </div>
+                        </label>
+                        <label class="toggle-card" data-price="7" data-key="crypto"><input type="checkbox" name="target"
+                                value="crypto">
+                            <div class="toggle-inner">
+                                <div class="tg-icon ic-a"><i class="fab fa-bitcoin"></i></div>
+                                <div><strong>Crypto Wallets</strong>
+                                    <p>Wallet files & seeds</p>
+                                </div><span class="tg-price">+$7.00</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- CHROME SUB -->
+                <div class="cfg-section sub-section" id="chromeSub" style="display:none">
+                    <h3 class="cfg-title"><i class="fab fa-chrome"></i> Chrome Modules</h3>
+                    <div class="chip-grid">
+                        <label class="chip"><input type="checkbox" name="chrome_mod" value="passwords"><span><i
+                                    class="fas fa-key"></i> Passwords <em>+$2.00</em></span></label>
+                        <label class="chip"><input type="checkbox" name="chrome_mod" value="history_browse"><span><i
+                                    class="fas fa-clock-rotate-left"></i> History <em>Free</em></span></label>
+                        <label class="chip"><input type="checkbox" name="chrome_mod" value="autofill"><span><i
+                                    class="fas fa-pen"></i> Autofill <em>+$1.00</em></span></label>
+                        <label class="chip"><input type="checkbox" name="chrome_mod" value="creditcards"><span><i
+                                    class="fas fa-credit-card"></i> Credit Cards <em>+$4.00</em></span></label>
+                        <label class="chip"><input type="checkbox" name="chrome_mod" value="addresses"><span><i
+                                    class="fas fa-location-dot"></i> Addresses <em>Free</em></span></label>
+                        <label class="chip"><input type="checkbox" name="chrome_mod" value="downloads"><span><i
+                                    class="fas fa-download"></i> Downloads <em>+$0.50</em></span></label>
+                        <label class="chip"><input type="checkbox" name="chrome_mod" value="cookies"><span><i
+                                    class="fas fa-cookie-bite"></i> Cookies <em>+$3.00</em></span></label>
+                    </div>
+                </div>
+
+                <!-- EXTRAS -->
+                <div class="cfg-section">
+                    <h3 class="cfg-title"><i class="fas fa-puzzle-piece"></i> Advanced Modules</h3>
+                    <div class="toggle-grid">
+                        <label class="toggle-card" data-price="5"><input type="checkbox" name="extra" value="backdoor">
+                            <div class="toggle-inner">
+                                <div class="tg-icon ic-r"><i class="fas fa-terminal"></i></div>
+                                <div><strong>Backdoor (CMD/PS)</strong>
+                                    <p>Remote shell access</p>
+                                </div><span class="tg-price">+$5.00</span>
+                            </div>
+                        </label>
+                        <label class="toggle-card" data-price="3"><input type="checkbox" name="extra" value="autostart">
+                            <div class="toggle-inner">
+                                <div class="tg-icon ic-t"><i class="fas fa-rotate"></i></div>
+                                <div><strong>Autostart</strong>
+                                    <p>Persist on every boot</p>
+                                </div><span class="tg-price">+$3.00</span>
+                            </div>
+                        </label>
+                        <label class="toggle-card" data-price="5"><input type="checkbox" name="extra" value="avbypass">
+                            <div class="toggle-inner">
+                                <div class="tg-icon ic-g"><i class="fas fa-shield-halved"></i></div>
+                                <div><strong>AV Protection</strong>
+                                    <p>Antivirus scan bypass</p>
+                                </div><span class="tg-price">+$5.00</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- OUTPUT -->
+                <div class="cfg-section">
+                    <h3 class="cfg-title"><i class="fas fa-satellite-dish"></i> Data Output & Connection</h3>
+                    <div class="toggle-grid">
+                        <label class="toggle-card" data-price="7"><input type="checkbox" name="output"
+                                value="discordbot">
+                            <div class="toggle-inner">
+                                <div class="tg-icon ic-pk"><i class="fab fa-discord"></i></div>
+                                <div><strong>Discord Bot</strong>
+                                    <p>Send data via Discord</p>
+                                </div><span class="tg-price">+$7.00</span>
+                            </div>
+                        </label>
+                        <label class="toggle-card" data-price="5"><input type="checkbox" name="output"
+                                value="telegrambot">
+                            <div class="toggle-inner">
+                                <div class="tg-icon ic-b"><i class="fab fa-telegram"></i></div>
+                                <div><strong>Telegram Bot</strong>
+                                    <p>Send data via Telegram</p>
+                                </div><span class="tg-price">+$5.00</span>
+                            </div>
+                        </label>
+                        <label class="toggle-card" data-price="12"><input type="checkbox" name="output"
+                                value="webpanel">
+                            <div class="toggle-inner">
+                                <div class="tg-icon ic-a"><i class="fas fa-globe"></i></div>
+                                <div><strong>Web Panel</strong>
+                                    <p>Full web dashboard</p>
+                                </div><span class="tg-price">+$12.00</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- MONITORING -->
+                <div class="cfg-section">
+                    <h3 class="cfg-title"><i class="fas fa-eye"></i> Monitoring & Logging</h3>
+                    <div class="toggle-grid cols-2">
+                        <label class="toggle-card" data-price="2"><input type="checkbox" name="monitor" value="keylog">
+                            <div class="toggle-inner">
+                                <div class="tg-icon ic-r"><i class="fas fa-keyboard"></i></div>
+                                <div><strong>Keylogger</strong>
+                                    <p>Record keystrokes</p>
+                                </div><span class="tg-price">+$2.00</span>
+                            </div>
+                        </label>
+                        <label class="toggle-card" data-price="7"><input type="checkbox" name="monitor"
+                                value="screenview">
+                            <div class="toggle-inner">
+                                <div class="tg-icon ic-t"><i class="fas fa-desktop"></i></div>
+                                <div><strong>Live Screen View</strong>
+                                    <p>Real-time screen capture</p>
+                                </div><span class="tg-price">+$7.00</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- DISGUISE -->
+                <div class="cfg-section">
+                    <h3 class="cfg-title"><i class="fas fa-mask"></i> Disguise As</h3>
+                    <div class="disguise-grid">
+                        <label class="disguise-opt"><input type="radio" name="disguise" value="steam" checked><span><i
+                                    class="fab fa-steam"></i> Steam</span></label>
+                        <label class="disguise-opt"><input type="radio" name="disguise" value="fps_booster"><span><i
+                                    class="fas fa-bolt"></i> FPS Booster</span></label>
+                        <label class="disguise-opt"><input type="radio" name="disguise" value="optimizer"><span><i
+                                    class="fas fa-gauge-high"></i> Optimizer</span></label>
+                        <label class="disguise-opt"><input type="radio" name="disguise" value="chrome_updater"><span><i
+                                    class="fab fa-chrome"></i> Chrome Updater</span></label>
+                        <label class="disguise-opt"><input type="radio" name="disguise" value="custom"><span><i
+                                    class="fas fa-pen-fancy"></i> Custom <em>+$5</em></span></label>
+                    </div>
+                </div>
+
+                <!-- LIVE PRICE TICKER -->
+                <div class="sticky-price" id="stickyPrice">
+                    <div class="sp-left"><span class="sp-label">Estimated Total</span><span class="sp-val"
+                            id="livePrice">$5.00</span></div>
+                    <button class="btn-next" id="toPhase2"><i class="fas fa-calculator"></i> Calculate Final
+                        Price</button>
+                </div>
+            </section>
+
+            <!-- PHASE 2 -->
+            <section class="phase" id="phase2">
+                <div class="phase-head" style="text-align:center">
+                    <span class="s-label"><i class="fas fa-calculator"></i> Step 2 of 3</span>
+                    <h1>Price Breakdown</h1>
+                    <p class="s-desc" style="margin:0 auto">Your custom build summary and final price.</p>
+                </div>
+                <div class="price-calc-box" id="priceCalcBox">
+                    <div class="calc-spinner" id="calcSpinner">
+                        <div class="calc-ring"></div>
+                        <p>Calculating<span class="dots"></span></p>
+                    </div>
+                    <div class="calc-result" id="calcResult" style="display:none">
+                        <div class="receipt" id="receipt"></div>
+                        <div class="total-row" id="totalRow"><span>Total</span><span class="total-val"
+                                id="totalVal">$0.00</span></div>
+                        <div class="discount-row" id="discountRow" style="display:none"><span>20% Discount
+                                Applied</span><span class="discount-val" id="discountVal">-$0.00</span></div>
+                        <div class="final-row" id="finalRow" style="display:none"><span>Final Price</span><span
+                                class="final-val" id="finalVal">$0.00</span></div>
+                        <div class="calc-btns" id="calcBtns">
+                            <button class="btn-accept" id="btnAccept"><i class="fas fa-check"></i> Accept &
+                                Continue</button>
+                            <button class="btn-reject" id="btnReject"><i class="fas fa-times"></i> Too
+                                Expensive</button>
+                        </div>
+                        <div class="calc-btns" id="calcBtns2" style="display:none">
+                            <button class="btn-accept" id="btnAccept2"><i class="fas fa-check"></i> Accept Discounted
+                                Price</button>
+                            <button class="btn-back" id="btnBack"><i class="fas fa-arrow-left"></i> Reconfigure</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PHASE 3 -->
+            <section class="phase" id="phase3">
+                <div class="phase-head" style="text-align:center">
+                    <span class="s-label"><i class="fas fa-credit-card"></i> Step 3 of 3</span>
+                    <h1>Checkout</h1>
+                    <p class="s-desc" style="margin:0 auto">Provide payment details and contact info.</p>
+                </div>
+                <div class="checkout-box">
+                    <div class="co-summary" id="coSummary"></div>
+                    <form id="checkoutForm">
+                        <div class="fg"><label>Full Name *</label><input type="text" name="coName"
+                                placeholder="John Doe" required></div>
+                        <div class="fg"><label>Contact Email *</label><input type="email" name="coEmail"
+                                placeholder="your@email.com" required><span class="hint">We'll send build details
+                                here</span></div>
+                        <div class="fg"><label>Telegram / Discord Username</label><input type="text" name="coContact"
+                                placeholder="@username"></div>
+                        <div class="fg"><label>Payment Method *</label>
+                            <select name="coPayment" required>
+                                <option value="" disabled selected>Select</option>
+                                <option>Bitcoin (BTC)</option>
+                                <option>Ethereum (ETH)</option>
+                                <option>USDT (TRC20)</option>
+                                <option>Litecoin (LTC)</option>
+                                <option>Monero (XMR)</option>
+                                <option>Wire Transfer</option>
+                            </select>
+                        </div>
+                        <div class="fg"><label>Notes</label><textarea name="coNotes" rows="3"
+                                placeholder="Any special requirements..."></textarea></div>
+                        <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> Place Order</button>
+                    </form>
+                    <div class="co-success" id="coSuccess" style="display:none">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>Order Submitted!</h3>
+                        <p>We'll contact you within 24 hours with further instructions.</p>
+                        <a href="index.html" class="btn-back-home"><i class="fas fa-arrow-left"></i> Back to
+                            Portfolio</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="grabber.js"></script>
+</body>
+
+</html>
